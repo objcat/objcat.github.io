@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="766d6452-e970-4074-8c59-0e6511008ef2" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/markdown/JavaScript/[JS致命缺陷] function和变量容易被覆盖/md/[JS致命缺陷] function和变量容易被覆盖.md" beforeDir="false" afterPath="$PROJECT_DIR$/markdown/JavaScript/[JS致命缺陷] function和变量容易被覆盖/md/[JS致命缺陷] function和变量容易被覆盖.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/markdown/Python/[Python] import自定义类/md/[Python] import自定义类.md" beforeDir="false" afterPath="$PROJECT_DIR$/markdown/Python/[Python] import自定义类/md/[Python] import自定义类.md" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -28,23 +28,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/markdown/Python/[Python] import自定义类/md/[Python] import自定义类.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="780">
-                <caret line="52" column="18" lean-forward="true" selection-start-line="52" selection-start-column="18" selection-end-line="52" selection-end-column="18" />
+              <first_editor relative-caret-position="383">
+                <caret line="60" column="18" lean-forward="true" selection-start-line="60" selection-start-column="18" selection-end-line="60" selection-end-column="18" />
               </first_editor>
               <second_editor />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/markdown/JavaScript/[JS致命缺陷] function和变量容易被覆盖/md/[JS致命缺陷] function和变量容易被覆盖.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="326">
+              <first_editor relative-caret-position="-19">
                 <caret line="39" column="25" selection-start-line="39" selection-start-column="25" selection-end-line="39" selection-end-column="25" />
               </first_editor>
               <second_editor />
@@ -62,8 +62,8 @@
       <list>
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/markdown/JavaScript/[JS致命缺陷] function和变量容易被覆盖/[JS致命缺陷] function和变量容易被覆盖.md" />
-        <option value="$PROJECT_DIR$/markdown/Python/[Python] import自定义类/md/[Python] import自定义类.md" />
         <option value="$PROJECT_DIR$/markdown/JavaScript/[JS致命缺陷] function和变量容易被覆盖/md/[JS致命缺陷] function和变量容易被覆盖.md" />
+        <option value="$PROJECT_DIR$/markdown/Python/[Python] import自定义类/md/[Python] import自定义类.md" />
       </list>
     </option>
   </component>
@@ -124,6 +124,35 @@
               <item name="[JS致命缺陷] function和变量容易被覆盖" type="462c0819:PsiDirectoryNode" />
               <item name="md" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="objcat_blog_markdown" type="b2602c69:ProjectViewProjectNode" />
+              <item name="objcat_blog_markdown" type="462c0819:PsiDirectoryNode" />
+              <item name="markdown" type="462c0819:PsiDirectoryNode" />
+              <item name="Python" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="objcat_blog_markdown" type="b2602c69:ProjectViewProjectNode" />
+              <item name="objcat_blog_markdown" type="462c0819:PsiDirectoryNode" />
+              <item name="markdown" type="462c0819:PsiDirectoryNode" />
+              <item name="Python" type="462c0819:PsiDirectoryNode" />
+              <item name="[Python] import自定义类" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="objcat_blog_markdown" type="b2602c69:ProjectViewProjectNode" />
+              <item name="objcat_blog_markdown" type="462c0819:PsiDirectoryNode" />
+              <item name="markdown" type="462c0819:PsiDirectoryNode" />
+              <item name="Python" type="462c0819:PsiDirectoryNode" />
+              <item name="[Python] import自定义类" type="462c0819:PsiDirectoryNode" />
+              <item name="img" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="objcat_blog_markdown" type="b2602c69:ProjectViewProjectNode" />
+              <item name="objcat_blog_markdown" type="462c0819:PsiDirectoryNode" />
+              <item name="markdown" type="462c0819:PsiDirectoryNode" />
+              <item name="Python" type="462c0819:PsiDirectoryNode" />
+              <item name="[Python] import自定义类" type="462c0819:PsiDirectoryNode" />
+              <item name="md" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -171,12 +200,12 @@
       <option name="presentableId" value="Default" />
       <updated>1544600204146</updated>
       <workItem from="1544600206101" duration="171000" />
-      <workItem from="1555310589815" duration="1019000" />
+      <workItem from="1555310589815" duration="1970000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1190000" />
+    <option name="totallyTimeSpent" value="2141000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="38" y="23" width="1280" height="712" extended-state="0" />
@@ -224,21 +253,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/markdown/Python/[Python] import自定义类/md/[Python] import自定义类.md">
+    <entry file="file://$PROJECT_DIR$/markdown/JavaScript/[JS致命缺陷] function和变量容易被覆盖/md/[JS致命缺陷] function和变量容易被覆盖.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="780">
-            <caret line="52" column="18" lean-forward="true" selection-start-line="52" selection-start-column="18" selection-end-line="52" selection-end-column="18" />
+          <first_editor relative-caret-position="-19">
+            <caret line="39" column="25" selection-start-line="39" selection-start-column="25" selection-end-line="39" selection-end-column="25" />
           </first_editor>
           <second_editor />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/markdown/JavaScript/[JS致命缺陷] function和变量容易被覆盖/md/[JS致命缺陷] function和变量容易被覆盖.md">
+    <entry file="file://$PROJECT_DIR$/markdown/Python/[Python] import自定义类/md/[Python] import自定义类.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="326">
-            <caret line="39" column="25" selection-start-line="39" selection-start-column="25" selection-end-line="39" selection-end-column="25" />
+          <first_editor relative-caret-position="383">
+            <caret line="60" column="18" lean-forward="true" selection-start-line="60" selection-start-column="18" selection-end-line="60" selection-end-column="18" />
           </first_editor>
           <second_editor />
         </state>

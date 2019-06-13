@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="766d6452-e970-4074-8c59-0e6511008ef2" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/markdown/iOS/[iOS] GCD死锁问题解读/md/[iOS] GCD死锁问题解读.md" beforeDir="false" afterPath="$PROJECT_DIR$/markdown/iOS/[iOS] GCD死锁问题解读/md/[iOS] GCD死锁问题解读.md" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -17,7 +17,56 @@
     <option name="isMigrated" value="true" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/markdown/HTML/[jquery] 基本使用方法/md/[jquery] 基本使用方法.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="1075">
+                <caret line="87" selection-start-line="87" selection-end-line="87" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/markdown/HTML/[HTML] 完美解决vscode在style中没有代码提示的问题/md/[HTML] 完美解决vscode在style中没有代码提示的问题.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="20">
+                <caret line="19" column="15" selection-start-line="19" selection-start-column="15" selection-end-line="19" selection-end-column="15" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/markdown/iOS/[iOS] 常用的代码块/md/[iOS] 常用的代码块.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="430">
+                <caret line="231" selection-start-line="231" selection-end-line="231" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/markdown/iOS/[iOS] GCD死锁问题解读/md/[iOS] GCD死锁问题解读.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="371">
+                <caret line="155" lean-forward="true" selection-start-line="155" selection-end-line="155" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <replaceStrings>
@@ -38,7 +87,6 @@
         <option value="$PROJECT_DIR$/markdown/JavaScript/[JS致命缺陷] function和变量容易被覆盖/[JS致命缺陷] function和变量容易被覆盖.md" />
         <option value="$PROJECT_DIR$/markdown/JavaScript/[JS致命缺陷] function和变量容易被覆盖/md/[JS致命缺陷] function和变量容易被覆盖.md" />
         <option value="$PROJECT_DIR$/markdown/Python/[Python] import自定义类/md/[Python] import自定义类.md" />
-        <option value="$PROJECT_DIR$/markdown/iOS/[iOS] GCD死锁问题解读/md/[iOS] GCD死锁问题解读.md" />
         <option value="$PROJECT_DIR$/markdown/iOS/[iOS] 教你优雅的访问HTTPS接口/md/[iOS] 教你优雅的访问HTTPS接口.md" />
         <option value="$PROJECT_DIR$/markdown/iOS/[iOS] AFNetWorking错误解决 -1016/md/[iOS] AFNetWorking错误解决 -1016.md" />
         <option value="$PROJECT_DIR$/markdown/iOS/[iOS] 打包原理及脚本自动打包的实现/md/[iOS] 打包原理及脚本自动打包的实现.md" />
@@ -84,12 +132,14 @@
         <option value="$PROJECT_DIR$/markdown/HTML/[jquery] 基本使用方法/md/[jquery] 基本使用方法.md" />
         <option value="$PROJECT_DIR$/markdown/Weex/[Weex] render error:wx_create_instance_error/md/[Weex] render error:wx_create_instance_error.md" />
         <option value="$PROJECT_DIR$/markdown/Mac/[Mac] Java从卸载到安装/md/[Mac] Java从卸载到安装.md" />
+        <option value="$PROJECT_DIR$/markdown/iOS/[iOS] 常用的代码块/md/[iOS] 常用的代码块.md" />
+        <option value="$PROJECT_DIR$/markdown/iOS/[iOS] GCD死锁问题解读/md/[iOS] GCD死锁问题解读.md" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="58" />
-    <option name="y" value="53" />
+    <option name="x" value="282" />
+    <option name="y" value="45" />
     <option name="width" value="1186" />
     <option name="height" value="605" />
   </component>
@@ -101,7 +151,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -109,11 +158,38 @@
               <item name="objcat_blog_markdown" type="b2602c69:ProjectViewProjectNode" />
               <item name="objcat_blog_markdown" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="objcat_blog_markdown" type="b2602c69:ProjectViewProjectNode" />
+              <item name="objcat_blog_markdown" type="462c0819:PsiDirectoryNode" />
+              <item name="markdown" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="objcat_blog_markdown" type="b2602c69:ProjectViewProjectNode" />
+              <item name="objcat_blog_markdown" type="462c0819:PsiDirectoryNode" />
+              <item name="markdown" type="462c0819:PsiDirectoryNode" />
+              <item name="iOS" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="objcat_blog_markdown" type="b2602c69:ProjectViewProjectNode" />
+              <item name="objcat_blog_markdown" type="462c0819:PsiDirectoryNode" />
+              <item name="markdown" type="462c0819:PsiDirectoryNode" />
+              <item name="iOS" type="462c0819:PsiDirectoryNode" />
+              <item name="[iOS] GCD死锁问题解读" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="objcat_blog_markdown" type="b2602c69:ProjectViewProjectNode" />
+              <item name="objcat_blog_markdown" type="462c0819:PsiDirectoryNode" />
+              <item name="markdown" type="462c0819:PsiDirectoryNode" />
+              <item name="iOS" type="462c0819:PsiDirectoryNode" />
+              <item name="[iOS] GCD死锁问题解读" type="462c0819:PsiDirectoryNode" />
+              <item name="md" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -159,16 +235,18 @@
       <workItem from="1544600206101" duration="171000" />
       <workItem from="1555310589815" duration="5028000" />
       <workItem from="1555386484763" duration="1761000" />
+      <workItem from="1560405545750" duration="188000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6960000" />
+    <option name="totallyTimeSpent" value="7148000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="58" y="53" width="1186" height="605" extended-state="0" />
+    <frame x="282" y="45" width="1186" height="605" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2902098" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.29545453" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Grunt " order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -225,16 +303,6 @@
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="383">
             <caret line="60" column="18" lean-forward="true" selection-start-line="60" selection-start-column="18" selection-end-line="60" selection-end-column="18" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/markdown/iOS/[iOS] GCD死锁问题解读/md/[iOS] GCD死锁问题解读.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="282">
-            <caret line="146" column="15" selection-start-line="146" selection-start-column="15" selection-end-line="146" selection-end-column="15" />
           </first_editor>
           <second_editor />
         </state>
@@ -460,16 +528,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/markdown/HTML/[HTML] 完美解决vscode在style中没有代码提示的问题/md/[HTML] 完美解决vscode在style中没有代码提示的问题.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="103">
-            <caret line="19" column="15" selection-start-line="19" selection-start-column="15" selection-end-line="19" selection-end-column="15" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/markdown/Java/[JavaEE] 五分钟搭建SpringCloud环境, 进入微服务时代/md/[JavaEE] 五分钟搭建SpringCloud环境, 进入微服务时代.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -660,16 +718,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/markdown/HTML/[jquery] 基本使用方法/md/[jquery] 基本使用方法.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="356">
-            <caret line="87" selection-start-line="87" selection-end-line="87" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/markdown/Docker/[Docker] 入门教程/md/[Docker] 入门教程.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -685,6 +733,46 @@
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="356">
             <caret line="244" column="1" selection-start-line="244" selection-start-column="1" selection-end-line="244" selection-end-column="1" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/markdown/HTML/[jquery] 基本使用方法/md/[jquery] 基本使用方法.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="1075">
+            <caret line="87" selection-start-line="87" selection-end-line="87" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/markdown/HTML/[HTML] 完美解决vscode在style中没有代码提示的问题/md/[HTML] 完美解决vscode在style中没有代码提示的问题.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="20">
+            <caret line="19" column="15" selection-start-line="19" selection-start-column="15" selection-end-line="19" selection-end-column="15" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/markdown/iOS/[iOS] 常用的代码块/md/[iOS] 常用的代码块.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="430">
+            <caret line="231" selection-start-line="231" selection-end-line="231" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/markdown/iOS/[iOS] GCD死锁问题解读/md/[iOS] GCD死锁问题解读.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="371">
+            <caret line="155" lean-forward="true" selection-start-line="155" selection-end-line="155" />
           </first_editor>
           <second_editor />
         </state>

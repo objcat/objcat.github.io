@@ -14,8 +14,6 @@ https://www.jianshu.com/writer#/notebooks/20574865/notes/37511203
 
 我们从`logo`上可以看出来, 说白了, 这个东西就是一个管理容器的工(zhang)具(yu), 我们可以方便的使用它来管理我们的`docker`容器, 可以极大程度的简化命令行的复杂操作.
 
-
-
 # 一.快速开始
 
 如果你是`Mac`或`Windows`用户使用桌面版本的`Docker`应用默认就会替你安装`docker-compose`(下文中用dc代替), 如果是`centos`的话可以使用命令`yum -y install docker-compose`太简单了不做过多说明.

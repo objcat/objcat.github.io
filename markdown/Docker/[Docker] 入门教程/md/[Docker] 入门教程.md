@@ -146,7 +146,7 @@ docker stop 5a1cd11440eb
 ![](https://upload-images.jianshu.io/upload_images/2194379-9c887fa4fe2249f5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 我们来访问一下刚才的接口
-  ![](https://upload-images.jianshu.io/upload_images/2194379-4479a000495d10cd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](https://upload-images.jianshu.io/upload_images/2194379-4479a000495d10cd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 发现它果然已经关闭了
 

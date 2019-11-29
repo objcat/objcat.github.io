@@ -4,8 +4,7 @@
     <list default="true" id="766d6452-e970-4074-8c59-0e6511008ef2" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/markdown/Docker/[Docker] docker-compose使用教程/md/[Docker] docker-compose使用教程.md" beforeDir="false" afterPath="$PROJECT_DIR$/markdown/Docker/[Docker] docker-compose使用教程/md/[Docker] docker-compose使用教程.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/markdown/iOS/[iOS] GCD死锁问题解读/md/[iOS] GCD死锁问题解读.md" beforeDir="false" afterPath="$PROJECT_DIR$/markdown/iOS/[iOS] GCD死锁问题解读/md/[iOS] GCD死锁问题解读.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/markdown/iOS/[iOS] 常用的代码块/md/[iOS] 常用的代码块.md" beforeDir="false" afterPath="$PROJECT_DIR$/markdown/iOS/[iOS] 常用的代码段/md/[iOS] 常用的代码块.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/markdown/Docker/[Docker] 入门教程/md/[Docker] 入门教程.md" beforeDir="false" afterPath="$PROJECT_DIR$/markdown/Docker/[Docker] 入门教程/md/[Docker] 入门教程.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -28,11 +27,6 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="y" value="23" />
-    <option name="width" value="1280" />
-    <option name="height" value="709" />
-  </component>
   <component name="ProjectId" id="1UGpSgkyeo0dcBhl6d67WctueHb" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="1" id="Add" />
@@ -47,12 +41,13 @@
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/markdown/JavaScript/[JS致命缺陷] function和变量容易被覆盖/img" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/markdown/守望先锋" />
       <recent name="$PROJECT_DIR$/markdown/JavaScript/[JS致命缺陷] function和变量容易被覆盖/md" />
       <recent name="$PROJECT_DIR$/markdown/js" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/markdown/JavaScript/[JS致命缺陷] function和变量容易被覆盖/img" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -83,7 +78,7 @@
       <workItem from="1560405545750" duration="285000" />
       <workItem from="1560405970592" duration="26000" />
       <workItem from="1560406207071" duration="729000" />
-      <workItem from="1574992800694" duration="645000" />
+      <workItem from="1574992800694" duration="7033000" />
     </task>
     <servers />
   </component>

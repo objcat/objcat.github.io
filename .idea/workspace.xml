@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="766d6452-e970-4074-8c59-0e6511008ef2" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/markdown/Docker/[Docker] docker-compose使用教程/md/[Docker] docker-compose使用教程.md" beforeDir="false" afterPath="$PROJECT_DIR$/markdown/Docker/[Docker] docker-compose使用教程/md/[Docker] docker-compose使用教程.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/markdown/Docker/[Docker] 入门教程/md/[Docker] 入门教程.md" beforeDir="false" afterPath="$PROJECT_DIR$/markdown/Docker/[Docker] 入门教程/md/[Docker] 入门教程.md" afterDir="false" />
-    </list>
+    <list default="true" id="766d6452-e970-4074-8c59-0e6511008ef2" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +74,7 @@
       <workItem from="1560405545750" duration="285000" />
       <workItem from="1560405970592" duration="26000" />
       <workItem from="1560406207071" duration="729000" />
-      <workItem from="1574992800694" duration="7033000" />
+      <workItem from="1574992800694" duration="7373000" />
     </task>
     <servers />
   </component>

@@ -1,17 +1,17 @@
 最近一直在研究SpringBoot, 那么接下来我就教大家如何来搭建一个SpringBoot并写出来一个接口.
 这里分成了Eclipse和IDEA篇  可以使用这两个IDE来进行环境的搭建. 使用IDEA的同学直接在文章中搜索`IDEA篇`
 
-#*****Eclipse篇*****
+# *****Eclipse篇*****
 
-####一.安装java环境和eclipse
+#### 一.安装java环境和eclipse
 (1).java
 http://www.oracle.com/technetwork/java/javase/downloads/index.html
 (2).eclipse  
 https://www.eclipse.org/downloads/
 自行安装 
-####****在看第二步之前请确保你的java环境和eclipse环境已经安装完毕, 否则后果自负 = = .***
+#### ****在看第二步之前请确保你的java环境和eclipse环境已经安装完毕, 否则后果自负 = = .***
 
-###二.创建一个maven工程并引入jar包
+### 二.创建一个maven工程并引入jar包
 > 问:什么是maven? 答: 是第三方库管理工具
 
 >问:什么是jar包 答: 是第三方库
@@ -69,7 +69,7 @@ https://www.eclipse.org/downloads/
 
 到这里为止环境已经搭建完成 如果有报错请自行百度解决
 
-###三.开始写接口
+### 三.开始写接口
 
 首先我们需要创建两个包
 
@@ -200,15 +200,15 @@ http://192.168.1.110:8080/third
 
 ![](./images/ff12ece0835f31fc48290d971b75cb44/25.png)
 
-#*****IDEA篇*****
+# *****IDEA篇*****
 
-###一.准备工具
+### 一.准备工具
 (1).java
 http://www.oracle.com/technetwork/java/javase/downloads/index.html
 (2).idea开发工具
 https://www.jetbrains.com/idea/  
 
-###二.创建一个maven工程并引入jar包
+### 二.创建一个maven工程并引入jar包
 ![](./images/ff12ece0835f31fc48290d971b75cb44/26.png)
 
 创建一个新项目
@@ -367,32 +367,6 @@ http://localhost:8080/hello
 是可以访问成功的.
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#finally enjoy it.
-#write by objcat 2018.02.04
-#update by objcat 2018.03.29
+# finally enjoy it.
+# write by objcat 2018.02.04
+# update by objcat 2018.03.29

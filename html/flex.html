@@ -25,6 +25,10 @@
 		</style>
 	</head>
 	<body>
+		
+		<h1 style="text-align: center;">Flex布局教程 by objcat</h1>
+		
+		
 		<h1>一.基本概念</h1>
 		<p>
 			采用Flex布局的元素，称为Flex容器（flex container），简称”容器”。它的所有子元素自动成为容器成员，称为Flex项目（flex item），简称”项目”。
@@ -43,10 +47,10 @@ flex-direction属性决定主轴的方向, 即布局的方向
 flex-direction: row(默认) | row-reverse | column | column-reverse;
 		</pre>
 
-		<h2>flex-direction: row;</h2>
+		<h2>flex-direction: row;(横向布局)</h2>
 
 		<p>
-			横向布局时, 子元素默认display变成了inline-block, 默认没有宽度和高度, 可以随着文字填充, 也可以设置宽度和高度
+			横向布局时, 子元素默认没有宽度和高度, 可以随着文字填充, 也可以设置宽度和高度, 符合inline-block特性
 		</p>
 
 		<div style="display: flex; flex-direction: row; background-color: purple;">
@@ -115,6 +119,12 @@ justify-content: flex-start(默认) | flex-end | center | space-between | space-
 		</div>
 
 		<h3>justify-content: space-between;</h3>
+		
+		<div style="display: flex; flex-direction: row; justify-content: space-between; background-color: purple;">
+			<div style="height: 20px; background-color: yellow; width: 30%; text-align: center;">30%</div>
+		</div>
+		
+		<br>
 
 		<div style="display: flex; flex-direction: row; justify-content: space-between; background-color: purple;">
 			<div style="height: 20px; background-color: yellow; width: 30%; text-align: center;">30%</div>
@@ -125,20 +135,26 @@ justify-content: flex-start(默认) | flex-end | center | space-between | space-
 
 		<div style="display: flex; flex-direction: row; justify-content: space-between; background-color: purple;">
 			<div style="height: 20px; background-color: yellow; width: 30%; text-align: center;">30%</div>
-			<div style="height: 20px; background-color: orange; width: 20%; text-align: center;">20%</div>
 			<div style="height: 20px; background-color: green; width: 30%; text-align: center;">30%</div>
+			<div style="height: 20px; background-color: orange; width: 20%; text-align: center;">20%</div>
 		</div>
 
 		<br>
 
 		<div style="display: flex; flex-direction: row; justify-content: space-between; background-color: purple;">
 			<div style="height: 20px; background-color: yellow; width: 30%; text-align: center;">30%</div>
-			<div style="height: 20px; background-color: orange; width: 20%; text-align: center;">20%</div>
-			<div style="height: 20px; background-color: orange; width: 10%; text-align: center;">10%</div>
 			<div style="height: 20px; background-color: green; width: 30%; text-align: center;">30%</div>
+			<div style="height: 20px; background-color: orange; width: 20%; text-align: center;">20%</div>
+			<div style="height: 20px; background-color: cyan; width: 10%; text-align: center;">10%</div>
 		</div>
 
 		<h3>justify-content: space-around;</h3>
+		
+		<div style="display: flex; flex-direction: row; justify-content: space-around; background-color: purple;">
+			<div style="height: 20px; background-color: yellow; width: 30%; text-align: center;">30%</div>
+		</div>
+		
+		<br>
 
 		<div style="display: flex; flex-direction: row; justify-content: space-around; background-color: purple;">
 			<div style="height: 20px; background-color: yellow; width: 30%; text-align: center;">30%</div>
@@ -149,17 +165,17 @@ justify-content: flex-start(默认) | flex-end | center | space-between | space-
 
 		<div style="display: flex; flex-direction: row; justify-content: space-around; background-color: purple;">
 			<div style="height: 20px; background-color: yellow; width: 30%; text-align: center;">30%</div>
-			<div style="height: 20px; background-color: orange; width: 20%; text-align: center;">20%</div>
 			<div style="height: 20px; background-color: green; width: 30%; text-align: center;">30%</div>
+			<div style="height: 20px; background-color: orange; width: 20%; text-align: center;">20%</div>
 		</div>
 
 		<br>
 
 		<div style="display: flex; flex-direction: row; justify-content: space-around; background-color: purple;">
 			<div style="height: 20px; background-color: yellow; width: 30%; text-align: center;">30%</div>
-			<div style="height: 20px; background-color: orange; width: 20%; text-align: center;">20%</div>
-			<div style="height: 20px; background-color: orange; width: 10%; text-align: center;">10%</div>
 			<div style="height: 20px; background-color: green; width: 30%; text-align: center;">30%</div>
+			<div style="height: 20px; background-color: orange; width: 20%; text-align: center;">20%</div>
+			<div style="height: 20px; background-color: cyan; width: 10%; text-align: center;">10%</div>
 		</div>
 
 		<pre>
@@ -218,10 +234,10 @@ align-items: flex-start | flex-end | center | baseline | stretch(默认);
 			<div style="background-color: green; width: 30%; text-align: center;">30%</div>
 		</div>
 
-		<h2>flex-direction: column;</h2>
+		<h2>flex-direction: column;(纵向布局)</h2>
 		
 		<p>
-			纵向布局时, 子元素默认变成inline-block, 不同的是如果不指定子元素的宽度会自动填充整个行
+			纵向布局时, 子元素默认没有高度, 宽度是默认填充父视图宽度
 		</p>
 		
 		<div style="display: flex; flex-direction: column; background-color: red; height: 100px; background-color: purple;">
@@ -267,63 +283,66 @@ align-items: flex-start | flex-end | center | baseline | stretch(默认);
 		
 		<h3>justify-content: space-between;</h3>
 		
-		<div style="display: flex; flex-direction: row; justify-content: space-between; background-color: purple;">
+		<div style="display: flex; flex-direction: column; justify-content: space-between; background-color: purple;  height: 100px;">
+			<div style="height: 20px; background-color: yellow; width: 30%; text-align: center;">30%</div>
+		</div>
+		
+		<br>
+		
+		<div style="display: flex; flex-direction: column; justify-content: space-between; background-color: purple;  height: 100px;">
 			<div style="height: 20px; background-color: yellow; width: 30%; text-align: center;">30%</div>
 			<div style="height: 20px; background-color: green; width: 30%; text-align: center;">30%</div>
 		</div>
 		
 		<br>
 		
-		<div style="display: flex; flex-direction: row; justify-content: space-between; background-color: purple;">
+		<div style="display: flex; flex-direction: column; justify-content: space-between; background-color: purple;  height: 100px;">
 			<div style="height: 20px; background-color: yellow; width: 30%; text-align: center;">30%</div>
-			<div style="height: 20px; background-color: orange; width: 20%; text-align: center;">20%</div>
 			<div style="height: 20px; background-color: green; width: 30%; text-align: center;">30%</div>
+			<div style="height: 20px; background-color: orange; width: 20%; text-align: center;">20%</div>
 		</div>
 		
 		<br>
 		
-		<div style="display: flex; flex-direction: row; justify-content: space-between; background-color: purple;">
+		<div style="display: flex; flex-direction: column; justify-content: space-between; background-color: purple;  height: 100px;">
 			<div style="height: 20px; background-color: yellow; width: 30%; text-align: center;">30%</div>
-			<div style="height: 20px; background-color: orange; width: 20%; text-align: center;">20%</div>
-			<div style="height: 20px; background-color: orange; width: 10%; text-align: center;">10%</div>
 			<div style="height: 20px; background-color: green; width: 30%; text-align: center;">30%</div>
+			<div style="height: 20px; background-color: orange; width: 20%; text-align: center;">20%</div>
+			<div style="height: 20px; background-color: cyan; width: 10%; text-align: center;">10%</div>
 		</div>
 		
 		<h3>justify-content: space-around;</h3>
 		
-		<div style="display: flex; flex-direction: row; justify-content: space-around; background-color: purple;">
+		<div style="display: flex; flex-direction: column; justify-content: space-around; background-color: purple;  height: 100px;">
+			<div style="height: 20px; background-color: yellow; width: 30%; text-align: center;">30%</div>
+		</div>
+		
+		<br>
+		
+		<div style="display: flex; flex-direction: column; justify-content: space-around; background-color: purple;  height: 100px;">
 			<div style="height: 20px; background-color: yellow; width: 30%; text-align: center;">30%</div>
 			<div style="height: 20px; background-color: green; width: 30%; text-align: center;">30%</div>
 		</div>
 		
 		<br>
 		
-		<div style="display: flex; flex-direction: row; justify-content: space-around; background-color: purple;">
+		<div style="display: flex; flex-direction: column; justify-content: space-around; background-color: purple;  height: 100px;">
 			<div style="height: 20px; background-color: yellow; width: 30%; text-align: center;">30%</div>
-			<div style="height: 20px; background-color: orange; width: 20%; text-align: center;">20%</div>
 			<div style="height: 20px; background-color: green; width: 30%; text-align: center;">30%</div>
+			<div style="height: 20px; background-color: orange; width: 20%; text-align: center;">20%</div>
 		</div>
 		
 		<br>
 		
-		<div style="display: flex; flex-direction: row; justify-content: space-around; background-color: purple;">
+		<div style="display: flex; flex-direction: column; justify-content: space-around; background-color: purple;  height: 100px;">
 			<div style="height: 20px; background-color: yellow; width: 30%; text-align: center;">30%</div>
-			<div style="height: 20px; background-color: orange; width: 20%; text-align: center;">20%</div>
-			<div style="height: 20px; background-color: orange; width: 10%; text-align: center;">10%</div>
 			<div style="height: 20px; background-color: green; width: 30%; text-align: center;">30%</div>
+			<div style="height: 20px; background-color: orange; width: 20%; text-align: center;">20%</div>
+			<div style="height: 20px; background-color: cyan; width: 10%; text-align: center;">10%</div>
 		</div>
 		
 		
 		
-
-
-
-
-
-
-
-
-
 
 
 	</body>

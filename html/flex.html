@@ -10,6 +10,15 @@
 				margin: 0;
 			}
 
+			div {
+				/*对超出容器的部分强制截取，高度不确定则换行*/
+				overflow: hidden;
+				/*显示省略符号来代表被修剪的文本。*/
+				text-overflow: ellipsis;
+				/*禁止换行*/
+				white-space: nowrap;
+			}
+
 			pre {
 				background-color: rgba(244, 244, 244);
 				border-left: 5px solid rgb(221, 221, 221);
@@ -50,11 +59,10 @@
 				width: 10%;
 				height: 20px;
 			}
-			
+
 			img {
 				width: 100%;
 			}
-			
 		</style>
 	</head>
 	<body>
@@ -97,7 +105,7 @@ flex-direction: row(默认) | row-reverse | column | column-reverse;
 		</div>
 
 		<h3>三等分</h3>
-		
+
 		<p>
 			按照百分比很容易做到 <code>33.3% 33.3% 33.3%</code>
 		</p>
@@ -117,13 +125,13 @@ flex-direction: row(默认) | row-reverse | column | column-reverse;
 			<div class="b" style="width: 100%;">100%</div>
 			<div class="c" style="width: 100%;">100%</div>
 		</div>
-		
+
 		<h3>水平垂直居中 - 网上询问最多需求</h3>
-		
+
 		<p>
 			在没有flex布局的时候很麻烦, 使用flex布局就非常简单了<code>justify-content: center; align-items: center;</code>
 		</p>
-		
+
 		<div style="display: flex; flex-direction: row; justify-content: center; align-items: center; background-color: purple; height: 100px;">
 			<div class="a" style="width: 30px; height: 30px;"></div>
 		</div>
@@ -277,7 +285,7 @@ align-items: flex-start | flex-end | center | baseline | stretch(默认);
 		</div>
 
 		<h2>flex-direction: column;(纵向布局)</h2>
-		
+
 		<pre>
 纵向布局时
 宽度: 当未设置宽度时, 宽度随父元素填充(align-items: stretch;(默认)), 父元素没有宽度则为0
@@ -294,18 +302,12 @@ align-items: flex-start | flex-end | center | baseline | stretch(默认);
 			注: 只有当父视图有高度的时候才可以使用百分比
 		</p>
 
-		<div style="display: flex; flex-direction: column; background-color: red; height: 200px; background-color: purple;">
-			<div class="a" style="width: auto; height: 40px; line-height: 40px;">height:40px</div>
-			<div class="b" style="width: auto; height: 40px;">height:33.3%</div>
-			<div class="c" style="width: auto; height: 40px;">height:33.3%</div>
-		</div>
-
 		<br>
 
 		<div style="display: flex; flex-direction: column; background-color: red; height: 200px; background-color: purple;">
-			<div class="a" style="width: auto; height: 33.3%;">height:33.3%</div>
-			<div class="b" style="width: auto; height: 33.3%;">height:33.3%</div>
-			<div class="c" style="width: auto; height: 33.3%;">height:33.3%</div>
+			<div class="a" style="width: auto; height: 20%;">height:20%</div>
+			<div class="b" style="width: auto; height: 20%;">height:20%</div>
+			<div class="c" style="width: auto; height: 20%;">height:20%</div>
 		</div>
 
 		<pre>

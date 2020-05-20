@@ -21,9 +21,6 @@
   <component name="ChangeListManager">
     <list default="true" id="766d6452-e970-4074-8c59-0e6511008ef2" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/markdown/DCloud/2018-09-29.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/markdown/iOS/[iOS].md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/markdown/iOS/iOS.md" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +89,9 @@
       <workItem from="1560406207071" duration="729000" />
       <workItem from="1574992800694" duration="7697000" />
       <workItem from="1575009226820" duration="420000" />
-      <workItem from="1589190640475" duration="186000" />
+      <workItem from="1589190640475" duration="618000" />
+      <workItem from="1589349224758" duration="368000" />
+      <workItem from="1589767835971" duration="4000" />
     </task>
     <servers />
   </component>

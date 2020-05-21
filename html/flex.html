@@ -69,6 +69,18 @@
 			img {
 				max-width: 100%;
 			}
+
+			#calendar {
+				border: 1px solid #EEE8AA;
+			}
+
+			.item {
+				display: flex;
+				width: 14.2%;
+				height: 30px;
+				justify-content: center;
+				align-items: center;
+			}
 		</style>
 	</head>
 	<body>
@@ -142,6 +154,7 @@ flex-direction: row(默认) | row-reverse | column | column-reverse;
 			<div class="a" style="width: 30px; height: 30px;"></div>
 		</div>
 
+		<h2>justify-content</h2>
 
 		<pre>
 justify-content属性定义了项目在主轴上的对齐方式。
@@ -234,6 +247,8 @@ justify-content: flex-start(默认) | flex-end | center | space-between | space-
 			<div class="d">10%</div>
 		</div>
 
+		<h2>align-items</h2>
+
 		<pre>
 align-items属性定义项目在交叉轴(纵轴)如何对齐.
 align-items: flex-start | flex-end | center | baseline | stretch(默认);
@@ -281,11 +296,11 @@ align-items: flex-start | flex-end | center | baseline | stretch(默认);
 			<div class="b center" style="height: 30px;">h:30%</div>
 			<div class="c center" style="height: 40px;">h:40%</div>
 		</div>
-		
+
 		<p>
 			可以看到没有文字的时候"baseline就在盒子底部"
 		</p>
-		
+
 		<div style="display: flex; flex-direction: row; align-items: baseline; height: 50px; background-color: purple;">
 			<div class="a center" style="height: 20px;">h:20%</div>
 			<div class="b center" style="height: 30px;">h:30%</div>
@@ -325,6 +340,8 @@ align-items: flex-start | flex-end | center | baseline | stretch(默认);
 			<div class="b center" style="width: auto; height: 20%;">20%,居中</div>
 			<div class="c" style="width: auto; height: 20%;">20%</div>
 		</div>
+
+		<h2>justify-content</h2>
 
 		<pre>
 我们可以看到纵向布局的justify-content和align-items互换了, 与横向布局不同的是justify-content控制上下, align-items控制左右
@@ -400,7 +417,7 @@ align-items: flex-start | flex-end | center | baseline | stretch(默认);
 
 		<br>
 
-		<div style="display: flex; flex-direction: column; justify-content: space-around; background-color: purple;  height: 100px;">
+		<div style="display: flex; flex-direction: column; justify-content: space-around; background-color: purple; height: 100px;">
 			<div class="a">30%</div>
 			<div class="b">30%</div>
 			<div class="c">20%</div>
@@ -408,13 +425,14 @@ align-items: flex-start | flex-end | center | baseline | stretch(默认);
 
 		<br>
 
-		<div style="display: flex; flex-direction: column; justify-content: space-around; background-color: purple;  height: 100px;">
+		<div style="display: flex; flex-direction: column; justify-content: space-around; background-color: purple; height: 100px;">
 			<div class="a">30%</div>
 			<div class="b">30%</div>
 			<div class="c">20%</div>
 			<div class="d">10%</div>
 		</div>
 
+		<h2>align-items</h2>
 
 		<pre>
 纵向布局 align-items ... 
@@ -469,8 +487,397 @@ align-items: flex-start | flex-end | center | baseline | stretch(默认);
 			<div class="b" style="width: auto;">w:auto,h:20</div>
 			<div class="c" style="width: auto;">w:auto,h:20</div>
 		</div>
-		
-		<h2></h2>
+
+		<h2>flex-wrap</h2>
+		<pre>
+flex-wrap 设置换行		
+flex-wrap: nowrap(默认) | wrap | wrap-reverse;
+</pre>
+
+		<p>默认情况</p>
+
+		<div style="display: flex; flex-direction: row; align-items: stretch; background-color: purple;">
+			<div class="a"></div>
+			<div class="b"></div>
+			<div class="c"></div>
+			<div class="a" style="background-color: green;"></div>
+			<div class="b" style="background-color: yellow;"></div>
+			<div class="c" style="background-color: black;"></div>
+		</div>
+
+		<p>设置flex-wrap: wrap;</p>
+
+		<div style="display: flex; flex-direction: row; align-items: stretch; background-color: purple; flex-wrap: wrap;">
+			<div class="a"></div>
+			<div class="b"></div>
+			<div class="c"></div>
+			<div class="a" style="background-color: green;"></div>
+			<div class="b" style="background-color: yellow;"></div>
+			<div class="c" style="background-color: black;"></div>
+		</div>
+
+		<p>日历项目</p>
+
+		<div id="calendar" style="display: flex; flex-wrap: wrap;">
+			<div class="item">日</div>
+			<div class="item">一</div>
+			<div class="item">二</div>
+			<div class="item">三</div>
+			<div class="item">四</div>
+			<div class="item">五</div>
+			<div class="item">六</div>
+			<div class="item">1</div>
+			<div class="item">2</div>
+			<div class="item">3</div>
+			<div class="item">4</div>
+			<div class="item">5</div>
+			<div class="item">6</div>
+			<div class="item">7</div>
+			<div class="item">8</div>
+			<div class="item">9</div>
+			<div class="item">10</div>
+			<div class="item">11</div>
+			<div class="item">12</div>
+			<div class="item">13</div>
+			<div class="item">14</div>
+			<div class="item">15</div>
+			<div class="item">16</div>
+			<div class="item">17</div>
+			<div class="item">18</div>
+			<div class="item">19</div>
+			<div class="item">20</div>
+			<div class="item">21</div>
+			<div class="item">22</div>
+			<div class="item">23</div>
+			<div class="item">24</div>
+			<div class="item">25</div>
+			<div class="item">26</div>
+			<div class="item">27</div>
+			<div class="item">28</div>
+			<div class="item">29</div>
+			<div class="item">30</div>
+		</div>
+
+
+		<h2>flex-flow</h2>
+
+		<pre>flex-flow属性是flex-direction属性和flex-wrap属性的简写形式，默认值为row nowrap。</pre>
+
+		<br>
+
+		<div style="display: flex; background-color: purple; flex-flow: row nowrap;">
+			<div class="a" style="width: 100%; height: 30px"></div>
+			<div class="b" style="width: 100%; height: 30px"></div>
+			<div class="c" style="width: 100%; height: 30px"></div>
+			<div class="a" style="width: 100%; height: 30px"></div>
+			<div class="b" style="width: 100%; height: 30px"></div>
+			<div class="c" style="width: 100%; height: 30px"></div>
+		</div>
+
+		<h2>align-content</h2>
+
+		<pre>
+align-content属性定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用。<br>
+align-content: flex-start | flex-end | center | space-between | space-around | stretch;
+</pre>
+
+		<img src="../img/4.png" alt="图片">
+
+		<h3>align-content: stretch; (默认)</h3>
+
+		<div style="display: flex; background-color: purple; flex-flow: row wrap; height: 100px;">
+			<div class="a" style="width: 33.3%; height: 30px"></div>
+			<div class="b" style="width: 33.3%; height: 30px"></div>
+			<div class="c" style="width: 33.3%; height: 30px"></div>
+			<div class="c" style="width: 33.3%; height: 30px"></div>
+			<div class="a" style="width: 33.3%; height: 30px"></div>
+			<div class="b" style="width: 33.3%; height: 30px"></div>
+		</div>
+
+		<h3>align-content: flex-start;</h3>
+
+		<div style="display: flex; background-color: purple; flex-flow: row wrap; height: 100px; align-content: flex-start;">
+			<div class="a" style="width: 33.3%; height: 30px"></div>
+			<div class="b" style="width: 33.3%; height: 30px"></div>
+			<div class="c" style="width: 33.3%; height: 30px"></div>
+			<div class="c" style="width: 33.3%; height: 30px"></div>
+			<div class="a" style="width: 33.3%; height: 30px"></div>
+			<div class="b" style="width: 33.3%; height: 30px"></div>
+		</div>
+
+		<h3>align-content: flex-end;</h3>
+
+		<div style="display: flex; background-color: purple; flex-flow: row wrap; height: 100px; align-content: flex-end;">
+			<div class="a" style="width: 33.3%; height: 30px"></div>
+			<div class="b" style="width: 33.3%; height: 30px"></div>
+			<div class="c" style="width: 33.3%; height: 30px"></div>
+			<div class="c" style="width: 33.3%; height: 30px"></div>
+			<div class="a" style="width: 33.3%; height: 30px"></div>
+			<div class="b" style="width: 33.3%; height: 30px"></div>
+		</div>
+
+		<h3>align-content: center;</h3>
+
+		<div style="display: flex; background-color: purple; flex-flow: row wrap; height: 100px; align-content: center;">
+			<div class="a" style="width: 33.3%; height: 30px"></div>
+			<div class="b" style="width: 33.3%; height: 30px"></div>
+			<div class="c" style="width: 33.3%; height: 30px"></div>
+			<div class="c" style="width: 33.3%; height: 30px"></div>
+			<div class="a" style="width: 33.3%; height: 30px"></div>
+			<div class="b" style="width: 33.3%; height: 30px"></div>
+		</div>
+
+		<h3>align-content: space-between;</h3>
+
+		<div style="display: flex; background-color: purple; flex-flow: row wrap; height: 100px; align-content: space-between;">
+			<div class="a" style="width: 33.3%; height: 30px"></div>
+			<div class="b" style="width: 33.3%; height: 30px"></div>
+			<div class="c" style="width: 33.3%; height: 30px"></div>
+			<div class="c" style="width: 33.3%; height: 30px"></div>
+			<div class="a" style="width: 33.3%; height: 30px"></div>
+			<div class="b" style="width: 33.3%; height: 30px"></div>
+		</div>
+
+		<h3>align-content: space-around;</h3>
+
+		<div style="display: flex; background-color: purple; flex-flow: row wrap; height: 100px; align-content: space-around;">
+			<div class="a" style="width: 33.3%; height: 30px"></div>
+			<div class="b" style="width: 33.3%; height: 30px"></div>
+			<div class="c" style="width: 33.3%; height: 30px"></div>
+			<div class="c" style="width: 33.3%; height: 30px"></div>
+			<div class="a" style="width: 33.3%; height: 30px"></div>
+			<div class="b" style="width: 33.3%; height: 30px"></div>
+		</div>
+
+
+		<p>与align-items的区别</p>
+
+		<p>当flex-wrap为nowrap的时候这两个属性没区别</p>
+
+
+		<div style="display: flex; background-color: purple; flex-flow: row nowrap; height: 100px; justify-content: center; align-items: center;">
+			<div class="a"></div>
+			<div class="b"></div>
+			<div class="c"></div>
+		</div>
+
+		<br>
+
+		<div style="display: flex; background-color: purple; flex-flow: row nowrap; height: 100px; justify-content: center; align-items: center;">
+			<div class="a"></div>
+			<div class="b"></div>
+			<div class="c"></div>
+		</div>
+
+
+		<p>当flex-wrap为wrap的时候</p>
+
+		<p>想要做到整体居中的效果, 我们发现align-items是做不到的</p>
+
+
+		<div style="display: flex; background-color: purple; flex-flow: row wrap; height: 100px; justify-content: center; align-items: center;">
+			<div class="a"></div>
+			<div class="b"></div>
+			<div class="c"></div>
+			<div class="a"></div>
+			<div class="b"></div>
+			<div class="c"></div>
+		</div>
+
+		<p>align-content可以轻松实现这个样式</p>
+
+		<div style="display: flex; background-color: purple; flex-flow: row wrap; height: 100px; justify-content: center; align-content: center;">
+			<div class="a"></div>
+			<div class="b"></div>
+			<div class="c"></div>
+			<div class="a"></div>
+			<div class="b"></div>
+			<div class="c"></div>
+		</div>
+
+
+		<pre>
+总结一下就是 align-content 是针对多行来设计的, 它可以解决 align-items 做不到的效果, 换句话而言它是相对于整体内容的, 而 align-items 只是相对于块本身, 我是这么理解的
+</pre>
+
+
+		<h1>三.项目的属性(设置在item上)</h1>
+
+
+		<h2>order</h2>
+
+		<pre>
+数字小的排在前面
+order: (数字);		
+</pre>
+
+
+		<div style="display: flex; background-color: purple; flex-flow: row nowrap;">
+			<div class="a" style="width: 100%; height: 30px; order: 2;">order:2</div>
+			<div class="b" style="width: 100%; height: 30px; order: 1;">order:1</div>
+			<div class="c" style="width: 100%; height: 30px; order: 3;">order:3</div>
+		</div>
+
+		<h2>flex-grow</h2>
+
+		<pre>
+flex-grow属性定义项目的放大比例，默认为0，即如果存在剩余空间，也不放大。
+一.item有自身尺寸
+1.如果只有一个flex-grow: 1;则它会占用所有剩余,忽略宽度
+2.如果只有两个flex-grow: 1;则它们两个会占用所有空间,忽略宽度,剩余一个比例不变
+3.如果有三个flex-grow: 1;则他们会平分剩余空间
+二.item没有自身尺寸
+根据row的特性,高度会自动适配成容器大小,然后会根据flex-grow的比例来设置宽度
+
+所以共同点为:
+都忽略了宽度即把宽度变成了比例,然后尽可能占用所有空间
+
+flex-grow: (数字); /* default 0 */
+</pre>
+
+		<p>宽度为10% 高度为30px 下面数字为flex-flow的数值</p>
+
+		<div style="display: flex; background-color: purple; flex-flow: row nowrap;">
+			<div class="a" style="width: 10%; height: 30px; flex-grow: 1;">1</div>
+			<div class="b" style="width: 10%; height: 30px; flex-grow: 0;">0</div>
+			<div class="c" style="width: 10%; height: 30px; flex-grow: 0;">0</div>
+		</div>
+
+		<br>
+
+		<div style="display: flex; background-color: purple; flex-flow: row nowrap;">
+			<div class="a" style="width: 10%; height: 30px; flex-grow: 1;">1</div>
+			<div class="b" style="width: 10%; height: 30px; flex-grow: 1;">1</div>
+			<div class="c" style="width: 10%; height: 30px; flex-grow: 0;">0</div>
+		</div>
+
+		<br>
+
+		<div style="display: flex; background-color: purple; flex-flow: row nowrap;">
+			<div class="a" style="width: 10%; height: 30px; flex-grow: 1;">1</div>
+			<div class="b" style="width: 10%; height: 30px; flex-grow: 1;">1</div>
+			<div class="c" style="width: 10%; height: 30px; flex-grow: 1;">1</div>
+		</div>
+
+		<p>没有自身尺寸 这是必须设置外部容器高度100px</p>
+
+		<div style="display: flex; background-color: purple; flex-flow: row nowrap;height: 100px;">
+			<div style="background-color: red; flex-grow: 1;"></div>
+			<div style="background-color: green; flex-grow: 1;"></div>
+			<div style="background-color: orange; flex-grow: 1;"></div>
+		</div>
+
+
+		<h2>flex-shrink</h2>
+
+
+		<pre>
+flex-shrink属性定义了项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。
+
+flex-shrink: (数字); /* default 1 */
+</pre>
+
+
+		<p>正常flex布局没有进行压缩</p>
+		<div style="display: flex; background-color: purple; flex-flow: row nowrap;">
+			<div class="a"></div>
+			<div class="b"></div>
+		</div>
+
+		<p>当比例超过100%, flex布局将会被压缩, 正常压缩比例如下</p>
+		<div style="display: flex; background-color: purple; flex-flow: row nowrap;">
+			<div class="a"></div>
+			<div class="b"></div>
+			<div class="a"></div>
+			<div class="b"></div>
+			<div class="a"></div>
+			<div class="b"></div>
+		</div>
+
+		<p>可以看到flex-shrink:0的元素按照正常比例显示</p>
+
+		<div style="display: flex; background-color: purple; flex-flow: row nowrap;">
+			<div class="a" style="flex-shrink: 0;">flex-shrink: 0</div>
+			<div class="b"></div>
+			<div class="a"></div>
+			<div class="b"></div>
+			<div class="a"></div>
+			<div class="b"></div>
+		</div>
+
+		<h2>flex-basis</h2>
+
+		<pre>
+flex-basis属性定义了在分配多余空间之前，项目占据的主轴空间（main size）。浏览器根据这个属性，计算主轴是否有多余空间。它的默认值为auto，即项目的本来大小。
+
+从现象看来:
+1.横向布局它设置的是item的宽度
+1.横向布局它设置的是item的高度
+
+flex-basis: (数字) | auto; /* default auto */
+</pre>
+
+
+		<div style="display: flex; background-color: purple; flex-flow: row wrap;height: 100px;">
+			<div class="a" style="flex-basis: 300px;">flex-basis: 300px</div>
+			<div class="b" style="flex-basis: 400px;">flex-basis: 400px</div>
+			<div class="c"></div>
+			<div class="a"></div>
+			<div class="b"></div>
+			<div class="c"></div>
+		</div>
+
+		<br>
+
+		<div style="display: flex; background-color: purple; flex-flow: column wrap;height: 100px;">
+			<div class="a" style="flex-basis: 50px;">flex-basis: 50px</div>
+			<div class="b" style="flex-basis: 70px;">flex-basis: 70px</div>
+			<div class="c"></div>
+			<div class="a"></div>
+			<div class="b"></div>
+			<div class="c"></div>
+		</div>
+
+
+		<h2>flex</h2>
+
+
+
+		<pre>
+flex属性是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto。后两个属性可选。
+
+我们经常的用法就是flex:1来设置item的比例, 因为后面两个值可以选, 所以相当于 1 1 auto 意思就是 设置为flex-grow设置为1 其他保持默认 也就是只设置放大比例
+
+flex: none | [ <'flex-grow'> <'flex-shrink'>? || <'flex-basis'> ]
+</pre>
+
+
+		<div style="display: flex; background-color: purple; flex-flow: row wrap;height: 100px;">
+			<div class="a" style="flex: 1;">flex: 1</div>
+			<div class="b"></div>
+			<div class="c"></div>
+		</div>
+
+
+
+
+		<h2>align-self</h2>
+
+		<pre>
+align-self属性允许单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性。默认值为auto，表示继承父元素的align-items属性，如果没有父元素，则等同于stretch。
+
+align-self: auto | flex-start | flex-end | center | baseline | stretch;
+</pre>
+
+		<div style="display: flex; background-color: purple; flex-flow: row wrap;height: 100px;">
+			<div class="a" style="align-self: center;"></div>
+			<div class="b"></div>
+			<div class="c"></div>
+			<div class="a" style="align-self: center;">center</div>
+			<div class="b" style="align-self: flex-end;">flex-end</div>
+			<div class="c"></div>
+		</div>
+
 
 	</body>
 </html>

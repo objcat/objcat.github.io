@@ -60,6 +60,12 @@
 				height: 20px;
 			}
 
+			.center {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+
 			img {
 				width: 100%;
 			}
@@ -99,9 +105,9 @@ flex-direction: row(默认) | row-reverse | column | column-reverse;
 
 
 		<div style="display: flex; flex-direction: row; align-items: stretch; height: 50px; background-color: purple;">
-			<div class="a" style="height: auto;">没有height或auto</div>
-			<div class="b" style="height: auto;">没有height或auto</div>
-			<div class="c" style="height: auto;">没有height或auto</div>
+			<div class="a" style="width: 100%; height: auto;"></div>
+			<div class="b" style="width: 100%; height: auto;"></div>
+			<div class="c" style="width: 100%; height: auto;"></div>
 		</div>
 
 		<h3>三等分</h3>
@@ -260,28 +266,38 @@ align-items: flex-start | flex-end | center | baseline | stretch(默认);
 			<div class="c">20%</div>
 		</div>
 
-		<h3>横向布局: align-items: baseline; (与line-height有关)</h3>
+		<h3>横向布局: align-items: baseline; (基线从效果呈现上看是文字的中线对齐)</h3>
 
 		<div style="display: flex; flex-direction: row; align-items: baseline; height: 50px; background-color: purple;">
-			<div class="a" style="height: 20px;">height: 20%</div>
-			<div class="b" style="height: 30px;">height: 30%</div>
-			<div class="c" style="height: 40px;">height: 40%</div>
+			<div class="a" style="height: 20px;">h:20%</div>
+			<div class="b" style="height: 30px;">h:30%</div>
+			<div class="c center" style="height: 40px;">h:40%</div>
 		</div>
 
 		<br>
 
 		<div style="display: flex; flex-direction: row; align-items: baseline; height: 50px; background-color: purple;">
-			<div class="a" style="height: 20px; line-height: 20px;">height: 20%</div>
-			<div class="b" style="height: 30px; line-height: 30px;">height: 30%</div>
-			<div class="c" style="height: 40px; line-height: 40px;">height: 40%</div>
+			<div class="a center" style="height: 20px;">h:20%</div>
+			<div class="b center" style="height: 30px;">h:30%</div>
+			<div class="c center" style="height: 40px;">h:40%</div>
+		</div>
+		
+		<p>
+			可以看到没有文字的时候"baseline就在盒子底部"
+		</p>
+		
+		<div style="display: flex; flex-direction: row; align-items: baseline; height: 50px; background-color: purple;">
+			<div class="a center" style="height: 20px;">h:20%</div>
+			<div class="b center" style="height: 30px;">h:30%</div>
+			<div class="c center" style="height: 40px;"></div>
 		</div>
 
 		<h3>横向布局: align-items: stretch; (默认: 如果高度未设置或auto, 自动填满高度)</h3>
 
 		<div style="display: flex; flex-direction: row; align-items: stretch; height: 50px; background-color: purple;">
-			<div class="a" style="height: auto;">没有height或auto</div>
-			<div class="b" style="height: auto;">没有height或auto</div>
-			<div class="c" style="height: auto;">没有height或auto</div>
+			<div class="a" style="height: auto;">h:auto</div>
+			<div class="b center" style="height: auto;">h:auto,居中</div>
+			<div class="c" style="height: auto;">h:auto</div>
 		</div>
 
 		<h2>flex-direction: column;(纵向布局)</h2>
@@ -293,9 +309,9 @@ align-items: flex-start | flex-end | center | baseline | stretch(默认);
 </pre>
 
 		<div style="display: flex; flex-direction: column; height: 100px; background-color: purple;">
-			<div class="a" style="width: auto; height: auto;">没有width或auto</div>
-			<div class="b" style="width: auto; height: auto;">没有width或auto</div>
-			<div class="c" style="width: auto; height: auto;">没有width或auto</div>
+			<div class="a" style="width: auto; height: 100%;">w:auto</div>
+			<div class="b" style="width: auto; height: 100%;">w:auto</div>
+			<div class="c" style="width: auto; height: 100%;">w:auto</div>
 		</div>
 
 		<p>
@@ -305,9 +321,9 @@ align-items: flex-start | flex-end | center | baseline | stretch(默认);
 		<br>
 
 		<div style="display: flex; flex-direction: column; height: 200px; background-color: purple;">
-			<div class="a" style="width: auto; height: 20%;">height:20%</div>
-			<div class="b" style="width: auto; height: 20%;">height:20%</div>
-			<div class="c" style="width: auto; height: 20%;">height:20%</div>
+			<div class="a" style="width: auto; height: 20%;">20%</div>
+			<div class="b center" style="width: auto; height: 20%;">20%,居中</div>
+			<div class="c" style="width: auto; height: 20%;">20%</div>
 		</div>
 
 		<pre>
@@ -449,9 +465,9 @@ align-items: flex-start | flex-end | center | baseline | stretch(默认);
 		<br>
 
 		<div style="display: flex; flex-direction: column; align-items: stretch; background-color: purple; height: 100px;">
-			<div class="a" style="width: auto;">没有width或auto</div>
-			<div class="b" style="width: auto;">没有width或auto</div>
-			<div class="c" style="width: auto;">没有width或auto</div>
+			<div class="a" style="width: auto;">w:auto,h:20</div>
+			<div class="b" style="width: auto;">w:auto,h:20</div>
+			<div class="c" style="width: auto;">w:auto,h:20</div>
 		</div>
 
 	</body>

@@ -708,7 +708,7 @@ align-content: flex-start | flex-end | center | space-between | space-around | s
 
 		<pre>
 数字小的排在前面
-order: (数字);		
+order: (数字);
 </pre>
 
 
@@ -848,9 +848,22 @@ flex属性是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 au
 
 我们经常的用法就是flex:1来设置item的比例, 因为后面两个值可以选, 所以相当于 1 1 auto 意思就是 设置为flex-grow设置为1 其他保持默认 也就是只设置放大比例
 
+但是flex设置为0后, item消失, 证明flex:0和flex 0 1 auto 是不一样的, 这一点我也不知道为什么, 按理来说应该继承 1和auto 的
+
 flex: none | [ <'flex-grow'> <'flex-shrink'>? || <'flex-basis'> ]
+
+该属性有两个快捷值：auto (1 1 auto) 和 none (0 0 auto)。
+建议优先使用这个属性，而不是单独写三个分离的属性，因为浏览器会推算相关值。
 </pre>
 
+
+<div style="display: flex; background-color: purple; flex-flow: row wrap;height: 100px;">
+			<div class="a" style="flex: 0 1 auto;">flex: 0 1 auto;(默认)</div>
+			<div class="b"></div>
+			<div class="c"></div>
+		</div>
+		
+		<br>
 
 		<div style="display: flex; background-color: purple; flex-flow: row wrap;height: 100px;">
 			<div class="a" style="flex: 1;">flex: 1</div>

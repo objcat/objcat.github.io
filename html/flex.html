@@ -20,10 +20,9 @@
 			}
 
 			pre {
-				background-color: rgba(244, 244, 244);
+				background-color: rgb(244, 244, 244);
 				border-left: 5px solid rgb(221, 221, 221);
 				padding: 20px;
-				padding-bottom: 0px;
 				line-height: 20px;
 				white-space: pre-wrap;
 			}
@@ -75,7 +74,7 @@
 		<p>
 			采用Flex布局的元素，称为Flex容器（flex container），简称”容器”。它的所有子元素自动成为容器成员，称为Flex项目（flex item），简称”项目”。
 		</p>
-		<img src="../img/1.png" />
+		<img src="../img/1.png" alt="图片">
 		<p>
 			容器默认存在两根轴：水平的主轴（main axis）和垂直的交叉轴（cross axis）。主轴的开始位置（与边框的交叉点）叫做main start，结束位置叫做main end；交叉轴的开始位置叫做cross
 			start，结束位置叫做cross end。
@@ -87,17 +86,17 @@
 		<pre>
 flex-direction属性决定主轴的方向, 即布局的方向
 flex-direction: row(默认) | row-reverse | column | column-reverse;
-		</pre>
+</pre>
 
 		<h2>flex-direction: row;(横向布局)</h2>
 
-		<pre>
-横向布局时
+
+		<pre>横向布局时
 宽度: 没有则随子元素填充, 没有子元素则为0
 高度: 当未设置高度时, 高度随父元素填充(align-items: stretch;(默认)), 父元素没有高度则为0
-		</pre>
+</pre>
 
-		</p>
+
 
 		<div style="display: flex; flex-direction: row; align-items: stretch; height: 50px; background-color: purple;">
 			<div class="a" style="height: auto;">没有height或auto</div>
@@ -141,9 +140,9 @@ flex-direction: row(默认) | row-reverse | column | column-reverse;
 		<pre>
 justify-content属性定义了项目在主轴上的对齐方式。
 justify-content: flex-start(默认) | flex-end | center | space-between | space-around;
-		</pre>
+</pre>
 
-		<img src="../img/2.png">
+		<img src="../img/2.png" alt="图片">
 
 		<h3>横向布局: justify-content: flex-start; (默认)</h3>
 
@@ -232,9 +231,9 @@ justify-content: flex-start(默认) | flex-end | center | space-between | space-
 		<pre>
 align-items属性定义项目在交叉轴(纵轴)如何对齐.
 align-items: flex-start | flex-end | center | baseline | stretch(默认);
-		</pre>
+</pre>
 
-		<img src="../img/3.png">
+		<img src="../img/3.png" alt="图片">
 
 
 		<h3>横向布局: align-items: flex-start;</h3>
@@ -291,9 +290,9 @@ align-items: flex-start | flex-end | center | baseline | stretch(默认);
 纵向布局时
 宽度: 当未设置宽度时, 宽度随父元素填充(align-items: stretch;(默认)), 父元素没有宽度则为0
 高度: 没有则随子元素填充, 没有子元素则为0
-		</pre>
+</pre>
 
-		<div style="display: flex; flex-direction: column; background-color: red; height: 100px; background-color: purple;">
+		<div style="display: flex; flex-direction: column; height: 100px; background-color: purple;">
 			<div class="a" style="width: auto; height: auto;">没有width或auto</div>
 			<div class="b" style="width: auto; height: auto;">没有width或auto</div>
 			<div class="c" style="width: auto; height: auto;">没有width或auto</div>
@@ -305,7 +304,7 @@ align-items: flex-start | flex-end | center | baseline | stretch(默认);
 
 		<br>
 
-		<div style="display: flex; flex-direction: column; background-color: red; height: 200px; background-color: purple;">
+		<div style="display: flex; flex-direction: column; height: 200px; background-color: purple;">
 			<div class="a" style="width: auto; height: 20%;">height:20%</div>
 			<div class="b" style="width: auto; height: 20%;">height:20%</div>
 			<div class="c" style="width: auto; height: 20%;">height:20%</div>
@@ -313,7 +312,7 @@ align-items: flex-start | flex-end | center | baseline | stretch(默认);
 
 		<pre>
 我们可以看到纵向布局的justify-content和align-items互换了, 与横向布局不同的是justify-content控制上下, align-items控制左右
-		</pre>
+</pre>
 
 
 		<h3>纵向布局: justify-content: flex-start; (默认)</h3>
@@ -403,7 +402,7 @@ align-items: flex-start | flex-end | center | baseline | stretch(默认);
 
 		<pre>
 纵向布局 align-items ... 
-		</pre>
+</pre>
 
 
 		<h3>纵向布局: align-items: flex-start;</h3>
@@ -454,11 +453,6 @@ align-items: flex-start | flex-end | center | baseline | stretch(默认);
 			<div class="b" style="width: auto;">没有width或auto</div>
 			<div class="c" style="width: auto;">没有width或auto</div>
 		</div>
-
-
-
-
-
 
 	</body>
 </html>

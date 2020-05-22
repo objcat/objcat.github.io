@@ -1,16 +1,97 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>objcat's blog</title>
-        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-        <style>
-
-        </style>
-    </head>
-    <body>
-        <a href="./html/flex.html">flex布局</a>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>objcat's blog</title>
+		<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+		<script src="" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+			}	
+			
+			
+			#app {
+				display: flex;
+				flex-flow: column;
+			}
+			
+			.item-box {
+				display: flex;
+				flex-flow: row wrap;
+				font-size: 10px;
+			}
+			
+			.item-box a {
+				display: flex;
+				width: 14.2%;
+				height: 14.2vw;
+			}
+			
+			.item {
+				display: flex;
+				width: 90%;
+				height: 90%;
+				background-color: rgb(71, 130, 241);
+				color: white;
+			}
+			
+			.center {
+				justify-content: center;
+				align-items: center;
+			}
+			
+		</style>
+	</head>
+	<body>
 		
-    </body>
+		
+		
+
+		<div id="app">
+			<div class="item-box">
+				<a v-for="item in items" :href="item.path" class="center">
+					<div class="item center">
+						{{ item.title }}
+					</div>
+				</a>
+			</div>
+		</div>
+		
+		<iframe src="com/ball/ball.html" width="100%" height="1000"></iframe>
+
+
+		<script type="text/javascript">
+			new Vue({
+				el: "#app",
+				data() {
+					return {
+						items: [{
+								"title": "flex布局",
+								"path": "./html/flex.html"
+							},
+							{
+								"title": "日语词汇",
+								"path": "./html/jp_words.html"
+							}
+						]
+					};
+				},
+				methods: {
+					frame() {
+						console.log("1");
+					}
+				},
+				created() {
+					console.log("created");
+					setInterval(this.frame, 1000);
+					
+				}
+			})
+		</script>
+
+	</body>
 </html>

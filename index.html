@@ -50,7 +50,7 @@
 		
 		<div id="app">
 			<div class="item-box">
-				<a v-for="item in items" :href="item.path" class="center">
+				<a v-for="item in items" :href="item.url" class="center">
 					<div class="item center">
 						{{ item.title }}
 					</div>
@@ -67,15 +67,15 @@
 					return {
 						items: [{
 								"title": "flex布局",
-								"path": "./html/flex.html"
+								"url": "./html/flex.html"
 							},
 							{
 								"title": "日语词汇",
-								"path": "./html/jp_words.html"
+								"url": "./html/jp_words.html"
 							},
 							{
 								"title": "我的简书",
-								"path": "https://www.jianshu.com/u/833f9df05b7a"
+								"url": "https://www.jianshu.com/u/833f9df05b7a"
 							}
 						]
 					};

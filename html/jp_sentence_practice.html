@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>日语句子练习</title>
+		<script src="../js/vue.min.js"></script>
+		<style>
+			.content {
+				display: flex;
+				flex-direction: column;
+			}
+			
+			.item {
+				background-color: #00BFFF; text-align: center; height: 50px; line-height: 50px; margin-top: 5px; color: white;
+			}
+			
+		</style>
+	</head>
+	<body>
+
+
+		<div id="app">
+			<div class="content">
+				<div v-for="item in list">
+					<div @click="translate(item)" class="item">{{ item.zh }}</div>
+					<div v-if="item.flag" class="item" style="background-color: white; color: black;">{{ item.jp }}</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+		<script type="text/javascript">
+			new Vue({
+				el: "#app",
+				data() {
+					return {
+						list: []
+					}
+				},
+				methods: {
+					translate(item) {
+						console.log(123);
+						item.flag = !item.flag;
+					}
+				},
+				created() {
+
+					let list = [{
+							"zh": "早上好",
+							"jp": "おはようございます"
+						},
+						{
+							"zh": "你好",
+							"jp": "こんにちは"
+						},
+						{
+							"zh": "再见",
+							"jp": "さよなら"
+						},
+						{
+							"zh": "晚上好",
+							"jp": "こんばんは"
+						},
+						{
+							"zh": "晚安",
+							"jp": "おやすみなさい"
+						},
+						{
+							"zh": "初次见面请多关照",
+							"jp": "はじめまして　どうぞ　よろしくお願いします"
+						},
+						{
+							"zh": "对不起",
+							"jp": "すみません"
+						},
+						{
+							"zh": "谢谢",
+							"jp": "ありがとうございます"
+						},
+						{
+							"zh": "不用谢",
+							"jp": "いいえ,　どういだしましで"
+						},
+						{
+							"zh": "我开动了",
+							"jp": "いただきます"
+						},
+						{
+							"zh": "我吃饱了",
+							"jp": "ごちそうさまでした"
+						}
+					]
+
+					for (index in list) {
+						let item = list[index];
+						item.flag = false;
+					}
+
+					this.list = list;
+				}
+			})
+		</script>
+	</body>
+</html>

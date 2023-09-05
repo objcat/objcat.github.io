@@ -13,13 +13,26 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/1-framework/java/spring/springcloud/SpringCloudMaven/SpringCloudMaven.md",
+                "file": "docs/README.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "48fc916bc31c81fa",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "docs/README.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/1-framework/java/spring/springcloud/SpringCloudMaven/SpringCloudMaven.md",
+                "file": "docs/README.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/1-framework/java/spring/springcloud/SpringCloudMaven/SpringCloudMaven.md",
+                "file": "docs/README.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/1-framework/java/spring/springcloud/SpringCloudMaven/SpringCloudMaven.md"
+                "file": "docs/README.md"
               }
             }
           }
@@ -146,8 +159,12 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "1c3dca8c62729b85",
+  "active": "48fc916bc31c81fa",
   "lastOpenFiles": [
+    "docs/0-language/Java/java.md",
+    "docs/0-language/Java/images/Pasted image 20230418141428.png",
+    "docs/README.md",
+    "docs/1-framework/java/spring/springcloud/SpringCloudMaven/SpringCloudMaven.md",
     "docs/js/prism-yaml.min.js",
     "docs/css/theme-simple-light.css",
     "docs/css/theme-simple-dark.css",
@@ -161,22 +178,17 @@
     "docs/3-program/IDE/IDEA/IDEA/images/Pasted image 20230902123540.png",
     "docs/3-program/IDE/IDEA/IDEA/images/Pasted image 20230902122847.png",
     "docs/3-program/IDE/IDEA/IDEA/images/Pasted image 20230902122415.png",
-    "docs/3-program/IDE/IDEA/IDEA/images/Pasted image 20230902122044.png",
     "docs/3-program/IDE/IDEA/IDEA/images",
     "docs/3-program/IDE/IDEA/IDEA",
     "docs/3-program/IDE/IDEA/IDEA注释模板/images",
     "docs/3-program/IDE/IDEA/IDEA注释模板/IDEA注释模板.md",
     "docs/3-program/IDE/IDEA/IDEA注释模板",
     "docs/3-program/IDE/IDEA",
-    "docs/1-framework/java/spring/springcloud/SpringCloudMaven/SpringCloudMaven.md",
     "docs/3-program/IDE/IDEA/IDEA.md",
-    "docs/0-language/Java/Java.md",
     "docs/3-program/IDE/IDEA/images",
     "docs/3-program/IDE/Pycharm/Pycharm.md",
     "docs/3-program/IDE/Pycharm/images",
-    "docs/3-program/IDE/Pycharm",
     "docs/3-program/IDE/Xcode/Xcode.md",
-    "docs/README.md",
     "docs/3-program/env/java/java_env.md",
     "docs/4-package-manager/Maven/Maven.md",
     "docs/0-language/swift/swift.md",

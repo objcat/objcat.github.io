@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/0-language/Java/Java的副本.md",
+                "file": "docs/0-language/java/java.md",
                 "mode": "source",
                 "source": false
               }
@@ -89,6 +89,14 @@
               "type": "starred",
               "state": {}
             }
+          },
+          {
+            "id": "9670575174eff76f",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
           }
         ]
       }
@@ -110,7 +118,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/0-language/Java/Java的副本.md",
+                "file": "docs/0-language/java/java.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -127,7 +135,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/0-language/Java/Java的副本.md",
+                "file": "docs/0-language/java/java.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +158,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/0-language/Java/Java的副本.md"
+                "file": "docs/0-language/java/java.md"
               }
             }
           }
@@ -171,9 +179,11 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "a40879f498f9f9c4",
+  "active": "eee7dabbf81aba60",
   "lastOpenFiles": [
     "docs/README.md",
+    "docs/0-language/java/java.md",
+    "docs/0-language/java/Java的副本.md",
     "README.md",
     "docs/0-language/Java/Java.md",
     "docs/0-language/Java/Java的副本.md",

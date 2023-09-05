@@ -148,6 +148,7 @@
   },
   "active": "1c3dca8c62729b85",
   "lastOpenFiles": [
+    "docs/js/prism-yaml.min.js",
     "docs/css/theme-simple-light.css",
     "docs/css/theme-simple-dark.css",
     "docs/3-program/IDE/IDEA/IDEA/IDEA.md",
@@ -174,7 +175,6 @@
     "docs/3-program/IDE/Pycharm/Pycharm.md",
     "docs/3-program/IDE/Pycharm/images",
     "docs/3-program/IDE/Pycharm",
-    "docs/3-program/IDE/Xcode/images",
     "docs/3-program/IDE/Xcode/Xcode.md",
     "docs/README.md",
     "docs/3-program/env/java/java_env.md",

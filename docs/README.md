@@ -18,7 +18,7 @@ open-doc是白猫开放文档, 里面用到的东西都是白猫平时积累所�
 
 ## 🌲 Java语言文档
 
-[Java语言文档](0-language/Java/java.md)
+[Java语言文档](0-language/Java/Java.md)
 
 ## 🌲 SpringCloud-Maven
 

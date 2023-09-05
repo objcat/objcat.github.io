@@ -148,6 +148,8 @@
   },
   "active": "1c3dca8c62729b85",
   "lastOpenFiles": [
+    "docs/css/theme-simple-light.css",
+    "docs/css/theme-simple-dark.css",
     "docs/3-program/IDE/IDEA/IDEA/IDEA.md",
     "docs/3-program/IDE/IDEA/IDEA/images/Pasted image 20230809111309.png",
     "docs/3-program/IDE/IDEA/IDEA/images/Pasted image 20230902122225.png",
@@ -174,7 +176,6 @@
     "docs/3-program/IDE/Pycharm",
     "docs/3-program/IDE/Xcode/images",
     "docs/3-program/IDE/Xcode/Xcode.md",
-    "docs/3-program/IDE/Xcode",
     "docs/README.md",
     "docs/3-program/env/java/java_env.md",
     "docs/4-package-manager/Maven/Maven.md",

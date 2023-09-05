@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/README.md",
+                "file": "docs/1-framework/java/spring/springcloud/SpringCloudMaven/SpringCloudMaven.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/README.md",
+                "file": "docs/1-framework/java/spring/springcloud/SpringCloudMaven/SpringCloudMaven.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/README.md",
+                "file": "docs/1-framework/java/spring/springcloud/SpringCloudMaven/SpringCloudMaven.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,16 +125,16 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/README.md"
+                "file": "docs/1-framework/java/spring/springcloud/SpringCloudMaven/SpringCloudMaven.md"
               }
             }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -146,39 +146,44 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "eee7dabbf81aba60",
+  "active": "1c3dca8c62729b85",
   "lastOpenFiles": [
-    "docs/4-package-manager/Maven/images/image-20220306212756986.png",
-    "docs/4-package-manager/Maven/images/image-20220306212251248.png",
-    "docs/4-package-manager/Maven/images/image-20220306212159621.png",
-    "docs/4-package-manager/Maven/images/image-20220306211557161.png",
-    "docs/4-package-manager/Maven/images/image-20220306210851075.png",
-    "docs/4-package-manager/Maven/images/image-20220306210749184.png",
-    "docs/4-package-manager/Maven/images/image-20220306205340178.png",
-    "docs/4-package-manager/Maven/images/image-20220306205048413.png",
-    "docs/4-package-manager/Maven/images/image-20220306204129106.png",
-    "docs/4-package-manager/Maven/images/Pasted image 20221118171503.png",
-    "docs/4-package-manager/Maven/images/Pasted image 20221118171110.png",
-    "docs/4-package-manager/Maven/images",
-    "docs/4-package-manager/Maven/Maven.md",
-    "docs/4-package-manager/Maven",
-    "docs/4-package-manager",
-    "docs/0-language/swift/swift.md",
-    "docs/0-language/swift/images",
-    "docs/0-language/python/python.md",
-    "docs/0-language/python/images",
-    "docs/0-language/javascript/javascript.md",
-    "docs/0-language/javascript/images",
-    "docs/0-language/java/images",
-    "docs/0-language/java/Java.md",
-    "docs/0-language/html/images",
-    "docs/0-language/html/html.md",
-    "docs/0-language/swift",
-    "docs/0-language/python",
-    "docs/1-framework/javascript/vue/vue.md",
+    "docs/3-program/IDE/IDEA/IDEA/IDEA.md",
+    "docs/3-program/IDE/IDEA/IDEA/images/Pasted image 20230809111309.png",
+    "docs/3-program/IDE/IDEA/IDEA/images/Pasted image 20230902122225.png",
+    "docs/3-program/IDE/IDEA/IDEA/images/Pasted image 20230809111246.png",
+    "docs/3-program/IDE/IDEA/IDEA/images/Pasted image 20230902123906.png",
+    "docs/3-program/IDE/IDEA/IDEA/images/Pasted image 20230902123817.png",
+    "docs/3-program/IDE/IDEA/IDEA/images/Pasted image 20230902123622.png",
+    "docs/3-program/IDE/IDEA/IDEA/images/Pasted image 20230902123540.png",
+    "docs/3-program/IDE/IDEA/IDEA/images/Pasted image 20230902122847.png",
+    "docs/3-program/IDE/IDEA/IDEA/images/Pasted image 20230902122415.png",
+    "docs/3-program/IDE/IDEA/IDEA/images/Pasted image 20230902122044.png",
+    "docs/3-program/IDE/IDEA/IDEA/images",
+    "docs/3-program/IDE/IDEA/IDEA",
+    "docs/3-program/IDE/IDEA/IDEA注释模板/images",
+    "docs/3-program/IDE/IDEA/IDEA注释模板/IDEA注释模板.md",
+    "docs/3-program/IDE/IDEA/IDEA注释模板",
+    "docs/3-program/IDE/IDEA",
     "docs/1-framework/java/spring/springcloud/SpringCloudMaven/SpringCloudMaven.md",
-    "docs/1-framework/java/spring/springcloud/SpringCloudGradle/SpringCloudGradle.md",
+    "docs/3-program/IDE/IDEA/IDEA.md",
+    "docs/0-language/Java/Java.md",
+    "docs/3-program/IDE/IDEA/images",
+    "docs/3-program/IDE/Pycharm/Pycharm.md",
+    "docs/3-program/IDE/Pycharm/images",
+    "docs/3-program/IDE/Pycharm",
+    "docs/3-program/IDE/Xcode/images",
+    "docs/3-program/IDE/Xcode/Xcode.md",
+    "docs/3-program/IDE/Xcode",
+    "docs/README.md",
+    "docs/3-program/env/java/java_env.md",
+    "docs/4-package-manager/Maven/Maven.md",
     "docs/0-language/swift/swift.md",
-    "docs/README.md"
+    "docs/0-language/python/python.md",
+    "docs/0-language/javascript/javascript.md",
+    "docs/0-language/html/html.md",
+    "docs/1-framework/javascript/vue/vue.md",
+    "docs/1-framework/java/spring/springcloud/SpringCloudGradle/SpringCloudGradle.md",
+    "docs/0-language/swift/swift.md"
   ]
 }

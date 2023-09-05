@@ -1071,10 +1071,11 @@ Class 对象是在加载类时由 Java 虚拟机以及通过调用类加载器�
 
 我们知道Spring框架可以帮我们创建和管理对象。需要对象时，我们无需自己手动new对象，直接从Spring提供的容器中的Beans获取即可。Beans底层其实就是一个Map<String,Object>，最终通过getBean(“user”)来获取。而这其中最核心的实现就是利用反射技术。   
 
+![](images/Pasted%20image%2020230903091203.png)
+
 ### 🌸 获取类对象的三种方式
 
 ```java
-
 class Person {
     String name;
     Integer age;
@@ -2117,6 +2118,62 @@ try(FileOutputStream fileOutputStream = new FileOutputStream(file)) {
 
 使用 try-with-resources 后,无需在 finally 中关闭 FileOutputStream,它会自动进行后续处理了
 
+# 🍎 Scanner
+
+从字面上理解是打印机, 其实它是在程序中接收用户输入的一个类
+
+## 🌲 基本用法
+
+```java
+Scanner scanner = new Scanner(System.in);  
+System.out.println("请输入数字:");  
+int i = scanner.nextInt();  
+System.out.println(i);
+```
+
+然后我们来测试一下, 我们发现控制台上打印让我们输入数字
+
+```
+请输入数字:
+1
+1
+```
+
+这就是最基本的用法了, 但当我们输入多个数字的时候, 我们发现打印的只有一个
+
+```
+请输入数字:
+1 2 3 4
+1
+```
+
+因为Scanner的规则是, 当遇到空格、tab、enter回车时,读取结束, 那我们想要都读取要怎么做呢, 接着往下看
+
+## 🌲 连续获取
+
+我们可以改造一下代码让Scanner获得连续读取的能力
+
+```java
+Scanner scanner = new Scanner(System.in);  
+System.out.println("请输入数字:");  
+while (scanner.hasNextInt()) {  
+    int i = scanner.nextInt();  
+    System.out.println(i);  
+}
+```
+
+然后我们看一下输出
+
+```
+请输入数字:
+1 2 3
+1
+2
+3
+```
+
+这就解决了我们数字读取不完整的问题了
+
 # 🍎 环境变量
 
 ## 🌲 classpath
@@ -2229,29 +2286,9 @@ if (x.equals(y)) {
 
 https://hollischuang.gitee.io/tobetopjavaer/#/basics/object-oriented/principle
 
-# 🍎 环境安装
+# 🍎 环境搭建
 
-甲骨文Java17
-https://www.oracle.com/cn/java/technologies/downloads/#jdk17-linux
-
-Adoptium
-https://adoptopenjdk.net/
-
-清华大学镜像源OpenJdk
-https://mirrors.tuna.tsinghua.edu.cn/Adoptium/
-https://mirrors.tuna.tsinghua.edu.cn/Adoptium/8/jdk/x64/windows/OpenJDK8U-jdk_x64_windows_hotspot_8u345b01.zip
-
-亚马逊
-https://aws.amazon.com/cn/corretto/?filtered-posts.sort-by=item.additionalFields.createdDate&filtered-posts.sort-order=desc
-
-腾讯kona
-https://cloud.tencent.com/product/tkjdk
-
-阿里Dragonwell
-https://dragonwell-jdk.io/#/index
-
-微软
-https://learn.microsoft.com/zh-cn/java/openjdk/overview
+[跳转 java_env](../../3-program/env/java/java_env.md)
 
 # 🍎 官方文档
 

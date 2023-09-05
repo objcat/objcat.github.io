@@ -87,7 +87,7 @@ https://dlcdn.apache.org/maven/maven-3/3.8.4/binaries/apache-maven-3.8.4-bin.zip
 
 然后使用`mvn -v`来检测是否配置成功
 
-![image-20220306210239942](images/image-20220306210239942.png)
+![image-20220306210239942](../../1-framework/java/spring/springcloud/SpringCloudMaven/images/image-20220306210239942.png)
 
 ## 🌲 IDEA配置
 

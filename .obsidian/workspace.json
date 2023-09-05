@@ -1,0 +1,184 @@
+{
+  "main": {
+    "id": "3a7021d871c35938",
+    "type": "split",
+    "children": [
+      {
+        "id": "66b5a63294decdc2",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "1c3dca8c62729b85",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "docs/README.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "a11e5d173c833ff5",
+    "type": "split",
+    "children": [
+      {
+        "id": "9525db70a0fb41a1",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "eee7dabbf81aba60",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "89f69eeae1128102",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "8131a9a661445561",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "f134cb2d058d0332",
+    "type": "split",
+    "children": [
+      {
+        "id": "051e1f6097b3157d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "4077713454e910e3",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "docs/README.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "48b354e7c79e82b5",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "docs/README.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "326270cc5ec60a51",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "a26a723787320780",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "docs/README.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false
+    }
+  },
+  "active": "eee7dabbf81aba60",
+  "lastOpenFiles": [
+    "docs/4-package-manager/Maven/images/image-20220306212756986.png",
+    "docs/4-package-manager/Maven/images/image-20220306212251248.png",
+    "docs/4-package-manager/Maven/images/image-20220306212159621.png",
+    "docs/4-package-manager/Maven/images/image-20220306211557161.png",
+    "docs/4-package-manager/Maven/images/image-20220306210851075.png",
+    "docs/4-package-manager/Maven/images/image-20220306210749184.png",
+    "docs/4-package-manager/Maven/images/image-20220306205340178.png",
+    "docs/4-package-manager/Maven/images/image-20220306205048413.png",
+    "docs/4-package-manager/Maven/images/image-20220306204129106.png",
+    "docs/4-package-manager/Maven/images/Pasted image 20221118171503.png",
+    "docs/4-package-manager/Maven/images/Pasted image 20221118171110.png",
+    "docs/4-package-manager/Maven/images",
+    "docs/4-package-manager/Maven/Maven.md",
+    "docs/4-package-manager/Maven",
+    "docs/4-package-manager",
+    "docs/0-language/swift/swift.md",
+    "docs/0-language/swift/images",
+    "docs/0-language/python/python.md",
+    "docs/0-language/python/images",
+    "docs/0-language/javascript/javascript.md",
+    "docs/0-language/javascript/images",
+    "docs/0-language/java/images",
+    "docs/0-language/java/Java.md",
+    "docs/0-language/html/images",
+    "docs/0-language/html/html.md",
+    "docs/0-language/swift",
+    "docs/0-language/python",
+    "docs/1-framework/javascript/vue/vue.md",
+    "docs/1-framework/java/spring/springcloud/SpringCloudMaven/SpringCloudMaven.md",
+    "docs/1-framework/java/spring/springcloud/SpringCloudGradle/SpringCloudGradle.md",
+    "docs/0-language/swift/swift.md",
+    "docs/README.md"
+  ]
+}

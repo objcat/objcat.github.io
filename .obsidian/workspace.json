@@ -25,14 +25,26 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/0-language/Java/Java.md",
+                "file": "docs/README.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "a40879f498f9f9c4",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "docs/0-language/Java/Java的副本.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -98,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/0-language/Java/Java.md",
+                "file": "docs/0-language/Java/Java的副本.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/0-language/Java/Java.md",
+                "file": "docs/0-language/Java/Java的副本.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/0-language/Java/Java.md"
+                "file": "docs/0-language/Java/Java的副本.md"
               }
             }
           }
@@ -159,10 +171,12 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "eee7dabbf81aba60",
+  "active": "a40879f498f9f9c4",
   "lastOpenFiles": [
     "docs/README.md",
+    "README.md",
     "docs/0-language/Java/Java.md",
+    "docs/0-language/Java/Java的副本.md",
     "docs/0-language/Java/images/Pasted image 20230418141428.png",
     "docs/1-framework/java/spring/springcloud/SpringCloudMaven/SpringCloudMaven.md",
     "docs/js/prism-yaml.min.js",

@@ -12,43 +12,40 @@ open-doc是白猫开放文档, 里面用到的东西都是白猫平时积累所�
 
 ## 🌲 Swift语言文档
 
-[Swift语言文档](swift/swift.md)
+[Swift语言文档](language/swift/swift.md)
 
 # 🍎 Java
 
 ## 🌲 Java语言文档
 
-[Java语言文档](java/java/Java.md)
+[Java语言文档](language/java/Java.md)
 
 ## 🌲 SpringCloud-Maven
 
-[SpringCloudMaven](java/spring/springcloud/SpringCloudMaven/SpringCloudMaven.md)
+[SpringCloudMaven](framework/java/spring/springcloud/SpringCloudMaven/SpringCloudMaven.md)
 
 ## 🌲 SpringCloud-Gradle
 
-[SpringCloudGradle](java/spring/springcloud/SpringCloudGradle/SpringCloudGradle.md)
+[SpringCloudGradle](framework/java/spring/springcloud/SpringCloudGradle/SpringCloudGradle.md)
 
 # 🍎 Python
 
 ## 🌲 Python语言文档
 
-[Python语言文档](python/python.md)
+[Python语言文档](language/python/python.md)
 
 # 🍎 Javascript
 
 ## 🌲 Javascript语言文档
 
-[javascript语言文档](javascript/javascript/javascript.md)
+[javascript语言文档](language/javascript/javascript.md)
 
 ## 🌲 Vue文档
 
-[Vue文档](javascript/vue/vue.md)
+[Vue文档](framework/javascript/vue/vue.md)
 
 # 🍎 HTML
 
 ## 🌲 HTML语言文档
 
-[HTML语言文档](html/html.md)
-
-
-
+[HTML语言文档](language/html/html.md)

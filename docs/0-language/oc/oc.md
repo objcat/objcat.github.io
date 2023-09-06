@@ -619,7 +619,7 @@ if (vc2.delegate && [vc2.delegate respondsToSelector:@selector(callBack:)]) {
 假如我VC1接到值后想给VC2回个话要怎么做呢, 有两种方法, 第一种是调用VC2提供的传值方法, 第二种就是callback后面跟一个block, 下面就来看看第二种吧
 
 ```objc
-@protocol VC1Delegate <NSObject>
+@protocol PassValueDelegate <NSObject>
 - (void)callBack:(NSString *)value complete:(void (^) (NSString *))complete;
 @end
 

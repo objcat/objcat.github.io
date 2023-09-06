@@ -3,18 +3,25 @@
 Objective-C，通常写作ObjC或OC和较少用的Objective C或Obj-C，是扩充C的面向对象编程语言。它主要使用于Mac OS X和GNUstep这两个使用OpenStep标准的系统，而在NeXTSTEP和OpenStep中它更是基本语言。
 
 # 🍎 Hello World
+
 ```objc
 NSLog(@"hello world!");
 ```
 
-# 🍎 变量
+# 🍎 数据类型
 ```objc
 // 整型
+NSInteger testInteger = 100;
 int testInt = 100;
 // 浮点型
 float testFloat = 1000.0;
+double testDouble = 2000.0;
+// 布尔类型
+Boolean testBoolean = YES;
 // 字符串
 NSString *testString = @"objcat";
+// 数字类型
+NSNumber *testNumber = @(1000.0);
 // 数组
 NSArray *testArray = @[@"1", @"2", @"3"];
 // 字典

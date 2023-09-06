@@ -362,10 +362,7 @@ while (i < 3) {
     return self;
 }
 @end
-        
-# 初始化
 
-# 方法1
 Person *per = [[Person alloc] init];
 per.name = @"张三";
 per.age = 18;
@@ -374,7 +371,6 @@ per.age = 18;
 ## 🌲 定义方法
 
 ```objc
-
 // .h
 @interface Person : NSObject
 @property (strong, nonatomic) NSString *name;
@@ -398,11 +394,13 @@ per.age = 18;
 @end
 ```
 
-# 🍎 协议
+# 🍎 Protocol
 
-`iOS中协议即Protocol`, 是一种给类和对象添加方法的技术, 它类似于Java中的接口, 但是很多培训班经常把它作为传值的手段, 这是非常误人子弟的, 也是不可取的教学方式, 我们接下来就一起来看看它的用法吧
+`iOS中Protocol即协议`, 它不是类, 而是一组方法的声明但没有实现, 类可以通过签订协议来动态添加一组方法, 然后在`.m`中实现它, 类似于Java中的接口, 但是很多培训班一上来就把它作为传值的一种手段来讲, 很容易让人迷惑, 我们接下来就一起来看看它的用法吧
 
-## 🌲 给类添加方法
+## 🌲 类签订协议
+
+签订协议后类就能够获取一组方法, 比如例子中的`+ (void)hello;`就是一个类方法, 当`ViewController`类签订协议后, 就动态添加了这个方法的声明, 值得注意的是我们想使用这个方法前需要在`.m`中实现这个方法, 否则会因为无法找到方法实现而报错
 
 ```objc
 @protocol TestProtocol
@@ -428,7 +426,9 @@ per.age = 18;
 @end
 ```
 
-## 🌲 给对象添加方法
+## 🌲 对象签订协议
+
+与类签订协议类似, 给对象添加一个`- (void)hello;`方法
 
 ```objc
 @protocol TestProtocol
@@ -484,6 +484,8 @@ per.age = 18;
 }
 ```
 
+为什么说是多态呢, 因为只要是签订过这个协议的类或对象都可以调用协议中的`hello`方法, 同一个方法在不同对象上有不同的实现方式也是一种多态
+
 ## 🌲 判断是否遵守协议
 
 我们使用`conformsToProtocol`来进行判断
@@ -497,40 +499,40 @@ NSLog(@"%d", [[self class] conformsToProtocol:@protocol(TestProtocol)]);
 
 来了, 培训班最喜欢教的东西, 协议传值, 我们透过现象来看本质
 
-### 🌸 创建协议
+### 🌸 1.创建协议
 
-首先是一个协议叫`VC1Delegate`不要纠结为啥上面我起的叫`Protocol`都是一样的
+首先是一个协议叫`PassValueDelegate`, 名字随便起, 后缀为`Delegate或Protocol`就可以
 
 ```objc
-@protocol VC1Delegate <NSObject>
+@protocol PassValueDelegate <NSObject>
 - (void)callBack:(NSString *)value;
 @end
 ```
 
-### 🌸 实现协议
+### 🌸 2.签订协议
 
-创建一个`VC1`实现协议, 实现协议的过程就是给这个对象增加了一个方法, 这个方法的用途是`callback`顾名思义回调方法
+创建一个`VC1`对象签订协议, 签订协议使用`<PassValueDelegate>`尖括号, 签订协议后`VC1`对象增加了一个`callback`方法, 这个方法的用途顾名思义就是回调方法
 
 ```objc
-@interface VC1 : NSObject <VC1Delegate>
+@interface VC1 : NSObject <PassValueDelegate>
 
 @end
 ```
 
-
-### 🌸 配置代理人
+### 🌸 3.配置代理人
 
 ```objc
 @interface VC2 : NSObject
-@property (weak, nonatomic) id <VC1Delegate> delegate;
+@property (weak, nonatomic) id <PassValueDelegate> delegate;
 @end
 ```
 
 一说到代理人肯定很多人都懵了, 什么是代理人呢? 其实就是`VC1`的一个实例
-1. 为什么要传这个实例呢? 因为要调用回调方法
+
+1. 为什么要传这个实例呢? 因为要在适当的时候调用回调方法
 2. 为什么要调用回调方法? 因为要传值啊, 演示传值
-3. 为什么叫代理人, 因为传递的对象是用`id <VC1Delegate>`来接收的, 这个属性名叫`delegate`
-4. 为什么要用`id <VC1Delegate>`而不是`VC1 *delegate`呢, 运用了多态的特性, 写出通用代码, 可以少写很多代码,  如果设置成`VC1`那么就只能接受`VC1`的实例, 那么其他的控制器传值的时候还要定义个`VC3`, `VC4`, 这样就不通用了
+3. 为什么叫代理人, 因为传递的对象是用`id <PassValueDelegate>`来接收的, 这个属性名叫`delegate`
+4. 为什么要用`id <PassValueDelegate>`而不是`VC1 *delegate`呢, 运用了多态的特性, 写出通用代码, 可以少写很多代码,  如果设置成`VC1`那么就只能接受`VC1`的实例, 那么其他的控制器传值的时候还要定义个`VC3`, `VC4`, 这样就不通用了
 
 ### 🌸 调用代理
 
@@ -555,12 +557,13 @@ NSLog(@"%d", [[self class] conformsToProtocol:@protocol(TestProtocol)]);
 ```
 
 ### 🌸 完整代码
+
 ```objc
-@protocol VC1Delegate <NSObject>
+@protocol PassValueDelegate <NSObject>
 - (void)callBack:(NSString *)value;
 @end
 
-@interface VC1 : NSObject <VC1Delegate>
+@interface VC1 : NSObject <PassValueDelegate>
 
 @end
 
@@ -571,7 +574,7 @@ NSLog(@"%d", [[self class] conformsToProtocol:@protocol(TestProtocol)]);
 @end
 
 @interface VC2 : NSObject
-@property (weak, nonatomic) id <VC1Delegate> delegate;
+@property (weak, nonatomic) id <PassValueDelegate> delegate;
 @end
 
 @implementation VC2
@@ -582,7 +585,6 @@ NSLog(@"%d", [[self class] conformsToProtocol:@protocol(TestProtocol)]);
 @end
 
 @implementation ViewController
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     VC1 *vc1 = [[VC1 alloc] init];
@@ -595,6 +597,23 @@ NSLog(@"%d", [[self class] conformsToProtocol:@protocol(TestProtocol)]);
 @end
 ```
 
+然后我们会发现控制台中出现一行
+
+```objc
+NSLog(@"VC1接收到值: %@", value);
+```
+
+那么我现在问你为什么会出现这行呢? 你可能会有点懵没事, 我们一起来看, 关键性代码在这里
+
+```objc
+vc2.delegate = vc1;
+if (vc2.delegate && [vc2.delegate respondsToSelector:@selector(callBack:)]) {
+	[vc2.delegate callBack:@"吃过了"];
+}
+```
+
+首先我把vc2的`delegate`设置成vc1, 那么它现在就是vc1, 然后我用vc1来执行自己的方法`callback`, 你认为有什么毛病吗? 它当然会执行vc1中已经定义的方法 `callBack`, 自己多动动手写一写
+
 ### 🌸 传值回复
 
 假如我VC1接到值后想给VC2回个话要怎么做呢, 有两种方法, 第一种是调用VC2提供的传值方法, 第二种就是callback后面跟一个block, 下面就来看看第二种吧
@@ -604,7 +623,7 @@ NSLog(@"%d", [[self class] conformsToProtocol:@protocol(TestProtocol)]);
 - (void)callBack:(NSString *)value complete:(void (^) (NSString *))complete;
 @end
 
-@interface VC1 : NSObject <VC1Delegate>
+@interface VC1 : NSObject <PassValueDelegate>
 
 @end
 
@@ -618,7 +637,7 @@ NSLog(@"%d", [[self class] conformsToProtocol:@protocol(TestProtocol)]);
 @end
 
 @interface VC2 : NSObject
-@property (weak, nonatomic) id <VC1Delegate> delegate;
+@property (weak, nonatomic) id <PassValueDelegate> delegate;
 @end
 
 @implementation VC2
@@ -1072,7 +1091,6 @@ NSArray *arr = [NSArray arrayWithObjects:@"1", @"2", @"3", nil];
 那么实现原理到底是什么呢, 实际上就是用了我们的可变参数了, 我们也仿照写一个方法来获取所有传进来的参数
 
 ```objc
-
 /// 获取参数列表
 /// @param firstArg 第一个参数
 /// @param ... 可以无限向后拼接的参数
@@ -1901,16 +1919,16 @@ for (NSInteger i = 0; i < 10; i++) {
 
 ```objc
 NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-    for (NSInteger i = 0; i < 10; i++) {
-        [queue addOperationWithBlock:^{
-            NSLog(@"未加锁区间上%ld", i);
-            @synchronized (self) {
-                sleep(3);
-                NSLog(@"任务%ld", i);
-            }
-            NSLog(@"未加锁区间下%ld", i);
-        }];
-    }
+for (NSInteger i = 0; i < 10; i++) {
+	[queue addOperationWithBlock:^{
+		NSLog(@"未加锁区间上%ld", i);
+		@synchronized (self) {
+			sleep(3);
+			NSLog(@"任务%ld", i);
+		}
+		NSLog(@"未加锁区间下%ld", i);
+	}];
+}
 ```
 
 锁定`{}`中的代码块, 同一时间只允许一个线程访问

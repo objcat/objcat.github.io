@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/0-language/oc/oc.md",
+                "file": "docs/README.md",
                 "mode": "source",
                 "source": false
               }
@@ -118,7 +118,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/0-language/oc/oc.md",
+                "file": "docs/README.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -135,7 +135,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/0-language/oc/oc.md",
+                "file": "docs/README.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -158,7 +158,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/0-language/oc/oc.md"
+                "file": "docs/README.md"
               }
             }
           }
@@ -181,14 +181,16 @@
   },
   "active": "a40879f498f9f9c4",
   "lastOpenFiles": [
-    "docs/README.md",
-    "docs/0-language/oc/oc.md",
+    "run.sh",
+    "docs/js/prism-sql.min.js",
     "docs/js/prism-c.min.js",
-    "docs/css/theme-docsify4-default.css",
-    "docs/css/theme-docsify4-light.css",
     "docs/js/docsify4.min.js",
+    "docs/css/theme-docsify4-default.css",
+    "docs/0-language/oc/oc.md",
+    "docs/0-language/oc",
     "docs/js/prism-json-min.js",
     "README.md",
+    "docs/README.md",
     "docs/0-language/java/java.md",
     "docs/0-language/java/Java的副本.md",
     "docs/0-language/Java/Java.md",
@@ -209,7 +211,6 @@
     "docs/3-program/IDE/IDEA/IDEA/images/Pasted image 20230902122847.png",
     "docs/3-program/IDE/IDEA/IDEA/images/Pasted image 20230902122415.png",
     "docs/3-program/IDE/IDEA/IDEA/images",
-    "docs/3-program/IDE/IDEA/IDEA",
     "docs/3-program/IDE/IDEA/IDEA注释模板/IDEA注释模板.md",
     "docs/3-program/IDE/IDEA/IDEA.md",
     "docs/3-program/IDE/Pycharm/Pycharm.md",

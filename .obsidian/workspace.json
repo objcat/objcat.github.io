@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/README.md",
+                "file": "docs/0-language/javascript/javascript.md",
                 "mode": "source",
                 "source": false
               }
@@ -30,21 +30,8 @@
                 "source": false
               }
             }
-          },
-          {
-            "id": "a40879f498f9f9c4",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "docs/README.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -118,7 +105,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/README.md",
+                "file": "docs/0-language/javascript/javascript.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -135,7 +122,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/README.md",
+                "file": "docs/0-language/javascript/javascript.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -158,7 +145,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/README.md"
+                "file": "docs/0-language/javascript/javascript.md"
               }
             }
           }
@@ -179,24 +166,32 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "a40879f498f9f9c4",
+  "active": "1c3dca8c62729b85",
   "lastOpenFiles": [
+    "docs/0-language/javascript/javascript.md",
+    "docs/0-language/javascript/images/Pasted image 20230907112014.png",
+    "docs/0-language/javascript/images/Pasted image 20230112144513.png",
+    "docs/0-language/javascript/images",
+    "docs/README.md",
+    "docs/0-language/python/images/Pasted image 20230907111820.png",
+    "docs/0-language/python/python.md",
+    "docs/0-language/java/java.md",
     "docs/0-language/java/images/Pasted image 20230903091203.png",
+    "docs/0-language/java/images/Pasted image 20230907111727.png",
     "docs/0-language/java/images/Pasted image 20230418141429.png",
     "docs/0-language/java/images/Pasted image 20230418141428.png",
-    "docs/0-language/java/java.md",
     "docs/0-language/java/images",
-    "docs/0-language/java",
+    "docs/0-language/swift/swift.md",
+    "docs/0-language/python/images/Pasted image 20221213135129.png",
     "docs/0-language/oc/oc.md",
+    "docs/0-language/java",
     "docs/js/docsify-copy-code.js",
     "docs/js/docsify-copy-code",
     "docs/js/countable.js",
     "docs/js/zoom-image.min.js",
-    "docs/README.md",
     "docs/js/prism-c.min.js",
     "docs/css/theme-docsify4-default.css",
     "docs/css/theme-docsify4-light.css",
-    "docs/js/docsify4.min.js",
     "README.md",
     "docs/0-language/java/Java的副本.md",
     "docs/0-language/Java/Java.md",
@@ -205,24 +200,14 @@
     "docs/1-framework/java/spring/springcloud/SpringCloudMaven/SpringCloudMaven.md",
     "docs/3-program/IDE/IDEA/IDEA/IDEA.md",
     "docs/3-program/IDE/IDEA/IDEA/images/Pasted image 20230809111309.png",
-    "docs/3-program/IDE/IDEA/IDEA/images/Pasted image 20230902122225.png",
-    "docs/3-program/IDE/IDEA/IDEA/images/Pasted image 20230809111246.png",
-    "docs/3-program/IDE/IDEA/IDEA/images/Pasted image 20230902123906.png",
-    "docs/3-program/IDE/IDEA/IDEA/images/Pasted image 20230902123817.png",
-    "docs/3-program/IDE/IDEA/IDEA/images/Pasted image 20230902123622.png",
-    "docs/3-program/IDE/IDEA/IDEA/images/Pasted image 20230902123540.png",
     "docs/3-program/IDE/IDEA/IDEA注释模板/IDEA注释模板.md",
     "docs/3-program/IDE/IDEA/IDEA.md",
     "docs/3-program/IDE/Pycharm/Pycharm.md",
     "docs/3-program/IDE/Xcode/Xcode.md",
     "docs/3-program/env/java/java_env.md",
     "docs/4-package-manager/Maven/Maven.md",
-    "docs/0-language/swift/swift.md",
-    "docs/0-language/python/python.md",
-    "docs/0-language/javascript/javascript.md",
     "docs/0-language/html/html.md",
     "docs/1-framework/javascript/vue/vue.md",
-    "docs/1-framework/java/spring/springcloud/SpringCloudGradle/SpringCloudGradle.md",
-    "docs/0-language/swift/swift.md"
+    "docs/1-framework/java/spring/springcloud/SpringCloudGradle/SpringCloudGradle.md"
   ]
 }

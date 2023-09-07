@@ -1,16 +1,10 @@
 # 🍎 简介
 
-Python 是一种解释型、面向对象、动态数据类型的高级程序设计语言。
+![](images/Pasted%20image%2020230907111820.png)
 
-Python 由 Guido van Rossum 于 1989 年底发明，第一个公开发行版发行于 1991 年。
+Python由[荷兰国家数学与计算机科学研究中心](https://baike.baidu.com/item/%E8%8D%B7%E5%85%B0%E5%9B%BD%E5%AE%B6%E6%95%B0%E5%AD%A6%E4%B8%8E%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E7%A0%94%E7%A9%B6%E4%B8%AD%E5%BF%83/53889845?fromModule=lemma_inlink)的[吉多·范罗苏姆](https://baike.baidu.com/item/%E5%90%89%E5%A4%9A%C2%B7%E8%8C%83%E7%BD%97%E8%8B%8F%E5%A7%86/328361?fromModule=lemma_inlink)于1990年代初设计，作为一门叫作[ABC语言](https://baike.baidu.com/item/ABC%E8%AF%AD%E8%A8%80/334996?fromModule=lemma_inlink)的替代品。 [1]  Python提供了高效的高级[数据结构](https://baike.baidu.com/item/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/1450?fromModule=lemma_inlink)，还能简单有效地[面向对象](https://baike.baidu.com/item/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/2262089?fromModule=lemma_inlink)编程。Python语法和动态类型，以及[解释型语言](https://baike.baidu.com/item/%E8%A7%A3%E9%87%8A%E5%9E%8B%E8%AF%AD%E8%A8%80/8888952?fromModule=lemma_inlink)的本质，使它成为多数平台上写脚本和快速开发应用的[编程语言](https://baike.baidu.com/item/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/9845131?fromModule=lemma_inlink)， [2]  随着版本的不断更新和语言新功能的添加，逐渐被用于独立的、大型项目的开发。 [3] 
 
-像 Perl 语言一样, Python 源代码同样遵循 GPL(GNU General Public License) 协议。
-
-**官方宣布，2020 年 1 月 1 日， 停止 Python 2 的更新。**
-
-**Python 2.7 被确定为最后一个 Python 2.x 版本。**
-
-https://baike.baidu.com/item/Python/407313?fr=aladdin
+Python在各个编程语言中比较适合新手学习，Python解释器易于扩展，可以使用[C](https://baike.baidu.com/item/C/7252092?fromModule=lemma_inlink)、[C++](https://baike.baidu.com/item/C%2B%2B/99272?fromModule=lemma_inlink)或其他可以通过C调用的语言扩展新的功能和[数据类型](https://baike.baidu.com/item/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/10997964?fromModule=lemma_inlink)。 [4]  Python也可用于可定制化软件中的扩展程序语言。Python丰富的标准库，提供了适用于各个主要系统平台的[源码](https://baike.baidu.com/item/%E6%BA%90%E7%A0%81/344212?fromModule=lemma_inlink)或[机器码](https://baike.baidu.com/item/%E6%9C%BA%E5%99%A8%E7%A0%81/86125?fromModule=lemma_inlink)。 [4]
 
 # 🍎 官方网站
 
@@ -438,7 +432,7 @@ while (i < 3):
 
 # 🍎 类和对象
 
-## 🌲 类
+## 🌲 创建类
 
 ```
 class Person:
@@ -984,6 +978,12 @@ with open("1.csv") as f:
     rows = csv.reader(f)  
     for row in rows:  
         print(row)
+```
+
+# 🍎 创建虚拟环境
+
+```shell
+python3 -m venv venv
 ```
 
 # 🍎 测试

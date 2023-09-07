@@ -1,6 +1,6 @@
 # 🍎 简介
 
-![](images/Pasted%20image%2020230907111820.png)
+![](images/Pasted%20image%2020230907120104.jpg)
 
 Python由[荷兰国家数学与计算机科学研究中心](https://baike.baidu.com/item/%E8%8D%B7%E5%85%B0%E5%9B%BD%E5%AE%B6%E6%95%B0%E5%AD%A6%E4%B8%8E%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E7%A0%94%E7%A9%B6%E4%B8%AD%E5%BF%83/53889845?fromModule=lemma_inlink)的[吉多·范罗苏姆](https://baike.baidu.com/item/%E5%90%89%E5%A4%9A%C2%B7%E8%8C%83%E7%BD%97%E8%8B%8F%E5%A7%86/328361?fromModule=lemma_inlink)于1990年代初设计，作为一门叫作[ABC语言](https://baike.baidu.com/item/ABC%E8%AF%AD%E8%A8%80/334996?fromModule=lemma_inlink)的替代品。 [1]  Python提供了高效的高级[数据结构](https://baike.baidu.com/item/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/1450?fromModule=lemma_inlink)，还能简单有效地[面向对象](https://baike.baidu.com/item/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/2262089?fromModule=lemma_inlink)编程。Python语法和动态类型，以及[解释型语言](https://baike.baidu.com/item/%E8%A7%A3%E9%87%8A%E5%9E%8B%E8%AF%AD%E8%A8%80/8888952?fromModule=lemma_inlink)的本质，使它成为多数平台上写脚本和快速开发应用的[编程语言](https://baike.baidu.com/item/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/9845131?fromModule=lemma_inlink)， [2]  随着版本的不断更新和语言新功能的添加，逐渐被用于独立的、大型项目的开发。 [3] 
 

@@ -909,13 +909,13 @@ typedef NS_ENUM(NSUInteger, NSRoundingMode) {
 };
 ```
 
-# 🍎 空值
+# 🍎 NSNull
 
-我们都知道OC中有三种空, 针对字符串来说 有 nil "" 和 NSNull, 虽然第三种并不是并不是应该属于字符串范畴的, 但是它实打实的有用接下来我就说一说
+我们都知道OC中有三种空值, 就拿字符串的判空来说可能是`nil`, `""`和`NSNull`中的一种, 我们要特别注意的就是第三种, 如果不去判断就会造成很多崩溃
 
 ## 🌲 用途1: 判断空
  
- ```
+ ```objc
  - (BOOL)isEmpty:(NSString *)str {
      if ([@"" isEqualToString:str] || str == nil || [str isKindOfClass:[NSNull class]]) {
          return YES;
@@ -925,12 +925,11 @@ typedef NS_ENUM(NSUInteger, NSRoundingMode) {
  }
  ```
  
- 我们判断字符串应该判断这三种空, 否则第三种情况, 就有可能造成崩溃的问题
+ 我们判断字符串应该判断这三种空, 如果漏掉`NSNull`, 那么当它调用它自身没有的方法就会造成崩溃, 比如经常出的错误, 使用`NSNull对象`调用`length`属性, 它会抛出异常`**-[NSNull length]: unrecognized selector sent to instance 0x1fabd89d0**`
  
 ## 🌲 用途2: 序列化
 
-当我们把想把对象序列化的时候, 如果要表达一个对象中的值是null要怎么表达呢? 你第一想到的应该是nil, 但是很不幸的是几乎所有主流框架都没有这么做, 因为它们区分出来了`nil`和`null`, 而`null`在OC中就代表着`NSNull`, 虽然它不常用但是很有用, 我们接下来就看一看
-
+当我们把想把对象序列化的时候, 如果要表达一个对象中的值是`null`要怎么表达呢? 在iOS中你第一想到的应该是`nil,` 但是很遗憾它可能并不能达到你想要的效果, 我们来看一个例子
 
 我们有这样一个对象
 
@@ -941,7 +940,7 @@ typedef NS_ENUM(NSUInteger, NSRoundingMode) {
 @end
 ```
 
-当我们初始化后, 把它转化为字典会发生什么呢
+当我们初始化后, 把它转化为字典会发生什么呢(我们这里用`MJExtension`框架来转换)
 
 ```objc
 Person *person = [[Person alloc] init];
@@ -952,7 +951,7 @@ NSLog(@"%@", [person mj_JSONObject]);
 */
 ```
 
-答案是空, 因为对象里面的初始值都是nil, 又因为`MJExtension`这款第三方解析库默认是不去序列化这些为nil值的属性的, 所以是空, 这没什么毛病
+答案是空, 因为对象里面的初始值都是`nil`, 又因为`MJExtension`这款第三方解析库默认是不去序列化这些为`nil`值的属性的, 所以是空, 这没什么毛病
 
 我们想序列化就要先赋值对吧
 
@@ -969,9 +968,9 @@ NSLog(@"%@", [person mj_JSONObject]);
 */
 ```
 
-这看起来也没有什么问题, 我们似乎不需要null
+这看起来也没有什么问题, 我们似乎不需要`null`
 
-但是有一种情况你可能想要构造这种数据, 你只使用nil和字符串是办不到的
+但是有一种情况你可能想要构造这种数据, 你只使用nil是办不到的
 
 ```objc
 2022-10-12 16:59:06.481932+0800 ZYKit[28357:437550] {
@@ -982,7 +981,7 @@ NSLog(@"%@", [person mj_JSONObject]);
 
 说到这里杠精又问了, 我不需要!  这玩意有啥用啊
 
-那我问你, 如果想向数据库中插入null值你要怎么做呢? 除非手写SQL, 如果是全量插入你都要做序列化去解析插入的, 这个时候想要表达一个值为null, 那么`NSNull`将是你唯一的解, 你无法使用nil来转化成null, 因为不对等, nil表示的是没有, NSNull表示的空对象, 这里是不能去混乱的
+那我问你, 如果想向数据库中插入null值你要怎么做呢? 除非手写SQL, 如果是全量插入你都要做序列化去解析插入的, 这个时候想要表达一个值为`null`, 那么`NSNull`将是你唯一的解, 你无法使用`nil`来转化成`null`, 因为不对等, nil表示的是没有, `NSNull`表示的空对象, 这里是不能去混乱的
 
 ## 🌲 nil - NSNull - null - None
 
@@ -996,7 +995,7 @@ OC: nil
 
 你可能看不懂, 我来说明一下
 
-`Java`中如果你初始化一个`自定义对象`, 里面有声明了一个字符串类型的成员变量name, 它的值默认会被置为null, 当你使用它时会报出空指针异常
+`Java`中如果你初始化一个`自定义对象`, 里面有声明了一个字符串类型的成员变量`name`, 它的值默认会被置为`null`, 当你使用它时会报出空指针异常
 
 ```java
 public static void main(String[] args) {
@@ -1013,6 +1012,10 @@ Exception in thread "main" java.lang.NullPointerException
 `Python`中如果你初始化一个`自定义对象`, 里面声明了一个字符串类型的成员变量name, 它默认是不加入到对象中的, 当你打印它的时候会报出`AttributeError: 'User' object has no attribute 'name'`异常
 
 ```python
+class User:
+    name
+    pass
+    
 user = User()
 print(user.name)
 ```
@@ -1032,11 +1035,37 @@ NSLog(@"%@", nil); // (null)
 NSLog(@"%@", [NSNull null]); // <null>
 ```
 
+## 🌲 造成NSNull的JSON
+
+那么什么情况会造成这个问题呢
+
+```objc
+NSError *err = nil;
+
+NSDictionary *dic = @{@"name": @"张三", @"age": [NSNull null]};
+
+NSString *json = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingFragmentsAllowed error:&err] encoding:NSUTF8StringEncoding];
+
+NSLog(@"%@", json); // {"name":"张三","age":null}
+
+id obj = [NSJSONSerialization JSONObjectWithData:[json dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&err];
+
+NSLog(@"%@", obj);
+/*
+{
+age = "<null>";
+name = "\U5f20\U4e09";
+}
+*/
+```
+
+我们可以看到当值为`null`的时候, 我们原生的解析工具就会解析成`NSNull`类型从而引发问题
+
 ## 🌲 第三方框架解析思路
 
 ### 🌸 MJExtension
 
-1. 默认不序列化为nil的属性, 当遇到`NSNull`的时候会有两种情况, 如果是实体转字典, 那么会解析成`NSNull`以便于占位, 因为字典不允许存在nil值, 如果是实体转字符串, 那么会解析成`Json`所认识的`null`
+1. 默认不序列化为`nil`的属性, 当遇到`NSNull`的时候会有两种情况, 如果是实体转字典, 那么会解析成`NSNull`以便于占位, 因为字典不允许存在`nil`值, 如果是实体转字符串, 那么会解析成`Json`的`null`
 
 2. 相反的, 当字典转实体的时候, 里面的`NSNull`因为和对象里面的值类型不符合, 会被解析成nil
 

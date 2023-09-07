@@ -1168,7 +1168,7 @@ public class TestController {
 
 分别是服务层和数据访问层, 我们这里就引入最常使用到的ORM框架进行讲解, 即`MyBatis-plus`
 
-[跳转 MybatisPlus](1-framework/Mybatis/MyBatisPlus/MybatisPlus.md)
+[跳转 MybatisPlus](../../Mybatis/MyBatisPlus/MybatisPlus.md)
 
 # 🍎 打包
 

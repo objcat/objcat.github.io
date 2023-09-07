@@ -1,6 +1,6 @@
 # 🍎 简介
 
-Spring Cloud是一系列框架的有序集合。它利用Spring Boot的开发便利性巧妙地简化了分布式系统基础设施的开发，如服务发现注册、配置中心、消息总线、负载均衡、断路器、数据监控等，都可以用Spring Boot的开发风格做到一键启动和部署。Spring Cloud并没有重复制造轮子，它只是将各家公司开发的比较成熟、经得起实际考验的服务框架组合起来，通过Spring Boot风格进行再封装屏蔽掉了复杂的配置和实现原理，最终给开发者留出了一套简单易懂、易部署和易维护的分布式系统开发工具包。
+`SpringCloud`是一系列框架的集合, 有人亲切地把它称为全家桶。它利用Spring Boot的开发便利性巧妙地简化了分布式系统基础设施的开发，如服务发现注册、配置中心、消息总线、负载均衡、断路器、数据监控等，都可以用Spring Boot的开发风格做到一键启动和部署。Spring Cloud并没有重复制造轮子，它只是将各家公司开发的比较成熟、经得起实际考验的服务框架组合起来，通过Spring Boot风格进行再封装屏蔽掉了复杂的配置和实现原理，最终给开发者留出了一套简单易懂、易部署和易维护的分布式系统开发工具包。
 
 一般情况下, 我们使用`spring-cloud`是搭建微服务的项目, 我们利用`maven module`的方式来把项目按照功能模块细分为不同的模块, 每一个功能模块都可以独立运行, 在`spring-boot`中也喜欢这种分模块的写法, 但是它的主启动类只有一个, 只是通过模块来区分功能区, 看起来很微服务而已
 
@@ -43,6 +43,8 @@ https://spring.io/projects/spring-cloud
 
 https://start.spring.io/actuator/info
 
+我们来看下面的一段JSON, 上面标注了`SpringCloud`和`SpringBoot`的对应关系, 比如`2021.0.8的SpringCloud`对应`SpringBoot 2.6.0到<3.0.0的任意版本`
+
 ```json
 "spring-cloud": {
 	"2021.0.8": "Spring Boot >=2.6.0 and <3.0.0", 
@@ -54,9 +56,17 @@ https://start.spring.io/actuator/info
 
 https://start.spring.io
 
+进去是这个样子的
+
+![](images/Pasted%20image%2020230907140006.png)
+
+可以根据提示创建项目
+
 上面写的内容是如何帮你选择版本, 至于我选择的版本请继续往下看
 
 # 🍎 技术更替
+
+记录主流框架, 由于技术更新较快所以我写的框架很可能在你看来很老旧, 那么请忽略这一章
 
 ## 🌲 服务注册与发现
 
@@ -113,9 +123,13 @@ https://start.spring.io
 
 # 🍎 搭建项目
 
-## 🌲 创建项目
+## 🌲 创建项目(父工程)
 
-新建一个普通Maven项目做spring-cloud的父工程, 随便起个名, 比如`test-springcloud`, 这个是老版本的创建界面, 新版本同理, 凑合看吧, 我这里选择的是`1.8`版本的java, 也就是java8
+我们创建工程主要用的思想就是`SpringCloud微服务思想`, 所以我们需要先创建一个父工程, 在里面配置好依赖, 然后再创建子工程遵循这些依赖, 这样我们就可以通过无限扩展子工程来进行微服务方式的开发了
+
+创建项目的方法很多, 我们主要来看两个
+
+新建一个普通Maven项目做spring-cloud的父工程, 随便起个名, 比如`test-springcloud`, 这个是老版本的创建界面, 新版本同理, 凑合看吧, 我这里选择的是`1.8`版本的java, 也就是`java8`
 
 ![](images/Pasted%20image%2020230822100800.png)
 
@@ -129,11 +143,11 @@ The desired archetype does not exist (org.apache.maven.archetypes:maven-archetyp
 
 那我们就要去配置`maven`, 可以参考我的文档
 
-[跳转 Maven](4-package-manager/Maven/Maven.md)
+[跳转 Maven](../../../../../4-package-manager/Maven/Maven.md)
 
 ## 🌲 配置IDEA
 
-[跳转 IDEA 配置](3-program/IDE/IDEA/IDEA/IDEA.md)
+[跳转 IDEA 配置](../../../../../3-program/IDE/IDEA/IDEA/IDEA.md)
 
 ## 🌲 配置父工程pom
 
@@ -159,17 +173,17 @@ https://central.sonatype.com/artifact/com.alibaba.cloud/spring-cloud-alibaba-dep
 
 所以下面就是我的版本选择
 
-```
-spring-boot 2.7.10
-spring-cloud 2021.0.6
-spring-cloud-alibaba 2021.0.5.0
-```
+| 框架 | 版本 |
+| -- | -- |
+| spring-boot | 2.7.10 |
+| spring-cloud | 2021.0.6 |
+| spring-cloud-alibaba | 2021.0.5.0 |
 
 版本选好了我们先放着 继续往下看
 
 ### 🌸 配置packaging为pom
 
-选择完版本了, 我们就要开始配置父工程了, 首先我们找到pom文件, 配置父文件的类型为pom, 因为父工程的pom主要是用来负责管理子项目和引入一些通用的依赖, 不负责打包, 如果不配置会被默认为jar, jar是可以被打包的类型与我们想要的效果不符
+选择完版本了, 我们就要开始配置父工程了, 首先我们找到`pom`文件, 配置父文件的类型为`pom`, 因为父工程的`pom`主要是用来负责管理子项目和引入一些通用的依赖, 不负责打包, 如果不配置会被默认为`jar`,` jar`是可以被打包成独立应用的类型与我们想要的类型不符
 
 ```xml
 <packaging>pom</packaging>
@@ -220,6 +234,8 @@ bundle：生成一个 OSGi Bundle，用于在 OSGi 容器中部署。
 
 </project>
 ```
+
+最显眼的就是最下面的三个, 跟我上面约定的版本是一致的, 其他都是一些常用的依赖
 
 ### 🌸 配置dependencyManagement
 
@@ -282,7 +298,7 @@ bundle：生成一个 OSGi Bundle，用于在 OSGi 容器中部署。
 
 上面我们分别配置了`spring-boot`, `spring-cloud`和`spring-cloud-alibaba`的`依赖管理声明`, 那么你肯定想知道他们是怎么管理的, 我们一起来看, 首先把配置文件填入父POM中, 然后我们同步一下
 
-![](images/Pasted%20image%2020230404110653.png)
+![](images/Pasted%20image%2020230907153157.png)
 
 同步完成后库就拉取下来了, 我们可以点进去看, 按住cmd然后点这个名字
 
@@ -293,13 +309,13 @@ bundle：生成一个 OSGi Bundle，用于在 OSGi 容器中部署。
 
 ![](images/Pasted%20image%2020230404110825.png)
 
-我们会发现库中的pom里包含了大量的版本号,`依赖管理声明`就是利用这些版本号对子依赖进行管理的, 所以我们配置里面包含的库就不需要再加上版本了, 这些`依赖管理声明`会自动给我们管理补全, 所以说配置`依赖管理声明`会更加方便管理, 让项目中的库都保持一致性
+我们会发现库中的`pom`里包含了大量的版本号,`依赖管理声明`就是利用这些版本号对子依赖进行管理的, 所以我们配置里面包含的库就不需要再加上版本了, 这些`依赖管理声明`会自动给我们管理补全, 所以说配置`依赖管理声明`会更加方便管理, 让项目中的库都保持一致性
 
 ### 🌸 dependencyManagement拓展
 
 如果觉得迷糊可以先跳过这一节, 之后再回来看它也可以
 
-接下来我们说一些, 可能有些人认为这里就只能配置上面三个依赖, 其实不然, 我们也可以配置一些其他的库来管理版本, 比如我就拿`mybatis-puls`举例子吧, 在我们上面引入的依赖库中并没有包含它的版本管理, 我们想在子模块中引入`mybatis-puls`但是我们想在父模块中管理版本, 其实可以这样做, 在父模块的`dependencyManagement`中配置
+接下来我们说一些, 可能`有些人`甚至`入行了很多年但在混的老鸟`认为这里就只能配置上面三个`bom`依赖, 其实不然, 我们也可以配置一些其他的库来管理版本, 比如我就拿`mybatis-puls`举例子吧, 在我们上面引入的依赖库中并没有包含它的版本管理, 我们想在子模块中引入`mybatis-puls`但是我们想在父模块中管理版本, 其实可以这样做, 在父模块的`dependencyManagement`中配置
 
 ```xml
 <dependency>
@@ -315,7 +331,7 @@ bundle：生成一个 OSGi Bundle，用于在 OSGi 容器中部署。
 </dependency>
 ```
 
-然后在子模块中就不用指定版本号了, 还有另外一种方法就是子模块中使用`${mybatis-plus.version}`也可以约定版本号, 都可以, 顺便提一嘴的目的就是给大家提个醒, 这个`dependencyManagement`的正确用法, 在这里导入依赖并不能让你使用他们, `<dependencyManagement>`只做版本管理作用, 想要使用需要在子模块中导入库, 比如
+然后在子模块中就不用指定版本号了, 还有另外一种方法就是子模块中直接使用`${mybatis-plus.version}`也可以约定版本号也可以, 顺便提一嘴的目的就是给大家提个醒, 这个`dependencyManagement`在这里导入依赖并不能让你使用他们, 它只做版本管理作用, 想要使用依赖还是需要在子模块中导入库, 比如
 
 ```xml
 <dependencies>
@@ -528,11 +544,15 @@ maven跳过单元测试(可以节约时间), 只需要点击上面的闪电按�
 
 ## 🌲 创建服务
 
-配置完父模块, 我们终于可以开始写接口了, 在`spring-cloud`中我们会把业务模块细分成一个一个的微服务, 每个服务都可以单独进行发布, 单独运行, 说了这么多我们一起来看看吧
+配置完父模块, 我们终于可以开始写接口了, 在`spring-cloud`中我们会把业务模块细分成一个一个的微服务, 每个服务都可以单独进行发布, 单独运行, 我们下面要创建的`module`就是一个微服务了, 单个服务用的技术叫`SpringBoot`是一个不需要过多配置就可以跑起来的后台应用
 
 ### 🌸 创建module
 
-在项目工程中选择项目文件夹, 右键新建一个`module`, 起名为`cloud-provider-payment8001`, 这个名字随便起不一定非要起这个
+创建`module`的方式主要有两种, 我们一起来看看, 在项目工程中选择项目文件夹, 右键新建一个`module`
+
+#### 🌵 直接通过`new module`创建(推荐)
+
+起名为`cloud-provider-payment8001`, 我觉得这个名字很冗长, 你可以随便起名字不一定非要起这个
 
 ![image-20220306224937447](images/image-20220306224937447.png)
 
@@ -569,9 +589,65 @@ maven跳过单元测试(可以节约时间), 只需要点击上面的闪电按�
 
 ![image-20220306230151062](images/image-20220306230151062.png)
 
+#### 🌵 通过`spring initializr`创建(不推荐)
+
+我们也可以通过这种方式创建, 好处是可以选择组件, 学习起来比较方便, 我们来看一下
+
+![](images/Pasted%20image%2020230907142323.png)
+
+然后点击下一步, 依赖的话勾选一个web就可以创建了
+
+![](images/Pasted%20image%2020230907144504.png)
+
+创建完成是这个样子的
+
+![](images/Pasted%20image%2020230907144323.png)
+
+我们可以看到文件夹上没有颜色, 而且里面文件报红, 别慌, 我们要先把他和父项目关联一下
+
+![](images/Pasted%20image%2020230907144601.png)
+
+然后继续走
+
+![](images/Pasted%20image%2020230907144644.png)
+
+点击import
+
+![](images/Pasted%20image%2020230907144726.png)
+
+添加我们刚才创建的模块
+
+![](images/Pasted%20image%2020230907144752.png)
+
+然后导入即可
+
+然后我们可以看到文件夹有颜色了, 下面配置pom
+
+![](images/Pasted%20image%2020230907145148.png)
+
+把parent替换一下
+
+```xml
+<parent>
+	<groupId>com.objcat</groupId>
+	<artifactId>test-springcloud</artifactId>
+	<version>1.0</version>
+</parent>
+```
+
+让后关联父pom
+
+```xml
+<modules>
+	<module>cloud-provider-payment8001</module>
+</modules>
+```
+
+我们可以看到, 这个创建方法和`new module`比起来非常麻烦, 虽然可以手动选择依赖包, 但当我们熟练后可以直接通过粘贴XML导入依赖, 所以这种方法看看就行, 不要用
+
 ### 🌸 配置子pom
 
-然后我们来看一下子模块的配置
+然后我们点击这个新建的pom文件, 然后把依赖导进去, 一共四个
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -656,7 +732,7 @@ mybatis-plus:
   mapper-locations: classpath:mapper/**/*.xml
 ```
 
-因为数据库我们还没有开始学, 所以你可以像我这样配置, 把url位置写一个占位符, 否则`mybatis-plus`依赖会报错, 如果你有数据库你可以像下面这样配置
+因为数据库我们还没有开始学, 所以你可以像我这样配置, 把url位置写一个占位符比如`1`, 否则`mybatis`会报错, 如果你有数据库你可以像下面这样配置
 
 ```yml
 spring:
@@ -702,9 +778,9 @@ public class TestController {
 }
 ```
 
-`@RestController`是一个Java 注解, 将一个类标记为处理 `RESTful Web` 服务的控制器, 也就是告诉`spring`我们要在这里写接口了
+- `@RestController`是一个Java 注解, 将一个类标记为处理 `RESTful Web` 服务的控制器, 也就是告诉`spring`我们要在这里写接口了
 
-`@RequestMapping("hello")`这是接口的路径, RequestMapping表示可以用任何请求类型, 如`get, post, put, delete`
+- `@RequestMapping("hello")`这是接口的路径, RequestMapping表示可以用任何请求类型, 如`get, post, put, delete`
 
 然后下面的`hello`方法就是我们的接口, 我们按照上面写完后就可以运行我们的应用试一试了
 
@@ -755,7 +831,7 @@ http://localhost:8001/hello
 
 ### 🌸 安装
 
-这个章节不属于`spring-boot`的教学范畴内, 只是为了教学方便就随便写一写, 后续我可能会单独开启一个`mysql`的文档, 当然你不按照这个安装也没关系, 在网上搜搜应该都有, 我们这里就只做简要说明, 推荐使用`docker`来安装, 首先下载`docker`
+这个章节不属于`spring`的教学范畴内, 只是为了教学方便就随便写一写, 后续我可能会单独开启一个`mysql`的文档, 当然你不按照这个安装也没关系, 在网上搜搜应该都有, 我们这里就只做简要说明, 推荐使用`docker`来安装, 首先下载`docker`
 
 https://www.docker.com
 
@@ -940,7 +1016,6 @@ public class TestUserService {
 
 ```xml
 <build>
-	<finalName>sprintcloud2022</finalName>
 	<plugins>
 		<plugin>
 			<groupId>org.springframework.boot</groupId>
@@ -1057,19 +1132,120 @@ open ~/.m2
 <dependency>
     <groupId>com.objcat</groupId>
     <artifactId>cloud-api-common</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 </dependency>
 ```
+
+比如我们的``
 
 ### 🌸 运行测试
 
 然后我们运行项目, 如果能够成功运行, 说明你的通用模块完成了创建
 
+# 🍎 三层架构
+
+这个章节要注意听, 因为它非常重要, 就跟你平时要吃饭要睡觉一样重要
+
+为了方便开发, 我们的`Spring`项目通常都需要遵循三层架构来开发, 即`Controller, Service, Dao`
+
+在你使用插件根据数据库表自动生成代码其实就是生成的这三个层, 我们一起来看看手动创建要怎么做吧
+
+## 🌲 Controller
+
+接口层用来写接口, 我们上面的例子已经写过了
+
+```java
+@RestController
+public class TestController {
+    @RequestMapping("/hello")
+    public String hello() {
+        return "hello world!";
+    }
+}
+```
+
+## 🌲Service/Dao
+
+分别是服务层和数据访问层, 我们这里就引入最常使用到的ORM框架进行讲解, 即`MyBatis-plus`
+
+[跳转 MybatisPlus](1-framework/Mybatis/MyBatisPlus/MybatisPlus.md)
+
+# 🍎 打包
+
+我们要发布服务的时候肯定是要打包的, 我们一起来看看吧
+
+## 🌲 正常打包
+
+如果是正常情况下打包是很简单的, 只需要点击`package`就可以了
+
+![](images/Pasted%20image%2020230903221843.png)
+
+如果哪个依赖找不到无非就是install一下那个依赖, 然后照旧`package`
+
+## 🌲 非正常打包
+
+### 🌸 Downloading from aliyun
+
+```
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------------< com.objcat:test-api >-------------------------
+[INFO] Building test-api 1.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+Downloading from aliyun: https://maven.aliyun.com/repository/public/com/objcat/test-springcloud/1.0/test-springcloud-1.0.pom
+Downloading from central: https://repo.maven.apache.org/maven2/com/objcat/test-springcloud/1.0/test-springcloud-1.0.pom
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  5.099 s
+[INFO] Finished at: 2023-09-03T22:16:26+08:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal on project test-api: Could not resolve dependencies for project com.objcat:test-api:jar:1.0: Failed to collect dependencies at com.objcat:test-api-common:jar:1.0: Failed to read artifact descriptor for com.objcat:test-api-common:jar:1.0: The following artifacts could not be resolved: com.objcat:test-springcloud:pom:1.0 (absent): Could not find artifact com.objcat:test-springcloud:pom:1.0 in aliyun (https://maven.aliyun.com/repository/public) -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/DependencyResolutionException
+```
+
+我们可以看到它尝试在阿里云拉取了父工程的pom, 显而易见云上是没有父工程的pom, 所以编译失败了, 我需要`install`一下父工程
+
+![](images/Pasted%20image%2020230903222149.png)
+
+然后我们发现又报错了
+
+```SHELL
+[FATAL] Non-resolvable parent POM for com.objcat:test-security:1.0: Could not find artifact com.objcat:test-springcloud:pom:1.0 in aliyunmaven (https://maven.aliyun.com/repository/public) and 'parent.relativePath' points at wrong local POM @ line 6, column 13
+[FATAL] Non-resolvable parent POM for com.objcat:test-shiro-token:1.0: com.objcat:test-springcloud:pom:1.0 was not found in https://maven.aliyun.com/repository/public during a previous attempt. This failure was cached in the local repository and resolution is not reattempted until the update interval of aliyunmaven has elapsed or updates are forced and 'parent.relativePath' points at wrong local POM @ line 6, column 13
+[FATAL] Non-resolvable parent POM for com.objcat:test-shiro-session:1.0: com.objcat:test-springcloud:pom:1.0 was not found in https://maven.aliyun.com/repository/public during a previous attempt. This failure was cached in the local repository and resolution is not reattempted until the update interval of aliyunmaven has elapsed or updates are forced and 'parent.relativePath' points at wrong local POM @ line 6, column 13
+[FATAL] Non-resolvable parent POM for com.objcat:test-shiro-jwt:1.0: com.objcat:test-springcloud:pom:1.0 was not found in https://maven.aliyun.com/repository/public during a previous attempt. This failure was cached in the local repository and resolution is not reattempted until the update interval of aliyunmaven has elapsed or updates are forced and 'parent.relativePath' points at wrong local POM @ line 6, column 13
+[FATAL] Non-resolvable parent POM for com.objcat:test-nacos:1.0: com.objcat:test-springcloud:pom:1.0 was not found in https://maven.aliyun.com/repository/public during a previous attempt. This failure was cached in the local repository and resolution is not reattempted until the update interval of aliyunmaven has elapsed or updates are forced and 'parent.relativePath' points at wrong local POM @ line 6, column 13
+```
+
+![](images/Pasted%20image%2020230903224456.png)
+原因出在这几个子模块上面, 因为使用了`0.xxx`做文件夹名, 里面包含`.`后会有问题, 所以他们变的不太老实, 而且这个错误难以排查, 后来我把`.`改成`-`发现可以了
+
+```xml
+<modules>
+	<module>0-test-auth/test-security</module>
+	<module>0-test-auth/test-shiro-token</module>
+	<module>0-test-auth/test-shiro-session</module>
+	<module>0-test-auth/test-shiro-jwt</module>
+	<module>1-test-spring-alibaba/test-nacos</module>
+	<module>2-test-spring-cloud/test-spring-boot-starter-web</module>
+	<module>test-api</module>
+	<module>test-api-common</module>
+</modules>
+```
+
+
 # 🍎 接口
 
 ## 🌲 写法
 
-Java中的方法对应着接口
+这一章记录接口有哪些写法
 
 ### 🌸 返回字符串
 
@@ -1649,76 +1825,6 @@ public class TestExceptionHandler {
 ```
 
 我们发现是一段json, 而不是那个报错的空白页面了
-
-# 🍎 打包
-
-我们要发布服务的时候肯定是要打包的, 我们一起来看看吧
-
-## 🌲 正常打包
-
-如果是正常情况下打包是很简单的, 只需要点击`package`就可以了
-
-![](images/Pasted%20image%2020230903221843.png)
-
-如果哪个依赖找不到无非就是install一下那个依赖, 然后照旧`package`
-
-## 🌲 非正常打包
-
-### 🌸 Downloading from aliyun
-
-```
-[INFO] Scanning for projects...
-[INFO] 
-[INFO] ------------------------< com.objcat:test-api >-------------------------
-[INFO] Building test-api 1.0
-[INFO]   from pom.xml
-[INFO] --------------------------------[ jar ]---------------------------------
-Downloading from aliyun: https://maven.aliyun.com/repository/public/com/objcat/test-springcloud/1.0/test-springcloud-1.0.pom
-Downloading from central: https://repo.maven.apache.org/maven2/com/objcat/test-springcloud/1.0/test-springcloud-1.0.pom
-[INFO] ------------------------------------------------------------------------
-[INFO] BUILD FAILURE
-[INFO] ------------------------------------------------------------------------
-[INFO] Total time:  5.099 s
-[INFO] Finished at: 2023-09-03T22:16:26+08:00
-[INFO] ------------------------------------------------------------------------
-[ERROR] Failed to execute goal on project test-api: Could not resolve dependencies for project com.objcat:test-api:jar:1.0: Failed to collect dependencies at com.objcat:test-api-common:jar:1.0: Failed to read artifact descriptor for com.objcat:test-api-common:jar:1.0: The following artifacts could not be resolved: com.objcat:test-springcloud:pom:1.0 (absent): Could not find artifact com.objcat:test-springcloud:pom:1.0 in aliyun (https://maven.aliyun.com/repository/public) -> [Help 1]
-[ERROR] 
-[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
-[ERROR] Re-run Maven using the -X switch to enable full debug logging.
-[ERROR] 
-[ERROR] For more information about the errors and possible solutions, please read the following articles:
-[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/DependencyResolutionException
-```
-
-我们可以看到它尝试在阿里云拉取了父工程的pom, 显而易见云上是没有父工程的pom, 所以编译失败了, 我需要`install`一下父工程
-
-![](images/Pasted%20image%2020230903222149.png)
-
-然后我们发现又报错了
-
-```SHELL
-[FATAL] Non-resolvable parent POM for com.objcat:test-security:1.0: Could not find artifact com.objcat:test-springcloud:pom:1.0 in aliyunmaven (https://maven.aliyun.com/repository/public) and 'parent.relativePath' points at wrong local POM @ line 6, column 13
-[FATAL] Non-resolvable parent POM for com.objcat:test-shiro-token:1.0: com.objcat:test-springcloud:pom:1.0 was not found in https://maven.aliyun.com/repository/public during a previous attempt. This failure was cached in the local repository and resolution is not reattempted until the update interval of aliyunmaven has elapsed or updates are forced and 'parent.relativePath' points at wrong local POM @ line 6, column 13
-[FATAL] Non-resolvable parent POM for com.objcat:test-shiro-session:1.0: com.objcat:test-springcloud:pom:1.0 was not found in https://maven.aliyun.com/repository/public during a previous attempt. This failure was cached in the local repository and resolution is not reattempted until the update interval of aliyunmaven has elapsed or updates are forced and 'parent.relativePath' points at wrong local POM @ line 6, column 13
-[FATAL] Non-resolvable parent POM for com.objcat:test-shiro-jwt:1.0: com.objcat:test-springcloud:pom:1.0 was not found in https://maven.aliyun.com/repository/public during a previous attempt. This failure was cached in the local repository and resolution is not reattempted until the update interval of aliyunmaven has elapsed or updates are forced and 'parent.relativePath' points at wrong local POM @ line 6, column 13
-[FATAL] Non-resolvable parent POM for com.objcat:test-nacos:1.0: com.objcat:test-springcloud:pom:1.0 was not found in https://maven.aliyun.com/repository/public during a previous attempt. This failure was cached in the local repository and resolution is not reattempted until the update interval of aliyunmaven has elapsed or updates are forced and 'parent.relativePath' points at wrong local POM @ line 6, column 13
-```
-
-![](images/Pasted%20image%2020230903224456.png)
-原因出在这几个子模块上面, 因为使用了`0.xxx`做文件夹名, 里面包含`.`后会有问题, 所以他们变的不太老实, 而且这个错误难以排查, 后来我把`.`改成`-`发现可以了
-
-```xml
-<modules>
-	<module>0-test-auth/test-security</module>
-	<module>0-test-auth/test-shiro-token</module>
-	<module>0-test-auth/test-shiro-session</module>
-	<module>0-test-auth/test-shiro-jwt</module>
-	<module>1-test-spring-alibaba/test-nacos</module>
-	<module>2-test-spring-cloud/test-spring-boot-starter-web</module>
-	<module>test-api</module>
-	<module>test-api-common</module>
-</modules>
-```
 
 # 🍎 依赖库
 

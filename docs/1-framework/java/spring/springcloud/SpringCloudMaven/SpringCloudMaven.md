@@ -123,13 +123,13 @@ https://start.spring.io
 
 # 🍎 快速开始
 
-## 🌲 创建项目(父工程)
+## 🌲 创建父工程
 
-我们创建工程主要用的思想就是`SpringCloud微服务思想`, 所以我们需要先创建一个父工程, 在里面配置好依赖, 然后再创建子工程遵循这些依赖, 这样我们就可以通过无限扩展子工程来进行微服务方式的开发了
+这个模块会快速教你搭建一个`Spring`项目, 你准备好了嘛
 
-创建项目的方法很多, 我们主要来看两个
+我们创建工程主要用的思想就是`SpringCloud微服务思想`, 所以我们需要先创建一个父工程, 在里面配置好依赖, 然后再创建子模块(微服务)遵循这些依赖, 这样我们就可以通过无限扩展子模块来进行微服务方式的开发了
 
-新建一个普通Maven项目做spring-cloud的父工程, 随便起个名, 比如`test-springcloud`, 这个是老版本的创建界面, 新版本同理, 凑合看吧, 我这里选择的是`1.8`版本的java, 也就是`java8`
+新建一个普通Maven项目做父工程, 随便起个名如`test-springcloud`, 可以选择`java8`也可以选择`java17`
 
 ![](images/Pasted%20image%2020230822100800.png)
 
@@ -137,7 +137,7 @@ https://start.spring.io
 
 ![](images/Pasted%20image%2020230908104101.png)
 
-## 🌲 配置Maven
+### 🌸 配置Maven
 
 创建后可以出现这样的问题, 如果没问题则不需要配置
 
@@ -149,11 +149,9 @@ The desired archetype does not exist (org.apache.maven.archetypes:maven-archetyp
 
 [跳转 Maven](../../../../../4-package-manager/Maven/Maven.md)
 
-## 🌲 配置IDEA
+### 🌸 配置IDEA
 
 [跳转 IDEA 配置](../../../../../3-program/IDE/IDEA/IDEA/IDEA.md)
-
-## 🌲 配置父工程
 
 ### 🌸 选择版本
 
@@ -210,7 +208,7 @@ bundle：生成一个 OSGi Bundle，用于在 OSGi 容器中部署。
 
 ### 🌸 定义pom属性
 
-我们既然选择了版本然后我们来配置一下pom属性, 主要是定义一些版本号, 在父工程中一次性定义可以在所有子工程中应用, 保持一致性, 你直接粘贴进去就行, 怎么使用以后就知道了
+我们选择版本后最好来配置一下`pom`属性, 主要是定义一些版本号, 在父工程中一次性定义可以在所有子工程中应用, 保持一致性, 你直接粘贴进去就行, 怎么使用以后就知道了
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -239,7 +237,7 @@ bundle：生成一个 OSGi Bundle，用于在 OSGi 容器中部署。
 </project>
 ```
 
-最显眼的就是最下面的三个, 跟我上面约定的版本是一致的, 其他都是一些常用的依赖
+最显眼的就是最下面的三个, 跟我上面约定的版本是一致的, 其他都是一些常用的依赖库版本
 
 ### 🌸 配置仓库镜像源
 
@@ -848,6 +846,35 @@ http://localhost:8001/hello
 ![](images/Pasted%20image%2020230404145606.png)
 
 我们看到网页上出现`hello world`, 到此你已经搭建出来`Spring`项目了, 赶紧喝杯饮料庆祝一下吧!
+
+### 🌸 读取配置文件
+
+配置文件不一定是固定内容也可以配置自定义内容, 我们下面就来看看, 比如我给配置文件加点东西
+
+```yml
+test-config:
+  name: "张三"
+```
+
+然后我们就可以在程序中使用这个配置了, 我们使用`@Value`来读取配置
+
+```java
+@RestController
+public class TestController {
+
+    @Value("${test-config.name}")
+    private String name;
+
+    @RequestMapping("hello")
+    public String hello() {
+        return "hello world " + name;
+    }
+}
+```
+
+然后我们访问是可以看到张三的, 这就是配置文件的自定义应用
+
+![](images/Pasted%20image%2020230908142852.png)
 
 # 🍎 三层架构
 

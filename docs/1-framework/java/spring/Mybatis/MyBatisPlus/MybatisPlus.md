@@ -81,7 +81,7 @@ dependencies {
 }
 ```
 
-# 🍎 数据库配置四部曲
+# 🍎 配置
 
 ## 🌲 配置连接
 
@@ -149,7 +149,9 @@ public interface UserMapper extends BaseMapper<UserDO> {
 
 我们可以看到`controller, service, dao, entity, mapper`都齐全, 这就是我们的项目结构了, 也是spring编程中要遵守的, 不要着急, 我们往下看
 
-# 🍎 快速开始
+# 🍎 三层架构
+
+我们在这里就开始学习`Mybatis-Plus`在三层架构上的应用了
 
 ## 🌲 创建数据库
 
@@ -313,7 +315,7 @@ private String id;
 
 ![](images/Pasted%20image%2020230907165008.png)
 
-Mapper是数据访问层, 我们看看要怎么实现, 我们创建一个`UserMapper接口`继承于`BaseMapper`, 后者是`MyBatis-plus`提供的公共`Mapper`类, 用于做一些通用的增删改查
+Mapper属于`数据访问层`, 在三层架构中叫做`Dao`, 我们看看要怎么实现, 我们创建一个`UserMapper接口`继承于`BaseMapper`, 后者是`MyBatis-plus`提供的公共`Mapper`类, 用于做一些通用的增删改查
 
 ```java
 public interface UserMapper extends BaseMapper<UserDO> {
@@ -1137,7 +1139,7 @@ public void testSelectUsers2() {
 }
 ```
 
-![](images/1.png)
+![](images/MybatisPlus/1.png)
 
 # 🍎 分页
 
@@ -1230,7 +1232,6 @@ public class UserDO {
 使用`@Alias`来定义一个别名, 然后在`xml`中就可以直接写这个别名了
 
 ```xml
-
 <select id="listUsers" resultType="com.objcat.common.entitys.UserDO">
 	SELECT *
 	FROM objcat.user

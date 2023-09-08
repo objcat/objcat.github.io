@@ -133,6 +133,10 @@ https://start.spring.io
 
 ![](images/Pasted%20image%2020230822100800.png)
 
+新建完成后的结构是这样的
+
+![](images/Pasted%20image%2020230908104101.png)
+
 ## 🌲 配置Maven
 
 创建后可以出现这样的问题
@@ -141,7 +145,7 @@ https://start.spring.io
 The desired archetype does not exist (org.apache.maven.archetypes:maven-archetype-archetype:1.0)
 ```
 
-那我们就要去配置`maven`, 可以参考我的文档
+那你可能就要去配置`maven`, 可以参考我的文档
 
 [跳转 Maven](../../../../../4-package-manager/Maven/Maven.md)
 
@@ -542,7 +546,7 @@ maven跳过单元测试(可以节约时间), 只需要点击上面的闪电按�
 
 ![image-20220306223928132](images/image-20220306223928132.png)
 
-## 🌲 创建服务
+## 🌲 创建服务(开始写接口了)
 
 配置完父模块, 我们终于可以开始写接口了, 在`spring-cloud`中我们会把业务模块细分成一个一个的微服务, 每个服务都可以单独进行发布, 单独运行, 我们下面要创建的`module`就是一个微服务了, 单个服务用的技术叫`SpringBoot`是一个不需要过多配置就可以跑起来的后台应用
 
@@ -554,9 +558,13 @@ maven跳过单元测试(可以节约时间), 只需要点击上面的闪电按�
 
 起名为`cloud-provider-payment8001`, 我觉得这个名字很冗长, 你可以随便起名字不一定非要起这个
 
-![image-20220306224937447](images/image-20220306224937447.png)
+![](images/Pasted%20image%2020230908103538.png)
 
-新建完成后我们点击pom查看一下, 我们可以看`parent`标签中是父模块的名字, 证明我们继承父模块的配置成功了
+新建完成后的目录结构是这样的
+
+![](images/Pasted%20image%2020230908103659.png)
+
+我们点击pom查看一下, 我们可以看`parent`标签中是父模块的名字, 证明我们继承父模块的配置成功了
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -829,46 +837,13 @@ http://localhost:8001/hello
 
 ## 🌲 安装MySQL
 
+我们在开发中时长需要在数据库中读取写入数据, 所以要学习本教程这个数据库是要去安装的
+
 ### 🌸 安装
 
-这个章节不属于`spring`的教学范畴内, 只是为了教学方便就随便写一写, 后续我可能会单独开启一个`mysql`的文档, 当然你不按照这个安装也没关系, 在网上搜搜应该都有, 我们这里就只做简要说明, 推荐使用`docker`来安装, 首先下载`docker`
+这个章节不属于`spring`的教学范畴内, 只是为了教学方便就随便写一写, 跳转查看
 
-https://www.docker.com
-
-然后我们使用`docker-compose`来创建mysql, 新建`docker-compose.yml`然后写入下面内容
-
-```yml
-version: '3'
-services:
-  mysql:
-    image: mysql:5.7
-    container_name: mysql
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-    restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=123456
-      - TZ=Asia/Shanghai
-    ports:
-      - 3306:3306
-    volumes:
-      - ./mysql/data:/var/lib/mysql
-      - ./mysql/log:/var/log/mysql
-      - ./mysql/conf:/etc/mysql
-```
-
-然后cd到该文件所在的文件夹运行docker命令
-
-```
-docker-compose up -d
-```
-
-运行完毕后我们来检查一下`mysql`是否启动起来了, 看到下面的提示就是成功了
-
-```
-docker ps
-
-739f4772aa52   mysql:5.7      "docker-entrypoint.s…"   6 minutes ago   Up 6 minutes   0.0.0.0:3306->3306/tcp, 33060/tcp   mysql
-```
+[跳转 mysql_env](../../../../../3-program/env/mysql/mysql_env.md)
 
 ### 🌸 测试
 
@@ -1150,7 +1125,7 @@ open ~/.m2
 
 在你使用插件根据数据库表自动生成代码其实就是生成的这三个层, 我们一起来看看手动创建要怎么做吧
 
-## 🌲 Controller
+## 🌲 Controller(控制层/接口层)
 
 接口层用来写接口, 我们上面的例子已经写过了
 
@@ -1166,7 +1141,7 @@ public class TestController {
 
 ## 🌲Service/Dao
 
-分别是服务层和数据访问层, 我们这里就引入最常使用到的ORM框架进行讲解, 即`MyBatis-plus`
+分别是`服务层/业务逻辑层`和`数据访问层/持久层`, 因为篇幅比较长, 我们这里就引入最常使用到的`ORM`框架进行讲解, 点击跳转来学习三层架构
 
 [跳转 MybatisPlus](../../Mybatis/MyBatisPlus/MybatisPlus.md)
 

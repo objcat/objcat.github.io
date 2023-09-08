@@ -32,7 +32,7 @@ B) 领域模型命名规约
 
 ## 🌲 安装MySQL
 
-自行安装
+[跳转 mysql_env](../../../../../3-program/env/mysql/mysql_env.md)
 
 ## 🌲 连接数据库
 
@@ -141,17 +141,17 @@ public interface UserMapper extends BaseMapper<UserDO> {
 }
 ```
 
-# 🍎 工程样子
+# 🍎 三层架构
+
+我们在这里就开始学习`Mybatis-Plus`在三层架构上的应用了
+
+## 🌲 工程样子
 
 我们需要先来看一看完成Demo的结构
 
 ![](images/Pasted%20image%2020230907160332.png)
 
 我们可以看到`controller, service, dao, entity, mapper`都齐全, 这就是我们的项目结构了, 也是spring编程中要遵守的, 不要着急, 我们往下看
-
-# 🍎 三层架构
-
-我们在这里就开始学习`Mybatis-Plus`在三层架构上的应用了
 
 ## 🌲 创建数据库
 
@@ -215,19 +215,10 @@ public class UserDO {
 
 值得注意的是`@TableName("user")`必须要写, 否则`mybatis`会给我解析成`user_d_o`表从而从查询不到数据, 不过好在你如果忘记配置这一条后, 会在错误提示中很容易就看到问题
 
-### 🌸 @Data
-
-`lombok`的注解, 自动生成`setter/getter`方法
-
-### 🌸 @TableName
-
-指定表名, 如果不指定默认是类名(忽略大小写), 如果实体与数据库表不一致则这一项必须要指定, 否则会找不到表, 比如上文中`UserDO`和`user`表不一样, 所以必须指定
-
-### 🌸 @TableId
-
-指定主键, value是主键的名字, 如果和数据库不一致需要修改成数据库中的, 驼峰命名法默认可以转换为数据库中的下划线写法, 比如`dogId`可以转换成`dog_id`
-
-`type`是设置主键生成策略, 有些是自增, 由数据库自己生成, 有些则是UUID或是雪花算法, 我们来看一下它提供了机种类型
+- `@Data`s是`lombok`的注解, 自动生成`setter/getter`方法
+- `@TableName`用来指定表名, 如果不指定默认是类名(忽略大小写), 如果实体与数据库表不一致则这一项必须要指定, 否则会找不到表, 比如上文中`UserDO`和`user`表不一样, 所以必须指定
+- `@TableId`用来指定主键, value是主键的名字, 如果和数据库不一致需要修改成数据库中的, 驼峰命名法默认可以转换为数据库中的下划线写法, 比如`dogId`可以转换成`dog_id`
+- `type`是设置主键生成策略, 有些是自增, 由数据库自己生成, 有些则是UUID或是雪花算法, 我们来看一下它提供了机种类型
 
 ```java
 @Getter
@@ -488,11 +479,15 @@ http://localhost:8080/listUser
 
 到此就是三层架构写接口的全过程, 完结撒花, 下面是扩展章节
 
-## 🌲 XML
+# 🍎 XML CRUD
 
-### 🌸  创建初始XML
+使用XML来写SQL一直是`MyBatis`的一大特色, 我们就先来学习最传统的`增删改查`
 
-`resources`目录下新建`mapper`文件夹, 创建文件`UserMapper.xml`,  下面就是xml初始化必须的内容
+## 🌲 快速开始
+
+### 🌸  创建XML
+
+`resources`目录下新建`mapper`文件夹, 创建文件`UserMapper.xml`用于写`user表`相关`SQL`,  下面就是`XML`的初始配置内容, 称为`文件头`
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -503,61 +498,64 @@ http://localhost:8080/listUser
 
 为什么叫初始, 因为一切都要从这里开始, 我们可以看到上面有一个网址, 打开是一个`.dtd`文件用于规范此XML中的语法
 
-### 🌸  绑定查询
+### 🌸  mapper新增方法
 
-我们主要是来看一下`xml`怎么与`.java`绑定
+我们在mapper中新增一个查询方法
 
-首先我们在里面写一个`mapper`标签
+```java
+public interface UserMapper extends BaseMapper<UserDO> {
+    List<UserDO> listUser();
+}
+```
+
+### 🌸  mapper和xml绑定
+
+用`namespace`属性指定所属的`UserMapper`接口类, 这一步叫做`绑定`
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.objcat.mybatisplus.mapper.UserMapper">
-    <select id="listUsers" resultType="com.objcat.common.entitys.UserDO">
+
+<mapper namespace="com.objcat.web.dao.UserMapper">
+
+</mapper>
+```
+
+绑定后, 我们返回`Mapper`, 可以看到`MyBatisX`插件会自动提示我们没有`XML`中的查询语句
+
+![](images/截屏2023-09-08%2015.06.39.png)
+
+我们可以点击上面的`Generate statement`来自动生成`XML`语句, 也可以手动写, 我们把这个过程叫做绑定
+
+### 🌸  手写查询
+
+我们使用`select`标签来描述一个查询`SQL`, 需要注意的是表名前面不要写成`数据库.表名`要跟我一样只写一个`表名`, 因为带数据库名的书写方式扩展性不好, 如果写出表名后`报红`就配置一下`schema`使用`IDEA`的自动修复也就是`option+回车`或鼠标悬停在上面就能查看修复方案了
+
+![](images/Pasted%20image%2020230908163523.png)
+
+修复好后我们可以看到屏幕的最上面会显示当前XML连接的数据库
+
+![](images/Pasted%20image%2020230908163618.png)
+
+然后我们来看看语法
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.objcat.web.mapper.UserMapper">
+    <select id="listUser" resultType="com.objcat.web.entity.UserDO">
         SELECT *
-        FROM objcat.user
+        FROM user
     </select>
 </mapper>
 ```
 
-用`namespace`属性指定所属的`UserMapper`接口类, 这一步叫做`绑定`
-使用`select`标签来实现一个查询功能
-
-然后我们在`UserMapper.java`中添加一个方法
-
-```java
-public interface UserMapper extends BaseMapper<UserDO> {
-    List<UserDO> listUsers();
-}
-```
-
-#### 🌵 id
-
-方法名
-
-与`UserMapper.java`的方法名一一对应
-
-```java
-public interface UserMapper extends BaseMapper<UserDO> {
-    List<UserDO> selectAll();
-}
-```
-
-#### 🌵 resultType
-
-返回值类型
-
-必须要写否则会报错`A query was run and no Result Maps were found for the Mapped Statement`
-
-#### 🌵 语句
-
-`select`标签中间就是写我们的语句
-
-```sql
-select * from objcat.user
-```
+- `id`是我们的方法名`listUser`
+- `resultType`是我们方法返回的数据类型, 我们填写`UserDO`, 不写会报错`A query was run and no Result Maps were found for the Mapped Statement`
 
 ### 🌸  SQL语句重用
 
@@ -565,32 +563,51 @@ select * from objcat.user
 
 ```sql
 <sql id="fields">
-	id, name, username, password, salt, create_time, update_time, is_delete
+	id, name, age, dog_id
 </sql>
 ```
 
-我们在查询的时候就可以直接使用它了
+我们在查询的时候就可以使用`<include>`来引用它
 
 ```xml
-<select id="selectByUsername" resultType="com.objcat.shiro.entity.UserDO">
+<select id="selectById" resultType="com.objcat.web.entity.UserDO">
 	SELECT
 	<include refid="fields" />
-	FROM test_shiro.user
-	WHERE username=#{username}
+	FROM user
+	WHERE id=#{id}
 </select>
 ```
 
-# 🍎 XML CRUD
+### 🌸  测试
+
+我们一起来测试一下
+
+```java
+@Test
+public void loadContext() {
+	List<UserDO> list2 = userMapper.listUser();
+	System.out.println(list2); 
+	// [UserDO(id=1, name=张三, age=18, dogId=1), UserDO(id=2, name=李四, age=20, dogId=2), UserDO(id=1699703719342141442, name=王五, age=18, dogId=1), UserDO(id=1699707091805065217, name=赵六, age=18, dogId=1)]
+}
+```
 
 ## 🌲 增
 
 ### 🌸  普通插入数据
 
-```xml
-Boolean testInsert(UserDO user);
+我们在`mapper`里添加这个方法
 
-<insert id="testInsert" parameterType="com.objcat.common.entitys.UserDO">
-	INSERT INTO objcat.user (name, age, dog_id)
+```java
+public interface UserMapper extends BaseMapper<UserDO> {
+    Boolean testInsert(UserDO user);
+}
+```
+
+然后在`XML`中实现
+
+```xml
+<insert id="testInsert" parameterType="com.objcat.web.entity.UserDO">
+	INSERT INTO user (name, age, dog_id)
 	VALUES (#{name}, #{age}, #{dogId})
 </insert>
 ```
@@ -620,8 +637,8 @@ CREATE TABLE user
 (
     id          bigint AUTO_INCREMENT
         PRIMARY KEY,
-    name        text                         NULL,
-    age         char(5)                      NULL,
+    name        varchar(4)                   NULL,
+    age         varchar(3)                   NULL,
     dog_id      int                          NULL,
     create_time datetime                     NULL,
     update_time datetime                     NULL,
@@ -780,8 +797,8 @@ public void testEqual() {
 这个比上面的更加简单, 只需要修改时间的生成策略即可
 
 ```sql
-ALTER TABLE objcat.user MODIFY create_time datetime NOT NULL DEFAULT CURRENT_TIMESTAMP;
-ALTER TABLE objcat.user MODIFY update_time datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+ALTER TABLE user MODIFY create_time datetime NOT NULL DEFAULT CURRENT_TIMESTAMP;
+ALTER TABLE user MODIFY update_time datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
 ```
 
 然后我们把model中的注解去掉, 就可以随便进行插入了
@@ -813,7 +830,7 @@ Boolean testDeleteById(Long id);
 
 <delete id="testDeleteById">
 	DELETE
-	FROM objcat.user
+	FROM user
 	WHERE id = #{id}
 </delete>
 ```
@@ -834,7 +851,7 @@ public void testDelete() {
 Boolean testUpdateNameById(String name, Long id);
 
 <update id="testUpdateNameById">
-	UPDATE objcat.user
+	UPDATE user
 	SET name=#{name}
 	WHERE id = #{id}
 </update>
@@ -851,9 +868,9 @@ Boolean testUpdateNameById(String name, Long id);
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.objcat.mybatisplus.mapper.UserMapper">
-    <select id="listUsers" resultType="com.objcat.common.entitys.UserDO">
-        select * from objcat.user
+<mapper namespace="com.objcat.web.mapper.UserMapper">
+    <select id="listUsers" resultType="com.objcat.web.entity.UserDO">
+        select * from user
     </select>
 </mapper>
 ```
@@ -864,7 +881,7 @@ public interface UserMapper extends BaseMapper<UserDO> {
 }
 ```
 
-需要注意的是我们写方法的时候要注意返回值, 查询所有数据返回的是一个列表, 我们必须使用`List<UserDO>`来接收, 如果使用`UserDO`来接收就会报出错误`org.apache.ibatis.exceptions.TooManyResultsException`结果太多了
+需要注意的是我们写方法的时候要注意返回值, 查询所有数据返回的是一个列表, 我们必须使用`List<UserDO>`来接收, 如果使用`UserDO`来接收就会报出错误`org.apache.ibatis.exceptions.TooManyResultsException`也就是结果太多了
 
 ### 🌸  有参数查询
 
@@ -877,12 +894,12 @@ public interface UserMapper extends BaseMapper<UserDO> {
 UserDO getUserById(Long id);
 List<UserDO> listUsersById(Long id);
 
-<select id="getUserById" resultType="com.objcat.common.entitys.UserDO">
-	select * from objcat.user where id=#{id}
+<select id="getUserById" resultType="com.objcat.web.entity.UserDO">
+	select * from user where id=#{id}
 </select>
 
-<select id="listUsersById" resultType="com.objcat.common.entitys.UserDO">
-	select * from objcat.user where id=#{id}
+<select id="listUsersById" resultType="com.objcat.web.entity.UserDO">
+	select * from user where id=#{id}
 </select>
 ```
 
@@ -917,8 +934,8 @@ public void testXMLSelectP() {
 ```xml
 UserDO getUserByUser(UserDO id);
 
-<select id="getUserByUser" resultType="com.objcat.common.entitys.UserDO">
-	select * from objcat.user where id=#{id}
+<select id="getUserByUser" resultType="com.objcat.web.entity.UserDO">
+	select * from user where id=#{id}
 </select>
 ```
 
@@ -940,8 +957,8 @@ public void testXMLSelectP() {
 ```xml
 UserDO getUserByUserAndId(UserDO user, Long id);
 
-<select id="getUserByUserAndId" resultType="com.objcat.common.entitys.UserDO">
-	select * from objcat.user where id=#{id}
+<select id="getUserByUserAndId" resultType="com.objcat.web.entity.UserDO">
+	select * from user where id=#{id}
 </select>
 ```
 
@@ -968,7 +985,7 @@ UserDO(id=1574366765331222530, name=张三, age=18, dogId=1)
 ### 🌸  resultMap
 
 ```xml
-<resultMap id="userResultMap" type="com.objcat.common.entitys.UserDO">
+<resultMap id="userResultMap" type="com.objcat.web.entity.UserDO">
 	<id column="id" jdbcType="BIGINT" property="id"/>
 	<result property="name" column="name" jdbcType="VARCHAR" />
 	<result property="age" column="age" jdbcType="CHAR" />
@@ -976,26 +993,11 @@ UserDO(id=1574366765331222530, name=张三, age=18, dogId=1)
 </resultMap>
 ```
 
-#### 🌵 id
+- `property`实体中的字段名, 写错了会报错
+- `column`数据库中的字段名, 写错了对应字段会为null
+- `jdbcType` 数据库中字段的类型
 
-结果集名称, 引用的时候用
-
-#### 🌵 type
-
-实体引用路径
-
-#### 🌵 property, column
-
-`property`实体中的字段名, 写错了会报错
-`column`数据库中的字段名, 写错了对应字段会为null
-
-意思是把数据库的某个字段映射到实体上
-
-#### 🌵 jdbcType
-
-数据库中字段的类型
-
-据说是如果没有会在更新的时候会遇到奇怪的问题
+据说是如果没有`jdbcType`会在更新的时候会遇到奇怪的问题
 
 ```
 Exception in thread "main" org.springframework.jdbc.UncategorizedSQLException: Error setting null for parameter #6 with JdbcType OTHER .
@@ -1032,8 +1034,8 @@ List<UserInfoDTO> listUsersJoin();
 ```xml
 <select id="listUsersJoin" resultType="com.objcat.common.entity.UserInfoDTO">
 	SELECT u.id, u.name, u.age, u.dog_id, d.name 'dog_name'
-	FROM objcat.user u
-			 LEFT JOIN objcat.dog d ON d.id = u.dog_id
+	FROM user u
+			 LEFT JOIN dog d ON d.id = u.dog_id
 </select>
 ```
 
@@ -1070,31 +1072,31 @@ public class UserDogDTO {
     
 <select id="listUsersJoinDog" resultMap="userDogResultMap">
 	SELECT user.id, user.name, user.age, user.dog_id, dog.name 'dog_name'
-	FROM objcat.user,
-		 objcat.dog
+	FROM user,
+		 dog
 </select>
 ```
 
-# 🍎 注解CRUD
+# 🍎 注解 CRUD
 
 ## 🌲 增
 
 ```java
-@Insert("INSERT INTO objcat.user (name, age, dog_id) VALUES (#{name}, #{age}, #{dogId})")
+@Insert("INSERT INTO user (name, age, dog_id) VALUES (#{name}, #{age}, #{dogId})")
 Boolean testInsert(UserDO user);
 ```
 
 ## 🌲 删
 
 ```java
-@Delete("DELETE FROM objcat.user WHERE id = #{id}")
+@Delete("DELETE FROM user WHERE id = #{id}")
 Boolean testDeleteById(Long id);
 ```
 
 ## 🌲 改
 
 ```java
-@Update("UPDATE objcat.user SET name = #{name} WHERE id = #{id}")
+@Update("UPDATE user SET name = #{name} WHERE id = #{id}")
 int testUpdateNameById(String name, Long id);
 ```
 
@@ -1105,7 +1107,7 @@ int testUpdateNameById(String name, Long id);
 与`xml`不同的是, 使用注解的方式做查询会更加方便, 我们在原来的`mapper`方法上面加上注解`@Select`然后进行查询就可以了
 
 ```java
-@Select("SELECT id FROM objcat.user")
+@Select("SELECT id FROM user")
 List<UserDO> listUsers();
 ```
 
@@ -1121,7 +1123,7 @@ Parsed mapper file: 'file [G:\project\Java\test-springboot-gradle\test-mybatispl
 ### 🌸  有参数查询
 
 ```java
-@Select("SELECT * FROM objcat.user WHERE id=#{id}")
+@Select("SELECT * FROM user WHERE id=#{id}")
 UserDO getUserById(Long id);
 ```
 
@@ -1213,7 +1215,7 @@ Closing non transactional SqlSession [org.apache.ibatis.session.defaults.Default
 
 # 🍎 ~~别名~~
 
-我们在配置类名的时候, 往往写的都比较冗长比如`com.objcat.common.entitys.UserDO`怎么简化呢, 其实有办法, 那就是别名
+我们在配置类名的时候, 往往写的都比较冗长比如`com.objcat.web.entity.UserDO`怎么简化呢, 其实有办法, 那就是别名
 
 ```java
 @Data
@@ -1232,16 +1234,16 @@ public class UserDO {
 使用`@Alias`来定义一个别名, 然后在`xml`中就可以直接写这个别名了
 
 ```xml
-<select id="listUsers" resultType="com.objcat.common.entitys.UserDO">
+<select id="listUsers" resultType="com.objcat.web.entity.UserDO">
 	SELECT *
-	FROM objcat.user
+	FROM user
 </select>
 
 替换后
     
 <select id="listUsers" resultType="UserDO">
 	SELECT *
-	FROM objcat.user
+	FROM user
 </select>
 ```
 

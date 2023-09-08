@@ -121,7 +121,7 @@ https://start.spring.io
 | Bus | ❌ | 不推荐 |
 | Nacos | ✔️ | 替换方案 |
 
-# 🍎 搭建项目
+# 🍎 快速开始
 
 ## 🌲 创建项目(父工程)
 
@@ -139,7 +139,7 @@ https://start.spring.io
 
 ## 🌲 配置Maven
 
-创建后可以出现这样的问题
+创建后可以出现这样的问题, 如果没问题则不需要配置
 
 ```
 The desired archetype does not exist (org.apache.maven.archetypes:maven-archetype-archetype:1.0)
@@ -153,7 +153,7 @@ The desired archetype does not exist (org.apache.maven.archetypes:maven-archetyp
 
 [跳转 IDEA 配置](../../../../../3-program/IDE/IDEA/IDEA/IDEA.md)
 
-## 🌲 配置父工程pom
+## 🌲 配置父工程
 
 ### 🌸 选择版本
 
@@ -221,7 +221,7 @@ bundle：生成一个 OSGi Bundle，用于在 OSGi 容器中部署。
 
     <groupId>com.objcat</groupId>
     <artifactId>test-springcloud</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -240,6 +240,28 @@ bundle：生成一个 OSGi Bundle，用于在 OSGi 容器中部署。
 ```
 
 最显眼的就是最下面的三个, 跟我上面约定的版本是一致的, 其他都是一些常用的依赖
+
+### 🌸 配置仓库镜像源
+
+因为`maven`仓库在国外, 拉取依赖速度比较慢, 所以我们先配置镜像源总是没错的, 体验飞速下载, 放在`</properties>`下面
+
+```xml
+<repositories>
+	<repository>
+		<id>aliyun</id>
+		<name>aliyun</name>
+		<url>https://maven.aliyun.com/repository/public</url>
+		<releases>
+			<enabled>true</enabled>
+		</releases>
+		<snapshots>
+			<enabled>false</enabled>
+		</snapshots>
+	</repository>
+</repositories>
+```
+
+https://developer.aliyun.com/mirror/maven?spm=a2c6h.13651102.0.0.44d61b112BnMIT
 
 ### 🌸 配置dependencyManagement
 
@@ -296,11 +318,26 @@ bundle：生成一个 OSGi Bundle，用于在 OSGi 容器中部署。
             </dependency>
         </dependencies>
     </dependencyManagement>
-    
+
+	<repositories>
+		<repository>
+			<id>aliyun</id>
+			<name>aliyun</name>
+			<url>https://maven.aliyun.com/repository/public</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+    </repositories>
 </project>
 ```
 
-上面我们分别配置了`spring-boot`, `spring-cloud`和`spring-cloud-alibaba`的`依赖管理声明`, 那么你肯定想知道他们是怎么管理的, 我们一起来看, 首先把配置文件填入父POM中, 然后我们同步一下
+上面我们分别配置了`spring-boot`, `spring-cloud`和`spring-cloud-alibaba`的`依赖管理声明`, 我们可以发现`<version>`标签里面使用的是上一节定义的变量, 也就是依赖版本, 这非常方便, 如果需要升级版本只需要修改定义的属性就可以了
+
+经过上面的学习我们已经学会配置`Maven BOM`了, 那么你知道他们是怎么管理版本的吗? 我们一起来看, 首先同步一下, 同步的按钮就在我们的`IDEA`的右上角, 有一个`Maven`的标签
 
 ![](images/Pasted%20image%2020230907153157.png)
 
@@ -315,43 +352,68 @@ bundle：生成一个 OSGi Bundle，用于在 OSGi 容器中部署。
 
 我们会发现库中的`pom`里包含了大量的版本号,`依赖管理声明`就是利用这些版本号对子依赖进行管理的, 所以我们配置里面包含的库就不需要再加上版本了, 这些`依赖管理声明`会自动给我们管理补全, 所以说配置`依赖管理声明`会更加方便管理, 让项目中的库都保持一致性
 
-### 🌸 dependencyManagement拓展
+### 🌸 拓展
 
-如果觉得迷糊可以先跳过这一节, 之后再回来看它也可以
-
-接下来我们说一些, 可能`有些人`甚至`入行了很多年但在混的老鸟`认为这里就只能配置上面三个`bom`依赖, 其实不然, 我们也可以配置一些其他的库来管理版本, 比如我就拿`mybatis-puls`举例子吧, 在我们上面引入的依赖库中并没有包含它的版本管理, 我们想在子模块中引入`mybatis-puls`但是我们想在父模块中管理版本, 其实可以这样做, 在父模块的`dependencyManagement`中配置
+这个东西很重要, 以至于不得不拿到如此前面来讲, 我们经过上面的学习已经知道了`dependencyManagement`主要负责管理依赖版本, 而我们刚才引入的那三个只是最基础的, 我们还可以引入自定义的, 比如下面我就加了`mybatis-plus`和`mysql-connector-java`来约定这两个依赖在子模块中的版本
 
 ```xml
-<dependency>
-	<groupId>com.baomidou</groupId>
-	<artifactId>mybatis-plus-boot-starter</artifactId>
-	<version>${mybatis-plus.version}</version>
-</dependency>
+<dependencyManagement>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-dependencies</artifactId>
+			<version>${spring-cloud.version}</version>
+			<type>pom</type>
+			<scope>import</scope>
+		</dependency>
 
-<dependency>
-	<groupId>mysql</groupId>
-	<artifactId>mysql-connector-java</artifactId>
-	<version>${mysql-connector.version}</version>
-</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-dependencies</artifactId>
+			<version>${spring-boot.version}</version>
+			<type>pom</type>
+			<scope>import</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-alibaba-dependencies</artifactId>
+			<version>${spring-cloud-alibaba.version}</version>
+			<type>pom</type>
+			<scope>import</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-boot-starter</artifactId>
+			<version>${mybatis-plus.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql-connector.version}</version>
+		</dependency>
+	</dependencies>
+</dependencyManagement>
 ```
 
-然后在子模块中就不用指定版本号了, 还有另外一种方法就是子模块中直接使用`${mybatis-plus.version}`也可以约定版本号也可以, 顺便提一嘴的目的就是给大家提个醒, 这个`dependencyManagement`在这里导入依赖并不能让你使用他们, 它只做版本管理作用, 想要使用依赖还是需要在子模块中导入库, 比如
+还有另外一种方法就是子模块中直接使用`${mybatis-plus.version}`也可以约定版本号也可以, 我们还没有学习到子模块, 所以这里知道就行, 后面会学习如何配置
+
+### 🌸 配置lombok
+
+Lombok项目是一个java库，它可以自动插入到编辑器和构建工具中，增强java的性能。不需要再写getter、setter或equals方法，只要有一个注解，就有一个功能齐全的构建器、自动记录变量等等。
+
+人人都用直接配置上
 
 ```xml
-<dependencies>
-	<dependency>
-		<groupId>com.baomidou</groupId>
-		<artifactId>mybatis-plus-boot-starter</artifactId>
-	</dependency>
-	
-	<dependency>
-		<groupId>mysql</groupId>
-		<artifactId>mysql-connector-java</artifactId>
-	</dependency>
-</dependencies>
+<dependencies>  
+	<dependency>  
+		<groupId>org.projectlombok</groupId>  
+		<artifactId>lombok</artifactId>  
+	</dependency>  
+</dependencies>  
 ```
-
-可以看到我没有写版本号, 如果到这里你不明白也没关系, 我们还没学习到子模块呢
 
 ### 🌸 配置插件
 
@@ -383,172 +445,125 @@ bundle：生成一个 OSGi Bundle，用于在 OSGi 容器中部署。
 - spring-boot-maven-plugin 这个插件是重点要说的, 因为没有这个插件打包的时候就会出现`xxxx 中没有注清单属性`的问题, 所以一定要认真配置
 - maven-compiler-plugin 添加后maven中会多出来一个`compiler`的按钮, 是编译java文件用的, 但是我没觉得它有什么用
 
-### 🌸 配置仓库镜像源
-
-虽然在前面的`maven`的`setting.xml`文件中已经全局配置过了, 但是这个方法是另一个途径, 在项目中配置镜像源, 当更换电脑后不需要配置maven就可以享受镜像源加速了
-
-```xml
-<repositories>
-	<repository>
-		<id>aliyun</id>
-		<name>aliyun</name>
-		<url>https://maven.aliyun.com/repository/public</url>
-		<releases>
-			<enabled>true</enabled>
-		</releases>
-		<snapshots>
-			<enabled>false</enabled>
-		</snapshots>
-	</repository>
-</repositories>
-```
-
-https://developer.aliyun.com/mirror/maven?spm=a2c6h.13651102.0.0.44d61b112BnMIT
-
 ### 🌸 完整配置
 
 下面是白猫的父工程的完成配置, 你可以先粘贴在你的父工程里
 
 ```xml
-<?xml version="1.0" encoding="UTF-8"?>  
-<project xmlns="http://maven.apache.org/POM/4.0.0"  
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">  
-    <modelVersion>4.0.0</modelVersion>  
-  
-    <groupId>com.objcat</groupId>  
-    <artifactId>test-springcloud</artifactId>  
-    <packaging>pom</packaging>  
-    <version>1.0</version>  
-  
-    <properties>  
-        <maven.compiler.source>8</maven.compiler.source>  
-        <maven.compiler.target>8</maven.compiler.target>  
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>  
-        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>  
-        <lombok.version>1.18.26</lombok.version>  
-        <mysql-connector.version>8.0.32</mysql-connector.version>  
-        <mybatis-plus.version>3.5.3.1</mybatis-plus.version>  
-        <hutool.version>5.8.8</hutool.version>  
-        <shiro-redis.version>3.3.1</shiro-redis.version>  
-        <jwt.version>4.0.0</jwt.version>  
-        <spring-boot.version>2.7.10</spring-boot.version>  
-        <spring-cloud.version>2021.0.6</spring-cloud.version>  
-        <spring-cloud-alibaba.version>2021.0.5.0</spring-cloud-alibaba.version>  
-    </properties>  
-  
-    <dependencyManagement>  
-        <dependencies>  
-            <dependency>  
-                <groupId>org.springframework.cloud</groupId>  
-                <artifactId>spring-cloud-dependencies</artifactId>  
-                <version>${spring-cloud.version}</version>  
-                <type>pom</type>  
-                <scope>import</scope>  
-            </dependency>  
-  
-            <dependency>  
-                <groupId>org.springframework.boot</groupId>  
-                <artifactId>spring-boot-dependencies</artifactId>  
-                <version>${spring-boot.version}</version>  
-                <type>pom</type>  
-                <scope>import</scope>  
-            </dependency>  
-  
-            <dependency>  
-                <groupId>com.alibaba.cloud</groupId>  
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>  
-                <version>${spring-cloud-alibaba.version}</version>  
-                <type>pom</type>  
-                <scope>import</scope>  
-            </dependency>  
-  
-            <dependency>  
-                <groupId>com.baomidou</groupId>  
-                <artifactId>mybatis-plus-boot-starter</artifactId>  
-                <version>${mybatis-plus.version}</version>  
-            </dependency>  
-  
-            <dependency>  
-                <groupId>mysql</groupId>  
-                <artifactId>mysql-connector-java</artifactId>  
-                <version>${mysql-connector.version}</version>  
-            </dependency>  
-  
-            <dependency>  
-                <groupId>cn.hutool</groupId>  
-                <artifactId>hutool-all</artifactId>  
-                <version>${hutool.version}</version>  
-            </dependency>  
-  
-            <dependency>  
-                <groupId>org.crazycake</groupId>  
-                <artifactId>shiro-redis</artifactId>  
-                <version>${shiro-redis.version}</version>  
-            </dependency>  
-  
-            <dependency>  
-                <groupId>com.auth0</groupId>  
-                <artifactId>java-jwt</artifactId>  
-                <version>${jwt.version}</version>  
-            </dependency>  
-        </dependencies>  
-    </dependencyManagement>  
-  
-    <dependencies>  
-        <dependency>  
-            <groupId>org.projectlombok</groupId>  
-            <artifactId>lombok</artifactId>  
-        </dependency>  
-    </dependencies>  
-  
-    <repositories>  
-        <repository>  
-            <id>aliyun</id>  
-            <name>aliyun</name>  
-            <url>https://maven.aliyun.com/repository/public</url>  
-            <releases>  
-                <enabled>true</enabled>  
-            </releases>  
-            <snapshots>  
-                <enabled>false</enabled>  
-            </snapshots>  
-        </repository>  
-    </repositories>  
-  
-    <build>  
-        <plugins>  
-            <plugin>  
-                <groupId>org.springframework.boot</groupId>  
-                <artifactId>spring-boot-maven-plugin</artifactId>  
-                <version>${spring-boot.version}</version>  
-            </plugin>  
-  
-            <plugin>  
-                <groupId>org.apache.maven.plugins</groupId>  
-                <artifactId>maven-compiler-plugin</artifactId>  
-                <version>${maven.compiler.plugin.version}</version>  
-                <configuration>  
-                    <source>${maven.compiler.source}</source>  
-                    <target>${maven.compiler.target}</target>  
-                    <encoding>${project.build.sourceEncoding}</encoding>  
-                </configuration>  
-            </plugin>  
-        </plugins>  
-    </build>  
-  
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.objcat</groupId>
+    <artifactId>test-springcloud</artifactId>
+    <version>1.0</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
+        <lombok.version>1.18.22</lombok.version>
+        <mysql-connector.version>8.0.32</mysql-connector.version>
+        <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
+        <spring-boot.version>2.7.10</spring-boot.version>
+        <spring-cloud.version>2021.0.6</spring-cloud.version>
+        <spring-cloud-alibaba.version>2021.0.5.0</spring-cloud-alibaba.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connector.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
+
+    <repositories>
+        <repository>
+            <id>aliyun</id>
+            <name>aliyun</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.plugin.version}</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
 ```
 
 ### 🌸 跳过单元测试
 
-maven跳过单元测试(可以节约时间), 只需要点击上面的闪电按钮即可, 效果如图所示
+maven跳过单元测试(可以节约时间), 否则打包之前会把你的单元测试跑一遍, 我们只需要点击上面的禁止按钮即可, 效果如图所示
 
-![image-20220306223928132](images/image-20220306223928132.png)
+![](images/Pasted%20image%2020230908134450.png)
 
-## 🌲 创建服务(开始写接口了)
+## 🌲 创建子模块(开始写接口了)
 
-配置完父模块, 我们终于可以开始写接口了, 在`spring-cloud`中我们会把业务模块细分成一个一个的微服务, 每个服务都可以单独进行发布, 单独运行, 我们下面要创建的`module`就是一个微服务了, 单个服务用的技术叫`SpringBoot`是一个不需要过多配置就可以跑起来的后台应用
+配置完父工程, 我们终于可以开始写接口了, 在`spring-cloud`中我们会把业务模块细分成一个一个的微服务, 每个服务都可以单独进行发布, 单独运行, 我们下面要创建的`module`就是一个微服务了, 单个服务用的技术叫`SpringBoot`是一个不需要过多配置就可以跑起来的后台应用
 
 ### 🌸 创建module
 
@@ -710,11 +725,13 @@ maven跳过单元测试(可以节约时间), 只需要点击上面的闪电按�
 - mybatis-plus-boot-starter 是mybatis的升级版, 一个开箱即用的ORM框架
 - mysql-connector-java 连接数据库必要的库
 
+我们会发现`mybatis-plus-boot-starter`和`mysql-connector-java`都没有去写版本号, 如果在通常情况下不写版本号就会报错因为找不到版本, 我们不用配置的原因是因为在父工程中我们配置了`dependencyManagement`来约定版本, 你的明白? 
+
 ### 🌸 写yml
 
 在子模块下的`src -> resources`文件夹建立`application.yml`文件
 
-![image-20220307190139328](images/image-20220307190139328.png)
+![](images/Pasted%20image%2020230908140046.png)
 
 配置说明在注释上都有, 自己看
 
@@ -729,7 +746,7 @@ spring:
   datasource:
     # 数据库连接url
     url: 1
-    # 驱动类名
+    # 数据库驱动类名
     driver-class-name: com.mysql.cj.jdbc.Driver
     # 数据库用户名
     username: root
@@ -742,28 +759,23 @@ mybatis-plus:
 
 因为数据库我们还没有开始学, 所以你可以像我这样配置, 把url位置写一个占位符比如`1`, 否则`mybatis`会报错, 如果你有数据库你可以像下面这样配置
 
-```yml
-spring:
-  datasource:
-    # 数据库连接url
-    url: jdbc:mysql://localhost:3306/objcat?useUnicode=true&characterEncoding=UTF-8&useSSL=false
-    # 驱动类名
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    # 数据库用户名
-    username: root
-    # 数据库密码
-    password: 123456
+```
+jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF-8&useSSL=false
 ```
 
 ### 🌸 第一个接口
 
 搞了这么久, 我们应该写一个接口犒劳一下自己了, 不能一直搞配置否则很难坚持下去, 在上面的配置文件中, 虽然我们配置了数据库的路径, 但是我们还没有安装数据库, 所以我们只写一些简单的接口
 
-首先我们按照图片中的目录结构新建文件, 我们只看`cloud-provider-payment8001`中的目录
+首先我们按照图片中的目录结构新建文件, 我们先看一下配置好的目录结构, 我们需要创建的效果就是这样的
 
-![](images/Pasted%20image%2020230404144554.png)
+![](images/Pasted%20image%2020230908141047.png)
 
-我来简单说明一下, 首先我们要创建包, 所谓包其实就是我们的一个目录结构, 在`java`上点击右键, `new package`然后我们输入`com.objcat.payment`, 这个包名你自己起, 然后是我们的`springboot`程序如果想启动, 必须有一个启动文件, 在图中就是`PaymentApplication`, 我们在这个`payment`包里创建这个文件, 文件如下
+接下来我们从无到有一步一步来创建
+
+#### 🌵 创建主启动类
+
+我来简单说明一下, 首先我们要创建包, 所谓包其实就是我们的一个目录结构, 在`java`上点击右键, `new package`然后我们输入`com.objcat.payment`, 这个包名你自己起, 然后是我们的`springboot`程序如果想启动, 必须有一个主启动文件, 在图中就是`PaymentApplication`, 我们在这个`payment`包里创建这个文件, 文件如下
 
 ```java
 @SpringBootApplication
@@ -773,6 +785,8 @@ public class PaymentApplication {
     }
 }
 ```
+
+#### 🌵 创建控制器
 
 然后我们想要写接口, 一般情况下是要创建一个控制器, 然后在里面写,我们创建一个`controller`文件夹在里面创建一个`TestController.java`文件, 然后在里面写一个`hello`接口
 
@@ -833,25 +847,107 @@ http://localhost:8001/hello
 
 ![](images/Pasted%20image%2020230404145606.png)
 
-我们看到网页上出现`hello world`
+我们看到网页上出现`hello world`, 到此你已经搭建出来`Spring`项目了, 赶紧喝杯饮料庆祝一下吧!
 
-## 🌲 安装MySQL
+# 🍎 三层架构
 
-我们在开发中时长需要在数据库中读取写入数据, 所以要学习本教程这个数据库是要去安装的
+这个章节要注意听, 因为它非常重要, 就跟你平时要吃饭要睡觉一样重要
 
-### 🌸 安装
+为了方便开发, 我们的`Spring`项目通常都需要遵循三层架构来开发, 即`Controller, Service, Dao`
 
-这个章节不属于`spring`的教学范畴内, 只是为了教学方便就随便写一写, 跳转查看
+在你使用插件根据数据库表自动生成代码其实就是生成的这三个层, 我们一起来看看手动创建要怎么做吧
 
-[跳转 mysql_env](../../../../../3-program/env/mysql/mysql_env.md)
+## 🌲 Controller(控制层)
 
-### 🌸 测试
+`控制层/接口层`用来写接口, 我们上面的例子已经写过了
 
-测试起来也很简单, 我们使用IDEA自带的`datagrip`来连接
+```java
+@RestController
+public class TestController {
+    @RequestMapping("/hello")
+    public String hello() {
+        return "hello world!";
+    }
+}
+```
 
-![](images/Pasted%20image%2020230406095451.png)
+## 🌲Service/Dao(服务层/数据访问层)
 
-然后点击Test就可以看到是否连接成功了
+分别是`服务层/业务逻辑层`和`数据访问层/持久层`, 因为篇幅比较长, 我们这里就引入最常使用到的`ORM`框架进行讲解, 点击跳转来学习三层架构
+
+[跳转 MybatisPlus](../../Mybatis/MyBatisPlus/MybatisPlus.md)
+
+# 🍎 打包
+
+我们要发布服务的时候肯定是要打包的, 我们一起来看看吧
+
+## 🌲 正常打包
+
+如果是正常情况下打包是很简单的, 只需要点击`package`就可以了
+
+![](images/Pasted%20image%2020230903221843.png)
+
+如果哪个依赖找不到无非就是install一下那个依赖, 然后照旧`package`
+
+## 🌲 非正常打包
+
+### 🌸 Downloading from aliyun
+
+```
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------------< com.objcat:test-api >-------------------------
+[INFO] Building test-api 1.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+Downloading from aliyun: https://maven.aliyun.com/repository/public/com/objcat/test-springcloud/1.0/test-springcloud-1.0.pom
+Downloading from central: https://repo.maven.apache.org/maven2/com/objcat/test-springcloud/1.0/test-springcloud-1.0.pom
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  5.099 s
+[INFO] Finished at: 2023-09-03T22:16:26+08:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal on project test-api: Could not resolve dependencies for project com.objcat:test-api:jar:1.0: Failed to collect dependencies at com.objcat:test-api-common:jar:1.0: Failed to read artifact descriptor for com.objcat:test-api-common:jar:1.0: The following artifacts could not be resolved: com.objcat:test-springcloud:pom:1.0 (absent): Could not find artifact com.objcat:test-springcloud:pom:1.0 in aliyun (https://maven.aliyun.com/repository/public) -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/DependencyResolutionException
+```
+
+我们可以看到它尝试在阿里云拉取了父工程的pom, 显而易见云上是没有父工程的pom, 所以编译失败了, 我需要`install`一下父工程
+
+![](images/Pasted%20image%2020230903222149.png)
+
+然后我们发现又报错了
+
+```SHELL
+[FATAL] Non-resolvable parent POM for com.objcat:test-security:1.0: Could not find artifact com.objcat:test-springcloud:pom:1.0 in aliyunmaven (https://maven.aliyun.com/repository/public) and 'parent.relativePath' points at wrong local POM @ line 6, column 13
+[FATAL] Non-resolvable parent POM for com.objcat:test-shiro-token:1.0: com.objcat:test-springcloud:pom:1.0 was not found in https://maven.aliyun.com/repository/public during a previous attempt. This failure was cached in the local repository and resolution is not reattempted until the update interval of aliyunmaven has elapsed or updates are forced and 'parent.relativePath' points at wrong local POM @ line 6, column 13
+[FATAL] Non-resolvable parent POM for com.objcat:test-shiro-session:1.0: com.objcat:test-springcloud:pom:1.0 was not found in https://maven.aliyun.com/repository/public during a previous attempt. This failure was cached in the local repository and resolution is not reattempted until the update interval of aliyunmaven has elapsed or updates are forced and 'parent.relativePath' points at wrong local POM @ line 6, column 13
+[FATAL] Non-resolvable parent POM for com.objcat:test-shiro-jwt:1.0: com.objcat:test-springcloud:pom:1.0 was not found in https://maven.aliyun.com/repository/public during a previous attempt. This failure was cached in the local repository and resolution is not reattempted until the update interval of aliyunmaven has elapsed or updates are forced and 'parent.relativePath' points at wrong local POM @ line 6, column 13
+[FATAL] Non-resolvable parent POM for com.objcat:test-nacos:1.0: com.objcat:test-springcloud:pom:1.0 was not found in https://maven.aliyun.com/repository/public during a previous attempt. This failure was cached in the local repository and resolution is not reattempted until the update interval of aliyunmaven has elapsed or updates are forced and 'parent.relativePath' points at wrong local POM @ line 6, column 13
+```
+
+![](images/Pasted%20image%2020230903224456.png)
+原因出在这几个子模块上面, 因为使用了`0.xxx`做文件夹名, 里面包含`.`后会有问题, 所以他们变的不太老实, 而且这个错误难以排查, 后来我把`.`改成`-`发现可以了
+
+```xml
+<modules>
+	<module>0-test-auth/test-security</module>
+	<module>0-test-auth/test-shiro-token</module>
+	<module>0-test-auth/test-shiro-session</module>
+	<module>0-test-auth/test-shiro-jwt</module>
+	<module>1-test-spring-alibaba/test-nacos</module>
+	<module>2-test-spring-cloud/test-spring-boot-starter-web</module>
+	<module>test-api</module>
+	<module>test-api-common</module>
+</modules>
+```
+
+# 🍎 选学内容
 
 ## 🌲 自动生成代码
 
@@ -1116,104 +1212,6 @@ open ~/.m2
 ### 🌸 运行测试
 
 然后我们运行项目, 如果能够成功运行, 说明你的通用模块完成了创建
-
-# 🍎 三层架构
-
-这个章节要注意听, 因为它非常重要, 就跟你平时要吃饭要睡觉一样重要
-
-为了方便开发, 我们的`Spring`项目通常都需要遵循三层架构来开发, 即`Controller, Service, Dao`
-
-在你使用插件根据数据库表自动生成代码其实就是生成的这三个层, 我们一起来看看手动创建要怎么做吧
-
-## 🌲 Controller(控制层/接口层)
-
-接口层用来写接口, 我们上面的例子已经写过了
-
-```java
-@RestController
-public class TestController {
-    @RequestMapping("/hello")
-    public String hello() {
-        return "hello world!";
-    }
-}
-```
-
-## 🌲Service/Dao
-
-分别是`服务层/业务逻辑层`和`数据访问层/持久层`, 因为篇幅比较长, 我们这里就引入最常使用到的`ORM`框架进行讲解, 点击跳转来学习三层架构
-
-[跳转 MybatisPlus](../../Mybatis/MyBatisPlus/MybatisPlus.md)
-
-# 🍎 打包
-
-我们要发布服务的时候肯定是要打包的, 我们一起来看看吧
-
-## 🌲 正常打包
-
-如果是正常情况下打包是很简单的, 只需要点击`package`就可以了
-
-![](images/Pasted%20image%2020230903221843.png)
-
-如果哪个依赖找不到无非就是install一下那个依赖, 然后照旧`package`
-
-## 🌲 非正常打包
-
-### 🌸 Downloading from aliyun
-
-```
-[INFO] Scanning for projects...
-[INFO] 
-[INFO] ------------------------< com.objcat:test-api >-------------------------
-[INFO] Building test-api 1.0
-[INFO]   from pom.xml
-[INFO] --------------------------------[ jar ]---------------------------------
-Downloading from aliyun: https://maven.aliyun.com/repository/public/com/objcat/test-springcloud/1.0/test-springcloud-1.0.pom
-Downloading from central: https://repo.maven.apache.org/maven2/com/objcat/test-springcloud/1.0/test-springcloud-1.0.pom
-[INFO] ------------------------------------------------------------------------
-[INFO] BUILD FAILURE
-[INFO] ------------------------------------------------------------------------
-[INFO] Total time:  5.099 s
-[INFO] Finished at: 2023-09-03T22:16:26+08:00
-[INFO] ------------------------------------------------------------------------
-[ERROR] Failed to execute goal on project test-api: Could not resolve dependencies for project com.objcat:test-api:jar:1.0: Failed to collect dependencies at com.objcat:test-api-common:jar:1.0: Failed to read artifact descriptor for com.objcat:test-api-common:jar:1.0: The following artifacts could not be resolved: com.objcat:test-springcloud:pom:1.0 (absent): Could not find artifact com.objcat:test-springcloud:pom:1.0 in aliyun (https://maven.aliyun.com/repository/public) -> [Help 1]
-[ERROR] 
-[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
-[ERROR] Re-run Maven using the -X switch to enable full debug logging.
-[ERROR] 
-[ERROR] For more information about the errors and possible solutions, please read the following articles:
-[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/DependencyResolutionException
-```
-
-我们可以看到它尝试在阿里云拉取了父工程的pom, 显而易见云上是没有父工程的pom, 所以编译失败了, 我需要`install`一下父工程
-
-![](images/Pasted%20image%2020230903222149.png)
-
-然后我们发现又报错了
-
-```SHELL
-[FATAL] Non-resolvable parent POM for com.objcat:test-security:1.0: Could not find artifact com.objcat:test-springcloud:pom:1.0 in aliyunmaven (https://maven.aliyun.com/repository/public) and 'parent.relativePath' points at wrong local POM @ line 6, column 13
-[FATAL] Non-resolvable parent POM for com.objcat:test-shiro-token:1.0: com.objcat:test-springcloud:pom:1.0 was not found in https://maven.aliyun.com/repository/public during a previous attempt. This failure was cached in the local repository and resolution is not reattempted until the update interval of aliyunmaven has elapsed or updates are forced and 'parent.relativePath' points at wrong local POM @ line 6, column 13
-[FATAL] Non-resolvable parent POM for com.objcat:test-shiro-session:1.0: com.objcat:test-springcloud:pom:1.0 was not found in https://maven.aliyun.com/repository/public during a previous attempt. This failure was cached in the local repository and resolution is not reattempted until the update interval of aliyunmaven has elapsed or updates are forced and 'parent.relativePath' points at wrong local POM @ line 6, column 13
-[FATAL] Non-resolvable parent POM for com.objcat:test-shiro-jwt:1.0: com.objcat:test-springcloud:pom:1.0 was not found in https://maven.aliyun.com/repository/public during a previous attempt. This failure was cached in the local repository and resolution is not reattempted until the update interval of aliyunmaven has elapsed or updates are forced and 'parent.relativePath' points at wrong local POM @ line 6, column 13
-[FATAL] Non-resolvable parent POM for com.objcat:test-nacos:1.0: com.objcat:test-springcloud:pom:1.0 was not found in https://maven.aliyun.com/repository/public during a previous attempt. This failure was cached in the local repository and resolution is not reattempted until the update interval of aliyunmaven has elapsed or updates are forced and 'parent.relativePath' points at wrong local POM @ line 6, column 13
-```
-
-![](images/Pasted%20image%2020230903224456.png)
-原因出在这几个子模块上面, 因为使用了`0.xxx`做文件夹名, 里面包含`.`后会有问题, 所以他们变的不太老实, 而且这个错误难以排查, 后来我把`.`改成`-`发现可以了
-
-```xml
-<modules>
-	<module>0-test-auth/test-security</module>
-	<module>0-test-auth/test-shiro-token</module>
-	<module>0-test-auth/test-shiro-session</module>
-	<module>0-test-auth/test-shiro-jwt</module>
-	<module>1-test-spring-alibaba/test-nacos</module>
-	<module>2-test-spring-cloud/test-spring-boot-starter-web</module>
-	<module>test-api</module>
-	<module>test-api-common</module>
-</modules>
-```
 
 
 # 🍎 接口

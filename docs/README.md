@@ -29,9 +29,7 @@ https://github.com/docsifyjs/docsify
 
 ## 🌲 5分钟搭建SpringCloud
 
-[5分钟搭建SpringCloud Maven版](1-framework/java/spring/springcloud/SpringCloudMaven/SpringCloudMaven.md)
-
-[5分钟搭建SpringCloud Gradle版](1-framework/java/spring/springcloud/SpringCloudGradle/SpringCloudGradle.md)
+[5分钟搭建SpringCloud](1-framework/java/spring/springcloud/SpringCloudMaven/SpringCloudMaven.md)
 
 # 🍎 Python
 

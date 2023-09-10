@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/1-framework/java/spring/springcloud/SpringCloudMaven/SpringCloudMaven.md",
+                "file": "docs/README.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/1-framework/java/spring/springcloud/SpringCloudMaven/SpringCloudMaven.md",
+                "file": "docs/README.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/1-framework/java/spring/springcloud/SpringCloudMaven/SpringCloudMaven.md",
+                "file": "docs/README.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/1-framework/java/spring/springcloud/SpringCloudMaven/SpringCloudMaven.md"
+                "file": "docs/README.md"
               }
             }
           }
@@ -154,8 +154,10 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "eee7dabbf81aba60",
+  "active": "1c3dca8c62729b85",
   "lastOpenFiles": [
+    "README.md",
+    "docs/1-framework/java/spring/springcloud/SpringCloudMaven/SpringCloudMaven.md",
     "docs/4-package-manager/maven/images/image-20220306212756986.png",
     "docs/4-package-manager/maven/images/image-20220306212251248.png",
     "docs/4-package-manager/maven/images/image-20220306212159621.png",
@@ -166,7 +168,6 @@
     "docs/4-package-manager/maven/images/image-20220306205048413.png",
     "docs/4-package-manager/maven/images/image-20220306204129106.png",
     "docs/4-package-manager/maven/images/Pasted image 20221118171503.png",
-    "docs/4-package-manager/maven/images/Pasted image 20221118171110.png",
     "docs/4-package-manager/maven/maven.md",
     "docs/4-package-manager/maven/images",
     "docs/4-package-manager/maven",
@@ -175,14 +176,12 @@
     "docs/4-package-manager/Maven.bak/images",
     "docs/4-package-manager/Maven.bak",
     "docs/1-framework/java/spring/mybatis/mybatis_plus/mybatis_plus.md",
-    "docs/1-framework/java/spring/springcloud/SpringCloudMaven/SpringCloudMaven.md",
     "docs/1-framework/java/spring/mybatis/mybatis_plus/images",
     "docs/1-framework/java/spring/mybatis/mybatis_plus",
     "docs/1-framework/java/spring/mybatis/mybatis_x/mybatis_x.md",
     "docs/1-framework/java/spring/mybatis/mybatis_x/images",
     "docs/1-framework/java/spring/mybatis/mybatis_x",
     "docs/1-framework/java/spring/mybatis",
-    "README.md",
     "docs/1-framework/java/spring/mybatis/mybatis_plus/mybatis_plus.md",
     "docs/1-framework/java/spring/mybatis/mybatis_plus/images",
     "docs/1-framework/java/spring/mybatis/mybatis_x/mybatis_x.md",

@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/README.md",
+                "file": "docs/0-language/python/python.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/README.md",
+                "file": "docs/0-language/python/python.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/README.md",
+                "file": "docs/0-language/python/python.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/README.md"
+                "file": "docs/0-language/python/python.md"
               }
             }
           }
@@ -154,8 +154,10 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "1c3dca8c62729b85",
+  "active": "eee7dabbf81aba60",
   "lastOpenFiles": [
+    "docs/README.md",
+    "docs/0-language/python/images/python_logo_128.png",
     "README.md",
     "docs/1-framework/java/spring/springcloud/SpringCloudMaven/SpringCloudMaven.md",
     "docs/4-package-manager/maven/images/image-20220306212756986.png",
@@ -167,7 +169,6 @@
     "docs/4-package-manager/maven/images/image-20220306205340178.png",
     "docs/4-package-manager/maven/images/image-20220306205048413.png",
     "docs/4-package-manager/maven/images/image-20220306204129106.png",
-    "docs/4-package-manager/maven/images/Pasted image 20221118171503.png",
     "docs/4-package-manager/maven/maven.md",
     "docs/4-package-manager/maven/images",
     "docs/4-package-manager/maven",
@@ -187,7 +188,6 @@
     "docs/1-framework/java/spring/mybatis/mybatis_x/mybatis_x.md",
     "docs/1-framework/java/spring/Mybatis.bak/MyBatisPlus.bak/MybatisPlus.md",
     "docs/1-framework/java/spring/Mybatis.bak/MyBatisPlus/MybatisPlus.md",
-    "docs/README.md",
     "docs/1-framework/java/spring/Mybatis/MyBatisPlus/MybatisPlus.md",
     "docs/3-program/env/mysql/mysql_env.md",
     "docs/3-program/env/docker/docker_env.md",

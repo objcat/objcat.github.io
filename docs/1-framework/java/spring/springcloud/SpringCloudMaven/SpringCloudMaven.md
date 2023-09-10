@@ -77,14 +77,14 @@ https://start.spring.io
 | Zookeeper | 🌎 | 备选方案 |
 | Consul | 🌎 | 备选方案 |
 
-## 🌲 服务调用
+## 🌲 负载均衡
 
 | 组件 | 状态 | 备注 |
 | - | - | - |
 | Ribbon | ❌ | 正在被慢慢替换 |
 | LoadBalancer | ✔️ | 方案2 |
 
-## 🌲 服务调用2
+## 🌲 服务调用
 
 | 组件 | 状态 | 备注 |
 | - | - | - |
@@ -147,7 +147,7 @@ The desired archetype does not exist (org.apache.maven.archetypes:maven-archetyp
 
 那你可能就要去配置`maven`, 可以参考我的文档
 
-[跳转 Maven](../../../../../4-package-manager/Maven/Maven.md)
+[跳转 Maven](../../../../../4-package-manager/maven/maven.md)
 
 ### 🌸 配置IDEA
 
@@ -157,13 +157,13 @@ The desired archetype does not exist (org.apache.maven.archetypes:maven-archetyp
 
 然后我们要选择一个好的`spingboot`和`springcloud`版本
 
-根据上文提及的`json`文件选用一个比较好的版本, 看我划线的地方, 我这里就选择这个版本了, 可以看到它的`springboot`要求是`大于2.6.1并小于3.0.0`, springcloud要求是`2021.0.6`
+根据上文提及的`json`文件选用一个比较好的版本, 看我划线的地方, 我这里就选择这个版本了, 可以看到它的`springboot`要求是`大于2.6.1并小于3.0.0`, `springcloud`要求是`2021.0.6`
 
 https://start.spring.io/actuator/info
 
 ![](images/Pasted%20image%2020230411102413.png)
 
-为什么要这么选择呢, 我是这样想的, 目前`spring-boot`大体分为2和3两个版本, 3是最新的但是要使用`java17`作为环境, 2是老版本使用`java8`作为环境, 然而3的使用还没有普及, 很多公司的老项目用的还是2, 所以我们这里还是选择了大众使用的2
+为什么要这么选择呢, 我是这样想的, 目前`spring-boot`大体分为`2和3`两个版本, 3是最新的但是要使用`java17`作为环境, 2是老版本使用`java8+`作为环境, 然而3的使用还没有普及, 很多公司的老项目用的还是2, 所以我们这里还是选择了大众使用的2
 
 然后我们再选择`spring-cloud-alibaba`版本
 
@@ -736,7 +736,13 @@ maven跳过单元测试(可以节约时间), 否则打包之前会把你的单�
 ```yaml
 server:
   # 服务端口号
-  port: 8001
+  port: 8080
+  servlet:
+    encoding:
+      # 返回数据使用utf-8编码
+      charset: utf-8
+      # 强制使用utf-8, 否则某些浏览器中查看会乱码
+      force: true
 spring:
   application:
     # 服务名称
@@ -900,9 +906,9 @@ public class TestController {
 
 ## 🌲Service/Dao(服务层/数据访问层)
 
-分别是`服务层/业务逻辑层`和`数据访问层/持久层`, 因为篇幅比较长, 我们这里就引入最常使用到的`ORM`框架进行讲解, 点击跳转来学习三层架构
+分别是`服务层/业务逻辑层`和`数据访问层/持久层`, 因为篇幅比较长, 我们这里就引入最常使用到的`ORM`框架进行讲解, 点击学习三层架构
 
-[跳转 MybatisPlus](../../Mybatis/MyBatisPlus/MybatisPlus.md)
+[跳转 mybatis_plus](../../mybatis/mybatis_plus/mybatis_plus.md)
 
 # 🍎 打包
 
@@ -920,7 +926,7 @@ public class TestController {
 
 ### 🌸 Downloading from aliyun
 
-```
+```shell
 [INFO] Scanning for projects...
 [INFO] 
 [INFO] ------------------------< com.objcat:test-api >-------------------------
@@ -1224,7 +1230,9 @@ open ~/.m2
 
 我们可以看到所谓的提交到本地仓库就是编译成jar包, 然后放到`.m2`仓库中
 
-这样我们其他微服务就能使用它了, 我们子服务的依赖库清空, 只需要引入下面的通用依赖就可以了
+### 🌸 导入其他服务
+
+提交到maven本地仓库后, 我们其他微服务就能使用它了, 我们子服务的依赖库清空, 只需要引入下面的通用依赖就可以了
 
 ```xml
 <dependency>
@@ -1233,13 +1241,6 @@ open ~/.m2
     <version>1.0</version>
 </dependency>
 ```
-
-比如我们的``
-
-### 🌸 运行测试
-
-然后我们运行项目, 如果能够成功运行, 说明你的通用模块完成了创建
-
 
 # 🍎 接口
 
@@ -1825,711 +1826,6 @@ public class TestExceptionHandler {
 ```
 
 我们发现是一段json, 而不是那个报错的空白页面了
-
-# 🍎 依赖库
-
-## 🌲 Eureka(使用Nacos代替)
-
-### 🌸 代替
-
-目前市面上已经使用阿里巴巴的`Nacos`代替`Eureka`, 推荐直接学习最新的[Nacos](../../Nacos/Nacos.md)
-
-### 🌸 配置服务端
-
-新建工程配置pom
-
-```xml
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
-    </dependency>
-</dependencies>
-```
-
-然后配置`application.yml`
-
-```yml
-server:
-  # 配置服务端口
-  port: 7001
-eureka:
-  instance:
-    hostname: localhost
-  client:
-    service-url:
-      # 配置eureka服务器地址
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
-    # 是否需要将自己注册到注册中心(注册中心集群需要设置为true)
-    register-with-eureka: false
-    # 是否需要搜索服务信息 因为自己是注册中心所以为false
-    fetch-registry: false
-```
-
-
-
-![image-20220311225159293](images/image-20220311225159293.png)
-
-到了这一步注册中心服务器搭建完成, 运行项目试试吧
-
-http://localhost:7001/
-
-![image-20220311225407400](images/image-20220311225407400.png)
-
-### 🌸 配置客户端
-
-![image-20220311230809904](images/image-20220311230809904.png)
-
-```xml
-<dependency>
-    <groupId>org.springframework.cloud</groupId>
-    <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-</dependency>
-```
-
-![image-20220311230900151](images/image-20220311230900151.png)
-
-然后改配置`application.yml`
-
-![image-20220311231941430](images/image-20220311231941430.png)
-
-```yml
-eureka:
-  instance:
-    hostname: localhost
-    # 使用ip地址注册到注册中心
-    prefer-ip-address: true
-    # 注册中心列表中显示的状态参数
-    instance-id: ${spring.cloud.client.ip-address}:${server.port}
-  client:
-    service-url:
-      # 配置eureka服务器地址
-      defaultZone: http://localhost:7001/eureka
-    # 是否需要将自己注册到注册中心
-    register-with-eureka: true
-    # 是否从注册中心抓取已有的注册信息
-    fetch-registry: true
-```
-
-配置另外一个微服务, 配置步骤与上面一致, 配置文件也一模一样
-
-![image-20220311232521950](images/image-20220311232521950.png)
-
-注册成功后我们要试一试他们之间的通讯了
-
-```java
-@GetMapping("/consumer/create")
-    public ZYResult<Payment> create(Payment payment) {
-        return restTemplate.postForObject("http://localhost:8001/payment/create", payment, ZYResult.class);
-    }
-
-@GetMapping("/consumer/create")
-    public ZYResult<Payment> create(Payment payment) {
-        return restTemplate.postForObject("http://cloud-payment-service/payment/create", payment, ZYResult.class);
-    }
-```
-
-我们就可以使用在注册中心注册的名字`cloud-payment-service`来代替`localhost:8001`了
-
-### 🌸 集群
-
-这里只做简单的配置 不想看的可以后面再看
-
-想要eureka集群, 首先需要搞两个域名
-
-```
-127.0.0.1 eureka7001.com
-127.0.0.1 eureka7002.com
-```
-
-然后新建一个7002端口的eureka修改7001和7002的配置
-
-![image-20220312094255137](images/image-20220312094255137.png)
-
-```yml
-server:
-  # 配置服务端口
-  port: 7001
-eureka:
-  instance:
-    hostname: eureka7001.com
-  client:
-    service-url:
-      # 配置eureka服务器地址
-      defaultZone: http://eureka7002.com:7002/eureka
-    # 是否需要将自己注册到注册中心(注册中心集群需要设置为true)
-    register-with-eureka: false
-    # 是否需要搜索服务信息 因为自己是注册中心所以为false
-    fetch-registry: false
-```
-
-```yml
-server:
-  # 配置服务端口
-  port: 7002
-eureka:
-  instance:
-    hostname: eureka7002
-  client:
-    service-url:
-      # 配置eureka服务器地址
-      defaultZone: http://eureka7001.com:7001/eureka
-    # 是否需要将自己注册到注册中心(注册中心集群需要设置为true)
-    register-with-eureka: false
-    # 是否需要搜索服务信息 因为自己是注册中心所以为false
-    fetch-registry: false
-```
-
-可以看到在7001的时候要设置7002的地址, 反过来在7002的配置文件要设置7001的地址, 为了让他们连接在一起
-
-配置完启动这两个程序
-
-![image-20220312094341912](images/image-20220312094341912.png)
-
-可以看到7002注册上来了
-
-反之亦然
-
-![image-20220312094427360](images/image-20220312094427360.png)
-
-到这里集群就配置完了
-
-### 🌸 服务发现
-
-```java
-@SpringBootApplication
-@EnableDiscoveryClient
-@MapperScan("com.objcat.payment.mapper")
-@EnableEurekaClient
-public class PaymentMain8001 {
-    public static void main(String[] args) {
-        SpringApplication.run(PaymentMain8001.class, args);
-    }
-}
-```
-
-服务发现是可以让服务器获取eureka上面信息的一种方式, 只需要简单的注解`@EnableDiscoveryClient`
-
-之后我们来试试吧
-
-```java
-@Autowired
-private DiscoveryClient discoveryClient;
-
-@GetMapping(value = "/discovery")
-    public ZYResult<Object> discovery() {
-        List<ServiceInstance> instances = discoveryClient.getInstances("CLOUD-PAYMENT-SERVICE");
-        for (ServiceInstance instance : instances) {
-            log.info(instance.getInstanceId());
-        }
-        return ZYResult.success();
-    }
-```
-
-主要注意的就是`import org.springframework.cloud.client.discovery.DiscoveryClient;`别引入错了
-
-### 🌸 关闭自我保护机制
-
-```yml
-eureka:
-	server:
-    	# 关闭自我保护机制, 在服务不可用的时候剔除, 默认是true在服务不可用的时候不移除等待服务恢复
-    	enable-self-preservation: false
-```
-
-## 🌲 RestTemplate
-
-### 🌸 开始使用
-
-微服务之间通讯需要使用RPC远程调用或HTTP, springcloud就提供了这样一个工具, 基于HTTP的通讯工具, 让我们来看一下怎么使用吧
-
-首先创建一个工程, 我这里面叫`test-service1`
-
-![](images/Pasted%20image%2020230407153544.png)
-
-怎么简单怎么来, 我们配置一下pom和yml和主启动类, 然后创建`config`, 把`RestTemplate`对象交给容器
-
-![image-20220310230145971](images/image-20220310230145971.png)
-
-代码如下
-
-```java
-@Configuration
-public class ApplicationContextConfig {
-    @Bean
-    public RestTemplate getRestTemplate() {
-        return new RestTemplate();
-    }
-}
-```
-
-### 🌸 测试请求字符串
-
-然后我们写个测试文件测试一下
-
-```java
-@SpringBootTest
-public class TestController {
-
-    @Autowired
-    private RestTemplate restTemplate;
-
-    @Test
-    public void testHello() {
-        System.out.println(restTemplate.getForObject("http://localhost:8001/hello", String.class)); // hello world
-    }
-}
-```
-
-首先我们注入`RestTemplate`然后使用它的`getForObject`方法来做网络请求, 请求之前不要忘了先启动我们的服务器
-
-![](images/Pasted%20image%2020230407171635.png)
-
-我们发现测试结果是正确的, 可以打印出hello world
-
-### 🌸 测试请求json
-
-因为字典本质上也是json字符串, 所以我们既可以用字符串类型来接收, 也能用字典类型来接收, 也可以使用我们定义的模型来接收, 只要结构合规都可以
-
-```java
-@Test
-public void testHello2() {
-	System.out.println(restTemplate.getForObject("http://localhost:8001/hello2", String.class));
-	System.out.println(restTemplate.getForObject("http://localhost:8001/hello2", Map.class));
-	System.out.println(restTemplate.getForObject("http://localhost:8001/hello2", JSONObject.class));
-	System.out.println(restTemplate.getForObject("http://localhost:8001/hello2", ZYResult.class));
-	/**
-	{"code":"200","data":{"name":"张三","age":18},"message":"请求成功"}
-	{code=200, data={name=张三, age=18}, message=请求成功}
-	{"code":"200","data":{"name":"张三","age":18},"message":"请求成功"}
-	ZYResult{code=200, message='请求成功', data={name=张三, age=18}}
-	*/
-}
-```
-
-但是当我们用数组类型的接收就不行了, 因为这段字符串是无法转换成数组的
-
-### 🌸 测试getForEntity
-
-`getForEntity`和`getForObject`大体相当, 只不过前者包含的信息更全, 我们可以试一试
-
-```java
-ResponseEntity<String> forEntity = restTemplate.getForEntity("http://localhost:8001/hello2", String.class);
-System.out.println(forEntity);
-System.out.println(forEntity.getBody());
-/**
-<200,{"code":"200","data":{"name":"张三","age":18},"message":"请求成功"},[Content-Type:"application/json;charset=UTF-8", Transfer-Encoding:"chunked", Date:"Fri, 07 Apr 2023 09:45:32 GMT", Keep-Alive:"timeout=60", Connection:"keep-alive"]>
-{"code":"200","data":{"name":"张三","age":18},"message":"请求成功"}
-*/
-```
-
-我们可以看到, `getForEntity`实际上就是一个`ResponseEntity`对象, 在这个对象里面可以获取到一些更全面的数据, 比如`状态码`等
-
-### 🌸 注册中心 访问
-
-开启注册中心后, 会得到注册中心中的别名, 使用别名来代替ip地址和端口号即可, 在eureka里的`🌸配置客户端`章节中写过了, 这里就不在重复了
-
-### 🌸 服务端集群 访问
-
-首先需要启动两个相同的服务
-
-![image-20220312094935133](images/image-20220312094935133.png)
-
-
-我们看一下配置文件, 除了端口号不同其他都相同
-
-```yml
-server:
-  # 服务端口号
-  port: 8001
-  servlet:
-    encoding:
-      # 返回数据使用utf-8编码
-      charset: utf-8
-
-spring:
-  application:
-    # 服务名称
-    name: cloud-payment-service
-  datasource:
-    # 数据库连接url
-    url: jdbc:mysql://192.168.159.135:3306/objcat?useUnicode=true&characterEncoding=UTF-8&useSSL=false
-    # 驱动类名
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    # 数据库用户名
-    username: root
-    # 数据库密码
-    password: 123456
-
-eureka:
-  instance:
-  	# 使用ip地址注册
-  	prefer-ip-address: true
-    # 注册中心列表中显示ip地址
-    instance-id: ${spring.cloud.client.ip-address}:${server.port}
-  client:
-    service-url:
-      # 配置eureka服务器地址
-      defaultZone: http://eureka7001.com:7001/eureka, http://eureka7002.com:7002/eureka
-    # 是否需要将自己注册到注册中心
-    register-with-eureka: true
-    # 是否从注册中心抓取已有的注册信息
-    fetch-registry: true
-
-
-mybatis-plus:
-  # xml存放位置, 注意中间是两颗星, 如果是一颗直接放在mapper文件夹里会无法识别
-  mapper-locations: classpath:mapper/**/*.xml
-```
-
-```
-
-然后为了证明负载均衡的有效性, 都写一个hello接口
-
-```java
-@Value("${server.port}")
-private String serverPort;
-    
-@GetMapping(value = "/hello")
-public ZYResult<Object> hello() {
-    return ZYResult.success("serverPort: " + serverPort);
-}
-```
-
-建立服务时, 你可以拷贝一份相同的服务, 但很麻烦, 这里提供一个好的方案, 使用一个module来开两个端口 
-
-首先需要把devtools禁用, 因为每次改动的时候都重启就会影响这个方案
-
-```yml
-spring:
-  devtools:
-    restart:
-      enabled: false
-```
-
-禁用后我们在idea中还需要勾选一个东西
-
-![image-20220313112012659](images/image-20220313112012659.png)
-
-勾选完成后就能跑两个服务了
-
- 先运行8001然后改yml端口号为8002, 然后再次运行 我们就可能看见有两个服务启动了
-
-![image-20220313112217159](images/image-20220313112217159.png)
-
-启动起来
-
-![image-20220312100730775](images/image-20220312100730775.png)
-
-然后我们使用有`restTemplate`的微服务来通过别名访问
-
-![image-20220312100849945](images/image-20220312100849945.png)
-
-很明显可以看出, 我们使用的是别名而不是ip, 在启动之前我们还要做另外一个事情, 就是开启负载均衡, 否则会出现找不到别名的问题
-
-![image-20220312100956862](images/image-20220312100956862.png)
-
-都配置好我们测试一下
-
-![image-20220312101017647](images/image-20220312101017647.png)
-
-![image-20220312101024078](images/image-20220312101024078.png)
-
-## 🌲 OpenFeign
-
-### 🌸 配置pom
-
-首先配置pom
-
-```xml
-<!--   主要库     -->
-<dependency>  
-    <groupId>org.springframework.cloud</groupId>  
-    <artifactId>spring-cloud-starter-openfeign</artifactId>  
-</dependency>
-
-<!--   备选库     -->
-<dependency>
-	<groupId>org.springframework.cloud</groupId>
-	<artifactId>spring-cloud-loadbalancer</artifactId>
-</dependency>
-
-/**
-如果出现下面的异常, 请加上`spring-cloud-loadbalancer`库, 一般情况下选择和我一样的版本不会出现这个问题, 在老版本上可能会有这样的问题
-org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'testController': Unsatisfied dependency expressed through field 'paymentFeignService'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'com.objcat.service1.service.PaymentFeignService': Unexpected exception during bean creation; nested exception is java.lang.IllegalStateException: No Feign Client for loadBalancing defined. Did you forget to include spring-cloud-starter-loadbalancer?
-*/
-```
-
-### 🌸 开启服务注解
-
-```java
-@SpringBootApplication
-@EnableFeignClients
-public class Service1Application {
-    public static void main(String[] args) {
-        SpringApplication.run(Service1Application.class, args);
-    }
-}
-```
-
-### 🌸 使用feign访问controller
-
-首先我们创建一个接口, 起名`PaymentFeignService`, 然后使用`FeignClient`指定服务器别名, 然后我们把controller里面的第一个方法拷贝出来, 但只留下方法名, 而不用实现, feign会自动帮我们去请求指定服务器上的接口
-
-![](images/Pasted%20image%2020230410145637.png)
-
-代码如下
-
-```java
-@FeignClient("cloud-payment-service")
-public interface PaymentFeignService {
-    @RequestMapping("hello")
-    public String hello();
-}
-```
-
-使用的时候也很简单, 我们首先使用`@Autowired`注入, 然后直接调用方法就可以了, 我们写一个`testHello`接口, 然后调用另外一台服务器的`hello`接口, 这样就实现对控制器的访问了
-
-```java
-@RestController
-public class TestController {
-
-    @Autowired
-    private PaymentFeignService paymentFeignService;
-
-    @RequestMapping("testHello")
-    public String testHello() {
-        return paymentFeignService.hello();
-    }
-}
-```
-
-### 🌸 错误解决ribbon冲突
-
-在某些老版本中, 我们运行项目会出现这个报错
-
-```
-java.lang.AbstractMethodError: org.springframework.cloud.netflix.ribbon.RibbonLoadBalancerClient.choose(Ljava/lang/String;Lorg/springframework/cloud/client/loadbalancer/Request;)Lorg/springframework/cloud/client/ServiceInstance;
-```
-
-错误解决, 如过与nacos搭配可能出现ribbon和loadbalancer冲突, 需要排除nacos中的ribbon, 或者你可以升级`spring-cloud-alibaba-dependencies`的版本, 在我的配置版本中, 它已经抛弃了`ribbon`转向`spring-cloud-loadbalancer`
-
-```xml
-<dependency>
-	<groupId>com.alibaba.cloud</groupId>
-	<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-	<exclusions>
-		<exclusion>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
-		</exclusion>
-	</exclusions>
-</dependency>
-```
-
-## 🌲 Gateway
-
-网关就是在微服务外面加上一层网关, 作用很广, 诸如反向代理, 鉴权, 流量控制, 熔断, 日志监控等
-
-首先改pom
-
-我们可以看到, 网关需要使用`spring-cloud-starter-gateway`并且还需要一个服务发现的客户端, 可以是eureka或nacos
-
-```xml
-<dependencies>  
-    <dependency>  
-        <groupId>org.springframework.cloud</groupId>  
-        <artifactId>spring-cloud-starter-gateway</artifactId>  
-    </dependency>  
-</dependencies>
-```
-
-然后改yml
-
-```yml
-server:
-  # 服务端口号
-  port: 9527
-  servlet:
-    encoding:
-      # 返回数据使用utf-8编码
-      charset: utf-8
-
-spring:
-  application:
-    # 服务名称
-    name: cloud-gateway
-  cloud: # 配置cloud相关属性
-    gateway: # 配置cloud网关相关熟属性
-      discovery: # 配置网关发现机制
-        locator: # 配置处理机制
-          enabled: true # 开启网关自动映射处理机制
-          # 只要请求地址符合规则 http://gatewayIp:gatewayPort/微服务服务名称/微服务请求地址
-          # 网关自动会映射为 http://微服务名称/微服务地址
-          # 之后微服务名称会自动根据负载均衡选择合适的 ip:port 来映射达到访问的目的
-          # 商业开发中enable一般不设置, 使用默认的false, 都采取手动配置的方式
-          lower-case-service-id: true # 开启服务名转换成小写
-
-eureka:
-  client:
-    service-url:
-      # 配置eureka服务器地址
-      defaultZone: http://eureka7001.com:7001/eureka
-    # 是否需要将自己注册到注册中心
-    register-with-eureka: true
-    # 是否从注册中心抓取已有的注册信息
-    fetch-registry: true
-  instance:
-    # 注册中心列表中显示的状态参数
-    instance-id: ${spring.cloud.client.ip-address}:${server.port}
-    prefer-ip-address: true
-```
-
-主启动类
-
-```java
-@SpringBootApplication  
-@EnableEurekaClient  
-public class GatewayMain9527 {  
-    public static void main(String[] args) {  
-        SpringApplication.run(GatewayMain9527.class, args);  
-    }  
-}
-```
-
-我们可以看到网关也是需要注册到注册中心的, 然后最关键的是`gateway`路由配置, 具体配置可以查看官网
-https://docs.spring.io/spring-cloud-gateway/docs/current/reference/html/
-
-### 🌸 最基本的路由
-```yml
-spring:
-  application:
-    # 服务名称
-    name: cloud-gateway
-  cloud: # 配置cloud相关属性
-    gateway: # 配置cloud网关相关熟属性
-      discovery: # 配置网关发现机制
-        locator: # 配置处理机制
-          enabled: true # 开启网关自动映射处理机制
-          # 只要请求地址符合规则 http://gatewayIp:gatewayPort/微服务服务名称/微服务请求地址
-          # 网关自动会映射为 http://微服务名称/微服务地址
-          # 之后微服务名称会自动根据负载均衡选择合适的 ip:port 来映射达到访问的目的
-          # 商业开发中enable一般不设置, 使用默认的false, 都采取手动配置的方式
-          lower-case-service-id: true # 开启服务名转换成小写
-```
-
-配置完毕后, 我们访问一下
-http://localhost:9527/cloud-payment-service/hello
-但是这种路由在商业项目中一般不会使用, 因为路由作用是限制微服务接口暴露, 完全放开显然不符合开发规范
-
-### 🌸 固定路径路由
-
-网关可以通过路径来转发到固定的微服务, 这样可以隐藏某些不对外开放的接口
-
-```yml
-cloud:  
-  gateway:  
-    routes:  
-      - id: payment  
-        uri: http://localhost:8001  
-        predicates:  
-          - Path=/payment/get/**, /payment/create/**
-```
-
-这个配置的意思是只转发get和create路径下的接口, 对应的接口如下所示
-```java
-@RequestMapping(value = "/payment/create")  
-// 如果加上 @RequestBody 就可以接受正文中的内容, 如果不加就接收param中的内容  
-public ZYResult<Object> create(Payment payment) {  
-    int result = paymentService.create(payment);  
-    log.info("插入数据");  
-    if (result > 0) {  
-        return ZYResult.success("插入成功!", result);  
-    } else {  
-        return ZYResult.error("插入失败!", result);  
-    }  
-}  
-  
-@GetMapping(value = "/payment/get/{id}")  
-public ZYResult<Payment> getPaymentById(@PathVariable("id") Long id) {  
-    Payment payment = paymentService.getPaymentById(id);  
-    if (payment != null) {  
-        return ZYResult.success("查询成功", payment);  
-    } else {  
-        return ZYResult.error("查询失败", payment);  
-    }  
-}
-```
-
-这两个接口都在payment下, 所以我们也可以写成
-
-```yml
-- Path=/payment/**
-```
-
-这个时候只有payment下面的接口才允许访问, 如果想打开所有接口的访问, 可以写成
-
-```yml
-- Path=/**
-```
-
-不过这样写我觉得意义不大, 你说呢
-
-### 🌸 负载均衡路由
-
-完全开放
-
-```
-spring:
-  application:
-    # 服务名称
-    name: cloud-gateway
-  cloud: # 配置cloud相关属性
-    gateway: # 配置cloud网关相关熟属性
-      discovery: # 配置网关发现机制
-        locator: # 配置处理机制
-          enabled: false # 开启网关自动映射处理机制
-          # 只要请求地址符合规则 http://gatewayIp:gatewayPort/微服务服务名称/微服务请求地址
-          # 网关自动会映射为 http://微服务名称/微服务地址
-          # 之后微服务名称会自动根据负载均衡选择合适的 ip:port 来映射达到访问的目的
-          # 商业开发中enable一般不设置, 使用默认的false, 都采取手动配置的方式
-          lower-case-service-id: true # 开启服务名转换成小写
-      routes:
-        - id: payment # 路由定义的命名, 唯一即可, 命名规则符合Java命名规则即可
-          uri: lb://cloud-payment-service # 当前路由的别名; lb代表负载均衡
-          predicates: # 配置谓词集合
-            - Path=/** # 定义一个谓词
-```
-
-`lower-case-service-id` 注意这里, 如果这里设置为true, 配置的时候就写小写的服务别名
-如果为false就写大写的服务别名, 因为eureka默认是使用大写来搞的, 所以开发中这里使用默认的大写居多, 此教程是使用小写, 因为觉得小写好看 - -
-
-部分开放 - 只开放payment路径下的接口, 那么根路径下的 cloud-payment-service/hello 就不能被访问
-
-```
-routes:
-- id: payment # 路由定义的命名, 唯一即可, 命名规则符合Java命名规则即可
-  uri: lb://cloud-payment-service # 当前路由的别名; lb代表负载均衡
-  predicates: # 配置谓词集合
-	- Path=/payment/**
-```
-
-可以定义多个谓词路由
-
-```
-- Path=/payment/**, Path=/payment2/**, Path=/payment3/**
-```
-
-谓词除了Path还有很多, 可以查看官方文档, 在项目中对应的实体类为`GatewayPredicate`
-
-![image-20220313162716524](images/image-20220313162716524.png)
-
-
-### 🌸 过滤器
-```
-filter:
-- stripPrefix=1
-```
 
 # 🍎 排除模块
 

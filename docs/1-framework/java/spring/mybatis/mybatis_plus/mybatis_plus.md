@@ -1141,7 +1141,7 @@ public void testSelectUsers2() {
 }
 ```
 
-![](images/MybatisPlus/1.png)
+![](spring/mybatis/mybatis_plus/images/1.png)
 
 # 🍎 分页
 
@@ -1251,7 +1251,7 @@ public class UserDO {
 
 # 🍎 MyBatisX插件安装
 
-![image-20220307223033679](../../springcloud/SpringCloudMaven/images/image-20220307223033679.png)
+![image-20220307223033679](spring/springcloud/SpringCloudMaven/images/image-20220307223033679.png)
 
 # 🍎 配置sql解析范围
 

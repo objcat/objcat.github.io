@@ -1,10 +1,12 @@
 # 🍎 简介
 
-![](images/Pasted%20image%2020230907120306.jpg)
+![](images/Javascript-icon-128.png)
 
-JavaScript（简称“JS”）是一种具有函数优先的轻量级，解释型或即时编译型的编程语言。虽然它是作为开发Web页面的脚本语言而出名，但是它也被用到了很多非浏览器环境中，JavaScript基于原型编程、多范式的动态脚本语言，并且支持面向对象、命令式、声明式、函数式编程范式。 [1]
-JavaScript在1995年由Netscape公司的Brendan Eich，在网景导航者浏览器上首次设计实现而成。因为Netscape与Sun合作，Netscape管理层希望它外观看起来像Java，因此取名为JavaScript。但实际上它的语法风格与Self及Scheme较为接近。
-JavaScript的标准是ECMAScript。截至2012年，所有浏览器都完整的支持ECMAScript 5.1，旧版本的浏览器至少支持ECMAScript 3标准。2015年6月17日，ECMA国际组织发布了ECMAScript的第六版，该版本正式名称为ECMAScript 2015，但通常被称为ECMAScript 6或者ES2015。 [1]
+avaScript（简称“[JS](https://baike.baidu.com/item/JS/10687961?fromModule=lemma_inlink)”）是一种具有函数优先的[轻量级](https://baike.baidu.com/item/%E8%BD%BB%E9%87%8F%E7%BA%A7/10002835?fromModule=lemma_inlink)，解释型或即时编译型的[编程语言](https://baike.baidu.com/item/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/9845131?fromModule=lemma_inlink)。虽然它是作为开发[Web](https://baike.baidu.com/item/Web/150564?fromModule=lemma_inlink)页面的[脚本语言](https://baike.baidu.com/item/%E8%84%9A%E6%9C%AC%E8%AF%AD%E8%A8%80/1379708?fromModule=lemma_inlink)而出名，但是它也被用到了很多非浏览器环境中，JavaScript基于原型编程、多范式的动态脚本语言，并且支持面向对象、[命令式](https://baike.baidu.com/item/%E5%91%BD%E4%BB%A4%E5%BC%8F/55229960?fromModule=lemma_inlink)、声明式、函数式编程范式。 [1] 
+
+[Java](https://baike.baidu.com/item/Java/85979?fromModule=lemma_inlink)Script在1995年由[Netscape](https://baike.baidu.com/item/Netscape/2778944?fromModule=lemma_inlink)公司的Brendan Eich，在[网景导航者](https://baike.baidu.com/item/%E7%BD%91%E6%99%AF%E5%AF%BC%E8%88%AA%E8%80%85/10404300?fromModule=lemma_inlink)浏览器上首次设计实现而成。因为Netscape与[Sun](https://baike.baidu.com/item/Sun/69463?fromModule=lemma_inlink)合作，Netscape[管理层](https://baike.baidu.com/item/%E7%AE%A1%E7%90%86%E5%B1%82/4605896?fromModule=lemma_inlink)希望它外观看起来像Java，因此取名为JavaScript。但实际上它的语法风格与Self及[Scheme](https://baike.baidu.com/item/Scheme/8379129?fromModule=lemma_inlink)较为接近。
+
+JavaScript的标准是[ECMAScript](https://baike.baidu.com/item/ECMAScript/1889420?fromModule=lemma_inlink)。截至2012年，所有浏览器都完整的支持ECMAScript 5.1，旧版本的浏览器至少支持ECMAScript 3标准。2015年6月17日，ECMA国际组织发布了ECMAScript的第六版，该版本[正式名称](https://baike.baidu.com/item/%E6%AD%A3%E5%BC%8F%E5%90%8D%E7%A7%B0/56531430?fromModule=lemma_inlink)为ECMAScript 2015，但通常被称为[ECMAScript 6](https://baike.baidu.com/item/ECMAScript%206/22641264?fromModule=lemma_inlink)或者ES2015。 [1]
 
 # 🍎 js写在哪里
 

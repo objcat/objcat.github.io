@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "f56ad76d97250d81",
+        "id": "554e9206db6a1a1e",
         "type": "tabs",
         "children": [
           {
-            "id": "cc08eb68b4e958be",
+            "id": "81c705e956368bb5",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "docs/README.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ]
@@ -93,7 +89,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/README.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +105,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/README.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -132,9 +126,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "docs/README.md"
-              }
+              "state": {}
             }
           }
         ],
@@ -154,15 +146,16 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "cc08eb68b4e958be",
+  "active": "81c705e956368bb5",
   "lastOpenFiles": [
-    "docs/images/oc-icon.png",
+    "docs/0-language/swift/swift.md",
     "docs/README.md",
+    "docs/images/Vue.js_Logo_2.svg",
+    "docs/images/oc-icon.png",
     "docs/images/oc-icon.png.sb-11252ca5-HhbXUD",
     "docs/images/Pasted image 20230818132727.png",
     "docs/images/Pasted image 20230910135152.png",
     "docs/images/spring-logo.svg",
-    "docs/images/Vue.js_Logo_2.svg",
     "docs/images/Pasted image 20230910134908.png",
     "docs/images/未命名",
     "docs/images/Pasted image 20230910134401.png",
@@ -197,7 +190,6 @@
     "docs/3-program/env/mysql/mysql_env.md",
     "docs/3-program/env/docker/docker_env.md",
     "docs/1-framework/java/Mybatis/MyBatisX/MyBatisX.md",
-    "docs/0-language/swift/swift.md",
     "docs/0-language/oc/oc.md",
     "docs/0-language/java/Java的副本.md",
     "docs/0-language/Java/Java.md"

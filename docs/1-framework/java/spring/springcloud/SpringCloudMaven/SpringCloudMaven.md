@@ -139,7 +139,7 @@ https://start.spring.io
 
 ### 🌸 配置Maven
 
-创建后可以出现这样的问题, 如果没问题则不需要配置
+创建后可以出现拉取不了依赖或爆红的问题, 这里都推荐安装一下, 熟悉安装流程, 虽然不安装也能使用IDEA自带的, 但是配置镜像源那一步还是很关键的
 
 ```
 The desired archetype does not exist (org.apache.maven.archetypes:maven-archetype-archetype:1.0)
@@ -239,28 +239,6 @@ bundle：生成一个 OSGi Bundle，用于在 OSGi 容器中部署。
 
 最显眼的就是最下面的三个, 跟我上面约定的版本是一致的, 其他都是一些常用的依赖库版本
 
-### 🌸 配置仓库镜像源
-
-因为`maven`仓库在国外, 拉取依赖速度比较慢, 所以我们先配置镜像源总是没错的, 体验飞速下载, 放在`</properties>`下面
-
-```xml
-<repositories>
-	<repository>
-		<id>aliyun</id>
-		<name>aliyun</name>
-		<url>https://maven.aliyun.com/repository/public</url>
-		<releases>
-			<enabled>true</enabled>
-		</releases>
-		<snapshots>
-			<enabled>false</enabled>
-		</snapshots>
-	</repository>
-</repositories>
-```
-
-https://developer.aliyun.com/mirror/maven?spm=a2c6h.13651102.0.0.44d61b112BnMIT
-
 ### 🌸 配置dependencyManagement
 
 我们把这些带有`dependencies`的库叫做 `Maven BOM`(Bill Of Materials，依赖管理声明), 它包含了一组通用的依赖版本号和依赖范围等信息, 提供了应用程序所需的所有依赖库的版本管理和依赖关系.
@@ -316,20 +294,6 @@ https://developer.aliyun.com/mirror/maven?spm=a2c6h.13651102.0.0.44d61b112BnMIT
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-	<repositories>
-		<repository>
-			<id>aliyun</id>
-			<name>aliyun</name>
-			<url>https://maven.aliyun.com/repository/public</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-    </repositories>
 </project>
 ```
 
@@ -424,6 +388,13 @@ Lombok项目是一个java库，它可以自动插入到编辑器和构建工具�
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-maven-plugin</artifactId>
 			<version>${spring-boot.version}</version>
+			<executions>
+				<execution>
+					<goals>
+						<goal>repackage</goal>
+					</goals>
+				</execution>
+			</executions>
 		</plugin>
 
 		<plugin>
@@ -516,26 +487,19 @@ Lombok项目是一个java库，它可以自动插入到编辑器和构建工具�
         </dependency>
     </dependencies>
 
-    <repositories>
-        <repository>
-            <id>aliyun</id>
-            <name>aliyun</name>
-            <url>https://maven.aliyun.com/repository/public</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
@@ -810,6 +774,19 @@ public class TestController {
 
 然后下面的`hello`方法就是我们的接口, 我们按照上面写完后就可以运行我们的应用试一试了
 
+或者你也可以这么写, 效果是一样的, 前者是专门写`api`的控制器, 后者可以返回`html`页面, 如果想返回`api`需要加上`@ResponseBody`注解
+```java
+@Controller
+public class TestController {
+
+    @ResponseBody
+    @RequestMapping("/hello")
+    public String hello() {
+        return "hello world";
+    }
+}
+```
+
 ### 🌸 运行项目
 
 运行项目有多方法, 我们一个一个看
@@ -906,9 +883,9 @@ public class TestController {
 
 ## 🌲Service/Dao(服务层/数据访问层)
 
-分别是`服务层/业务逻辑层`和`数据访问层/持久层`, 因为篇幅比较长, 我们这里就引入最常使用到的`ORM`框架进行讲解, 点击学习三层架构
+分别是`服务层/业务逻辑层`和`数据访问层/持久层`, 因为篇幅比较长, 我们这里就引入最常使用到的`ORM`框架进行讲解, 点击跳转来学习三层架构
 
-[跳转 mybatis_plus](../../mybatis/mybatis_plus/mybatis_plus.md)
+[跳转 MybatisPlus](../../mybatis/mybatis_plus/mybatis_plus.md)
 
 # 🍎 打包
 
@@ -978,268 +955,6 @@ Downloading from central: https://repo.maven.apache.org/maven2/com/objcat/test-s
 	<module>test-api</module>
 	<module>test-api-common</module>
 </modules>
-```
-
-# 🍎 选学内容
-
-## 🌲 自动生成代码
-
-首先我们要下载插件`MyBatisX`
-
-![image-20220307223033679](images/image-20220307223033679.png)
-
-### 🌸 新建数据库
-
-然后我们新建一个数据库用于测试使用, 比如我这里叫做objcat
-
-![](images/Pasted%20image%2020230406095943.png)
-
-然后给数据库起个名字
-
-![](images/Pasted%20image%2020230406100035.png)
-
-### 🌸 新建表
-
-然后我们创建表
-
-![](images/Pasted%20image%2020230406102141.png)
-
-把下面的SQL填写进去
-
-```sql
-CREATE TABLE user
-(
-    id          bigint AUTO_INCREMENT COMMENT '身份id'
-        PRIMARY KEY,
-    name        varchar(50)                                NULL COMMENT '名字',
-    username    varchar(20)                                NULL COMMENT '用户名',
-    password    varchar(32)                                NULL COMMENT '密码',
-    salt        varchar(10)                                NOT NULL COMMENT '盐',
-    status      int              DEFAULT 0                 NULL COMMENT '状态: 0正常 1未激活 3冻结',
-    create_time datetime         DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '创建时间',
-    update_time datetime         DEFAULT CURRENT_TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-    is_delete   tinyint UNSIGNED DEFAULT 0                 NULL COMMENT '是否删除',
-    CONSTRAINT user_username_uindex
-        UNIQUE (username)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4 COMMENT '用户表';
-```
-
-执行完毕后我们会发现多了一个表
-
-![](images/Pasted%20image%2020230406102317.png)
-
-### 🌸 使用插件自动生成代码
-
-我们在数据库表上点击右键, 然后选择`MybatisX-Generator`
-
-![](images/Pasted%20image%2020230406103826.png)
-
-然后会弹出对话框
-
-​![](images/Pasted%20image%2020230406102955.png)
-
-![](images/Pasted%20image%2020230406103341.png)
-
-生成后是这样的
-
-![](images/Pasted%20image%2020230406103427.png)
-
-自动生成的代码需要好好的说一下, 因为这是我`spring-boot`的基础结构, 结构图如下
-
-```
-src
-├── main
-│   ├── java 
-│   │   └── com.example.demo
-│   │       ├── DemoApplication.java // Spring Boot启动类
-│   │       ├── controller
-│   │       │   └── DemoController.java    // Controller
-│   │       ├── mapper
-│   │       │   └── DemoMapper.java        // Mapper
-│   │       └── service
-│   │           └── DemoService.java      // Service
-│   └── resources
-│       └── application.yml                // 配置文件
-└── test
-    └── java 
-        └── com.example.demo
-            └── DemoApplicationTests.java   // 测试类
-```
-
-- Controller: 处理请求和响应,负责接受客户端请求并调用服务层进行业务处理。通常用@Controller注解标注。
-- Mapper: 负责数据库操作,进行ORM映射(Object-Relational Mapping),通常使用MyBatis框架。
-- Service: 业务逻辑层,处理复杂的业务逻辑,Validator验证,调用Mapper访问数据库。通常用@Service注解标注。
-
-调用步骤就是, `Mapper`写查询数据的方法, 然后`Service`调用`Mapper`加上业务逻辑来封装服务, 最后在`Controller`中返回`Service`中生成的数据
-
-### 🌸 测试
-
-我们要怎么测试自动生成的类呢, 这就要使用到我们的`spring-boot-starter-test`依赖库了, 如果你是跟着我做的那么在前面就已经引入了
-
-我们接下来就来测试一下service是否好用吧, 首先我们在测试类中创建包结构, 注意如果包名不对程序是不能跑起来的
-
-![](images/Pasted%20image%2020230406114748.png)
-
-然后在里面写一个测试类
-
-![](images/Pasted%20image%2020230406115015.png)
-
-里面按照我的写
-
-```java
-@SpringBootTest
-public class TestUserService {
-    @Autowired
-    private UserService userService;
-
-    @Test
-    public void test() {
-        User user = userService.list().get(0);
-        System.out.println(user.toString());
-    }
-}
-```
-
-然后在数据库中添加几条数据就能进行查询了
-
-## 🌲 热部署工具安装
-
-每次修改完代码手动重启都十分麻烦, 那么怎么来实现代码自动生效呢
-
-首先添加maven库 - 在子工程中
-
-```xml
-<dependency>
-	<groupId>org.springframework.boot</groupId>
-	<artifactId>spring-boot-devtools</artifactId>
-</dependency>
-```
-
-然后添加热启动插件 - 在父工程中
-
-```xml
-<build>
-	<plugins>
-		<plugin>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-maven-plugin</artifactId>
-			<version>${springboot.version}</version>
-			<configuration>
-				<fork>true</fork>
-				<addResources>true</addResources>
-			</configuration>
-		</plugin>
-	</plugins>
-</build>
-```
-
-然后同步maven
-
-![image-20220310195449636](images/image-20220310195449636.png)
-
-配置idea
-
-![image-20220310195410879](images/image-20220310195410879.png)
-
-然后按 `ctrl + shift + alt + /`
-
-![image-20220310195631186](images/image-20220310195631186.png)
-
-勾选下图所示即可
-
-![image-20220310200317923](images/image-20220310200317923.png)
-
-新版本没有上面两个选项, 需要在设置里勾选
-
-![image-20220310201251250](images/image-20220310201251250.png)
-
-这个功能适合在开发环境使用
-
-## 🌲 开启DashBoard
-
-DashBoard是用来管理多个微服务的面板, 后来改名叫做`Services`, 我们在开发中几乎是必用的, 那么怎么开启呢
-
-![image-20220310230925922](images/image-20220310230925922.png)
-
-然后在IDEA下面会出来services窗口
-
-![image-20220310231021792](images/image-20220310231021792.png)
-
-选择`spring-boot`即可
-
-![image-20220310231049274](images/image-20220310231049274.png)
-
-之后就可以很方便的运行了
-
-![image-20220310231131276](images/image-20220310231131276.png)
-
-## 🌲 创建通用模块
-
-### 🌸 创建module
-
-有时候一个工程中需要有共用的类和公共的依赖, 比如我们写api接口, 用到的依赖库大致就那么多, 每次都重新写一遍pom, 费时费力, 针对此类问题, 我们可以抽出公共模块来让开发更方便
-
-首先创建一个maven module, 起名叫`test-api-common`
-
-![](images/Pasted%20image%2020230406152050.png)
-
-### 🌸 写pom
-
-然后我们把pom改一下, 怎么改? 很简单, 我们把上面创建的`cloud-provider-payment8001`的pom的依赖库直接拷贝过来就可以了
-
-```xml
-<dependencies>
-	<dependency>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-web</artifactId>
-	</dependency>
-
-	<dependency>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-test</artifactId>
-	</dependency>
-
-	<dependency>
-		<groupId>com.baomidou</groupId>
-		<artifactId>mybatis-plus-boot-starter</artifactId>
-	</dependency>
-
-	<dependency>
-		<groupId>mysql</groupId>
-		<artifactId>mysql-connector-java</artifactId>
-	</dependency>
-</dependencies>
-```
-
-### 🌸 推送到maven本地仓库
-
-然后把它推送到`maven`本地仓库
-
-![](images/Pasted%20image%2020230406152428.png)
-
-先`clean`再`install`
-
-我们可以去到仓库里看一下
-
-```
-open ~/.m2
-```
-
-![](images/Pasted%20image%2020230903221425.png)
-
-我们可以看到所谓的提交到本地仓库就是编译成jar包, 然后放到`.m2`仓库中
-
-### 🌸 导入其他服务
-
-提交到maven本地仓库后, 我们其他微服务就能使用它了, 我们子服务的依赖库清空, 只需要引入下面的通用依赖就可以了
-
-```xml
-<dependency>
-    <groupId>com.objcat</groupId>
-    <artifactId>cloud-api-common</artifactId>
-    <version>1.0</version>
-</dependency>
 ```
 
 # 🍎 接口
@@ -1827,177 +1542,9 @@ public class TestExceptionHandler {
 
 我们发现是一段json, 而不是那个报错的空白页面了
 
-# 🍎 排除模块
+# 🍎 注解
 
-有时候由于项目功能可能不需要导入公共模块中的某些依赖, 所以我们需要进行排除, 这里就使用nacos为例子, 注意这只是一个例子!
-
-```xml
-<dependencies>
-	<dependency>
-		<groupId>org.objcat</groupId>
-		<artifactId>test-common</artifactId>
-		<version>1.0</version>
-		<exclusions>
-			<exclusion>
-				<groupId>com.alibaba.cloud</groupId>
-				<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-			</exclusion>
-		</exclusions>
-	</dependency>
-</dependencies>
-```
-
-因为我创建的`新服务`仅仅是一个测试服务, 所以不需要使用`nacos`, 然而不启动`nacos`程序就会报错, 所以我这里把`nacos`排除了使用`exclusion`标签
-
-# 🍎 本地化
-
-有时候接口返回的`message`可能需要根据请求的地区来进行显示中文或者英文, 那么我们就来看看怎么实现吧
-
-## 🌲 创建i18n文件夹
-
-在`resource`下创建`i18n`文件夹(internationalization国际化, 共18个字母简称i18n)
-
-## 🌲 创建Resource Bundle
-
-![](images/i18n_1.png)
-
-然后我们需要对它进行一些配置
-
-![](images/i18n_2.png)
-
-创建完成后, 我们看一下就是这个样子
-
-![](images/i18n_3.png)
-
-然后我们就来修改en和zh两个文件吧, 分别填入我们的字段
-
-```
-title = "title"
-```
-
-```
-title = "标题"
-```
-
-
-## 🌲 代码实现工具类
-
-配置了这么久, 你可能会问那怎么调用呢, 我们需要在代码里写一个工具类
-
-```java
-public class ZYI18nUtil {
-
-    private final MessageSource messageSource;
-
-    public ZYI18nUtil() {
-        messageSource = initMessageSource();
-    }
-
-    private MessageSource initMessageSource() {
-        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename("i18n/messages");
-        messageSource.setDefaultEncoding("UTF-8");
-        return messageSource;
-    }
-
-    /**
-     * description: 获取本地化文字 <br>
-     * version: 1.0 <br>
-     * date: 2022/10/2 11:36 <br>
-     * author: objcat <br>
-     *
-     * @param key 键
-     * @return value值
-     */
-    public String get(String key) {
-        return get(key, Locale.CHINA);
-    }
-
-    /**
-     * description: 获取本地化文字 <br>
-     * version: 1.0 <br>
-     * date: 2022/10/2 11:36 <br>
-     * author: objcat <br>
-     *
-     * @param key    键
-     * @param locale 语言
-     * @return value值
-     */
-    public String get(String key, Locale locale) {
-        return messageSource.getMessage(key, null, locale);
-    }
-}
-```
-
-是不是挠挠的简单呢, 那我们就来用一下吧
-
-```java
-// 中文
-System.out.println(new ZYI18nUtil().get("title"));
-// 英文
-System.out.println(new ZYI18nUtil().get("title", Locale.ENGLISH));
-```
-
-## 🌲 依赖注入
-
-因为每次我们使用`ZYI18nUtil`对象的时候都需要重新创建一个, 这样效率很低, 所以可以交给的`Spring IOC`进行管理
-
-### 🌸 对象放入容器
-
-我们需要新建config包, 然后在包下创建一个类叫做`AppConfig`, 我们使用`@Bean`来把对象交给容器去管理
-
-```java
-@Configuration
-public class AppConfig {
-    @Bean
-    public ZYI18nUtil zyi18nUtil() {
-        return new ZYI18nUtil();
-    }
-}
-```
-
-### 🌸 依赖注入
-
-我们使用的时候也很简单使用`@Resource`或`@Autowired`都可以注入, 这样我们使用的时候就直接从IOC容器里面拿, 就不需要重新创建对象, 避免了性能开销
-
-```java
-@Resource
-private ZYI18nUtil zyi18nUtil;
-
-@RequestMapping("/request1")
-ZYResult<Object> request1() {
-	System.out.println(zyi18nUtil.get("title"));
-	return ZYResult.success();
-}
-```
-
-## 🌲 单例
-
-除了依赖注入我们也可以使用静态变量来搞, 增加下面的方法
-
-```java
-public class ZYI18nUtil {
-
-    private static ZYI18nUtil zyi18nUtil;
-
-    public static ZYI18nUtil getInstance() {
-        if (zyi18nUtil == null) {
-            zyi18nUtil = new ZYI18nUtil();
-        }
-        return zyi18nUtil;
-    }
-}
-```
-
-然后我们可以直接在接口中使用
-
-```java
-@RequestMapping("/request1")
-ZYResult<Object> request1() {
-	System.out.println(ZYI18nUtil.getInstance().get("title"));
-	return ZYResult.success();
-}
-```
+[跳转 annotation](../../annotation/annotation.md)
 
 # 🍎 配置多环境
 
@@ -2145,7 +1692,6 @@ java -jar test-spring-boot-starter-web-application-active-1.0.jar --spring.profi
 
 ![](images/Pasted%20image%2020230904170938.png)
 
-
 ### 🌸 配置管理文件
 
 然后我们配置`bootstrap.yml`, 这个是主文件, 值得注意的是配置这个文件后, 我们的`application.yml`就完全被接管了
@@ -2177,221 +1723,6 @@ spring:
         prefix: ${spring.application.name}
 ```
 
-# 🍎 自定义配置文件映射实体
+# 🍎 扩展文档
 
-我们首先要引入一个包
-
-```xml
-<dependency>
-	<groupId>org.springframework.boot</groupId>
-	<artifactId>spring-boot-configuration-processor</artifactId>
-	<optional>true</optional>
-</dependency>
-```
-
-然后我们新建一个配置文件, 并写上内容
-
-```yml
-basic.student.name="张三"
-basic.student.age="18"
-
-basic.student2.name="李四"
-basic.student2.age="100"
-```
-
-然后我们新建两个类, 来承接我们的配置
-
-```java
-@Data
-public class Student {
-    private String name;
-    private String age;
-}
-
-@Data
-@Component
-@PropertySource("classpath:test.properties")
-@ConfigurationProperties(prefix = "basic")
-public class BasicConfig {
-    private Student student;
-    private Student student2;
-}
-```
-
-然后我们新建一个测试类
-
-```java
-@Test
-public void hello() {
-	System.out.println(basicConfig.getStudent());
-	System.out.println(basicConfig.getStudent2());
-}
-/**
-Student(name="张三", age="18")
-Student(name="李四", age="100")
-*/
-```
-
-我们可以看到配置文件中的配置被自动读取到实体中了
-
-# 🍎 版本选择完整JSON
-
-```json
-{
-    "git": {
-        "branch": "87454b79e1cfa772c013928e06e62457eba7b7df", 
-        "commit": {
-            "id": "87454b7", 
-            "time": "2023-04-07T14:10:04Z"
-        }
-    }, 
-    "build": {
-        "version": "0.0.1-SNAPSHOT", 
-        "artifact": "start-site", 
-        "versions": {
-            "spring-boot": "3.0.5", 
-            "initializr": "0.20.0-SNAPSHOT"
-        }, 
-        "name": "start.spring.io website", 
-        "time": "2023-04-07T14:12:17.694Z", 
-        "group": "io.spring.start"
-    }, 
-    "bom-ranges": {
-        "codecentric-spring-boot-admin": {
-            "2.4.3": "Spring Boot >=2.3.0.M1 and <2.5.0-M1", 
-            "2.5.6": "Spring Boot >=2.5.0.M1 and <2.6.0-M1", 
-            "2.6.8": "Spring Boot >=2.6.0.M1 and <2.7.0-M1", 
-            "2.7.4": "Spring Boot >=2.7.0.M1 and <3.0.0-M1", 
-            "3.0.2": "Spring Boot >=3.0.0-M1 and <3.1.0-M1"
-        }, 
-        "solace-spring-boot": {
-            "1.1.0": "Spring Boot >=2.3.0.M1 and <2.6.0-M1", 
-            "1.2.2": "Spring Boot >=2.6.0.M1 and <3.0.0-M1"
-        }, 
-        "solace-spring-cloud": {
-            "1.1.1": "Spring Boot >=2.3.0.M1 and <2.4.0-M1", 
-            "2.1.0": "Spring Boot >=2.4.0.M1 and <2.6.0-M1", 
-            "2.3.2": "Spring Boot >=2.6.0.M1 and <3.0.0-M1"
-        }, 
-        "spring-cloud": {
-            "Hoxton.SR12": "Spring Boot >=2.2.0.RELEASE and <2.4.0.M1", 
-            "2020.0.6": "Spring Boot >=2.4.0.M1 and <2.6.0-M1", 
-            "2021.0.0-M1": "Spring Boot >=2.6.0-M1 and <2.6.0-M3", 
-            "2021.0.0-M3": "Spring Boot >=2.6.0-M3 and <2.6.0-RC1", 
-            "2021.0.0-RC1": "Spring Boot >=2.6.0-RC1 and <2.6.1", 
-            "2021.0.6": "Spring Boot >=2.6.1 and <3.0.0-M1", 
-            "2022.0.0-M1": "Spring Boot >=3.0.0-M1 and <3.0.0-M2", 
-            "2022.0.0-M2": "Spring Boot >=3.0.0-M2 and <3.0.0-M3", 
-            "2022.0.0-M3": "Spring Boot >=3.0.0-M3 and <3.0.0-M4", 
-            "2022.0.0-M4": "Spring Boot >=3.0.0-M4 and <3.0.0-M5", 
-            "2022.0.0-M5": "Spring Boot >=3.0.0-M5 and <3.0.0-RC1", 
-            "2022.0.0-RC1": "Spring Boot >=3.0.0-RC1 and <3.0.0-RC2", 
-            "2022.0.0-RC2": "Spring Boot >=3.0.0-RC2 and <3.0.0", 
-            "2022.0.2": "Spring Boot >=3.0.0 and <3.1.0-M1"
-        }, 
-        "spring-cloud-azure": {
-            "4.7.0": "Spring Boot >=2.5.0.M1 and <3.0.0-M1", 
-            "5.0.0": "Spring Boot >=3.0.0-M1 and <3.1.0-M1"
-        }, 
-        "spring-cloud-gcp": {
-            "2.0.11": "Spring Boot >=2.4.0-M1 and <2.6.0-M1", 
-            "3.4.8": "Spring Boot >=2.6.0-M1 and <3.0.0-M1", 
-            "4.1.4": "Spring Boot >=3.0.0-M1 and <3.1.0-M1"
-        }, 
-        "spring-cloud-services": {
-            "2.3.0.RELEASE": "Spring Boot >=2.3.0.RELEASE and <2.4.0-M1", 
-            "2.4.1": "Spring Boot >=2.4.0-M1 and <2.5.0-M1", 
-            "3.3.0": "Spring Boot >=2.5.0-M1 and <2.6.0-M1", 
-            "3.4.0": "Spring Boot >=2.6.0-M1 and <2.7.0-M1", 
-            "3.5.0": "Spring Boot >=2.7.0-M1 and <3.0.0-M1", 
-            "4.0.0": "Spring Boot >=3.0.0 and <3.1.0-M1"
-        }, 
-        "spring-shell": {
-            "2.1.6": "Spring Boot >=2.7.0 and <3.0.0-M1", 
-            "3.0.0": "Spring Boot >=3.0.0 and <3.1.0-M1"
-        }, 
-        "vaadin": {
-            "14.9.6": "Spring Boot >=2.1.0.RELEASE and <2.6.0-M1", 
-            "23.2.15": "Spring Boot >=2.6.0-M1 and <2.7.0-M1", 
-            "23.3.10": "Spring Boot >=2.7.0-M1 and <3.0.0-M1", 
-            "24.0.3": "Spring Boot >=3.0.0-M1 and <3.1.0-M1"
-        }, 
-        "wavefront": {
-            "2.0.2": "Spring Boot >=2.1.0.RELEASE and <2.4.0-M1", 
-            "2.1.1": "Spring Boot >=2.4.0-M1 and <2.5.0-M1", 
-            "2.2.2": "Spring Boot >=2.5.0-M1 and <2.7.0-M1", 
-            "2.3.4": "Spring Boot >=2.7.0-M1 and <3.0.0-M1", 
-            "3.0.1": "Spring Boot >=3.0.0-M1 and <3.1.0-M1"
-        }
-    }, 
-    "dependency-ranges": {
-        "okta": {
-            "1.4.0": "Spring Boot >=2.2.0.RELEASE and <2.4.0-M1", 
-            "1.5.1": "Spring Boot >=2.4.0-M1 and <2.4.1", 
-            "2.0.1": "Spring Boot >=2.4.1 and <2.5.0-M1", 
-            "2.1.6": "Spring Boot >=2.5.0-M1 and <3.0.0-M1", 
-            "3.0.3": "Spring Boot >=3.0.0-M1 and <3.1.0-M1"
-        }, 
-        "mybatis": {
-            "2.1.4": "Spring Boot >=2.1.0.RELEASE and <2.5.0-M1", 
-            "2.2.2": "Spring Boot >=2.5.0-M1 and <2.7.0-M1", 
-            "2.3.0": "Spring Boot >=2.7.0-M1 and <3.0.0-M1", 
-            "3.0.0": "Spring Boot >=3.0.0-M1"
-        }, 
-        "pulsar": {
-            "0.2.0": "Spring Boot >=3.0.0 and <3.1.0-M1"
-        }, 
-        "pulsar-reactive": {
-            "0.2.0": "Spring Boot >=3.0.0 and <3.1.0-M1"
-        }, 
-        "camel": {
-            "3.5.0": "Spring Boot >=2.3.0.M1 and <2.4.0-M1", 
-            "3.10.0": "Spring Boot >=2.4.0.M1 and <2.5.0-M1", 
-            "3.13.0": "Spring Boot >=2.5.0.M1 and <2.6.0-M1", 
-            "3.17.0": "Spring Boot >=2.6.0.M1 and <2.7.0-M1", 
-            "3.20.2": "Spring Boot >=2.7.0.M1 and <3.0.0-M1", 
-            "4.0.0-M2": "Spring Boot >=3.0.0-M1 and <3.1.0-M1"
-        }, 
-        "picocli": {
-            "4.7.0": "Spring Boot >=2.5.0.RELEASE and <3.1.0-M1"
-        }, 
-        "open-service-broker": {
-            "3.2.0": "Spring Boot >=2.3.0.M1 and <2.4.0-M1", 
-            "3.3.1": "Spring Boot >=2.4.0-M1 and <2.5.0-M1", 
-            "3.4.1": "Spring Boot >=2.5.0-M1 and <2.6.0-M1", 
-            "3.5.0": "Spring Boot >=2.6.0-M1 and <2.7.0-M1"
-        }
-    }
-}
-```
-
-# 🍎 FAQ
-
-## 🌲 xxxx 中没有主清单属性
-
-```
-test-spring-boot-starter-web-application-active-1.0.jar中没有主清单属性
-```
-
-解决方法是把插件添加到pom
-
-```xml
-<build>
-	<plugins>
-		<plugin>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-maven-plugin</artifactId>
-			<configuration>
-				<executable>true</executable>
-			</configuration>
-			<executions>
-				<execution>
-					<goals>
-						<goal>repackage</goal>
-					</goals>
-				</execution>
-			</executions>
-		</plugin>
-	</plugins>
-</build>
-```
+[跳转 SpringCloudMavenExt](../SpringCloudMavenExt/SpringCloudMavenExt.md)

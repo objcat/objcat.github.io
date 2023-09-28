@@ -8,11 +8,26 @@ https://www.docker.com
 
 https://www.docker.com
 
-直接去官网下载`Docker Desktop`
+`Mac`就比较方便了, 直接去官网下载`Docker Desktop`
 
 ![](images/Pasted%20image%2020230902131848.png)
 
-## 🌲 linux
+## 🌲 yum
+
+https://docs.docker.com/engine/install/centos/
+
+卸载
+
+```shell
+sudo yum remove docker \
+				docker-client \
+				docker-client-latest \
+				docker-common \
+				docker-latest \
+				docker-latest-logrotate \
+				docker-logrotate \
+				docker-engine
+```
 
 首先安装必要工具
 
@@ -20,7 +35,7 @@ https://www.docker.com
 yum install -y yum-utils device-mapper-persistent-data lvm2
 ```
 
-然后配置仓库
+然后配置镜像源
 
 ```shell
 yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
@@ -35,7 +50,7 @@ yum list docker-ce --showduplicates | sort -r
 开始下载
 
 ```shell
-yum install docker-ce
+sudo yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 
 开启docker
@@ -73,7 +88,17 @@ sudo chmod +x /usr/local/bin/docker-compose
 pip install docker-compose
 ```
 
+## 🌲 ubuntu
+
+https://docs.docker.com/desktop/install/linux-install/
+
+```
+sudo apt install docker.io
+```
+
 # 🍎 配置镜像源
+
+## 🌲 MacOS
 
 首先登录阿里云, 点击左侧菜单, 搜索框搜索到容器镜像服务, 收藏并进入
 
@@ -83,7 +108,7 @@ pip install docker-compose
 
 ![image-20220312164029764](images/image-20220312164029764.png)
 
-这里只演示Mac配置
+然后打开Docker进行配置
 
 ![image-20220312164627774](images/image-20220312164627774.png)
 

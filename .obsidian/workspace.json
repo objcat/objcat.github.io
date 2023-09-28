@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "README.md",
+                "file": "docs/README.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "README.md",
+                "file": "docs/README.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "README.md",
+                "file": "docs/README.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "README.md"
+                "file": "docs/README.md"
               }
             }
           }
@@ -156,50 +156,51 @@
   },
   "active": "81c705e956368bb5",
   "lastOpenFiles": [
-    "docs/0-language/swift/swift.md",
+    "docs/images/Pasted image 20230929001126.png",
+    "docs/6-project/谷粒商城/谷粒商城.md",
+    "docs/3-program/env/java/java_env.md",
+    "docs/3-program/env/docker/docker_env.md",
+    "docs/3-program/env/nacos/nacos_env.md",
+    "docs/3-program/env/nacos/images/Pasted image 20230909204803.png",
+    "docs/3-program/env/nacos/images/Pasted image 20230909204444.png",
+    "docs/3-program/env/nacos/images",
+    "docs/3-program/env/nacos",
+    "docs/3-program/env/node/nacos/nacos_env.md",
+    "docs/3-program/env/node/nacos/images/Pasted image 20230909204803.png",
+    "docs/3-program/env/node/nacos/images/Pasted image 20230909204444.png",
+    "docs/3-program/env/node/nacos/images",
+    "docs/3-program/env/node/nacos",
+    "docs/3-program/env/redis/redis_env.md",
+    "docs/3-program/env/redis",
     "docs/README.md",
-    "docs/images/Vue.js_Logo_2.svg",
-    "docs/images/oc-icon.png",
-    "docs/images/oc-icon.png.sb-11252ca5-HhbXUD",
-    "docs/images/Pasted image 20230818132727.png",
-    "docs/images/Pasted image 20230910135152.png",
-    "docs/images/spring-logo.svg",
-    "docs/images/Pasted image 20230910134908.png",
-    "docs/images/未命名",
-    "docs/images/Pasted image 20230910134401.png",
+    "docs/3-program/env/ruby/ruby_env.md",
+    "docs/3-program/env/ruby",
+    "docs/3-program/env/node/images/Pasted image 20230903092240.png",
+    "docs/3-program/env/node/node_env.md",
+    "docs/3-program/env/node/images",
+    "docs/3-program/env/node",
+    "docs/3-program/env/mysql/images/Pasted image 20230908110716.png",
+    "docs/3-program/env/mysql/mysql_env.md",
+    "docs/3-program/env/mysql/images",
+    "docs/3-program/env/mysql",
+    "docs/3-program/env/java/images/Pasted image 20230902110429.png",
+    "docs/3-program/env/java/images/Pasted image 20230902110350.png",
+    "docs/3-program/env/python/python_env.md",
+    "docs/3-program/env/go/go.md",
+    "docs/3-program/env/docker/images/image-20220312164711230.png",
+    "docs/3-program/env/docker/images/image-20220312164627774.png",
     "README.md",
+    "docs/0-language/swift/swift.md",
     "docs/3-program/IDE/IDEA/IDEA/IDEA.md",
     "docs/0-language/javascript/javascript.md",
-    "docs/0-language/javascript/images/javascript-icon2-128.png",
-    "docs/0-language/javascript/images/Javascript-icon-128.png",
     "docs/0-language/java/java.md",
-    "docs/0-language/python/images/python_icon_128.png",
     "docs/0-language/python/python.md",
     "docs/0-language/java/images/java.svg.md",
     "docs/1-framework/java/spring/springcloud/SpringCloudMaven/SpringCloudMaven.md",
     "docs/4-package-manager/maven/maven.md",
-    "docs/4-package-manager/maven/images",
-    "docs/4-package-manager/maven",
     "docs/4-package-manager/Maven.bak/maven.md",
     "docs/4-package-manager/Maven.bak/Maven.md",
-    "docs/4-package-manager/Maven.bak/images",
-    "docs/4-package-manager/Maven.bak",
     "docs/1-framework/java/spring/mybatis/mybatis_plus/mybatis_plus.md",
-    "docs/1-framework/java/spring/mybatis/mybatis_plus/images",
-    "docs/1-framework/java/spring/mybatis/mybatis_plus",
-    "docs/1-framework/java/spring/mybatis/mybatis_x/mybatis_x.md",
-    "docs/1-framework/java/spring/mybatis/mybatis_x/images",
-    "docs/1-framework/java/spring/mybatis/mybatis_x",
-    "docs/1-framework/java/spring/mybatis/mybatis_plus/mybatis_plus.md",
-    "docs/1-framework/java/spring/mybatis/mybatis_x/mybatis_x.md",
-    "docs/1-framework/java/spring/Mybatis.bak/MyBatisPlus.bak/MybatisPlus.md",
-    "docs/1-framework/java/spring/Mybatis.bak/MyBatisPlus/MybatisPlus.md",
-    "docs/1-framework/java/spring/Mybatis/MyBatisPlus/MybatisPlus.md",
-    "docs/3-program/env/mysql/mysql_env.md",
-    "docs/3-program/env/docker/docker_env.md",
-    "docs/1-framework/java/Mybatis/MyBatisX/MyBatisX.md",
-    "docs/0-language/oc/oc.md",
-    "docs/0-language/java/Java的副本.md",
-    "docs/0-language/Java/Java.md"
+    "docs/1-framework/java/spring/mybatis/mybatis_x/mybatis_x.md"
   ]
 }

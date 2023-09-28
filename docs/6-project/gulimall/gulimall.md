@@ -62,7 +62,7 @@ redis:7
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.objcat</groupId>
-    <artifactId>test-springcloud</artifactId>
+    <artifactId>gulimall2024</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>
 
@@ -337,7 +337,7 @@ redis:7
 
 ## 🌲 后台管理系统
 
-视频上强烈推荐人人开源, 我抵挡不住这般热情直接开用, 出问题再说!
+视频上强烈推荐人人开源, 上面的是后台管理系统的服务端, 下面是后台管理系统的前端页面
 
 https://gitee.com/renrenio
 
@@ -397,7 +397,7 @@ java: 找不到符号
   位置: 类型为io.renren.modules.sys.entity.SysUserEntity的变量 user
 ```
 
-看了很久不知道怎么回事, 后来更新了一下`lombok`好了, 我把java版本也改成了`17`
+看了很久不知道怎么回事, 后来更新了一下`lombok`好了, 我把java版本也改成了17
 
 ```
 // <lombok.version>1.18.4</lombok.version>
@@ -424,7 +424,7 @@ LICENSE                 build                   demo-screenshot         index.ht
 yarn
 ```
 
-你也可以使用`npm`如果不会就过去学
+你也可以使用`npm`如果不会就过去学 [跳转 npm](../../4-package-manager/npm/npm.md)
 
 安装过程中我们发现`node-sass`报错了, 说没有xxx命令不能编译, 网上的解决方案是什么下载c++的编译环境, 但是我没有采用, 我是把它的版本进行了更新
 

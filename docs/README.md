@@ -42,7 +42,7 @@ https://github.com/docsifyjs/docsify
 
 ## 🌲 谷粒商城
 
-[谷粒商城](6-project/谷粒商城/谷粒商城.md)
+[谷粒商城](6-project/gulimall/gulimall.md)
 
 # 🍎 Python
 

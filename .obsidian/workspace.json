@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/README.md",
+                "file": "docs/6-project/gulimall/gulimall.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/README.md",
+                "file": "docs/6-project/gulimall/gulimall.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/README.md",
+                "file": "docs/6-project/gulimall/gulimall.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/README.md"
+                "file": "docs/6-project/gulimall/gulimall.md"
               }
             }
           }
@@ -156,39 +156,39 @@
   },
   "active": "81c705e956368bb5",
   "lastOpenFiles": [
-    "docs/images/Pasted image 20230929001126.png",
+    "docs/README.md",
+    "docs/6-project/gulimall/images2/application-dev.yml",
+    "docs/6-project/gulimall/images2/Pasted image 20230925181649.png",
+    "docs/6-project/gulimall/images2/gulimall_admin.sql",
+    "docs/6-project/gulimall/images2/Pasted image 20230925180305.png",
+    "docs/6-project/gulimall/images2/Pasted image 20230925175715.png",
+    "docs/6-project/gulimall/images2/Pasted image 20230925175641.png",
+    "docs/6-project/gulimall/images2/Pasted image 20230925174440.png",
+    "docs/6-project/gulimall/images2/Pasted image 20230925173720.png",
+    "docs/6-project/gulimall/images2/Pasted image 20230925173522.png",
+    "docs/6-project/gulimall/images2/Pasted image 20230925173043.png",
+    "docs/6-project/gulimall/images2/Pasted image 20230925172857.png",
+    "docs/6-project/gulimall/images2/Pasted image 20230925172436.png",
+    "docs/6-project/gulimall/images2",
+    "docs/6-project/gulimall/gulimall.md",
+    "docs/6-project/gulimall/images/generator.properties",
+    "docs/6-project/gulimall/images/XssHttpServletRequestWrapper.java",
+    "docs/6-project/gulimall/images/XssFilter.java",
+    "docs/6-project/gulimall/images",
+    "docs/6-project/gulimall",
     "docs/6-project/谷粒商城/谷粒商城.md",
     "docs/3-program/env/java/java_env.md",
     "docs/3-program/env/docker/docker_env.md",
     "docs/3-program/env/nacos/nacos_env.md",
-    "docs/3-program/env/nacos/images/Pasted image 20230909204803.png",
-    "docs/3-program/env/nacos/images/Pasted image 20230909204444.png",
     "docs/3-program/env/nacos/images",
     "docs/3-program/env/nacos",
     "docs/3-program/env/node/nacos/nacos_env.md",
-    "docs/3-program/env/node/nacos/images/Pasted image 20230909204803.png",
-    "docs/3-program/env/node/nacos/images/Pasted image 20230909204444.png",
-    "docs/3-program/env/node/nacos/images",
-    "docs/3-program/env/node/nacos",
     "docs/3-program/env/redis/redis_env.md",
-    "docs/3-program/env/redis",
-    "docs/README.md",
     "docs/3-program/env/ruby/ruby_env.md",
-    "docs/3-program/env/ruby",
-    "docs/3-program/env/node/images/Pasted image 20230903092240.png",
     "docs/3-program/env/node/node_env.md",
-    "docs/3-program/env/node/images",
-    "docs/3-program/env/node",
-    "docs/3-program/env/mysql/images/Pasted image 20230908110716.png",
     "docs/3-program/env/mysql/mysql_env.md",
-    "docs/3-program/env/mysql/images",
-    "docs/3-program/env/mysql",
-    "docs/3-program/env/java/images/Pasted image 20230902110429.png",
-    "docs/3-program/env/java/images/Pasted image 20230902110350.png",
     "docs/3-program/env/python/python_env.md",
     "docs/3-program/env/go/go.md",
-    "docs/3-program/env/docker/images/image-20220312164711230.png",
-    "docs/3-program/env/docker/images/image-20220312164627774.png",
     "README.md",
     "docs/0-language/swift/swift.md",
     "docs/3-program/IDE/IDEA/IDEA/IDEA.md",
@@ -200,7 +200,6 @@
     "docs/4-package-manager/maven/maven.md",
     "docs/4-package-manager/Maven.bak/maven.md",
     "docs/4-package-manager/Maven.bak/Maven.md",
-    "docs/1-framework/java/spring/mybatis/mybatis_plus/mybatis_plus.md",
-    "docs/1-framework/java/spring/mybatis/mybatis_x/mybatis_x.md"
+    "docs/1-framework/java/spring/mybatis/mybatis_plus/mybatis_plus.md"
   ]
 }

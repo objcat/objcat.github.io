@@ -2,7 +2,7 @@
 
 本文是跟随尚硅谷「谷粒商城」视频去做的一个项目, 也是白猫人生中真正意义上的第一个项目
 
-https://www.bilibili.com/video/BV1np4y1C7Yf/?spm_id_from=333.337.search-card.all.click&vd_source=5407f2eb7c2e35816577dccd53626507
+https://www.bilibili.com/video/BV1np4y1C7Yf
 
 # 🍎 我的仓库
 

@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/README.md",
+                "file": "docs/6-project/gulimall/gulimall.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/README.md",
+                "file": "docs/6-project/gulimall/gulimall.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/README.md",
+                "file": "docs/6-project/gulimall/gulimall.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/README.md"
+                "file": "docs/6-project/gulimall/gulimall.md"
               }
             }
           }
@@ -154,14 +154,14 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "eee7dabbf81aba60",
+  "active": "9070fa67b44dbdde",
   "lastOpenFiles": [
+    "docs/README.md",
     "docs/6-project/gulimall/images2/Pasted image 20230925002042.jpg",
     "docs/6-project/gulimall/images/Pasted image 20230929115438.png",
     "docs/6-project/gulimall/images/Pasted image 20230929115853.png",
     "docs/6-project/gulimall/images/CouponController.java",
     "docs/main_note.md",
-    "docs/README.md",
     "docs/video",
     "docs/video/1.mp4",
     "docs/images/spring-logo.svg",
@@ -174,7 +174,6 @@
     "docs/6-project/gulimall/images2/Pasted image 20230925175715.png",
     "docs/6-project/gulimall/images2/Pasted image 20230925175641.png",
     "docs/6-project/gulimall/images2/Pasted image 20230925174440.png",
-    "docs/6-project/gulimall/images2/Pasted image 20230925173720.png",
     "docs/6-project/gulimall/images2",
     "docs/6-project/gulimall/images/generator.properties",
     "docs/6-project/gulimall/images/XssHttpServletRequestWrapper.java",

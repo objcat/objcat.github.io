@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "554e9206db6a1a1e",
+        "id": "a4bb847644084c7a",
         "type": "tabs",
         "children": [
           {
-            "id": "81c705e956368bb5",
+            "id": "9070fa67b44dbdde",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/6-project/gulimall/gulimall.md",
+                "file": "docs/README.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/6-project/gulimall/gulimall.md",
+                "file": "docs/README.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/6-project/gulimall/gulimall.md",
+                "file": "docs/README.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/6-project/gulimall/gulimall.md"
+                "file": "docs/README.md"
               }
             }
           }
@@ -154,9 +154,19 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "81c705e956368bb5",
+  "active": "eee7dabbf81aba60",
   "lastOpenFiles": [
+    "docs/6-project/gulimall/images2/Pasted image 20230925002042.jpg",
+    "docs/6-project/gulimall/images/Pasted image 20230929115438.png",
+    "docs/6-project/gulimall/images/Pasted image 20230929115853.png",
+    "docs/6-project/gulimall/images/CouponController.java",
+    "docs/main_note.md",
     "docs/README.md",
+    "docs/video",
+    "docs/video/1.mp4",
+    "docs/images/spring-logo.svg",
+    "docs/images/Vue.js_Logo_2.svg",
+    "docs/6-project/gulimall/gulimall.md",
     "docs/6-project/gulimall/images2/application-dev.yml",
     "docs/6-project/gulimall/images2/Pasted image 20230925181649.png",
     "docs/6-project/gulimall/images2/gulimall_admin.sql",
@@ -165,23 +175,15 @@
     "docs/6-project/gulimall/images2/Pasted image 20230925175641.png",
     "docs/6-project/gulimall/images2/Pasted image 20230925174440.png",
     "docs/6-project/gulimall/images2/Pasted image 20230925173720.png",
-    "docs/6-project/gulimall/images2/Pasted image 20230925173522.png",
-    "docs/6-project/gulimall/images2/Pasted image 20230925173043.png",
-    "docs/6-project/gulimall/images2/Pasted image 20230925172857.png",
-    "docs/6-project/gulimall/images2/Pasted image 20230925172436.png",
     "docs/6-project/gulimall/images2",
-    "docs/6-project/gulimall/gulimall.md",
     "docs/6-project/gulimall/images/generator.properties",
     "docs/6-project/gulimall/images/XssHttpServletRequestWrapper.java",
     "docs/6-project/gulimall/images/XssFilter.java",
     "docs/6-project/gulimall/images",
-    "docs/6-project/gulimall",
     "docs/6-project/谷粒商城/谷粒商城.md",
     "docs/3-program/env/java/java_env.md",
     "docs/3-program/env/docker/docker_env.md",
     "docs/3-program/env/nacos/nacos_env.md",
-    "docs/3-program/env/nacos/images",
-    "docs/3-program/env/nacos",
     "docs/3-program/env/node/nacos/nacos_env.md",
     "docs/3-program/env/redis/redis_env.md",
     "docs/3-program/env/ruby/ruby_env.md",
@@ -199,7 +201,6 @@
     "docs/1-framework/java/spring/springcloud/SpringCloudMaven/SpringCloudMaven.md",
     "docs/4-package-manager/maven/maven.md",
     "docs/4-package-manager/Maven.bak/maven.md",
-    "docs/4-package-manager/Maven.bak/Maven.md",
-    "docs/1-framework/java/spring/mybatis/mybatis_plus/mybatis_plus.md"
+    "docs/4-package-manager/Maven.bak/Maven.md"
   ]
 }

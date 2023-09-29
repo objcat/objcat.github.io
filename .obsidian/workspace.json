@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/6-project/gulimall/gulimall.md",
+                "file": "docs/README.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/6-project/gulimall/gulimall.md",
+                "file": "docs/README.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/6-project/gulimall/gulimall.md",
+                "file": "docs/README.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/6-project/gulimall/gulimall.md"
+                "file": "docs/README.md"
               }
             }
           }
@@ -156,6 +156,7 @@
   },
   "active": "9070fa67b44dbdde",
   "lastOpenFiles": [
+    "docs/6-project/gulimall/gulimall.md",
     "docs/README.md",
     "docs/6-project/gulimall/images2/Pasted image 20230925002042.jpg",
     "docs/6-project/gulimall/images/Pasted image 20230929115438.png",
@@ -166,7 +167,6 @@
     "docs/video/1.mp4",
     "docs/images/spring-logo.svg",
     "docs/images/Vue.js_Logo_2.svg",
-    "docs/6-project/gulimall/gulimall.md",
     "docs/6-project/gulimall/images2/application-dev.yml",
     "docs/6-project/gulimall/images2/Pasted image 20230925181649.png",
     "docs/6-project/gulimall/images2/gulimall_admin.sql",

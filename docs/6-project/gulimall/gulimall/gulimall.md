@@ -10,7 +10,7 @@ https://gitee.com/objcat/gulimall2024
 
 # 🍎 学习日志
 
-下面是白猫的学习日志, 顺便透漏一下, 白猫从2018年开始就一直在学习`spring-cloud`相关的项目了, 当时用的还是全家桶`eureka, histrix, zuul`但是仅仅是学习, 并没有实打实的做什么项目, 直到最近2年内才开始逐渐搞技术转型, 学习了`nacos, sentinel, shiro, security, gateway`等, 所以下面所用的时间是在白猫已经有了少量技术积累的基础下进行的, 所以学习的速度可能还快一些, 新手的话慢慢看, 不要求快速掌握技术, 只要一步一个脚印应该都可以学会, 这也是我写这篇文档的初衷, 我觉得或许可以在一定程度上解答某些人的困惑吧, 为此白猫也建立了「白猫Java交流群 群号:916867721」来讨论开发中遇到的问题, 创建日期 `2023.09.29 18:00`
+下面是白猫的学习日志, 顺便透漏一下, 白猫从`2018`年开始就在学习`spring-cloud`相关的项目了, 当时用的还是全家桶`eureka, histrix, zuul`但仅仅是学习, 并没有实打实的做什么项目, 中途也放弃过一段直到最近`2`年内才开始逐渐搞技术更新, 学习了`nacos, sentinel, shiro, security, gateway`等, 所以下面所用的时间是在白猫已经有了「少量技术积累」的前提下进行的, 所以学习的速度可能会快一些, 新手的话慢慢看, 不要求快速掌握技术, 只要一步一个脚印应该都可以学会, 这也是我写这篇文档的初衷, 我觉得或许可以在一定程度上解答某些人的困惑吧, 为此白猫也建立了「白猫Java交流群 」群号:`916867721`, 用于讨论开发中遇到的问题, 无培训机构, 无广告, 创建日期 `2023.09.29 18:00`
 
 | 日期 | 学习内容 |
 | -- | -- |
@@ -19,6 +19,10 @@ https://gitee.com/objcat/gulimall2024
 | 2023.09.27 | nacos注册中心 |
 | 2023.09.28 | openfeign |
 | 2023.09.29 | nacos配置中心 |
+| 2023.10.01 | nacos配置中心 |
+| 2023.10.02 | nacos配置中心 |
+| 2023.10.03 | nacos配置中心, gateway网关 |
+| 2023.10.04 | 三级分类 |
 
 # 🍎 架构图
 
@@ -26,19 +30,19 @@ https://gitee.com/objcat/gulimall2024
 
 ![](images2/Pasted%20image%2020230925002042.jpg)
 
-# 🍎 快速开始
+# 🍎 开始
 
 ## 🌲 环境搭建
 
-下面提供了学习笔记
+按照视频中的要求去安装就行, 我顺便提供一下我的安装方式, 仅供参考
 
-- docker [跳转docker_env](../../3-program/env/docker/docker_env.md)
-- java [跳转 java_env](../../3-program/env/java/java_env.md)
-- mysql [跳转 mysql_env](../../3-program/env/mysql/mysql_env.md)
-- redis [跳转 redis_env](../../3-program/env/redis/redis_env.md)
-- node [跳转 node_env](../../3-program/env/node/node_env.md)
+- docker [跳转docker_env](../../../3-program/env/docker/docker_env.md)
+- java [跳转 java_env](../../../3-program/env/java/java_env.md)
+- mysql [跳转 mysql_env](../../../3-program/env/mysql/mysql_env.md)
+- redis [跳转 redis_env](../../../3-program/env/redis/redis_env.md)
+- node [跳转 node_env](../../../3-program/env/node/node_env.md)
 
-那我也提供一下我的环境, 因为视频中环境比较老, 以至于我无法忍受, 所以我采用目前比较新的环境, 如下
+那我也提供一下我的环境, 因为视频中环境比较老, 以至于我无法忍受, 所以我把他们能换的都换成新的环境了
 
 ```shell
 docker -v
@@ -294,7 +298,7 @@ redis:7
 
 ![](images2/Pasted%20image%2020230925161035.png)
 
-## 🌲 数据库
+## 🌲 配置数据库
 
 视频中是使用`power designer`来设计的数据库, 但是`mac`上面没有, 我先加群拿资料, 但是管理员反应的很慢, 所以我在下面的网盘中拿的
 
@@ -331,13 +335,26 @@ redis:7
 - gulimall_ums 用户系统
 - gulimall_wms 库存系统
 
+创建可以点击数据库然后新建`schema`, 但这种模式创建起来很慢
+
 ![](images2/Pasted%20image%2020230925173043.png)
+
+所以我们直接执行SQL
+
+```sql
+CREATE SCHEMA IF NOT EXISTS gulimall_admin;  
+CREATE SCHEMA IF NOT EXISTS gulimall_oms;  
+CREATE SCHEMA IF NOT EXISTS gulimall_pms;  
+CREATE SCHEMA IF NOT EXISTS gulimall_sms;  
+CREATE SCHEMA IF NOT EXISTS gulimall_ums;  
+CREATE SCHEMA IF NOT EXISTS gulimall_wms;
+```
 
 然后对号入座, 开始导入
 
 ![](images2/Pasted%20image%2020230925172403.png)
 
-然后选一个target
+然后选一个数据库导入进去
 
 ![](images2/Pasted%20image%2020230925173522.png)
 
@@ -436,7 +453,7 @@ LICENSE                 build                   demo-screenshot         index.ht
 yarn
 ```
 
-你也可以使用`npm`如果不会就过去学 [跳转 npm](../../4-package-manager/npm/npm.md)
+你也可以使用`npm`如果不会就过去学 [跳转 npm](../../../4-package-manager/npm/npm.md)
 
 安装过程中我们发现`node-sass`报错了, 说没有xxx命令不能编译, 网上的解决方案是什么下载c++的编译环境, 但是我没有采用, 我是把它的版本进行了更新
 
@@ -632,7 +649,9 @@ import com.objcat.common.utils.PageUtils;
 
 然后我发现我的项目不在报错了, 如果你的还报错, 就继续改, 这个地方对新手是「毁灭性打击」, 如果你能根据视频配出来, 那么我可以说你是半个天才, 所以我推荐你直接拷贝我的`common`使用, 先把功能做出来
 
-## 🌲 product服务
+## 🌲 创建服务
+
+下面教学如何启动服务, 我们需要有配置文件和主启动类
 
 ### 🌸 启动服务
 
@@ -733,542 +752,126 @@ public class ProductApplicationTests {
 
 ## 🌲 Nacos
 
-`nacos`在`spring-cloud`中充当发现中心语配置中心角色, 首先你要去安装服务端 [跳转 nacos_env](../../3-program/env/nacos/nacos_env.md)
+下面是视频中有关于nacos的章节 20 ~ 25
 
-### 🌸 启动nacos
+[跳转 gulimall_nacos](../gulimall_nacos/gulimall_nacos.md)
 
-```
-sh startup.sh -m standalone
-```
+## 🌲 Gateway
 
-启动后自己访问一下
+下面是视频中有关于gateway的章节 26 ~ 27
 
-http://localhost:8848/nacos
+[跳转 gulimall_gateway](../gulimall_gateway/gulimall_gateway.md)
 
-### 🌸 导入依赖
+## 🌲 前端基础
 
-然后我们要导入依赖, 直接配置到通用模块
+作为一个移动端来说, 终于是跳到和自己工作沾边的领域了, 不过前端和后端一起学习对于新手来说简直是「泰难啦」但是你心中要有一个理想就是学习完你就是全栈了
 
-```xml
-<dependency>
-    <groupId>com.alibaba.cloud</groupId>
-    <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-</dependency>
+### 🌸 js语法
 
-<dependency>
-	<groupId>org.springframework.cloud</groupId>
-	<artifactId>spring-cloud-starter-bootstrap</artifactId>
-</dependency>
-```
+视频里主要讲的是es6的语法, 我这里直接跳过了, 你们看视频吧, 如果想学习, 白猫整理出了一份自己写的语法文档, 自己敲一敲即可
 
-我们可以看到除了`discovery`, 我们导入一个`bootstrap`, 注意你如果按照我的步骤来, 就必须开启`bootstrap`
+[跳转 javascript](../../../0-language/javascript/javascript.md)
 
-### 🌸 配置
+如果不想学习`js`也无所谓, 但你至少要有一点语言基础, 比如会java, 然后可以在后续课程参照着写, 用到的时候直接去查
 
-我们在本地创建`boostrap.yml`然后写入配置, 这个配置写在`application.yml`中也可以, 但是为了以后配置中心方便, 我们提前创建这个配置文件
+### 🌸 vue语法
 
-```yml
-spring:
-  application:
-    # 配置服务的名称
-    name: gulimall-product
-  cloud:
-    nacos:
-      discovery:
-        # 配置nacos服务端地址
-        server-addr: 127.0.0.1:8848
-```
+这个也不想说了, 就是个模板引擎, 用于前后端分离的项目中, 如果你想学习那么白猫也有文档可以帮助你学习, 敲敲即可
 
-### 🌸 测试
+[跳转 vue](../../../1-framework/javascript/vue/vue/vue.md)
 
-然后我们启动项目, 看一下服务列表
+## 🌲 product模块
 
-![](images/Pasted%20image%2020230927171503.png)
+终于到了我们后台模块的编写环节了, 我们从第45节课开始
 
-## 🌲 openfeign
+### 🌸 三级分类
 
-### 🌸 生成代码
+#### 🌵 介绍
 
-然后视频带我们去做了`openfeign`的跨服务通讯, 内容是`member用户服务`调用`coupon优惠券服务`, 所以我们先把这两个服务的代码生成一下, 改动配置如下
+我们来看一张京东的主页, 可以看到上面的商品有三级分类
 
-- member
+![](images/Pasted%20image%2020231004134415.jpg)
 
-```
-url: jdbc:mysql://localhost:3306/gulimall_ums?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+#### 🌵 导入数据
 
-# 主目录
-mainPath=com.objcat
-# 包名
-package=com.objcat
-moduleName=member
-# 作者
-author=objcat
-# Email
-email=objcat2024@gmail.com
-# 表前缀(类名不会包含表前缀)
-tablePrefix=ums_
-```
+视频中让我们把数据导入到表, 我们就不用导入了, 因为使用的数据库脚本里面包含了数据了, 我们可以打开表看一看
 
-- coupon
+![](images/Pasted%20image%2020231004170006.png)
 
-```
-url: jdbc:mysql://localhost:3306/gulimall_sms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+在`pms_category`表中我们可以看到已经有相关的分类数据了
 
-# 主目录
-mainPath=com.objcat
-# 包名
-package=com.objcat
-moduleName=coupon
-# 作者
-author=objcat
-# Email
-email=objcat2024@gmail.com
-# 表前缀(类名不会包含表前缀)
-tablePrefix=sms_
-```
+![](images/Pasted%20image%2020231004170124.png)
 
-在粘贴文件夹的过程中有可能出现错误
+鼠标悬停在上面可以看到对应的类型和注释
 
-![](images/Pasted%20image%2020230928171032.png)
+#### 🌵 实现接口
 
-我的解法是直接`show in finder`在文件目录去粘贴, 不要去`idea`中粘贴
-
-### 🌸 创建主启动类并配置项目
-
-然后我们来创建这两个服务的主启动文件和配置文件, 主启动文件
+数据都有了, 我们就可以跟随视频一步一步的来实现接口了, 我们首先找到`CategoryService`, 新增一个方法叫`listCategoryTree`, 注意我没有遵循视频中的命名规范, 所以你们也可以跟视频起一个名字
 
 ```java
-@SpringBootApplication
-public class CouponApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(CouponApplication.class, args);
-    }
-}
-
-@SpringBootApplication
-public class MemberApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(MemberApplication.class, args);
-    }
+public interface CategoryService extends IService<CategoryEntity> {  
+    PageUtils queryPage(Map<String, Object> params);  
+    List<CategoryEntity> listCategoryTree();  
 }
 ```
 
-配置文件
-
-- member
-
-```yml
-server:
-  # 服务端口号
-  port: 8000
-  servlet:
-    encoding:
-      # 返回数据使用utf-8编码
-      charset: utf-8
-      # 强制使用utf-8, 否则某些浏览器中查看会乱码
-      force: true
-
-spring:
-  datasource:
-    # 数据库连接url
-    url: jdbc:mysql://localhost:3306/gulimall_ums
-    # 驱动类名
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    # 数据库用户名
-    username: root
-    # 数据库密码
-    password: 123456
-
-mybatis-plus:
-  # 配置mapper存放位置
-  mapper-locations: classpath:mapper/**/*.xml
-  # 配置日志打印策略
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
-  # 配置主键生成策略
-  global-config:
-    db-config:
-      id-type: auto
-```
-
-bootstrap.yml
-
-```yml
-spring:
-  application:
-    # 配置服务的名称
-    name: gulimall-member
-  cloud:
-    nacos:
-      discovery:
-        # 配置nacos服务端地址
-        server-addr: 127.0.0.1:8848
-```
-
-- coupon
-
-```yml
-server:
-  # 服务端口号
-  port: 7000
-  servlet:
-    encoding:
-      # 返回数据使用utf-8编码
-      charset: utf-8
-      # 强制使用utf-8, 否则某些浏览器中查看会乱码
-      force: true
-
-spring:
-  datasource:
-    # 数据库连接url
-    url: jdbc:mysql://localhost:3306/gulimall_sms
-    # 驱动类名
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    # 数据库用户名
-    username: root
-    # 数据库密码
-    password: 123456
-
-mybatis-plus:
-  # 配置mapper存放位置
-  mapper-locations: classpath:mapper/**/*.xml
-  # 配置日志打印策略
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
-  # 配置主键生成策略
-  global-config:
-    db-config:
-      id-type: auto
-```
-
-bootstrap.yml
-
-```yml
-spring:
-  application:
-    # 配置服务的名称
-    name: gulimall-coupon
-  cloud:
-    nacos:
-      discovery:
-        # 配置nacos服务端地址
-        server-addr: 127.0.0.1:8848
-```
-
-8000和7000端口是按照视频上面配置的, 但是有些时候你可能会发现端口占用, 比如m1苹果上面7000端口就被占用了, 用下面的命令可以查看端口占用
-
-```
-lsof -i :7000
-
-COMMAND    PID   USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
-
-ControlCe 2154 objcat    5u  IPv4 0xced43dc87b1820ff      0t0  TCP *:afs3-fileserver (LISTEN)
-
-ControlCe 2154 objcat    6u  IPv6 0xced43dcd47761bd7      0t0  TCP *:afs3-fileserver (LISTEN)
-```
-
-你会发现你永远启动不起来程序, 所以这个时候我们就要去换个端口, 比如7001
-
-### 🌸 测试
-
-配置完在`nacos`看到这样的画面就是成功注册了
-
-![](images/Pasted%20image%2020230928173543.png)
-
-### 🌸 写获取优惠券接口
-
-视频中的要求是`member`调用`coupon`来获取优惠券, 但是由于我们现在库里连用户都没有更别说优惠券了, 所以只能造假的数据, 下面先来写一个获取优惠券列表的接口
+然后我们在`CategoryServiceImpl`中进行实现
 
 ```java
-@RestController
-@RequestMapping("coupon/coupon")
-public class CouponController {
-
-    @Autowired
-    private CouponService couponService;
-
-    @RequestMapping("/listCoupon")
-    public R listCoupon() {
-        CouponEntity couponEntity = new CouponEntity();
-        couponEntity.setCouponName("满100减10");
-        return R.ok().put("data", Arrays.asList(couponEntity));
-    }
-}
-```
-
-然后重启访问
-
-http://localhost:7000/coupon/coupon/listCoupon
-
-然后可以看到返回结果
-
-```json
-{"msg":"success","code":0,"data":[{"id":null,"couponType":null,"couponImg":null,"couponName":"满100减10","num":null,"amount":null,"perLimit":null,"minPoint":null,"startTime":null,"endTime":null,"useType":null,"note":null,"publishCount":null,"useCount":null,"receiveCount":null,"enableStartTime":null,"enableEndTime":null,"code":null,"memberLevel":null,"publish":null}]}
-```
-
-看到上面返回的json说明优惠券请求成功了
-
-### 🌸 调用服务
-
-然后我们在`member`中写接口调用这个服务, 实现服务之间的通讯, 需要的依赖就是`openfeign`, 我们在第一期已经配置过了, 我们下面就看看要怎么使用`openfeign`吧
-
-首先要创建一个`feignService`接口, 比如
-
-```java
-@FeignClient("gulimall-coupon")
-public interface CouponFeignService {
-    @RequestMapping("/coupon/coupon/listCoupon")
-    public R listCoupon();
-}
-```
-
-然后我们在主启动类中开启`openfeign`
-
-```java
-@EnableFeignClients(basePackages = "com.objcat.member.feign")
-@SpringBootApplication
-public class MemberApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(MemberApplication.class, args);
-    }
-}
-```
-
-然后我们写接口
-
-```java
-@RestController
-@RequestMapping("member/member")
-public class MemberController {
-    @Autowired
-    private MemberService memberService;
-
-    @Autowired
-    private CouponFeignService couponFeignService;
-
-    @RequestMapping("/listCoupon")
-    public R listCoupon() {
-        return couponFeignService.listCoupon();
-    }
-}
-```
-
-然后我们启动程序, 如果你使用的是我的版本你会遇到这样一个错误
-
-```
-org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'memberController': Unsatisfied dependency expressed through field 'couponFeignService'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'com.objcat.member.feign.CouponFeignService': Unexpected exception during bean creation; nested exception is java.lang.IllegalStateException: No Feign Client for loadBalancing defined. Did you forget to include spring-cloud-starter-loadbalancer?
-```
-
-我们需要导入一个依赖在`common`中
-
-```xml
-<dependency>
-	<groupId>org.springframework.cloud</groupId>
-	<artifactId>spring-cloud-loadbalancer</artifactId>
-</dependency>
-```
-
-然后再次启动程序错误解决, 如果你和视频中用的一个版本可能没有问题, 启动程序后我们访问一下接口
-
-http://localhost:8000/member/member/listCoupon
-
-发现可以获取优惠券了
-
-```json
-{"msg":"success","code":0,"coupons":[{"id":null,"couponType":null,"couponImg":null,"couponName":"满100减10","num":null,"amount":null,"perLimit":null,"minPoint":null,"startTime":null,"endTime":null,"useType":null,"note":null,"publishCount":null,"useCount":null,"receiveCount":null,"enableStartTime":null,"enableEndTime":null,"code":null,"memberLevel":null,"publish":null}]}
-```
-
-## 🌲 配置中心
-
-接下来视频中讲了配置中心, 我就白话来说了, 有一些配置是要经常去修改的, 比如圣诞结活动开启的配置, 为true开始圣诞狂欢, 为false结束圣诞活动, 但是每次更改都重新发布那么多微服务这是很麻烦的, 所以人们想了一个办法, 就是使用配置中心来配置, 有一个好处就是修改配置后会同步到微服务上, 这样就可以灵活的来控制配置了, 那我们下面就一起来看看吧
-
-### 🌸 导入依赖
-
-```xml
-<dependency>
-	<groupId>com.alibaba.cloud</groupId>
-	<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-</dependency>
-```
-
-### 🌸 配置
-
-注意是`bootstrap.yml`
-
-```yml
-spring:  
-  application:  
-    # 配置服务的名称  
-    name: gulimall-coupon  
-  cloud:  
-    nacos:  
-      discovery:  
-        # 配置nacos服务端地址  
-        server-addr: 127.0.0.1:8848  
-      config:  
-        # 配置中心服务器地址  
-        server-addr: 127.0.0.1:8848  
-        # 配置文件扩展名  
-        file-extension: yaml  
-```
-
-可以发现我这里和视频配置的不同, 视频没有配置`file-extension`, 那么后缀就使用默认的`properties`, 而我喜欢yml所以配置文件使用yaml来写
-
-### 🌸 创建默认配置
-
-我们为了方便测试, 先在本地写死一个默认配置, 在`application.yml`中
-
-```
-coupon:  
-  user:  
-    name: "张三"  
-    age: 18
-```
-
-### 🌸 创建接口
-
-我们创建接口去读取配置, 跟视频一样在`CouponController`中去写
-
-```java
-@Value("${coupon.user.name}")  
-private String name;  
+@Override  
+public List<CategoryEntity> listCategoryTree() {  
+    // 查询所有分类  
+    List<CategoryEntity> categoryEntities = baseMapper.selectList(Wrappers.emptyWrapper());  
+    // 找到所有一级分类  
+    List<CategoryEntity> level1Menues = categoryEntities.stream().filter((categoryEntity) -> {  
+        return categoryEntity.getParentCid() == 0;  
+    }).map((menu1) -> {  
+        // 给一级分类设置子分类  
+        menu1.setChildren(getChildren(menu1, categoryEntities));  
+        return menu1;  
+    }).sorted((a, b) -> {  
+        Integer sort1 = Optional.ofNullable(a).map(CategoryEntity::getSort).orElse(0);  
+        Integer sort2 = Optional.ofNullable(a).map(CategoryEntity::getSort).orElse(0);  
+        return sort1 - sort2;  
+    }).collect(Collectors.toList());  
+    // 组装成父子树形结构  
+    return level1Menues;  
+}  
   
-@Value("${coupon.user.age}")  
-private String age;  
-  
-@RequestMapping("/test")  
-public R test() {  
-    return R.ok().put("data", name + " " + age);  
+private List<CategoryEntity> getChildren(CategoryEntity menu1, List<CategoryEntity> all) {  
+    List<CategoryEntity> categoryEntities = all.stream().filter(entity -> {  
+        // 获取1级分类的子分类, 也就是二级分类  
+        return entity.getParentCid() == menu1.getCatId();  
+    }).map((menu2) -> {  
+        // 给二级分类设置子分类, 原理很简单, 就是在总表中找二级分类  
+        menu2.setChildren(getChildren(menu2, all));  
+        return menu2;  
+    }).sorted((a, b) -> {  
+        Integer sort1 = Optional.ofNullable(a).map(CategoryEntity::getSort).orElse(0);  
+        Integer sort2 = Optional.ofNullable(a).map(CategoryEntity::getSort).orElse(0);  
+        return sort1 - sort2;  
+    }).collect(Collectors.toList());  
+    return categoryEntities;  
 }
 ```
 
-我们使用`@Value`来读取本地配置
+代码是经过我修改的, 我使用了`Optional`来解决空指针异常问题, 因为我发现有一个sort为空, `SELECT * FROM pms_category WHERE cat_id=1431;`
 
-### 🌸 测试
-
-我们访问接口试试
-
-http://localhost:7001/coupon/coupon/test
-
-可以看到是能够读取的, 注意端口号别错了, 我是因为7000端口被占用了, 所以改了别的, 能看到这一串说明读出来了
-
-```
-{"msg":"success","code":0,"data":"张三 18"}
-```
-
-### 🌸 新建配置文件
-
-我们下面就使用配置中心来配置吧, 首先点击新建
-
-![](images/Pasted%20image%2020230929115438.png)
-
-然后写一个配置, 名字是`应用名.yaml`, 比如我的就是`gulimall-coupon.yaml`
-
-![](images/Pasted%20image%2020230929115853.png)
-
-重点来了, 配置文件中我把name改成了李四, age改成了20, 这样方便区分
-
-然后点发布, 我们重启项目访问接口看看效果
-
-```
-{"msg":"success","code":0,"data":"李四 20"}
-```
-
-可以看到变成了`李四 20`, 这说明配置生效了, 也同样说明另外一个特性, 就是覆盖性, 我们本地的配置只是默认的, 如果配置中心和本地的配置重复就会出现覆盖
-
-### 🌸 配置刷新
-
-我们会发现一个问题, 就是当我们修改完配置文件后, 从新访问接口, 如果不重启应用, 配置文件是不会改变了, 这与我们的期待不符合, 所以我们需要让配置实时生效, 使用`@RefreshScope`注解
+然后我们在`controller`中调用它
 
 ```java
-@RefreshScope  
-@RestController  
-@RequestMapping("coupon/coupon")  
-public class CouponController {  
-  
-    @Autowired  
-    private CouponService couponService;  
-  
-    @Value("${coupon.user.name}")  
-    private String name;  
-  
-    @Value("${coupon.user.age}")  
-    private String age;  
-  
-    @RequestMapping("/test")  
-    public R test() {  
-        return R.ok().put("data", name + " " + age);  
-    }
+/**  
+ * 列表  
+ */  
+@RequestMapping("/listCategoryTree")  
+public R listCategory(@RequestParam Map<String, Object> params){  
+    return R.ok().put("data", categoryService.listCategoryTree());  
 }
 ```
 
-完活, 这回配置修改后访问接口就是实时生效的
+#### 🌵 有话要说
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+白猫有话要说, 虽然有经验的同学都能写出来, 但是这对于新手来说就是「毁灭性打击」, 所以白猫建议直接把代码粘贴到你的项目中, 先把程序运行出来, 然后再去分析结构反推代码, 这样更有利于学习
 
 
 

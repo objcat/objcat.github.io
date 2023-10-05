@@ -47,7 +47,14 @@
             search: {
                 placeholder: "搜索",
             },
-            repo: 'objcat/objcat.github.io'
+            repo: 'objcat/objcat.github.io',
+            scrollToTop: {
+                auto: true,
+                text: 'Top',
+                right: 15,
+                bottom: 15,
+                offset: 500
+            }
         };
     </script>
 
@@ -72,7 +79,10 @@
     <script src="./js/zoom-image.min.js"></script>
     <!-- 代码块复制 -->
     <script src="./js/docsify-copy-code.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+    <!-- 搜索 -->
+    <script src="./js/search.min.js"></script>
+    <!-- 滚动到顶部 -->
+    <script src="./js/docsify-scroll-to-top.min.js"></script>
 </body>
 
 </html>

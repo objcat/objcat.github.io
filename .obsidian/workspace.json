@@ -146,8 +146,10 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "5f51250099f66da4",
+  "active": "eee7dabbf81aba60",
   "lastOpenFiles": [
+    "docs/js/docsify-scroll-to-top.min.js",
+    "docs/js/search.min.js",
     "docs/6-project/gulimall/gulimall/images/Pasted image 20231005123751.png",
     "docs/6-project/gulimall/gulimall_product/images/Pasted image 20231005144425.png",
     "docs/6-project/gulimall/gulimall_product/images/Pasted image 20231005144247.png",
@@ -165,13 +167,11 @@
     "docs/6-project/gulimall/gulimall/images2/gulimall_admin.sql",
     "docs/6-project/gulimall/gulimall/images2/application-dev.yml",
     "docs/6-project/gulimall/gulimall/images2/Pasted image 20230925181649.png",
-    "docs/6-project/gulimall/gulimall/images2/Pasted image 20230925180305.png",
     "docs/6-project/gulimall/gulimall/images/generator.properties",
     "docs/6-project/gulimall/gulimall/images/XssHttpServletRequestWrapper.java",
     "docs/6-project/gulimall/gulimall/images/XssFilter.java",
     "docs/6-project/gulimall/gulimall/images/CouponController.java",
     "docs/6-project/gulimall/gulimall/images2",
-    "docs/6-project/gulimall/gulimall/images",
     "docs/6-project/gulimall/gulimall_gateway/gulimall_gateway.md",
     "docs/6-project/gulimall/gulimall_nacos/gulimall_nacos.md",
     "docs/6-project/gulimall/gulimall.md",

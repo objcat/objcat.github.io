@@ -433,7 +433,7 @@ java: 找不到符号
 <lombok.version>1.18.22</lombok.version>
 ```
 
-### 🌸 前台
+### 🌸 后台管理系统
 
 https://gitee.com/renrenio/renren-fast-vue
 
@@ -463,7 +463,36 @@ yarn add node-sass@latest
 "node-sass": "^9.0.0"
 ```
 
-然后使用`yarn run`就可以运行了
+然后使用`yarn run`就可以运行了, 但这只是侥幸
+
+后来我换了另外一台m2的机器, 出现了下面的问题
+
+```
+[4/7] ⠠ node-sass
+error /Users/objcat/project/Java/gulimall2024/renren-fast-vue/node_modules/chromedriver: Command failed.
+```
+
+可见`node-sass`确实是个坎, 遇到问题解决问题, 我们慢慢来研究, 首先我们来看node-sass匹配的版本
+
+https://www.npmjs.com/package/node-sass/v/8.0.0
+
+![](images/Pasted%20image%2020231005123751.png)
+
+因为我是node18, 所以我需要使用`8.0+`的版本, 那么可以印证`9.0`没问题
+
+```
+node -v                         
+
+v18.17.1
+```
+
+于是我尝试了
+
+```
+yarn add chromedriver
+```
+
+发现编译通过了
 
 ![](images/Pasted%20image%2020230926112559.png)
 
@@ -782,100 +811,5 @@ public class ProductApplicationTests {
 
 ## 🌲 product模块
 
-终于到了我们后台模块的编写环节了, 我们从第45节课开始
-
-### 🌸 三级分类
-
-#### 🌵 介绍
-
-我们来看一张京东的主页, 可以看到上面的商品有三级分类
-
-![](images/Pasted%20image%2020231004134415.jpg)
-
-#### 🌵 导入数据
-
-视频中让我们把数据导入到表, 我们就不用导入了, 因为使用的数据库脚本里面包含了数据了, 我们可以打开表看一看
-
-![](images/Pasted%20image%2020231004170006.png)
-
-在`pms_category`表中我们可以看到已经有相关的分类数据了
-
-![](images/Pasted%20image%2020231004170124.png)
-
-鼠标悬停在上面可以看到对应的类型和注释
-
-#### 🌵 实现接口
-
-数据都有了, 我们就可以跟随视频一步一步的来实现接口了, 我们首先找到`CategoryService`, 新增一个方法叫`listCategoryTree`, 注意我没有遵循视频中的命名规范, 所以你们也可以跟视频起一个名字
-
-```java
-public interface CategoryService extends IService<CategoryEntity> {  
-    PageUtils queryPage(Map<String, Object> params);  
-    List<CategoryEntity> listCategoryTree();  
-}
-```
-
-然后我们在`CategoryServiceImpl`中进行实现
-
-```java
-@Override  
-public List<CategoryEntity> listCategoryTree() {  
-    // 查询所有分类  
-    List<CategoryEntity> categoryEntities = baseMapper.selectList(Wrappers.emptyWrapper());  
-    // 找到所有一级分类  
-    List<CategoryEntity> level1Menues = categoryEntities.stream().filter((categoryEntity) -> {  
-        return categoryEntity.getParentCid() == 0;  
-    }).map((menu1) -> {  
-        // 给一级分类设置子分类  
-        menu1.setChildren(getChildren(menu1, categoryEntities));  
-        return menu1;  
-    }).sorted((a, b) -> {  
-        Integer sort1 = Optional.ofNullable(a).map(CategoryEntity::getSort).orElse(0);  
-        Integer sort2 = Optional.ofNullable(a).map(CategoryEntity::getSort).orElse(0);  
-        return sort1 - sort2;  
-    }).collect(Collectors.toList());  
-    // 组装成父子树形结构  
-    return level1Menues;  
-}  
-  
-private List<CategoryEntity> getChildren(CategoryEntity menu1, List<CategoryEntity> all) {  
-    List<CategoryEntity> categoryEntities = all.stream().filter(entity -> {  
-        // 获取1级分类的子分类, 也就是二级分类  
-        return entity.getParentCid() == menu1.getCatId();  
-    }).map((menu2) -> {  
-        // 给二级分类设置子分类, 原理很简单, 就是在总表中找二级分类  
-        menu2.setChildren(getChildren(menu2, all));  
-        return menu2;  
-    }).sorted((a, b) -> {  
-        Integer sort1 = Optional.ofNullable(a).map(CategoryEntity::getSort).orElse(0);  
-        Integer sort2 = Optional.ofNullable(a).map(CategoryEntity::getSort).orElse(0);  
-        return sort1 - sort2;  
-    }).collect(Collectors.toList());  
-    return categoryEntities;  
-}
-```
-
-代码是经过我修改的, 我使用了`Optional`来解决空指针异常问题, 因为我发现有一个sort为空, `SELECT * FROM pms_category WHERE cat_id=1431;`
-
-然后我们在`controller`中调用它
-
-```java
-/**  
- * 列表  
- */  
-@RequestMapping("/listCategoryTree")  
-public R listCategory(@RequestParam Map<String, Object> params){  
-    return R.ok().put("data", categoryService.listCategoryTree());  
-}
-```
-
-#### 🌵 有话要说
-
-白猫有话要说, 虽然有经验的同学都能写出来, 但是这对于新手来说就是「毁灭性打击」, 所以白猫建议直接把代码粘贴到你的项目中, 先把程序运行出来, 然后再去分析结构反推代码, 这样更有利于学习
-
-
-
-
-
-
+[跳转 gulimall_product](../gulimall_product/gulimall_product.md)
 

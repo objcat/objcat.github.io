@@ -4,5 +4,6 @@
   "useMarkdownLinks": true,
   "newFileLocation": "current",
   "newLinkFormat": "relative",
-  "attachmentFolderPath": "./images"
+  "attachmentFolderPath": "./images",
+  "autoConvertHtml": false
 }

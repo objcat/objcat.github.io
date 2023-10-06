@@ -214,7 +214,7 @@ WHERE menu_id IN (SELECT menu_id
 
 开个玩笑当然不是跑路, 我们继续跟着视频做哈
 
-#### 🌵 新建商品系统目录
+#### 🌵 新建「商品系统」目录
 
 点击新增
 
@@ -229,6 +229,265 @@ WHERE menu_id IN (SELECT menu_id
 ![](images/Pasted%20image%2020231005144425.png)
 
 我们可以看到商品系统就创建出来了 
+
+#### 🌵 新建「分类维护」菜单
+
+然后我们点击新建
+
+![](images/Pasted%20image%2020231005175245.png)
+
+给商品系统下面新建一个分类维护, 用于维护分类
+
+#### 🌵 完善「分类维护」页面
+
+我们首先点击菜单中的分类维护, 发现它跳转的页面是
+
+http://localhost:8001/#/product-category
+
+那我们就可以得出在vue项目中需要创建一个页面和它对应
+
+![](images/Pasted%20image%2020231005195004.png)
+
+然后写一段测试代码
+
+```vue
+<template lang="">
+
+<h1>hello world</h1>
+
+</template>
+
+<style lang=""></style>
+```
+
+可以看到效果是这样的, 证明我们设置的页面生效了
+
+![](images/Pasted%20image%2020231005194917.png)
+
+页面确定了我们就可以来完善项目了, 首先去`element`把树形控件的代码拷贝下来
+
+https://element.eleme.cn/#/zh-CN/component/tree
+
+然后直接放入页面
+
+```vue
+<template lang="">
+  <el-tree
+    :data="data"
+    :props="defaultProps"
+    @node-click="handleNodeClick"
+  ></el-tree>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      data: [
+        {
+          label: "一级 1",
+          children: [
+            {
+              label: "二级 1-1",
+              children: [
+                {
+                  label: "三级 1-1-1",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          label: "一级 2",
+          children: [
+            {
+              label: "二级 2-1",
+              children: [
+                {
+                  label: "三级 2-1-1",
+                },
+              ],
+            },
+            {
+              label: "二级 2-2",
+              children: [
+                {
+                  label: "三级 2-2-1",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          label: "一级 3",
+          children: [
+            {
+              label: "二级 3-1",
+              children: [
+                {
+                  label: "三级 3-1-1",
+                },
+              ],
+            },
+            {
+              label: "二级 3-2",
+              children: [
+                {
+                  label: "三级 3-2-1",
+                },
+              ],
+            },
+          ],
+        },
+      ],
+      defaultProps: {
+        children: "children",
+        label: "label",
+      },
+    };
+  },
+  methods: {
+    handleNodeClick(data) {
+      console.log(data);
+    },
+  },
+};
+</script>
+<style lang=""></style>
+```
+
+然后看一下效果
+
+![](images/Pasted%20image%2020231006123443.png)
+
+可以看到树形结构已经展示出来了
+
+#### 🌵 配置网关
+
+页面结构出来后老师并没有带我们去写网络请求, 而是遇到跨域问题就直接去配置网关, 而且中途灌输了一大堆的复杂配置比如分布式配置中心, 新手容易听的云里雾里的, 所以我这里化繁为简, 先把网络请求写完, 回过头再去配置网关以及网关跨域
+
+#### 🌵 请求数据
+
+我们直接从`48集的8分30秒`开始
+
+我们接下来就要向后台发送网络请求获取「三级分类」然后加载到树形结构中, 首先我们要在`category.vue`中写一个网络请求
+
+```vue
+<template lang="">
+  <el-tree
+    :data="menus"
+    :props="defaultProps"
+    @node-click="handleNodeClick"
+  ></el-tree>
+</template>
+<script>
+import axios from 'axios'
+export default {
+  data() {
+    return {
+      menus: [],
+      defaultProps: {
+        children: "children",
+        label: "label",
+      },
+    };
+  },
+  methods: {
+    handleNodeClick(data) {
+      console.log(data);
+    },
+    requestMenus() {
+      axios.get("http://localhost:8081/product/category/listCategoryTree").then((res) => {
+          
+      })
+    }
+  },
+  created() {
+    this.requestMenus();
+  },
+};
+</script>
+<style lang=""></style>
+```
+
+注意我这里没有使用`人人`封装好的`httpRequest.js`而是直接使用了`axios`库, `httpRequest.js`也是基于这个库封装的, 然后我们在页面中请求
+
+```
+Access to XMLHttpRequest at 'http://localhost:8081/product/category/listCategoryTree' from origin 'http://localhost:8001' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+xhr.js:178     GET http://localhost:8081/product/category/listCategoryTree 
+```
+
+发现浏览器中报了如下错误, 意思就是访问跨域被禁止了, `协议, 域名, 端口`只要浏览器和服务器其中一个不同, 那就无法访问, 那我们要如何做呢, 最简单的方式是在后台加上一个注解
+
+```java
+@CrossOrigin(origins = "*")
+@RequestMapping("/listCategoryTree")
+public R listCategory(@RequestParam Map<String, Object> params){
+	return R.ok().put("data", categoryService.listCategoryTree());
+}
+```
+
+然后我们发现这次可以看到数据了, 然后我们就可以按照格式来把后台得到的数据用树形加载出来
+
+![](images/Pasted%20image%2020231006141456.png)
+
+然后我们给菜单赋值, `this.menus`是数据源, 我们赋值为`data`, 然后把`label`的值改为`name`
+
+```vue
+<template lang="">
+  <el-tree
+    :data="menus"
+    :props="defaultProps"
+    @node-click="handleNodeClick"
+  ></el-tree>
+</template>
+<script>
+import axios from 'axios'
+export default {
+  data() {
+    return {
+      menus: [],
+      defaultProps: {
+        children: "children",
+        label: "name",
+      },
+    };
+  },
+  methods: {
+    handleNodeClick(data) {
+      console.log(data);
+    },
+    requestMenus() {
+      axios.get("http://localhost:8081/product/category/listCategoryTree").then((res) => {
+          this.menus = res.data.data;
+      })
+    }
+  },
+  created() {
+    this.requestMenus();
+  },
+};
+</script>
+<style lang=""></style>
+```
+
+然后刷新
+
+![](images/Pasted%20image%2020231006161741.png)
+
+我们可以看到分类菜单都能显示了
+
+#### 🌵 回过头配置网关
+
+请求数据已经可以正常显示了, 那么我们现在就来学习视频`46,47,48集`中配置的网关吧, 网关我们之前已经学过了, 就是用来转发请求的, 里面可以配置一些`跨域, 认证, 授权`之类的东西, 可以做到所有使用网关转发的微服务这种前置行为统一, 那我们接下来就开始配置吧
+
+未完待续
+
+
+
+
+
+
+
 
 
 

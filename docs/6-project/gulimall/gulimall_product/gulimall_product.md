@@ -347,7 +347,7 @@ export default {
   },
   methods: {
     handleNodeClick(data) {
-      console.log(data);
+      
     },
   },
 };
@@ -365,7 +365,7 @@ export default {
 
 页面结构出来后老师并没有带我们去写网络请求, 而是遇到跨域问题就直接去配置网关, 而且中途灌输了一大堆的复杂配置比如分布式配置中心, 新手容易听的云里雾里的, 所以我这里化繁为简, 先把网络请求写完, 回过头再去配置网关以及网关跨域
 
-#### 🌵 请求数据
+#### 🌵 展示三级分类
 
 我们直接从`48集的8分30秒`开始
 
@@ -393,7 +393,7 @@ export default {
   },
   methods: {
     handleNodeClick(data) {
-      console.log(data);
+      
     },
     requestMenus() {
       axios.get("http://localhost:8081/product/category/listCategoryTree").then((res) => {
@@ -454,7 +454,7 @@ export default {
   },
   methods: {
     handleNodeClick(data) {
-      console.log(data);
+      
     },
     requestMenus() {
       axios.get("http://localhost:8081/product/category/listCategoryTree").then((res) => {
@@ -474,7 +474,205 @@ export default {
 
 ![](images/Pasted%20image%2020231006161741.png)
 
-我们可以看到分类菜单都能显示了
+我们可以看到分类菜单都能显示了, 那么怎么改变分类顺序呢, 也很简单, 我们只需要改`sort`就可以了, 因为我们是从小到大排序, 所以把`sort`改小菜单自然就上来了
+
+比如我们想把手机放在前面, 那就在数据库把手机的`sort`改成`-1`
+
+![](images/Pasted%20image%2020231007134209.png)
+
+我们再刷新页面发现手机到第一个了
+
+![](images/Pasted%20image%2020231007134235.png)
+
+这就是排序原理了
+
+#### 🌵 添加删除分类
+
+想要添加删除分类, 我们的UI上必须要有添加和删除按钮, 因此我们需要查询`element`文档, 找到添加按钮的方法
+
+```vue
+<template>
+  <el-tree :data="menus" :props="defaultProps" @node-click="handleNodeClick">
+    <span class="custom-tree-node" slot-scope="{ node, data }">
+      <span>{{ node.label }}</span>
+      <span>
+        <el-button type="text" size="mini" @click="append(data)">
+          Append
+        </el-button>
+        <el-button type="text" size="mini" @click="remove(node, data)">
+          Delete
+        </el-button>
+      </span>
+    </span>
+  </el-tree>
+</template>
+
+<script>
+import axios from 'axios'
+
+export default {
+  data() {
+    return {
+      menus: [],
+      defaultProps: {
+        children: "children",
+        label: "name",
+      },
+    };
+  },
+  methods: {
+    handleNodeClick(data) {
+
+    },
+    requestMenus() {
+      axios.get("http://localhost:8081/product/category/listCategoryTree").then((res) => {
+        this.menus = res.data.data;
+      })
+    },
+    append(data) {
+      console.log(data);
+    },
+    remove(node, data) {
+      console.log(node);
+      console.log(data);
+    }
+  },
+  created() {
+    this.requestMenus();
+  },
+};
+</script>
+```
+
+然后我们可以看到按钮都显示出来了
+
+![](images/Pasted%20image%2020231007154353.png)
+
+然后我们可以点击`Append`和`Delete`来打印当中的元素, 其中`data`就是我们的数据, `node`是节点
+
+我们会发现一个问题, 就是点击`Append`和`Delete`的时候列表会打开和关闭, 这很不协调, 视频中是让设置一个属性`:expand-on-click-node="false"`, 但是我觉得这样点击范围就变小了, 也不方便, 所以我使用阻止事件传递到父视图, vue替我们封装好了, 我们使用`@click.stop`就可以阻止事件传递到父视图, 设置后点击非按钮地方都可以打开菜单了
+
+```vue
+<el-button type="text" size="mini" @click.stop="append(data)">
+  Append
+</el-button>
+<el-button type="text" size="mini" @click.stop="remove(node, data)">
+  Delete
+</el-button>
+```
+
+然后根据视频要求, 我们只有三级分类所以分类等于`三级`就隐藏`Append`, 如果有子节点就隐藏删除按钮, 我们一起来实现一下, 我们用`v-if`来做判断, 如果满足条件就显示, 不满足就隐藏
+
+```vue
+<el-button v-if="node.level <= 2" type="text" size="mini" @click.stop="append(data)">
+  Append
+</el-button>
+<el-button v-if="node.childNodes.length == 0" type="text" size="mini" @click.stop="remove(node, data)">
+  Delete
+</el-button>
+```
+
+然后视频中让加`选择框`和`node-key`我都没添加, 用到的时候自然会加, 所以先不加, 问就是麻烦
+
+之后我们就可以调用网络请求来删除数据了, 我们去找一下, 在`CategoryController`中有一个`delete`方法, 我们用这个方法应该是可以删除的
+
+```java
+@RequestMapping("/delete")
+public R delete(@RequestBody Long[] catIds){
+	categoryService.removeByIds(Arrays.asList(catIds));
+
+	return R.ok();
+}
+```
+
+这个时候老师让我们下载一个`postman`, 我不是很想使用这个, 所以我使用`REST Client`, 首先在`vscode`中下载插件
+
+![](images/Pasted%20image%2020231007175329.png)
+
+然后创建一个`test.http`文件, 写入下面的内容
+
+```
+### 删除
+POST http://127.0.0.1:8081/product/category/delete
+Content-Type: application/json
+
+[1]
+```
+
+然后我还备份一下`category`的数据到`csv`
+
+![](images/Pasted%20image%2020231007175455.png)
+
+然后发送请求, 发现成功了, 对应的数据也没了
+
+```
+{
+  "msg": "success",
+  "code": 0
+}
+```
+
+说明`mybatis-plus`的`delete`接口做的是物理删除, 到那时我们开发中一般不使用这么暴力的删除方式, 因为数据删除后不好恢复, 所以我们要使用逻辑删除, 那么逻辑删除是怎么实现的呢? 我们一起来看看吧
+
+所谓逻辑删除其实就是一个标识位, 我们去找`pms_category`表中可以看到一个`show_status`
+
+![](images/Pasted%20image%2020231007162906.png)
+
+这个就是区分逻辑删除的字段, 可以看注释, 1是不删除, 0是删除, 所以我们就可以通过配置删除位来达到删除的目的, 我们在配置文件中进行配置, 根据我们的规律, 没有删除是1, 删除了是0
+
+```yml
+mybatis-plus:
+  # 配置mapper存放位置
+  mapper-locations: classpath:mapper/**/*.xml
+  # 配置日志打印策略
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+  # 配置主键生成策略
+  global-config:
+    db-config:
+      id-type: auto
+      # 删除了
+      logic-delete-value: 0
+      # 没有删除
+      logic-not-delete-value: 1
+```
+
+然后我们要在`CategoryEntity.java`中给`mybatis`指定逻辑删除字段
+
+```java
+@TableLogic
+private Integer showStatus;
+```
+
+指定完毕后我们再测试一下, 我们发现图书已经改成了0, 说明逻辑删除配置成功了
+
+![](images/Pasted%20image%2020231007181151.png)
+
+新手可能会一头雾水, 这是什么原理呢? 那我们就一起来看看SQL吧, 首先我们配置一下日志打印策略
+
+```yml
+configuration:
+  log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+```
+
+然后重启程序再次执行接口就能看到日志输出
+
+```shell
+Creating a new SqlSession
+Registering transaction synchronization for SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3a4915b8]
+JDBC Connection [HikariProxyConnection@658814226 wrapping com.mysql.cj.jdbc.ConnectionImpl@d54fd3] will be managed by Spring
+==>  Preparing: UPDATE pms_category SET show_status=0 WHERE cat_id IN ( ? ) AND show_status=1
+==> Parameters: 1(Long)
+<==    Updates: 0
+Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3a4915b8]
+Transaction synchronization committing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3a4915b8]
+Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3a4915b8]
+Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3a4915b8]
+```
+
+我们可以看到逻辑删除只是`update`, 而真正的删除是`delete`
+
+未完待续
 
 #### 🌵 回过头配置网关
 

@@ -4,35 +4,18 @@
     "type": "split",
     "children": [
       {
-        "id": "554e9206db6a1a1e",
+        "id": "24cf8fe86916fbb0",
         "type": "tabs",
         "children": [
           {
-            "id": "81c705e956368bb5",
+            "id": "a171697de62cc1b2",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "docs/6-project/gulimall/gulimall/gulimall.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "628a4843f3325578",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "docs/6-project/gulimall/gulimall/gulimall.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -106,7 +89,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/6-project/gulimall/gulimall/gulimall.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -123,7 +105,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/6-project/gulimall/gulimall/gulimall.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -145,9 +126,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "docs/6-project/gulimall/gulimall/gulimall.md"
-              }
+              "state": {}
             }
           }
         ],
@@ -167,9 +146,15 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "628a4843f3325578",
+  "active": "a171697de62cc1b2",
   "lastOpenFiles": [
+    "docs/6-project/gulimall/gulimall/gulimall.md",
     "docs/6-project/gulimall/gulimall_product/gulimall_product.md",
+    "docs/README.md",
+    "docs/images/oc-icon.png",
+    "README.md",
+    "docs/6-project/gulimall/gulimall/images/Pasted image 20230926112559.jpg",
+    "docs/6-project/gulimall/gulimall/images/Pasted image 20230926112559.png",
     "docs/6-project/gulimall/gulimall_product/images/Pasted image 20231007181151.png",
     "docs/6-project/gulimall/gulimall_product/images/Pasted image 20231007175455.png",
     "docs/6-project/gulimall/gulimall_product/images/Pasted image 20231007175329.png",
@@ -178,13 +163,8 @@
     "docs/6-project/gulimall/gulimall_product/images/Pasted image 20231007154353.png",
     "docs/6-project/gulimall/gulimall_product/images/Pasted image 20231007134235.png",
     "docs/6-project/gulimall/gulimall_product/images/Pasted image 20231007134209.png",
-    "docs/6-project/gulimall/gulimall/gulimall.md",
-    "README.md",
     "docs/js/search.min.js",
     "docs/js/docsify-scroll-to-top.min.js",
-    "docs/images/Pasted image 20230929001126.png",
-    "docs/6-project/gulimall/gulimall_product/images/Pasted image 20231006161741.png",
-    "docs/6-project/gulimall/gulimall_product/images/Pasted image 20231006141456.png",
     "docs/6-project/gulimall/gulimall_product/images",
     "docs/6-project/gulimall/gulimall_product",
     "docs/6-project/gulimall/gulimall_nacos/images",
@@ -201,7 +181,6 @@
     "docs/3-program/env/nacos/nacos_env.md",
     "docs/3-program/env/go/go.md",
     "docs/0-language/swift/swift.md",
-    "docs/README.md",
     "docs/3-program/IDE/IDEA/IDEA/IDEA.md",
     "docs/0-language/javascript/javascript.md",
     "docs/0-language/java/java.md",

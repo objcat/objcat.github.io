@@ -498,7 +498,7 @@ yarn add chromedriver
 
 发现编译通过了
 
-![](images/Pasted%20image%2020230926112559.png)
+![](images/Pasted%20image%2020230926112559.jpg)
 
 运行出来界面是这样的, 那我们前端也跑起来了, 然后我们可以登录进去看看
 

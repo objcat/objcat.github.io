@@ -458,7 +458,7 @@ export default {
     },
     requestMenus() {
       axios.get("http://localhost:8081/product/category/listCategoryTree").then((res) => {
-          this.menus = res.data.data;
+          this.menus = res.data.datas;
       })
     }
   },
@@ -489,6 +489,8 @@ export default {
 #### 🌵 添加删除分类
 
 想要添加删除分类, 我们的UI上必须要有添加和删除按钮, 因此我们需要查询`element`文档, 找到添加按钮的方法
+
+##### 🐔 添加按钮
 
 ```vue
 <template>
@@ -526,7 +528,7 @@ export default {
     },
     requestMenus() {
       axios.get("http://localhost:8081/product/category/listCategoryTree").then((res) => {
-        this.menus = res.data.data;
+        this.menus = res.data.datas;
       })
     },
     append(data) {
@@ -550,6 +552,8 @@ export default {
 
 然后我们可以点击`Append`和`Delete`来打印当中的元素, 其中`data`就是我们的数据, `node`是节点
 
+##### 🐔 阻止事件传递
+
 我们会发现一个问题, 就是点击`Append`和`Delete`的时候列表会打开和关闭, 这很不协调, 视频中是让设置一个属性`:expand-on-click-node="false"`, 但是我觉得这样点击范围就变小了, 也不方便, 所以我使用阻止事件传递到父视图, vue替我们封装好了, 我们使用`@click.stop`就可以阻止事件传递到父视图, 设置后点击非按钮地方都可以打开菜单了
 
 ```vue
@@ -560,6 +564,8 @@ export default {
   Delete
 </el-button>
 ```
+
+##### 🐔 隐藏逻辑
 
 然后根据视频要求, 我们只有三级分类所以分类等于`三级`就隐藏`Append`, 如果有子节点就隐藏删除按钮, 我们一起来实现一下, 我们用`v-if`来做判断, 如果满足条件就显示, 不满足就隐藏
 
@@ -574,9 +580,12 @@ export default {
 
 然后视频中让加`选择框`和`node-key`我都没添加, 用到的时候自然会加, 所以先不加, 问就是麻烦
 
-之后我们就可以调用网络请求来删除数据了, 我们去找一下, 在`CategoryController`中有一个`delete`方法, 我们用这个方法应该是可以删除的
+##### 🐔 接口跨域配置
+
+之后我们就可以调用网络请求来删除数据了, 我们去找一下, 在`CategoryController`中有一个`delete`方法, 我们用这个方法应该是可以删除的, 我们把它前面也加上`@CrossOrigin("*")`
 
 ```java
+@CrossOrigin("*")
 @RequestMapping("/delete")
 public R delete(@RequestBody Long[] catIds){
 	categoryService.removeByIds(Arrays.asList(catIds));
@@ -584,6 +593,8 @@ public R delete(@RequestBody Long[] catIds){
 	return R.ok();
 }
 ```
+
+##### 🐔 接口测试工具
 
 这个时候老师让我们下载一个`postman`, 我不是很想使用这个, 所以我使用`REST Client`, 首先在`vscode`中下载插件
 
@@ -599,9 +610,13 @@ Content-Type: application/json
 [1]
 ```
 
+##### 🐔 备份数据
+
 然后我还备份一下`category`的数据到`csv`
 
 ![](images/Pasted%20image%2020231007175455.png)
+
+##### 🐔 测试接口
 
 然后发送请求, 发现成功了, 对应的数据也没了
 
@@ -613,6 +628,8 @@ Content-Type: application/json
 ```
 
 说明`mybatis-plus`的`delete`接口做的是物理删除, 到那时我们开发中一般不使用这么暴力的删除方式, 因为数据删除后不好恢复, 所以我们要使用逻辑删除, 那么逻辑删除是怎么实现的呢? 我们一起来看看吧
+
+##### 🐔 配置逻辑删除
 
 所谓逻辑删除其实就是一个标识位, 我们去找`pms_category`表中可以看到一个`show_status`
 
@@ -648,6 +665,8 @@ private Integer showStatus;
 
 ![](images/Pasted%20image%2020231007181151.png)
 
+##### 🐔 配置日志打印级别
+
 新手可能会一头雾水, 这是什么原理呢? 那我们就一起来看看SQL吧, 首先我们配置一下日志打印策略
 
 ```yml
@@ -670,11 +689,148 @@ Transaction synchronization deregistering SqlSession [org.apache.ibatis.session.
 Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3a4915b8]
 ```
 
-我们可以看到逻辑删除只是`update`, 而真正的删除是`delete`
+我们可以看到逻辑删除只是`update`, 并不是`delete`, 所以推理可以得到加上`@TableLogic`注解后进行删除就会变成逻辑删除
 
-未完待续
+##### 🐔 实现删除功能
 
-#### 🌵 回过头配置网关
+接口调通了, 我们接下来就可以在前端实现了
+
+```js
+remove(node, data) {
+  axios.post("http://127.0.0.1:8081/product/category/delete", [data.catId]).then((res) => {
+	console.log(res.data);
+	if (res.data.code == 0) {
+	  console.log("删除成功");
+	  this.requestMenus();
+	}
+  })
+}
+```
+
+首先我们调用`delete`接口, 要注意跨域注解, 否则访问不通, 当删除成功后我们可以调用`requestMenus`进行刷新, 这样列表就可以刷新了
+
+##### 🐔 发现问题
+
+但是我们会发现一些问题, 在删除之前没有弹框提示, 删除之后没有message提示删除成功, 还有删除后菜单合起来了, 并没有展开
+
+##### 🐔 添加提示框
+
+https://element.eleme.cn/#/zh-CN/component/dialog
+https://element.eleme.cn/#/zh-CN/component/message-box
+
+我们可以看到有两个提示框组件, 那么使用哪个呢, element告诉我们了
+
+> 从场景上说，MessageBox 的作用是美化系统自带的 alert、confirm 和 prompt，因此适合展示较为简单的内容。如果需要弹出较为复杂的内容，请使用 Dialog。
+
+所以我们果断选择简单的`message-box`, 可以看到代码是这样的
+
+```js
+this.$confirm('确认删除？')
+	.then(_ => {
+	  console.log("确定");
+	})
+	.catch(_ => {
+	  console.log("取消");
+	});
+```
+
+##### 🐔 添加消息框
+
+https://element.eleme.cn/#/zh-CN/component/message
+
+```js
+this.$message({
+  message: '恭喜你，这是一条成功消息',
+  type: 'success'
+});
+```
+
+##### 🐔 让菜单刷新后打开
+
+我们可以换个思路, 当我删除菜单成功后我可以直接删除当前节点, 不刷新数据菜单就不会关上了, 删除节点我们使用`tree`自带的`remove`方法, 我们可以使用`ref`来引用一个组件, 然后调用组件本身的方法
+
+##### 🐔 综合
+
+综合下来就是这个样子的
+
+```vue
+<template>
+  <el-tree :data="menus" :props="defaultProps" ref="tree">
+    <span class="custom-tree-node" slot-scope="{ node, data }">
+      <span>{{ node.label }}</span>
+      <span>
+        <el-button v-if="node.level <= 2" type="text" size="mini" @click.stop="append(data)">
+          添加
+        </el-button>
+        <el-button v-if="node.childNodes.length == 0" type="text" size="mini" @click.stop="remove(node, data)">
+          删除
+        </el-button>
+      </span>
+    </span>
+  </el-tree>
+</template>
+
+<script>
+import axios from 'axios'
+
+export default {
+  data() {
+    return {
+      menus: [],
+      defaultProps: {
+        children: "children",
+        label: "name"
+      },
+    };
+  },
+  methods: {
+    requestMenus() {
+      axios.get("http://localhost:8081/product/category/listCategoryTree").then((res) => {
+        this.menus = res.data.datas;
+      })
+    },
+    append(data) {
+      console.log(data);
+    },
+    remove(node, data) {
+      this.$confirm(`确认删除「${data.name}」菜单?`)
+        .then(_ => {
+          // 调用删除接口
+          this.delete(data, node);
+        })
+        .catch(e => {
+          console.log(e);
+          console.log("取消");
+        });
+    },
+    delete(data, node) {
+      axios.post("http://127.0.0.1:8081/product/category/delete", [data.catId]).then((res) => {
+        console.log(res.data);
+        // 判断是否删除成功
+        if (res.data.code == 0) {
+          this.$message({
+            message: '删除成功!',
+            type: 'success'
+          });
+          // 数据删除成功后再删除网页中的节点
+          this.$refs.tree.remove(node);
+        } else {
+          this.$message({
+            message: '删除失败!',
+            type: 'success'
+          });
+        }
+      })
+    }
+  },
+  created() {
+    this.requestMenus();
+  },
+};
+</script>
+```
+
+## 🌲 回过头配置网关
 
 请求数据已经可以正常显示了, 那么我们现在就来学习视频`46,47,48集`中配置的网关吧, 网关我们之前已经学过了, 就是用来转发请求的, 里面可以配置一些`跨域, 认证, 授权`之类的东西, 可以做到所有使用网关转发的微服务这种前置行为统一, 那我们接下来就开始配置吧
 

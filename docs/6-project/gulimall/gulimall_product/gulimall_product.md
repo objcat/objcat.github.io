@@ -59,7 +59,8 @@ public List<CategoryEntity> listCategoryTree() {
 private List<CategoryEntity> getChildren(CategoryEntity menu1, List<CategoryEntity> all) {  
     List<CategoryEntity> categoryEntities = all.stream().filter(entity -> {  
         // 获取1级分类的子分类, 也就是二级分类  
-        return entity.getParentCid() == menu1.getCatId();  
+        // return entity.getParentCid() == menu1.getCatId();
+        return Objects.equals(entity.getParentCid(), menu1.getCatId());  
     }).map((menu2) -> {  
         // 给二级分类设置子分类, 原理很简单, 就是在总表中找二级分类  
         menu2.setChildren(getChildren(menu2, all));  
@@ -73,7 +74,7 @@ private List<CategoryEntity> getChildren(CategoryEntity menu1, List<CategoryEnti
 }
 ```
 
-代码是经过我修改的, 我使用了`Optional`来解决空指针异常问题, 因为我发现有一个sort为空, `SELECT * FROM pms_category WHERE cat_id=1431;`
+代码是经过我修改的, 我使用了`Optional`来解决空指针异常问题, 因为我发现有一个sort为空, `SELECT * FROM pms_category WHERE cat_id=1431;`, 还有另外一个问题比较`Long`类型必须用`equals`, 因为是对象类型, ``==``只是用于比较地址, 当`Long`数值大于一定值即使相同的`值`的`地址`也会不一样, 之所以注释上是为了让你打开看看有啥bug, 「现在就告诉你, 可能会发生数据不全的问题」
 
 然后我们在`controller`中调用它
 
@@ -852,6 +853,32 @@ export default {
 
 删除分类已经做完了, 那我们来看看添加分类, 这个就稍微复杂一点了, 因为我们要写一个添加页面
 
+### 🌸 测试接口
+
+我们找到`save`接口, 先配置上跨域`@CrossOrigin("*")`
+
+```java
+@CrossOrigin("*")
+@RequestMapping("/save")
+public R save(@RequestBody CategoryEntity category){
+	categoryService.save(category);
+
+	return R.ok();
+}
+```
+
+我们测试接口还是用`Http Client`
+
+```
+### 添加
+POST http://localhost:8081/product/category/save
+Content-Type: application/json
+
+{"name": "测试1级栏目", "parentCid": 0, "catLevel": 1, "sort": 0, "showStatus": 1}
+```
+
+有了接口我们就能去实现页面了
+
 ### 🌸 实现dialog
 
 代码如下
@@ -904,32 +931,6 @@ form: {
 }
 ```
 
-### 🌸 测试接口
-
-我们找到`save`接口, 先配置上跨域`@CrossOrigin("*")`
-
-```java
-@CrossOrigin("*")
-@RequestMapping("/save")
-public R save(@RequestBody CategoryEntity category){
-	categoryService.save(category);
-
-	return R.ok();
-}
-```
-
-我们测试接口还是用`Http Client`
-
-```
-### 添加
-POST http://localhost:8081/product/category/save
-Content-Type: application/json
-
-{"name": "测试1级栏目", "parentCid": 0, "catLevel": 1, "sort": 0, "showStatus": 1}
-```
-
-有了接口我们就能去实现页面了
-
 ### 🌸 刷新列表
 
 我们添加分类后需要在次刷新列表, 有两种实现方式, 一种是调用`append`来拼接一个节点, 但是因为我们列表中有排序不好弄, 所以我们选择和视频中一样先刷新再默认打开
@@ -955,7 +956,7 @@ Content-Type: application/json
       </span>
     </el-tree>
 
-    <el-dialog title="请填写信息" :visible.sync="dialogVisible" width="30%">
+    <el-dialog title="新增" :visible.sync="dialogVisible" width="30%">
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="分类名称">
           <el-input v-model="form.name"></el-input>
@@ -1066,6 +1067,8 @@ export default {
             message: '添加成功!',
             type: 'success'
           });
+          // 清空表单 防止旧的文字保留在上面
+          this.form = {};
           // 先刷新再打开
           this.requestMenus(() => {
             // 刷新成功后, 我们调用新增默认id
@@ -1083,9 +1086,41 @@ export default {
 </script>
 ```
 
-### 🌸 修改
+## 🌲 修改分类
 
-未完待续
+修改也简单, 我们来看一下接口
+
+### 🌸 测试接口
+
+首先配置跨域
+
+```java
+@CrossOrigin("*")
+@RequestMapping("/update")
+public R update(@RequestBody CategoryEntity category){
+	categoryService.updateById(category);
+
+	return R.ok();
+}
+```
+
+然后测试
+
+```
+### 修改
+POST http://localhost:8081/product/category/update
+Content-Type: application/json
+
+{"catId": "3", "name": "家用电器2"}
+```
+
+### 🌸 实现页面
+
+直接写完整版
+
+```
+
+```
 
 # 🍎 回过头配置网关
 

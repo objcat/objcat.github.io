@@ -604,7 +604,7 @@ public R delete(@RequestBody Long[] catIds){
 
 ```
 ### 删除
-POST http://127.0.0.1:8081/product/category/delete
+POST http://localhost:8081/product/category/delete
 Content-Type: application/json
 
 [1]
@@ -616,11 +616,13 @@ Content-Type: application/json
 
 ![](images/Pasted%20image%2020231007175455.png)
 
+备份的目的是可以随时还原数据的状态方便学习
+
 ##### 🐔 测试接口
 
 然后发送请求, 发现成功了, 对应的数据也没了
 
-```
+```json
 {
   "msg": "success",
   "code": 0
@@ -697,7 +699,7 @@ Transaction synchronization closing SqlSession [org.apache.ibatis.session.defaul
 
 ```js
 remove(node, data) {
-  axios.post("http://127.0.0.1:8081/product/category/delete", [data.catId]).then((res) => {
+  axios.post("http://localhost:8081/product/category/delete", [data.catId]).then((res) => {
 	console.log(res.data);
 	if (res.data.code == 0) {
 	  console.log("删除成功");
@@ -804,7 +806,7 @@ export default {
         });
     },
     delete(data, node) {
-      axios.post("http://127.0.0.1:8081/product/category/delete", [data.catId]).then((res) => {
+      axios.post("http://localhost:8081/product/category/delete", [data.catId]).then((res) => {
         console.log(res.data);
         // 判断是否删除成功
         if (res.data.code == 0) {
@@ -852,9 +854,238 @@ export default {
 
 ##### 🐔 实现dialog
 
+代码如下
 
+https://element.eleme.cn/#/zh-CN/component/dialog
 
+```vue
+<el-dialog
+  title="提示"
+  :visible.sync="dialogVisible"
+  width="30%"
+  :before-close="handleClose">
+  <span>这是一段信息</span>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+  </span>
+</el-dialog>
+```
 
+当然不是拿来就可以用, 默认是这样的
+
+![](images/Pasted%20image%2020231009133143.png)
+
+我们需要在里面加入表单
+
+##### 🐔 加入表单
+
+我把`handleClose`去掉了, 因为没用, 把确定绑定了一个方法`determin`, 把表单填进去了
+
+```vue
+<el-dialog title="请填写信息" :visible.sync="dialogVisible" width="30%">
+  <el-form ref="form" :model="form" label-width="80px">
+	<el-form-item label="分类名称">
+	  <el-input v-model="form.name"></el-input>
+	</el-form-item>
+  </el-form>
+  <span slot="footer" class="dialog-footer">
+	<el-button @click="dialogVisible = false">取 消</el-button>
+	<el-button type="primary" @click="determin()">确 定</el-button>
+  </span>
+</el-dialog>
+```
+
+然后给表单构造个数据
+
+```json
+form: {
+  name: ""
+}
+```
+
+##### 🐔 测试接口
+
+我们找到`save`接口, 先配置上跨域`@CrossOrigin("*")`
+
+```java
+@CrossOrigin("*")
+@RequestMapping("/save")
+public R save(@RequestBody CategoryEntity category){
+	categoryService.save(category);
+
+	return R.ok();
+}
+```
+
+我们测试接口还是用`Http Client`
+
+```
+### 添加
+POST http://localhost:8081/product/category/save
+Content-Type: application/json
+
+{"name": "测试1级栏目", "parentCid": 0, "catLevel": 1, "sort": 0, "showStatus": 1}
+```
+
+有了接口我们就能去实现页面了
+
+##### 🐔 刷新列表
+
+我们添加分类后需要在次刷新列表, 有两种实现方式, 一种是调用`append`来拼接一个节点, 但是因为我们列表中有排序不好弄, 所以我们选择和视频中一样先刷新再默认打开
+
+##### 🐔 整合上面两个组件
+
+我们来看完整实现
+
+```vue
+<template>
+  <div>
+    <el-tree :data="menus" :props="defaultProps" ref="tree" node-key="catId" :default-expanded-keys="expandedKeys">
+      <span class="custom-tree-node" slot-scope="{ node, data }">
+        <span>{{ node.label }}</span>
+        <span>
+          <el-button v-if="node.level <= 2" type="text" size="mini" @click.stop="append(data)">
+            添加
+          </el-button>
+          <el-button v-if="node.childNodes.length == 0" type="text" size="mini" @click.stop="remove(node, data)">
+            删除
+          </el-button>
+        </span>
+      </span>
+    </el-tree>
+
+    <el-dialog title="请填写信息" :visible.sync="dialogVisible" width="30%">
+      <el-form ref="form" :model="form" label-width="80px">
+        <el-form-item label="分类名称">
+          <el-input v-model="form.name"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="determin()">确 定</el-button>
+      </span>
+    </el-dialog>
+  </div>
+</template>
+
+<script>
+import axios from 'axios'
+
+export default {
+  data() {
+    return {
+      menus: [],
+      dialogVisible: false,
+      expandedKeys: [],
+      category: {
+        // 分类名
+        name: "",
+        // 父id
+        parentCid: 0,
+        // 层级
+        catLevel: 0,
+        // 排序
+        sort: 0,
+        // 删除标记
+        showStatus: 1,
+      },
+      form: {
+        name: ""
+      },
+      defaultProps: {
+        children: "children",
+        label: "name"
+      },
+    };
+  },
+  methods: {
+    requestMenus(callback) {
+      axios.get("http://localhost:8081/product/category/listCategoryTree").then((res) => {
+        if (res.data.code == 0) {
+          this.menus = res.data.datas;
+          if (callback) {
+            callback();
+          }
+        }
+      })
+    },
+    append(data) {
+      console.log(data);
+      this.dialogVisible = true;
+      this.category.parentCid = data.catId;
+      this.category.catLevel = data.catLevel + 1;
+    },
+    remove(node, data) {
+      this.$confirm(`确认删除「${data.name}」菜单?`)
+        .then(_ => {
+          // 调用删除接口
+          this.delete(data, node);
+        })
+        .catch(e => {
+          console.log(e);
+          console.log("取消");
+        });
+    },
+    delete(data, node) {
+      axios.post("http://localhost:8081/product/category/delete", [data.catId]).then((res) => {
+        console.log(res.data);
+        // 判断是否删除成功
+        if (res.data.code == 0) {
+          this.$message({
+            message: '删除成功!',
+            type: 'success'
+          });
+          // 数据删除成功后再删除网页中的节点
+          this.$refs.tree.remove(node);
+        } else {
+          this.$message({
+            message: '删除失败!',
+            type: 'error'
+          });
+        }
+      })
+    },
+    determin() {
+      // 关闭窗口
+      this.category.name = this.form.name;
+      // 判断分类名称是否为空
+      if (this.category.name == "") {
+        this.$message({
+          message: '分类名称不能为空',
+          type: 'error'
+        });
+        return;
+      }
+      // 关闭对话框
+      this.dialogVisible = false
+      // 发送网络请求
+      axios.post("http://localhost:8081/product/category/save", this.category).then((res) => {
+        if (res.data.code == 0) {
+          this.$message({
+            message: '添加成功!',
+            type: 'success'
+          });
+          // 先刷新再打开
+          this.requestMenus(() => {
+            // 刷新成功后, 我们调用新增默认id
+            this.expandedKeys.push(this.category.parentCid);
+          })
+        }
+      }
+      )
+    }
+  },
+  created() {
+    this.requestMenus();
+  },
+};
+</script>
+```
+
+##### 🐔 修改
+
+未完待续
 
 ## 🌲 回过头配置网关
 

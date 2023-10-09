@@ -1,12 +1,8 @@
-# 🍎 Nacos
-
-本文接谷粒商城nacos模块
-
-## 🌲 Nacos
+# 🍎 Nacos搭建
 
 `nacos`在`spring-cloud`中充当发现中心语配置中心角色, 首先你要去安装服务端 [跳转 nacos_env](../../3-program/env/nacos/nacos_env.md)
 
-### 🌸 启动nacos
+## 🌲 启动nacos
 
 ```
 sh startup.sh -m standalone
@@ -16,7 +12,7 @@ sh startup.sh -m standalone
 
 http://localhost:8848/nacos
 
-### 🌸 导入依赖
+## 🌲 导入依赖
 
 然后我们要导入依赖, 直接配置到通用模块
 
@@ -34,7 +30,7 @@ http://localhost:8848/nacos
 
 我们可以看到除了`discovery`, 我们导入一个`bootstrap`, 注意你如果按照我的步骤来, 就必须开启`bootstrap`
 
-### 🌸 配置
+## 🌲 配置
 
 我们在本地创建`boostrap.yml`然后写入配置, 这个配置写在`application.yml`中也可以, 但是为了以后配置中心方便, 我们提前创建这个配置文件
 
@@ -50,15 +46,15 @@ spring:
         server-addr: 127.0.0.1:8848
 ```
 
-### 🌸 测试
+## 🌲 测试
 
 然后我们启动项目, 看一下服务列表
 
 ![](images/Pasted%20image%2020230927171503.png)
 
-## 🌲 openfeign
+# 🍎 openfeign
 
-### 🌸 生成代码
+## 🌲 生成代码
 
 然后视频带我们去做了`openfeign`的跨服务通讯, 内容是`member用户服务`调用`coupon优惠券服务`, 所以我们先把这两个服务的代码生成一下, 改动配置如下
 
@@ -104,7 +100,7 @@ tablePrefix=sms_
 
 我的解法是直接`show in finder`在文件目录去粘贴, 不要去`idea`中粘贴
 
-### 🌸 创建主启动类并配置项目
+## 🌲 创建主启动类并配置项目
 
 然后我们来创建这两个服务的主启动文件和配置文件, 主启动文件
 
@@ -240,13 +236,13 @@ ControlCe 2154 objcat    6u  IPv6 0xced43dcd47761bd7      0t0  TCP *:afs3
 
 你会发现你永远启动不起来程序, 所以这个时候我们就要去换个端口, 比如7001
 
-### 🌸 测试
+## 🌲 测试
 
 配置完在`nacos`看到这样的画面就是成功注册了
 
 ![](images/Pasted%20image%2020230928173543.png)
 
-### 🌸 写获取优惠券接口
+## 🌲 写获取优惠券接口
 
 视频中的要求是`member`调用`coupon`来获取优惠券, 但是由于我们现在库里连用户都没有更别说优惠券了, 所以只能造假的数据, 下面先来写一个获取优惠券列表的接口
 
@@ -279,7 +275,7 @@ http://localhost:7000/coupon/coupon/listCoupon
 
 看到上面返回的json说明优惠券请求成功了
 
-### 🌸 调用服务
+## 🌲 调用服务
 
 然后我们在`member`中写接口调用这个服务, 实现服务之间的通讯, 需要的依赖就是`openfeign`, 我们在第一期已经配置过了, 我们下面就看看要怎么使用`openfeign`吧
 
@@ -349,11 +345,11 @@ http://localhost:8000/member/member/listCoupon
 {"msg":"success","code":0,"coupons":[{"id":null,"couponType":null,"couponImg":null,"couponName":"满100减10","num":null,"amount":null,"perLimit":null,"minPoint":null,"startTime":null,"endTime":null,"useType":null,"note":null,"publishCount":null,"useCount":null,"receiveCount":null,"enableStartTime":null,"enableEndTime":null,"code":null,"memberLevel":null,"publish":null}]}
 ```
 
-## 🌲 配置中心
+# 🍎 配置中心
 
 接下来视频中讲了配置中心, 我就白话来说了, 有一些配置是要经常去修改的, 比如圣诞结活动开启的配置, 为true开始圣诞狂欢, 为false结束圣诞活动, 但是每次更改都重新发布那么多微服务这是很麻烦的, 所以人们想了一个办法, 就是使用配置中心来配置, 有一个好处就是修改配置后会同步到微服务上, 这样就可以灵活的来控制配置了, 那我们下面就一起来看看吧
 
-### 🌸 导入依赖
+## 🌲 导入依赖
 
 ```xml
 <dependency>
@@ -362,7 +358,7 @@ http://localhost:8000/member/member/listCoupon
 </dependency>
 ```
 
-### 🌸 配置
+## 🌲 配置
 
 注意是`bootstrap.yml`
 
@@ -385,7 +381,7 @@ spring:
 
 可以发现我这里和视频配置的不同, 视频没有配置`file-extension`, 那么后缀就使用默认的`properties`, 而我喜欢yml所以配置文件使用yaml来写
 
-### 🌸 创建默认配置
+## 🌲 创建默认配置
 
 我们为了方便测试, 先在本地写死一个默认配置, 在`application.yml`中
 
@@ -396,7 +392,7 @@ coupon:
     age: 18
 ```
 
-### 🌸 创建接口
+## 🌲 创建接口
 
 我们创建接口去读取配置, 跟视频一样在`CouponController`中去写
 
@@ -415,7 +411,7 @@ public R test() {
 
 我们使用`@Value`来读取本地配置
 
-### 🌸 测试
+## 🌲 测试
 
 我们访问接口试试
 
@@ -427,7 +423,7 @@ http://localhost:7001/coupon/coupon/test
 {"msg":"success","code":0,"data":"张三 18"}
 ```
 
-### 🌸 新建配置文件
+## 🌲 新建配置文件
 
 我们下面就使用配置中心来配置吧, 首先点击新建
 
@@ -447,7 +443,7 @@ http://localhost:7001/coupon/coupon/test
 
 可以看到变成了`李四 20`, 这说明配置生效了, 也同样说明另外一个特性, 就是覆盖性, 我们本地的配置只是默认的, 如果配置中心和本地的配置重复就会出现覆盖
 
-### 🌸 配置刷新
+## 🌲 配置刷新
 
 我们会发现一个问题, 就是当我们修改完配置文件后, 从新访问接口, 如果不重启应用, 配置文件是不会改变了, 这与我们的期待不符合, 所以我们需要让配置实时生效, 使用`@RefreshScope`注解
 
@@ -479,11 +475,11 @@ public class CouponController {
 
 当你的微服务足够多, 或者环境足够多的时候, 你会发现这种单一的配置(一个服务一个配置文件)可能无法满足你, 因为实际项目中需要区分`环境`有`生产开发测试环境`等, 视频第24集讲的真是「又长又一头雾水」听起来有点烦躁, 我并不是说讲的做不通, 照着配都能配出来, 但实际工作中怎么运用讲的很少, 下面我就以我的经验分别来写这几个模块
 
-## 🌲 DataId区分
+# 🍎 DataId区分
 
 `DataId`顾名思义就是数据的`Id`, 我们在配置文件的时候配置的第一个参数「文件名」就是`DataId`, 但是`DataId`也有一个区分环境的功能, 视频里没讲, 所以我这里准备给大家补上, 想学区分环境, 我们就要先学习在`springboot`中如何区分环境, 怎么区分呢? 其实很简单哈, 再次强调这章是我新加的
 
-### 🌸 创建配置文件
+## 🌲 创建配置文件
 
 首先除了你现在有的`bootstrap.yml`应该再创建出两个`bootstrap-dev.yml和bootstrap-prod.yml`分别代表开发环境和生产环境, 然后创建出两个`application-dev.yml和application-prod.yml`这俩也是配置文件, 也是咱们每个工程中基本都要用的, 创建好后开始写内容
 
@@ -581,7 +577,7 @@ coupon:
     age: 30
 ```
 
-### 🌸 测试
+## 🌲 测试
 
 创建完目录就是这个样子
 
@@ -625,7 +621,7 @@ http://localhost:7001/coupon/coupon/test
 
 因为我们在生产的配置文件中写的名字是`王五`, 所以被读出来了
 
-### 🌸 配置区分
+## 🌲 配置区分
 
 在学习之前我们先把环境调成`dev`, 然后读取配置文件的开关打开`enabled: false`
 
@@ -670,11 +666,11 @@ http://localhost:7001/coupon/coupon/test
 
 我们发现也是可以读到生产环境配置的
 
-### 🌸 总结
+## 🌲 总结
 
 我们发现通过`spring.profiles.active`属性既可以切换`springboot环境`又可以切换`分布式配置中心nacos`, 简直是一举两得, 比`命名空间`和`分组`方便的不是一点半点, 如果是普通的项目, 那我可以宣布, 这就叫够用! 其他两个你都不要学习了, 用到之后在学
 
-## 🌲 命名空间区分
+# 🍎 命名空间区分
 
 学了上面的`dataId`区分方式已经满足了大部分的需求, 然后我们继续来看视频中讲的根据命名空间区分, 视频里主要说了在命名空间中的两种区分方式
 
@@ -760,7 +756,7 @@ http://localhost:7001/coupon/coupon/test
 
 然后视频里也讲了一个把服务名作为配置中心区分, 我这里就不说了一个道理, 但是我们发现这种配置id来区分服务的方式很麻烦, 至少比`dataId`自动区分配置是麻烦的, 增加了配置成本
 
-## 🌲 分组区分
+# 🍎 分组区分
 
 这个区分方式也比较简单, 我们在以前配置中都使用默认的组别, 现在我们使用点别的
 

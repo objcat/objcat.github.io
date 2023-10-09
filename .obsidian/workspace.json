@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/6-project/gulimall/gulimall_product/gulimall_product.md",
+                "file": "docs/6-project/gulimall/gulimall/gulimall.md",
                 "mode": "source",
                 "source": false
               }
@@ -93,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/6-project/gulimall/gulimall_product/gulimall_product.md",
+                "file": "docs/6-project/gulimall/gulimall/gulimall.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/6-project/gulimall/gulimall_product/gulimall_product.md",
+                "file": "docs/6-project/gulimall/gulimall/gulimall.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -133,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/6-project/gulimall/gulimall_product/gulimall_product.md"
+                "file": "docs/6-project/gulimall/gulimall/gulimall.md"
               }
             }
           }
@@ -156,15 +156,15 @@
   },
   "active": "0160e588af015328",
   "lastOpenFiles": [
-    "README.md",
+    "docs/6-project/gulimall/gulimall_gateway/gulimall_gateway.md",
+    "docs/6-project/gulimall/gulimall_nacos/gulimall_nacos.md",
     "docs/6-project/gulimall/gulimall_product/gulimall_product.md",
+    "README.md",
     "docs/6-project/gulimall/gulimall/gulimall.md",
     "docs/6-project/gulimall/gulimall_product/images/Pasted image 20231009133143.png",
     "docs/6-project/gulimall/gulimall_product/images/Pasted image 20231008153221.png",
     "docs/README.md",
     "docs/6-project/gulimall/gulimall/images/Pasted image 20230926112559.jpg",
-    "docs/6-project/gulimall/gulimall_nacos/gulimall_nacos.md",
-    "docs/6-project/gulimall/gulimall_gateway/gulimall_gateway.md",
     "docs/6-project/gulimall/gulimall_product/images/Pasted image 20231007181151.png",
     "docs/6-project/gulimall/gulimall_product/images/Pasted image 20231007175455.png",
     "docs/6-project/gulimall/gulimall_product/images/Pasted image 20231007175329.png",

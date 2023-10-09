@@ -820,7 +820,7 @@ export default {
         } else {
           this.$message({
             message: '删除失败!',
-            type: 'success'
+            type: 'error'
           });
         }
       })
@@ -937,7 +937,7 @@ form: {
 
 ### 🌸 整合上面两个组件
 
-我们来看完整实现
+我们来看完整实现和视频不同的是我并没有定义`category`对象, 而是使用`category_add`计算属性`computed`, 计算属性可封装零碎的代码到方法中
 
 ```vue
 <template>
@@ -957,14 +957,14 @@ form: {
     </el-tree>
 
     <el-dialog title="新增" :visible.sync="dialogVisible" width="30%">
-      <el-form ref="form" :model="form" label-width="80px">
+      <el-form ref="form_add" :model="form_add" label-width="80px">
         <el-form-item label="分类名称">
-          <el-input v-model="form.name"></el-input>
+          <el-input v-model="form_add.name"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="determin()">确 定</el-button>
+        <el-button type="primary" @click="determin_add()">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -978,20 +978,13 @@ export default {
     return {
       menus: [],
       dialogVisible: false,
+      dialogVisible_update: false,
       expandedKeys: [],
-      category: {
-        // 分类名
-        name: "",
-        // 父id
-        parentCid: 0,
-        // 层级
-        catLevel: 0,
-        // 排序
-        sort: 0,
-        // 删除标记
-        showStatus: 1,
+      temp_data: {},
+      form_add: {
+        name: ""
       },
-      form: {
+      form_update: {
         name: ""
       },
       defaultProps: {
@@ -1001,21 +994,18 @@ export default {
     };
   },
   methods: {
-    requestMenus(callback) {
+    requestMenus() {
       axios.get("http://localhost:8081/product/category/listCategoryTree").then((res) => {
         if (res.data.code == 0) {
           this.menus = res.data.datas;
-          if (callback) {
-            callback();
-          }
         }
       })
     },
     append(data) {
-      console.log(data);
+      // 显示对话框
       this.dialogVisible = true;
-      this.category.parentCid = data.catId;
-      this.category.catLevel = data.catLevel + 1;
+      // 缓存data
+      this.temp_data = data;
     },
     remove(node, data) {
       this.$confirm(`确认删除「${data.name}」菜单?`)
@@ -1047,11 +1037,11 @@ export default {
         }
       })
     },
-    determin() {
-      // 关闭窗口
-      this.category.name = this.form.name;
+    determin_add() {
+      // 直接使用计算属性获取
+      let category_add = this.category_add;
       // 判断分类名称是否为空
-      if (this.category.name == "") {
+      if (category_add.name == "") {
         this.$message({
           message: '分类名称不能为空',
           type: 'error'
@@ -1061,22 +1051,42 @@ export default {
       // 关闭对话框
       this.dialogVisible = false
       // 发送网络请求
-      axios.post("http://localhost:8081/product/category/save", this.category).then((res) => {
+      axios.post("http://localhost:8081/product/category/save", category_add).then((res) => {
         if (res.data.code == 0) {
           this.$message({
             message: '添加成功!',
             type: 'success'
           });
-          // 清空表单 防止旧的文字保留在上面
-          this.form = {};
+          // 清空表单
+          this.form_add = {
+            name: ""
+          };
+          // 新增成功后默认打开父分类
+          this.expandedKeys.push(category_add.parentCid);
           // 先刷新再打开
-          this.requestMenus(() => {
-            // 刷新成功后, 我们调用新增默认id
-            this.expandedKeys.push(this.category.parentCid);
-          })
+          this.requestMenus()
         }
       }
       )
+    },
+  },
+  computed: {
+    category_add() {
+      console.log(this.temp_data.catId);
+      console.log(this.temp_data);
+      console.log(this.temp_data.catLevel + 1);
+      return {
+        // 分类名
+        name: this.form_add.name,
+        // 父id
+        parentCid: this.temp_data.catId,
+        // 层级
+        catLevel: this.temp_data.catLevel + 1,
+        // 排序 默认0
+        sort: 0,
+        // 删除标记 默认1
+        showStatus: 1
+      }
     }
   },
   created() {
@@ -1116,11 +1126,246 @@ Content-Type: application/json
 
 ### 🌸 实现页面
 
-直接写完整版
+直接写完整版, 这也没啥好说的, 就是加了个`dialog`
 
+```vue
+<template>
+  <div>
+    <el-tree :data="menus" :props="defaultProps" ref="tree" node-key="catId" :default-expanded-keys="expandedKeys">
+      <span class="custom-tree-node" slot-scope="{ node, data }">
+        <span>{{ node.label }}</span>
+        <span>
+          <el-button v-if="node.level <= 2" type="text" size="mini" @click.stop="append(data)">
+            添加
+          </el-button>
+          <el-button type="text" size="mini" @click.stop="update(node, data)">
+            修改
+          </el-button>
+          <el-button v-if="node.childNodes.length == 0" type="text" size="mini" @click.stop="remove(node, data)">
+            删除
+          </el-button>
+        </span>
+      </span>
+    </el-tree>
+
+    <el-dialog title="新增" :visible.sync="dialogVisible" width="30%">
+      <el-form ref="form_add" :model="form_add" label-width="80px">
+        <el-form-item label="分类名称">
+          <el-input v-model="form_add.name"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="determin_add()">确 定</el-button>
+      </span>
+    </el-dialog>
+
+    <el-dialog title="修改" :visible.sync="dialogVisible_update" width="30%">
+      <el-form ref="form_update" :model="form_update" label-width="80px">
+        <el-form-item label="分类名称">
+          <el-input v-model="form_update.name"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible_update = false">取 消</el-button>
+        <el-button type="primary" @click="determin_update()">确 定</el-button>
+      </span>
+    </el-dialog>
+  </div>
+</template>
+
+<script>
+import axios from 'axios'
+
+export default {
+  data() {
+    return {
+      menus: [],
+      dialogVisible: false,
+      dialogVisible_update: false,
+      expandedKeys: [],
+      temp_data: {},
+      form_add: {
+        name: ""
+      },
+      form_update: {
+        name: ""
+      },
+      defaultProps: {
+        children: "children",
+        label: "name"
+      },
+    };
+  },
+  methods: {
+    requestMenus() {
+      axios.get("http://localhost:8081/product/category/listCategoryTree").then((res) => {
+        if (res.data.code == 0) {
+          this.menus = res.data.datas;
+        }
+      })
+    },
+    append(data) {
+      // 显示对话框
+      this.dialogVisible = true;
+      // 缓存data
+      this.temp_data = data;
+    },
+    remove(node, data) {
+      this.$confirm(`确认删除「${data.name}」菜单?`)
+        .then(_ => {
+          // 调用删除接口
+          this.delete(data, node);
+        })
+        .catch(e => {
+          console.log(e);
+          console.log("取消");
+        });
+    },
+    update(node, data) {
+      // 显示对话框
+      this.dialogVisible_update = true;
+      // 让对话框显示原名称
+      this.form_update.name = data.name;
+      // 缓存data
+      this.temp_data = data;
+    },
+    delete(data, node) {
+      axios.post("http://localhost:8081/product/category/delete", [data.catId]).then((res) => {
+        console.log(res.data);
+        // 判断是否删除成功
+        if (res.data.code == 0) {
+          this.$message({
+            message: '删除成功!',
+            type: 'success'
+          });
+          // 数据删除成功后再删除网页中的节点
+          this.$refs.tree.remove(node);
+        } else {
+          this.$message({
+            message: '删除失败!',
+            type: 'error'
+          });
+        }
+      })
+    },
+    determin_add() {
+      // 直接使用计算属性获取
+      let category_add = this.category_add;
+      // 判断分类名称是否为空
+      if (category_add.name == "") {
+        this.$message({
+          message: '分类名称不能为空',
+          type: 'error'
+        });
+        return;
+      }
+      // 关闭对话框
+      this.dialogVisible = false
+      // 发送网络请求
+      axios.post("http://localhost:8081/product/category/save", category_add).then((res) => {
+        if (res.data.code == 0) {
+          this.$message({
+            message: '添加成功!',
+            type: 'success'
+          });
+          // 清空表单
+          this.form_add = {
+            name: ""
+          };
+          // 新增成功后默认打开父分类
+          this.expandedKeys.push(category_add.parentCid);
+          // 先刷新再打开
+          this.requestMenus()
+        }
+      }
+      )
+    },
+    determin_update() {
+      // 直接使用计算属性获取
+      let category_update = this.category_update;
+      // 判断分类名称是否为空
+      if (category_update.name == "") {
+        this.$message({
+          message: '分类名称不能为空',
+          type: 'error'
+        });
+        return;
+      }
+      // 判断catId是否为空
+      if (category_update.catId == "") {
+        this.$message({
+          message: '分类名称不能为空',
+          type: 'error'
+        });
+        return;
+      }
+      // 关闭对话框
+      this.dialogVisible_update = false;
+      // 发送修改请求
+      axios.post("http://localhost:8081/product/category/update", category_update).then((res) => {
+        if (res.data.code == 0) {
+          this.$message({
+            message: '修改成功!',
+            type: 'success'
+          });
+          // 清空表单
+          this.form_update = {
+            name: ""
+          };
+          // 新增成功后打开当前分类
+          this.expandedKeys.push(this.temp_data.parentCid);
+          // 先刷新再打开
+          this.requestMenus()
+        }
+      }
+      )
+    }
+  },
+  computed: {
+    category_add() {
+      console.log(this.temp_data.catId);
+      console.log(this.temp_data);
+      console.log(this.temp_data.catLevel + 1);
+      return {
+        // 分类名
+        name: this.form_add.name,
+        // 父id
+        parentCid: this.temp_data.catId,
+        // 层级
+        catLevel: this.temp_data.catLevel + 1,
+        // 排序 默认0
+        sort: 0,
+        // 删除标记 默认1
+        showStatus: 1
+      }
+    },
+    category_update() {
+      return {
+        // 分类id
+        catId: this.temp_data.catId,
+        // 分类名
+        name: this.form_update.name
+      }
+    }
+  },
+  created() {
+    this.requestMenus();
+  },
+};
+</script>
 ```
 
+## 🌲 拖拽分类
+
+### 🌸 实现拖拽
+
+实现拖拽只需要给`el-tree`加一个属性, 在文档中可以查看到
+
 ```
+<el-tree :data="menus" :props="defaultProps" ref="tree" node-key="catId" :default-expanded-keys="expandedKeys" draggable>
+```
+
 
 # 🍎 回过头配置网关
 

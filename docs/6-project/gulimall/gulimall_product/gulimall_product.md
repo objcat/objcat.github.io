@@ -1,4 +1,4 @@
-# 🍎 product模块
+# 🍎 product模块(商品系统)
 
 终于到了我们后台模块的编写环节了, 我们从第45节课开始
 
@@ -1461,7 +1461,7 @@ allowDrop(draggingNode, dropNode, type) {
 
 # 🍎 品牌管理
 
-品牌管理相比「分类维护」就简单多了, 我们打开`pms_band`表看一下我们的品牌
+这个模块从视频第`59集`开始, 品牌管理相比「分类维护」就简单多了, 我们打开`pms_band`表看一下我们的品牌
 
 ![](images2/Pasted%20image%2020231010100954.png)
 
@@ -1477,9 +1477,11 @@ allowDrop(draggingNode, dropNode, type) {
 
 ## 🌲 调试页面
 
+然后需要重新启动一下vue项目, 否则新增的vue文件不生效
+
 ![](images2/Pasted%20image%2020231010103752.png)
 
-然后我们可以看到品牌管理页面显示出来了, 但是是一直加载的状态, 那我们就要调试一下, 看看哪里出错了
+然后我们可以看到品牌管理页面显示出来了, 但是是一直「转圈」的状态, 我们打开控制台看一下
 
 ```
 xhr.js:178     GET http://localhost:8080/renren-fast/product/brand/list?t=1696905419987&page=1&limit=10&key= 404 (Not Found)
@@ -1527,8 +1529,11 @@ localhost/:158 Uncaught SyntaxError: Unexpected token ':'
 
 ```js
 const api = {
-    "api_product_brand_list": process.env.PRODUCT_SERVICE_HOST + "/product/brand/list",
-    "api_product_brand_delete": process.env.PRODUCT_SERVICE_HOST + "/product/brand/delete"
+    api_product_brand_list: process.env.PRODUCT_SERVICE_HOST + "/product/brand/list",
+    api_product_brand_delete: process.env.PRODUCT_SERVICE_HOST + "/product/brand/delete",
+    api_product_brand_info: process.env.PRODUCT_SERVICE_HOST + "/product/brand/info",
+    api_product_brand_save: process.env.PRODUCT_SERVICE_HOST + "/product/brand/save",
+
 }
 
 export {
@@ -1542,7 +1547,7 @@ export {
 
 现在`script`中导入`api`
 
-```
+```js
 <script>
 import AddOrUpdate from './brand-add-or-update'
 import { api } from  "@/utils/mytools.js"
@@ -1563,6 +1568,219 @@ url: api.api_product_brand_delete,
 ![](images2/Pasted%20image%2020231010123904.png)
 
 如果没出来就在控制台中看看有没有报错, 是不是端口号没有对上
+
+然后我们再来替换`brand-add-or-update.vue`
+
+```js
+url: this.$http.adornUrl(`/product/brand/info/${this.dataForm.brandId}`)
+url: `${api.api_product_brand_info}/${this.dataForm.brandId}`,
+
+url: this.$http.adornUrl(`/product/brand/${!this.dataForm.brandId ? 'save' : 'update'}`),
+url: `${!this.dataForm.brandId ? api.api_product_brand_save : api.api_product_brand_update}`,
+```
+
+## 🌲 开放权限
+
+然后视频让我们给给页面开放权限, 可能是由于权限系统还不完善, 我们找到`utils/index.js`
+
+然后在里面把`isAuth`返回值改为`true`
+
+```js
+/**
+ * 是否有权限
+ * @param {*} key
+ */
+export function isAuth (key) {
+  return true;
+  // return JSON.parse(sessionStorage.getItem('permissions') || '[]').indexOf(key) !== -1 || false
+}
+```
+
+然后我们可以看到按钮的权限已经开放了
+
+![](images/Pasted%20image%2020231010130700.png)
+
+## 🌲 修改显示状态
+
+下面视频讲的是如何修改显示状态, 其实很简单, 就是用vue的插槽机制, 文档中可以查看到
+
+https://element.eleme.cn/#/zh-CN/component/table
+
+```vue
+<el-table-column prop="showStatus" header-align="center" align="center" label="显示状态">
+<template slot-scope="scope">
+  <i class="el-icon-time"></i>
+  <span style="margin-left: 10px">{{ scope.row.date }}</span>
+</template>
+</el-table-column>
+```
+
+然后我们发现状态已经修改过来了
+
+![](images/Pasted%20image%2020231010132307.png)
+
+我们接下来就把开关替换到里面
+
+```vue
+<template slot-scope="scope">
+  <el-switch v-model="value" active-color="#13ce66" inactive-color="#ff4949">
+  </el-switch>
+</template>
+```
+
+然后我们会发现开关点不动, 那是因为value是一个没有定义的值, 我们需要绑定一个值
+
+```vue
+<template slot-scope="scope">
+  <el-switch v-model="scope.row.showStatus" active-color="#13ce66" inactive-color="#ff4949">
+  </el-switch>
+</template>
+```
+
+我们使用`scope`来获取数据`scope.row.showStatus`, 这里新手会一头雾水, 其实这个`showStatus`是后台返回给我们的数据, 我们请求接口看一下
+
+```
+### 品牌列表
+GET http://localhost:8081/product/brand/list
+Content-Type: application/json
+```
+
+```json
+{
+  "msg": "success",
+  "code": 0,
+  "page": {
+    "totalCount": 0,
+    "pageSize": 10,
+    "totalPage": 0,
+    "currPage": 1,
+    "list": [
+      {
+        "brandId": 9,
+        "name": "华为",
+        "logo": "https://gulimall-hello.oss-cn-beijing.aliyuncs.com/2019-11-18/de2426bd-a689-41d0-865a-d45d1afa7cde_huawei.png",
+        "descript": "华为",
+        "showStatus": 1,
+        "firstLetter": "H",
+        "sort": 1
+      },
+...
+```
+
+可以看到`list`下面有一个`华为`, 上面有一个`showStatus`属性, 这下知道了吧, 我们只是通过`element`框架提供给我们获取数据的方式来获取`showStatus`属性, 然后把他绑定在`switch`上
+
+知道了这个原理后给`brand-add-or-update.vue`做同样的修改, 注意这里获取数据需要使用`dataForm.showStatus`
+
+```vue
+<el-form-item label="显示状态" prop="showStatus">
+	<el-switch v-model="dataForm.showStatus" active-color="#13ce66" inactive-color="#ff4949">
+	</el-switch>
+</el-form-item>
+```
+
+但是我们发现开关的状态不太对, 因为`"showStatus": 1`但是开关是关闭的
+
+![](images/Pasted%20image%2020231010161421.png)
+
+这是因为`el-switch`默认只能接收`true`和`false`所以我们需要设置它的值格式`:active-value`是开, `:inactive-value`是关
+
+```vue
+<el-switch v-model="scope.row.showStatus" :active-value="1" :inactive-value="0"
+active-color="#13ce66" inactive-color="#ff4949">
+</el-switch>
+```
+
+## 🌲 开关修改状态
+
+https://element.eleme.cn/#/zh-CN/component/switch#methods
+
+### 🌸 获取开关状态
+
+然后视频中提到了使用开关修改状态, 原理就是点击开关的时候向后台发送网络请求, 我们使用`@change`来监听开关的开启和关闭动作
+
+```vue
+<el-switch v-model="scope.row.showStatus" @change="switchChange" active-color="#13ce66" inactive-color="#ff4949">
+
+<script>
+switchChange(value) {
+  console.log(value); // 1 0
+}
+```
+
+可以看到开关返回的是`1`和`0`, 但是我们修改某个品牌的状态还需要这个品牌的id, 很明显使用默认的value不行, 所以我们需要改写一下方法, 把数据传过来
+
+```vue
+<el-switch v-model="scope.row.showStatus" @change="switchChange(scope.row)" active-color="#13ce66" inactive-color="#ff4949">
+
+<script>
+switchChange(row) {
+  console.log(row);
+}
+```
+
+这次我们打印`row`就能看到数据了
+
+```json
+showStatus: true
+```
+
+### 🌸 测试接口
+
+我们接下来就准备接口
+
+```
+### 品牌修改
+POST http://localhost:8081/product/brand/update
+Content-Type: application/json
+
+{"brandId": 9, "showStatus": true}
+```
+
+发送请求后我们发现报错了
+
+```
+{
+  "timestamp": "2023-10-10T07:43:53.171+00:00",
+  "status": 400,
+  "error": "Bad Request",
+  "path": "/product/brand/update"
+}
+```
+
+去后台看一下
+
+```
+2023-10-10 15:43:53.167  WARN 21324 --- [nio-8081-exec-7] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Cannot deserialize value of type `java.lang.Integer` from Boolean value (token `JsonToken.VALUE_TRUE`); nested exception is com.fasterxml.jackson.databind.exc.MismatchedInputException: Cannot deserialize value of type `java.lang.Integer` from Boolean value (token `JsonToken.VALUE_TRUE`)<EOL> at [Source: (org.springframework.util.StreamUtils$NonClosingInputStream); line: 1, column: 30] (through reference chain: com.objcat.product.entity.BrandEntity["showStatus"])]
+```
+
+意思是`Boolean`不能转化成`Integer`, 所以是我们的传参有问题, `showStatus`需要的传参是0和1
+
+```
+### 品牌修改
+POST http://localhost:8081/product/brand/update
+Content-Type: application/json
+
+{"brandId": 9, "showStatus": 1}
+```
+
+修改后发现调通了
+
+我们接下来就可以在接口中进行写了
+
+```js
+switchChange(row) {
+  axios.post(api.api_product_brand_update, { "brandId": row.brandId, "showStatus": row.showStatus }).then((res) => {
+	if (res.data.code == 0) {
+	  this.$message({
+		message: '状态修改成功!',
+		type: 'success'
+	  });
+	}
+  });
+}
+```
+
+然后可以发现开关状态可以改变了
 
 # 🍎 回过头配置网关
 

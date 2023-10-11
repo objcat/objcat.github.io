@@ -2,7 +2,7 @@
 
 终于到了我们后台模块的编写环节了, 我们从第45节课开始
 
-# 🍎 三级分类
+# 🍎 三级分类(45集)
 
 ## 🌲 介绍
 
@@ -90,8 +90,7 @@ public R listCategory(@RequestParam Map<String, Object> params){
 
 白猫有话要说, 虽然有经验的同学都能写出来, 但是这对于新手来说可能是「毁灭性打击」, 所以白猫建议如果实在跟不下来直接把代码粘贴到你的项目中, 先把程序运行出来, 然后再去分析结构反推代码, 这样更有利于学习
 
-# 🍎 菜单管理
-
+# 🍎 菜单管理(46集)
 
 实现三级分类后我们就可以调用接口试试了, 视频让我们去「菜单管理」首先我们要管理菜单
 
@@ -381,7 +380,7 @@ export default {
 
 页面结构出来后老师并没有带我们去写网络请求, 而是遇到跨域问题就直接去配置网关, 而且中途灌输了一大堆的复杂配置比如分布式配置中心, 新手容易听的云里雾里的, 所以我这里化繁为简, 先把网络请求写完, 回过头再去配置网关以及网关跨域
 
-# 🍎 分类维护
+# 🍎 分类维护(48集)
 
 ## 🌲 展示三级分类
 
@@ -1459,9 +1458,9 @@ allowDrop(draggingNode, dropNode, type) {
 
 学习到这点到为止不学了, 我认为拖拽没那么重要, 我们直接去学下一个章节, 这章的其他功能我以后再完善
 
-# 🍎 品牌管理
+# 🍎 品牌管理(59集)
 
-这个模块从视频第`59集`开始, 品牌管理相比「分类维护」就简单多了, 我们打开`pms_band`表看一下我们的品牌
+品牌管理相比「分类维护」就简单多了, 我们打开`pms_band`表看一下我们的品牌
 
 ![](images2/Pasted%20image%2020231010100954.png)
 
@@ -1784,25 +1783,332 @@ switchChange(row) {
 
 然后可以发现开关状态可以改变了
 
-## 🌲 品牌上传
+# 🍎 品牌上传
 
 在微服务开发中, 由于我们可能有多个集群, 所以在保存图片的时候一般不会保存在当前服务器, 而是存放在「云服务商」的服务器中, 这样我们所有的服务器都能访问到资源, 比如我们常说的`阿里云OSS桶/七牛云/京东云/华为云`等都有类似产品
 
-### 🌸 OSS
+## 🌲 OSS
 
 [跳转 gulimall_oss](../gulimall_oss/gulimall_oss.md)
 
-### 🌸 第三方调用服务
+## 🌲 第三方调用服务
 
-从第`63集`开始, 学习完上面的章节我们已经可以向`OSS`中上传文件了, 但是如果使用`OSS`的微服务非常多, 那每个微服务中都要配置一个`key`, 这就会十分麻烦, 所以我们会把这些公用的接口抽出来, 封装成一个服务, 然后通过`openFeign`的方式调用
+从第`63集`开始, 学习完上面的章节我们已经可以向`OSS`中上传文件了, 但是如果使用`OSS`的微服务非常多, 那每个微服务中都要配置两个`key`, 这就会十分麻烦, 所以我们会把这些公用的接口抽出来, 封装成「一个微服务」, 然后通过`openFeign`的方式调用, 那我们接下来就开始创建吧
 
-未完待续
+### 🌸 创建服务
 
-# 🍎 回过头配置网关
+我们创建`gulimall-third-party`, 我们查看一下创建好的样子
 
-请求数据已经可以正常显示了, 那么我们现在就来学习视频`46,47,48集`中配置的网关吧, 网关我们之前已经学过了, 就是用来转发请求的, 里面可以配置一些`跨域, 认证, 授权`之类的东西, 可以做到所有使用网关转发的微服务这种前置行为统一, 那我们接下来就开始配置吧
+### 🌸 配置依赖
 
-未完待续
+在配置依赖之前我们要先移除`product`中的`oss`依赖, 因为第三方调用被这个微服务接管了
+
+```xml
+<dependencies>
+	<dependency>
+		<groupId>com.objcat</groupId>
+		<artifactId>gulimall-api-common</artifactId>
+		<version>1.0</version>
+	</dependency>
+
+	<dependency>
+		<groupId>com.alibaba.cloud</groupId>
+		<artifactId>spring-cloud-starter-alicloud-oss</artifactId>
+		<version>2.2.0.RELEASE</version>
+	</dependency>
+</dependencies>
+```
+
+### 🌸 配置yml
+
+都是常规配置, 端口用的`30000`, 应用名是`gulimall-third-party`
+
+- application.yml
+
+```yml
+server:
+  # 服务端口号
+  port: 30000
+  servlet:
+    encoding:
+      # 返回数据使用utf-8编码
+      charset: utf-8
+      # 强制使用utf-8, 否则某些浏览器中查看会乱码
+      force: true
+
+spring:
+  cloud:
+    alicloud:
+      access-key: xxx
+      secret-key: xxx
+      oss:
+        endpoint: oss-cn-shanghai.aliyuncs.com
+```
+
+- bootstrap.yml
+
+```yml
+spring:
+  application:
+    # 配置服务的名称
+    name: gulimall-third-party
+  cloud:
+    nacos:
+      discovery:
+        # 配置nacos服务端地址
+        server-addr: localhost:8848
+      config:
+        server-addr: localhost:8848
+        file-extension: yaml
+```
+
+### 🌸 启动nacos
+
+```shell
+sh startup.sh -m standalone
+```
+
+### 🌸 运行程序
+
+我们启动程序发现报错了
+
+```shell
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of method inetIPv6Utils in com.alibaba.cloud.nacos.util.UtilIPv6AutoConfiguration required a single bean, but 2 were found:
+	- spring.cloud.inetutils-org.springframework.cloud.commons.util.InetUtilsProperties: defined in unknown location
+	- inetUtilsProperties: defined by method 'inetUtilsProperties' in class path resource [org/springframework/cloud/commons/util/UtilAutoConfiguration.class]
+
+
+Action:
+
+Consider marking one of the beans as @Primary, updating the consumer to accept multiple beans, or using @Qualifier to identify the bean that should be consumed
+```
+
+别慌, 在网上我找到了解决方案设置`util.enable: false`
+
+```
+spring:
+  cloud:
+    alicloud:
+      access-key: xxx
+      secret-key: xxx
+      oss:
+        endpoint: oss-cn-shanghai.aliyuncs.com
+    util:
+      enabled: false
+```
+
+然后我们看到服务起来了
+
+![](images/Pasted%20image%2020231011120407.png)
+
+### 🌸 测试oss
+
+根据视频上要求我们要把`oss`相关的东西配置到`nacos`上去, 我们先不配置在本地测试一下, 测试好了再移动上去
+
+```java
+@SpringBootTest
+public class ThirdApplicationTests {
+    @Resource
+    private OSSClient ossClient;
+
+    @Test
+    public void test() throws FileNotFoundException {
+        // 填写Bucket名称，例如examplebucket。
+        String bucketName = "gulimall2024";
+        // 填写Object完整路径，完整路径中不能包含Bucket名称，例如exampledir/exampleobject.txt。
+        String objectName = "exampledir/baimao.jpg";
+        // 如果未指定本地路径，则默认从示例程序所属项目对应本地路径中上传文件流。
+        String filePath = "/users/objcat/desktop/baimao.jpg";
+        InputStream inputStream = new FileInputStream(filePath);
+        // 创建PutObjectRequest对象。
+        PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, objectName, inputStream);
+        // 创建PutObject请求。
+        PutObjectResult result = ossClient.putObject(putObjectRequest);
+        System.out.println(result.getResponse());
+    }
+}
+```
+
+为了测试有效性我们把云上的图片删了, 重新测试上传也是可以上传成功的
+
+### 🌸 配置中心
+
+然后根据视频要求让我们把key配到配置中心, 视频使用命名空间区分服务, 而我不赞成这种方式, 所以我用服务名区分服务, 新建`gulimall-third-party.yaml`
+
+![](images/Pasted%20image%2020231011131005.png)
+
+```
+spring:
+  cloud:
+    alicloud:
+      access-key: xxx
+      secret-key: xxx
+      oss:
+        endpoint: oss-cn-shanghai.aliyuncs.com
+    util:
+      enabled: false
+```
+
+然后我们重新测试上传图片, 如果对了那么配置中心就没问题了
+
+### 🌸 签名上传
+
+签名上传就是web端请求后台接口获取签名, 然后由web端使用签名直接上传图片, 这样就不用占用服务器的带宽了, 我们可以参考文档, 课程中的最佳实践我已经找不到了, 新版文档是「服务端签名直传」
+
+https://help.aliyun.com/zh/oss/use-cases/obtain-signature-information-from-the-server-and-upload-data-to-oss?spm=a2c4g.11186623.0.0.3165171dxAV8NZ
+
+服务端签名直传是指在服务端生成签名，将签名返回给客户端，然后客户端使用签名上传文件到OSS。由于服务端签名直传无需将访问密钥暴露在前端页面，相比客户端签名直传具有更高的安全性。本文介绍如何进行服务端签名直传。
+
+然后我们翻了一会并没有找到任何有关服务端的代码, 只找到一个客户端的代码, 所以我们要打开另一个文档
+
+https://help.aliyun.com/zh/oss/use-cases/java-1?spm=a2c4g.11186623.0.0.43f2763fDgq3W9
+
+核心代码如下
+
+```java
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, IOException {
+
+   // 从环境变量中获取访问凭证。运行本代码示例之前，请确保已设置环境变量OSS_ACCESS_KEY_ID和OSS_ACCESS_KEY_SECRET。
+   EnvironmentVariableCredentialsProvider credentialsProvider = CredentialsProviderFactory.newEnvironmentVariableCredentialsProvider();
+   // Endpoint以华东1（杭州）为例，其它Region请按实际情况填写。
+   String endpoint = "oss-cn-hangzhou.aliyuncs.com"; 
+   // 填写Bucket名称，例如examplebucket。
+   String bucket = "examplebucket"; 
+   // 填写Host名称，格式为https://bucketname.endpoint。                   
+   String host = "https://examplebucket.oss-cn-hangzhou.aliyuncs.com
+   // 设置上传回调URL，即回调服务器地址，用于处理应用服务器与OSS之间的通信。OSS会在文件上传完成后，把文件上传信息通过此回调URL发送给应用服务器。
+   String callbackUrl = "https://192.168.0.0:8888";
+   // 设置上传到OSS文件的前缀，可置空此项。置空后，文件将上传至Bucket的根目录下。
+   String dir = "exampledir/"; 
+
+	// 创建OSSClient实例。
+	OSS ossClient = new OSSClientBuilder().build(endpoint, credentialsProvider);
+	try {
+		long expireTime = 30;
+		long expireEndTime = System.currentTimeMillis() + expireTime * 1000;
+		Date expiration = new Date(expireEndTime);
+		// PostObject请求最大可支持的文件大小为5 GB，即CONTENT_LENGTH_RANGE为5*1024*1024*1024。
+		PolicyConditions policyConds = new PolicyConditions();
+		policyConds.addConditionItem(PolicyConditions.COND_CONTENT_LENGTH_RANGE, 0, 1048576000);
+		policyConds.addConditionItem(MatchMode.StartWith, PolicyConditions.COND_KEY, dir);
+
+		String postPolicy = ossClient.generatePostPolicy(expiration, policyConds);
+		byte[] binaryData = postPolicy.getBytes("utf-8");
+		String accessId = credentialsProvider.getCredentials().getAccessKeyId();
+		String encodedPolicy = BinaryUtil.toBase64String(binaryData);
+		String postSignature = ossClient.calculatePostSignature(postPolicy);
+
+		Map<String, String> respMap = new LinkedHashMap<String, String>();
+		respMap.put("accessid", accessId);
+		respMap.put("policy", encodedPolicy);
+		respMap.put("signature", postSignature);
+		respMap.put("dir", dir);
+		respMap.put("host", host);
+		respMap.put("expire", String.valueOf(expireEndTime / 1000));
+		// respMap.put("expire", formatISO8601Date(expiration));
+
+		JSONObject jasonCallback = new JSONObject();
+		jasonCallback.put("callbackUrl", callbackUrl);
+		jasonCallback.put("callbackBody",
+				"filename=${object}&size=${size}&mimeType=${mimeType}&height=${imageInfo.height}&width=${imageInfo.width}");
+		jasonCallback.put("callbackBodyType", "application/x-www-form-urlencoded");
+		String base64CallbackBody = BinaryUtil.toBase64String(jasonCallback.toString().getBytes());
+		respMap.put("callback", base64CallbackBody);
+
+		JSONObject ja1 = JSONObject.fromObject(respMap);
+		// System.out.println(ja1.toString());
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "GET, POST");
+		response(request, response, ja1.toString());
+
+	} catch (Exception e) {
+		// Assert.fail(e.getMessage());
+		System.out.println(e.getMessage());
+	} finally { 
+		ossClient.shutdown();
+	}
+}
+```
+
+我们可以看到代码很熟悉, 但是依然乱糟糟, 这就是阿里云文档的力量吧, 很培养程序员的能力, 我们根据视频修缮一下代码
+
+```java
+@RestController
+public class OssController {
+
+    @Resource
+    private OSSClient ossClient;
+
+    @Value("${spring.cloud.alicloud.oss.endpoint}")
+    private String endpoint;
+
+    @Value("${spring.cloud.alicloud.access-key}")
+    private String accessId;
+
+    @RequestMapping("/hello")
+    public String hello() {
+        return "hello world!";
+    }
+
+    @RequestMapping("/oss/getPolicy")
+    public Map<String, String> getPolicy() {
+
+        // 填写Host名称，格式为https://bucketname.endpoint。
+        String host = "https://gulimall2024." + endpoint;
+        // 我们一般用日期作为存放目录
+        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        String dir = date + "/";
+
+        long expireTime = 30;
+        long expireEndTime = System.currentTimeMillis() + expireTime * 1000;
+        Date expiration = new Date(expireEndTime);
+        // PostObject请求最大可支持的文件大小为5 GB，即CONTENT_LENGTH_RANGE为5*1024*1024*1024。
+        PolicyConditions policyConds = new PolicyConditions();
+        policyConds.addConditionItem(PolicyConditions.COND_CONTENT_LENGTH_RANGE, 0, 1048576000);
+        policyConds.addConditionItem(MatchMode.StartWith, PolicyConditions.COND_KEY, dir);
+
+        String postPolicy = ossClient.generatePostPolicy(expiration, policyConds);
+        byte[] binaryData = new byte[0];
+        try {
+            binaryData = postPolicy.getBytes("utf-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+        String encodedPolicy = BinaryUtil.toBase64String(binaryData);
+        String postSignature = ossClient.calculatePostSignature(postPolicy);
+
+        Map<String, String> respMap = new LinkedHashMap<String, String>();
+        respMap.put("accessid", accessId);
+        respMap.put("policy", encodedPolicy);
+        respMap.put("signature", postSignature);
+        respMap.put("dir", dir);
+        respMap.put("host", host);
+        respMap.put("expire", String.valueOf(expireEndTime / 1000));
+
+        ossClient.shutdown();
+        return respMap;
+    }
+}
+```
+
+然后我们启动服务访问一下接口
+
+http://localhost:30000/oss/getPolicy
+
+```
+{"accessid":"xxx","policy":"eyJleHBpcmF0aW9uIjoiMjAyMy0xMC0xMVQwNToyODoxMi44NDdaIiwiY29uZGl0aW9ucyI6W1siY29udGVudC1sZW5ndGgtcmFuZ2UiLDAsMTA0ODU3NjAwMF0sWyJzdGFydHMtd2l0aCIsIiRrZXkiLCIyMDIzLTEwLTExLyJdXX0=","signature":"boaB3HaP6mGjvuJ76nDlQsSpU1g=","dir":"2023-10-11/","host":"https://gulimall2024.oss-cn-shanghai.aliyuncs.com","expire":"1697002092"}
+```
+
+发现已经可以获取了
+
+
 
 
 

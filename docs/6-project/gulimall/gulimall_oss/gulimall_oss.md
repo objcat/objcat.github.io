@@ -58,6 +58,8 @@ https://help.aliyun.com/zh/oss/developer-reference/java-installation?spm=a2c4g.1
 
 ### 🌸 添加依赖
 
+直接添加在`product`中, 不要跟随视频添加到`common`
+
 ```xml
 <dependency>
     <groupId>com.aliyun.oss</groupId>
@@ -187,7 +189,7 @@ spring:
       access-key: xxx
       secret-key: xxx
       oss:
-        endpoint: https://oss-cn-shanghai.aliyuncs.com
+        endpoint: oss-cn-shanghai.aliyuncs.com
 ```
 
 ### 🌸 测试

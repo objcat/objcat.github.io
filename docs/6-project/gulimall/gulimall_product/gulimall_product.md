@@ -378,7 +378,7 @@ export default {
 
 ## 🌲 配置网关
 
-页面结构出来后老师并没有带我们去写网络请求, 而是遇到跨域问题就直接去配置网关, 而且中途灌输了一大堆的复杂配置比如分布式配置中心, 新手容易听的云里雾里的, 所以我这里化繁为简, 先把网络请求写完, 回过头再去配置网关以及网关跨域
+页面结构出来后老师并没有带我们去写网络请求, 而是遇到跨域问题就直接去配置网关, 而且中途灌输了一大堆的复杂配置比如分布式配置中心, 新手容易听的云里雾里的, 所以我这里化繁为简, 先把网络请求写完, 因为还不需要远程调用, 学完后回过头再去配置网关以及网关跨域
 
 # 🍎 分类维护(48集)
 
@@ -1809,12 +1809,23 @@ switchChange(row) {
 		<groupId>com.objcat</groupId>
 		<artifactId>gulimall-api-common</artifactId>
 		<version>1.0</version>
+		<exclusions>
+			<exclusion>
+				<groupId>com.baomidou</groupId>
+				<artifactId>mybatis-plus-boot-starter</artifactId>
+			</exclusion>
+
+			<exclusion>
+				<groupId>com.mysql</groupId>
+				<artifactId>mysql-connector-j</artifactId>
+			</exclusion>
+		</exclusions>
 	</dependency>
 
 	<dependency>
 		<groupId>com.alibaba.cloud</groupId>
 		<artifactId>spring-cloud-starter-alicloud-oss</artifactId>
-		<version>2.2.0.RELEASE</version>
+		<version>${spring-cloud-starter-alicloud-oss.version}</version>
 	</dependency>
 </dependencies>
 ```
@@ -2040,6 +2051,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
 我们可以看到代码很熟悉, 但是依然乱糟糟, 这就是阿里云文档的力量吧, 很培养程序员的能力, 我们根据视频修缮一下代码
 
 ```java
+@RequestMapping("/thirdparty")
 @RestController
 public class OssController {
 
@@ -2058,7 +2070,7 @@ public class OssController {
     }
 
     @RequestMapping("/oss/getPolicy")
-    public Map<String, String> getPolicy() {
+    public R getPolicy() {
 
         // 填写Host名称，格式为https://bucketname.endpoint。
         String host = "https://gulimall2024." + endpoint;
@@ -2093,20 +2105,277 @@ public class OssController {
         respMap.put("expire", String.valueOf(expireEndTime / 1000));
 
         ossClient.shutdown();
-        return respMap;
+        return R.ok().put("data", respMap);
     }
 }
 ```
 
 然后我们启动服务访问一下接口
 
-http://localhost:30000/oss/getPolicy
+http://localhost:30000/thirdparty/oss/getPolicy
+
+```json
+{"msg":"success","code":0,"data":{"accessid":"LTAI5tMiAPE8b1cs6vGcoxya","policy":"eyJleHBpcmF0aW9uIjoiMjAyMy0xMC0xMlQwODoxMjozMC40MDlaIiwiY29uZGl0aW9ucyI6W1siY29udGVudC1sZW5ndGgtcmFuZ2UiLDAsMTA0ODU3NjAwMF0sWyJzdGFydHMtd2l0aCIsIiRrZXkiLCIyMDIzLTEwLTEyLyJdXX0=","signature":"stJwWUN6RpeAchdEYJQEaIZ8NC4=","dir":"2023-10-12/","host":"https://gulimall2024.oss-cn-shanghai.aliyuncs.com","expire":"1697098350"}}
+```
+
+发现已经可以获取了, 然后我们把接口加入到`mytools`中管理
+
+```json
+api_thirdpart_oss_policy: "http://localhost:30000" + "/thirdparty/oss/policy",
+```
+
+我们先临时写一下
+
+### 🌸 导入组件
+
+https://element.eleme.cn/#/zh-CN/component/upload
+
+后台接口我们有了, 就可以使用`element`中的上传组件来上传文件了, 由于vue项目中已经有写好的上传文件的组件了, 我们就直接使用
+
+![](images/Pasted%20image%2020231012151945.png)
+
+注意这个`upload`你可能没有, 不要着急, 从下载的资料同目录下就可以获取了, 然后我们直接去`brand-add-or-update.vue`使用
+
+```vue
+<script>
+import SingleUpload from "@/components/upload/singleUpload.vue"
+
+export default {
+  components: {
+    SingleUpload
+  },
+```
+
+使用`import`导入并写入`components`注册, 然后我们就可以在`html`中使用了
+
+```vue
+<el-form-item label="品牌logo地址" prop="logo">
+  <SingleUpload></SingleUpload>
+</el-form-item>
+```
+
+然后配置一下`html`中的地址, 我用的是上海的
+
+```html
+<el-upload action="http://gulimall2024-clouds.oss-cn-shanghai.aliyuncs.com"
+```
+
+### 🌸 配置policy地址
+
+我们找到`upload/policy.js`, 然后修改里面的地址
+
+```js
+import http from '@/utils/httpRequest.js'
+import { api } from '@/utils/mytools.js'
+export function policy() {
+   return  new Promise((resolve,reject)=>{
+        http({
+            url: api.api_thirdpart_oss_policy,
+            method: "get",
+            params: http.adornParams({})
+        }).then(({ data }) => {
+            resolve(data);
+        })
+    });
+}
+```
+
+### 🌸 改完了测试一下吧
+
+![](images/Pasted%20image%2020231012162019.png)
+
+我们发现点击上传文件, 选择一个图片上传, 控制台就报错了
+
+```shell
+Access to XMLHttpRequest at 'http://localhost:30000/thirdparty/oss/policy?t=1697098776530' from origin 'http://localhost:8001' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+:30000/thirdparty/oss/policy?t=1697098776530:1     Failed to load resource: net::ERR_FAILED
+createError.js:16 Uncaught (in promise) Error: Network Error
+    at createError (createError.js:16:1)
+    at XMLHttpRequest.handleError (xhr.js:87:1)
+```
+
+是跨域问题, 我们有两种解法
+
+1. 在`gulimall-third-party`中配置跨域
+2. 在`gulimall-gateway`中配置跨域并转发服务
+
+很明显视频中选择了第二种, 那我们也配一配吧, 长痛不如短痛
+
+### 🌸 配置网关(63集)
+
+因为视频中非常重视网关, 而且网关上配置跨域挺方便, 因为配置完一次其他服务就是转发, 不用重新配置其他服务的跨域这个事情很方便, 所以我们也来配置一下吧, 网关就是转发请求用的, 本身很简单, 就是配置规则有点火星文, 不过无所谓, 跟我一起配
+
+首先把`product`中的`nacos`打开, 让注册中心可以发现我们
+
+```yml
+spring:
+  application:
+    # 配置服务的名称
+    name: gulimall-product
+  cloud:
+    nacos:
+      discovery:
+        # 配置nacos服务端地址
+        server-addr: 127.0.0.1:8848
+        enabled: true
+```
+
+然后把`product`中本身的跨域干掉, 否则会报下面的错误
 
 ```
-{"accessid":"xxx","policy":"eyJleHBpcmF0aW9uIjoiMjAyMy0xMC0xMVQwNToyODoxMi44NDdaIiwiY29uZGl0aW9ucyI6W1siY29udGVudC1sZW5ndGgtcmFuZ2UiLDAsMTA0ODU3NjAwMF0sWyJzdGFydHMtd2l0aCIsIiRrZXkiLCIyMDIzLTEwLTExLyJdXX0=","signature":"boaB3HaP6mGjvuJ76nDlQsSpU1g=","dir":"2023-10-11/","host":"https://gulimall2024.oss-cn-shanghai.aliyuncs.com","expire":"1697002092"}
+Access to XMLHttpRequest at 'http://localhost:90/product/brand/list?t=1697101971697&page=1&limit=10&key=' from origin 'http://localhost:8001' has been blocked by CORS policy: The 'Access-Control-Allow-Origin' header contains multiple values 'http://localhost:8001, http://localhost:8001', but only one is allowed.
 ```
 
-发现已经可以获取了
+干掉的方法是不让`CorsConfig`注入容器即可
+
+```
+//@Configuration
+public class CorsConfig implements WebMvcConfigurer
+```
+
+然后把服务都启动起来, 让配置中心可以读取到我们, 做这一步是为了确认都注册进来了
+
+![](images/Pasted%20image%2020231012164417.png)
+
+注册进来我们开始配置, 注意`lb`是负载均衡的意思, 后面加的是我们的服务名, 有了注册中心通过服务名就能找到我们的服务
+
+然后我们来写网关的配置文件, 与视频中不同的是我使用了`predicates`来开放`Path=/thirdparty/**`下面所有的接口, 我觉得这么配置清爽一些
+
+```yml
+server:
+  # 服务端口号
+  port: 90
+  servlet:
+    encoding:
+      # 返回数据使用utf-8编码
+      charset: utf-8
+      # 强制使用utf-8, 否则某些浏览器中查看会乱码
+      force: true
+
+spring:
+  main:
+    web-application-type: reactive
+  cloud:
+    gateway:
+      routes:
+        - id: gulimall-third-party
+          uri: lb://gulimall-third-party
+          predicates:
+            - Path=/thirdparty/**
+        - id: gulimall-product
+          uri: lb://gulimall-product
+          predicates:
+            - Path=/product/**
+```
+
+配置完需要重启网关, 然后我们调用一个接口试试能不能转发
+
+http://localhost:90/thirdparty/oss/getPolicy
+
+然后在网关中配置跨域, 就不用每个微服务配一遍了
+
+```java
+package com.objcat.gateway.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.reactive.CorsWebFilter;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+
+@Configuration
+public class MyCorsConfiguration {
+
+    @Bean
+    CorsWebFilter corsWebFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        // 允许哪些请求头跨域
+        corsConfiguration.addAllowedHeader("*");
+        // 允许哪些请求方法跨域 get post
+        corsConfiguration.addAllowedMethod("*");
+        // 允许哪些地址跨域
+//        corsConfiguration.addAllowedOrigin("*");
+        // 高版本springboot配置跨域
+        corsConfiguration.addAllowedOriginPattern("*");
+        // 是否允许携带cookie 默认为false
+        corsConfiguration.setAllowCredentials(true);
+        source.registerCorsConfiguration("/**", corsConfiguration);
+        return new CorsWebFilter(source);
+    }
+}
+```
+
+然后我们来配置一下前端, 因为我们统一使用网关进行转发, 所以我们首先要修改`dev.env.js`中的`PRODUCT_SERVICE_HOST`
+
+```js
+'use strict'
+const merge = require('webpack-merge')
+const prodEnv = require('./prod.env')
+
+module.exports = merge(prodEnv, {
+  NODE_ENV: '"development"',
+  OPEN_PROXY: false, // 是否开启代理, 重置后需重启vue-cli
+  PRODUCT_SERVICE_HOST: '"http://localhost:90"'
+})
+```
+
+改成`90`重启服务器, 完活
+
+然后我们修改请求工具, 这下就爽了, 有网关, 所有微服务统一
+
+```js
+const api = {
+    api_product_brand_list: process.env.PRODUCT_SERVICE_HOST + "/product/brand/list",
+    api_product_brand_delete: process.env.PRODUCT_SERVICE_HOST + "/product/brand/delete",
+    api_product_brand_info: process.env.PRODUCT_SERVICE_HOST + "/product/brand/info",
+    api_product_brand_save: process.env.PRODUCT_SERVICE_HOST + "/product/brand/save",
+    api_product_brand_update: process.env.PRODUCT_SERVICE_HOST + "/product/brand/update",
+    api_thirdpart_oss_policy: process.env.PRODUCT_SERVICE_HOST + "/thirdparty/oss/getPolicy",
+}
+
+export {
+    api
+}
+```
+
+### 🌸 配置阿里云跨域
+
+然后我们上传试试吧, 我们发现又报错了
+
+```shell
+Access to XMLHttpRequest at 'http://gulimall2024-clouds.oss-cn-shanghai.aliyuncs.com/' from origin 'http://localhost:8001' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+```
+
+出现这个说明我们跨域配置对了, 我们接下来要配置oss的跨域, 我们登录阿里云后台, 找到跨域设置
+
+![](images/Pasted%20image%2020231012170807.png)
+
+点击创建规则
+
+![](images/Pasted%20image%2020231012170851.png)
+
+然后按图中添上, 点击确定
+
+### 🌸 测试上传
+
+然后我们测试一下上传
+
+```
+:8001/#/product-brand:1 Access to XMLHttpRequest at 'http://gulimall2024-clouds.oss-cn-shanghai.aliyuncs.com/' from origin 'http://localhost:8001' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+upload.js:599     POST http://gulimall2024-clouds.oss-cn-shanghai.aliyuncs.com/ net::ERR_FAILED
+```
+
+还是这熊样, 气炸了
+
+![](images/Pasted%20image%2020231012173348.png)
+
+不知道是时间没到还是参数配置错了, 暂时就更新到这里吧, 接下来是等待
+
+
+
+
+
 
 
 

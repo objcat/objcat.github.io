@@ -2370,7 +2370,26 @@ upload.js:599     POST http://gulimall2024-clouds.oss-cn-shanghai.aliyuncs.com/ 
 
 ![](images/Pasted%20image%2020231012173348.png)
 
-不知道是时间没到还是参数配置错了, 暂时就更新到这里吧, 接下来是等待
+不知道是时间没到还是参数配置错了, 暂时就更新到这里吧, 接下来是等待, 等了很长时间也没有用, 所以查看了一下配置发现了问题
+
+```
+// 老版本上传地址
+https://gulimall2024-clouds.oss-cn-shanghai.aliyuncs.com
+// 新版本上传地址
+https://gulimall2024.oss-cn-shanghai.aliyuncs.com
+```
+
+我只是改了地区发现是不行的, 所以问题就在于上传地址的问题, 再次测试上传发现成功了
+
+![](images/Pasted%20image%2020231012175204.png)
+
+但是我们上传界面上的图片并没有出来
+
+![](images/Pasted%20image%2020231012175314.png)
+
+这是怎么回事呢, 我们下期继续
+
+未完待续
 
 
 

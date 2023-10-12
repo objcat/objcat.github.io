@@ -162,7 +162,7 @@ public void test() {
 
 上传成功后我们去阿里云上看一看
 
-![](images/Pasted%20image%2020231010201108.png)
+![](images/Pasted%20image%2020231010201108.jpg)
 
 到这里图片上传成功了
 

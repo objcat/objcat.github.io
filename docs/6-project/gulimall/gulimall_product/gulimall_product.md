@@ -1502,7 +1502,7 @@ const prodEnv = require('./prod.env')
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
   OPEN_PROXY: false, // 是否开启代理, 重置后需重启vue-cli
-  PRODUCT_SERVICE_HOST: '"http://localhost:8081"'
+  GULIMALL_HOST: '"http://localhost:8081"'
 })
 ```
 
@@ -1528,10 +1528,10 @@ localhost/:158 Uncaught SyntaxError: Unexpected token ':'
 
 ```js
 const api = {
-    api_product_brand_list: process.env.PRODUCT_SERVICE_HOST + "/product/brand/list",
-    api_product_brand_delete: process.env.PRODUCT_SERVICE_HOST + "/product/brand/delete",
-    api_product_brand_info: process.env.PRODUCT_SERVICE_HOST + "/product/brand/info",
-    api_product_brand_save: process.env.PRODUCT_SERVICE_HOST + "/product/brand/save",
+    api_product_brand_list: process.env.GULIMALL_HOST + "/product/brand/list",
+    api_product_brand_delete: process.env.GULIMALL_HOST + "/product/brand/delete",
+    api_product_brand_info: process.env.GULIMALL_HOST + "/product/brand/info",
+    api_product_brand_save: process.env.GULIMALL_HOST + "/product/brand/save",
 
 }
 
@@ -2126,7 +2126,7 @@ api_thirdpart_oss_policy: "http://localhost:30000" + "/thirdparty/oss/policy",
 
 我们先临时写一下
 
-### 🌸 导入组件
+### 🌸 导入上传组件
 
 https://element.eleme.cn/#/zh-CN/component/upload
 
@@ -2306,7 +2306,7 @@ public class MyCorsConfiguration {
 }
 ```
 
-然后我们来配置一下前端, 因为我们统一使用网关进行转发, 所以我们首先要修改`dev.env.js`中的`PRODUCT_SERVICE_HOST`
+然后我们来配置一下前端, 因为我们统一使用网关进行转发, 所以我们首先要修改`dev.env.js`中的`GULIMALL_HOST`
 
 ```js
 'use strict'
@@ -2316,28 +2316,36 @@ const prodEnv = require('./prod.env')
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
   OPEN_PROXY: false, // 是否开启代理, 重置后需重启vue-cli
-  PRODUCT_SERVICE_HOST: '"http://localhost:90"'
+  GULIMALL_HOST: '"http://localhost:90"'
 })
 ```
 
 改成`90`重启服务器, 完活
 
-然后我们修改请求工具, 这下就爽了, 有网关, 所有微服务统一
+然后我们修改请求工具, 这下就爽了, 有网关, 所有微服务统一, 我们把`category, brand`的接口都交给`mytools`管理
 
 ```js
 const api = {
-    api_product_brand_list: process.env.PRODUCT_SERVICE_HOST + "/product/brand/list",
-    api_product_brand_delete: process.env.PRODUCT_SERVICE_HOST + "/product/brand/delete",
-    api_product_brand_info: process.env.PRODUCT_SERVICE_HOST + "/product/brand/info",
-    api_product_brand_save: process.env.PRODUCT_SERVICE_HOST + "/product/brand/save",
-    api_product_brand_update: process.env.PRODUCT_SERVICE_HOST + "/product/brand/update",
-    api_thirdpart_oss_policy: process.env.PRODUCT_SERVICE_HOST + "/thirdparty/oss/getPolicy",
+    api_product_category_listCategoryTree: process.env.GULIMALL_HOST + "/product/category/listCategoryTree",
+    api_product_category_delete: process.env.GULIMALL_HOST + "/product/category/delete",
+    api_product_category_save: process.env.GULIMALL_HOST + "/product/category/save",
+    api_product_category_update: process.env.GULIMALL_HOST + "/product/category/update",
+
+    api_product_brand_list: process.env.GULIMALL_HOST + "/product/brand/list",
+    api_product_brand_delete: process.env.GULIMALL_HOST + "/product/brand/delete",
+    api_product_brand_info: process.env.GULIMALL_HOST + "/product/brand/info",
+    api_product_brand_save: process.env.GULIMALL_HOST + "/product/brand/save",
+    api_product_brand_update: process.env.GULIMALL_HOST + "/product/brand/update",
+    
+    api_thirdpart_oss_policy: process.env.GULIMALL_HOST + "/thirdparty/oss/getPolicy",
 }
 
 export {
     api
 }
 ```
+
+然后`product`中写死的路径也换成变量, 这样我们就得到了一个「崭新的」接口列表了
 
 ### 🌸 配置阿里云跨域
 

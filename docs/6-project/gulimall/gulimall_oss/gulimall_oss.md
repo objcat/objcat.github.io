@@ -8,27 +8,27 @@
 
 我们使用`阿里云OSS`, 注册账号就不说了
 
-![](images/Pasted%20image%2020231010164758.png)
+![](images2/Pasted%20image%2020231010164758.png)
 
 然后点击创建`bucket`, 通常一个项目使用一个`bucket`
 
-![](images/Pasted%20image%2020231010170119.png)
+![](images2/Pasted%20image%2020231010170119.png)
 
 读写权限改成`公共读`, 然后点击创建
 
-![](images/Pasted%20image%2020231010170217.png)
+![](images2/Pasted%20image%2020231010170217.png)
 
 创建成功后是这个样子的, 我们点击上传图片, 可以尝试先上传一张
 
-![](images/Pasted%20image%2020231010170609.png)
+![](images2/Pasted%20image%2020231010170609.png)
 
 拖拽上去然后点击上传
 
-![](images/Pasted%20image%2020231010170552.png)
+![](images2/Pasted%20image%2020231010170552.png)
 
 上传成功后我们点击图片访问一下
 
-![](images/Pasted%20image%2020231010170741.png)
+![](images2/Pasted%20image%2020231010170741.png)
 
 下面的URL链接点击就可以下载, 这说明我们的`OSS存储`启动成功了
 
@@ -124,37 +124,37 @@ public void test() {
 
 获取秘钥也比较简单, 我们点击`AccessKey管理`
 
-![](images/Pasted%20image%2020231010180604.png)
+![](images2/Pasted%20image%2020231010180604.png)
 
 我们选择右边的「开始使用子用户AccessKey」, 因为前面的key权限太大, 后面的key比较安全
 
-![](images/Pasted%20image%2020231010180405.png)
+![](images2/Pasted%20image%2020231010180405.png)
 
 然后会进入到`RAM访问控制`, 注意这个`RAM`可不是内存, 而是`访问控制RAM（Resource Access Management）是阿里云提供的管理用户身份与资源访问权限的服务。`
 
 然后我们点击创建用户
 
-![](images/Pasted%20image%2020231010181001.png)
+![](images2/Pasted%20image%2020231010181001.png)
 
 然后填写
 
-![](images/Pasted%20image%2020231010181100.png)
+![](images2/Pasted%20image%2020231010181100.png)
 
 然后就能看到`key`和`secret`了, 我的自己隐藏了, 你自己创建
 
-![](images/Pasted%20image%2020231010181153.png)
+![](images2/Pasted%20image%2020231010181153.png)
 
 然后配置权限, 我们点击用户
 
-![](images/Pasted%20image%2020231010181402.png)
+![](images2/Pasted%20image%2020231010181402.png)
 
 可以找到一个`添加权限`的按钮
 
-![](images/Pasted%20image%2020231010181419.png)
+![](images2/Pasted%20image%2020231010181419.png)
 
 然后点击添加权限
 
-![](images/Pasted%20image%2020231010181341.png)
+![](images2/Pasted%20image%2020231010181341.png)
 
 授权成功后我们把秘钥直接填写在代码里就能够上传了
 
@@ -162,7 +162,7 @@ public void test() {
 
 上传成功后我们去阿里云上看一看
 
-![](images/Pasted%20image%2020231010201108.jpg)
+![](images2/Pasted%20image%2020231010201108.jpg)
 
 到这里图片上传成功了
 

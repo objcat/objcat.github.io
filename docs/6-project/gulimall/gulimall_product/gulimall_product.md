@@ -2391,7 +2391,7 @@ https://gulimall2024.oss-cn-shanghai.aliyuncs.com
 
 ![](images/Pasted%20image%2020231012175204.png)
 
-但是我们发现图片可以出来了
+我们发现图片可以出来了
 
 ![](images/Pasted%20image%2020231015094657.png)
 
@@ -2439,6 +2439,9 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 ![](images/Pasted%20image%2020231015110700.png)
 
+### 🌸 完善表单校验
+
+未完待续
 
 
 

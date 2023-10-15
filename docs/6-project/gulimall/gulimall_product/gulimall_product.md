@@ -2150,7 +2150,7 @@ export default {
 
 ```vue
 <el-form-item label="品牌logo地址" prop="logo">
-  <SingleUpload></SingleUpload>
+  <SingleUpload v-model="dataForm.logo" ></SingleUpload>
 </el-form-item>
 ```
 
@@ -2391,14 +2391,53 @@ https://gulimall2024.oss-cn-shanghai.aliyuncs.com
 
 ![](images/Pasted%20image%2020231012175204.png)
 
-但是我们上传界面上的图片并没有出来
+但是我们发现图片可以出来了
 
-![](images/Pasted%20image%2020231012175314.png)
+![](images/Pasted%20image%2020231015094657.png)
 
-这是怎么回事呢, 我们下期继续
+点击确定就可以保存了, 白猫提醒一下, 学习这里需要「得过且过」, 因为上传是非常复杂的, 对于新手来说要先以学习后台为重点, 实在搞不明白的就先把功能做出来, 然后往后学习, 而不是一直卡住, 否则很容易放弃
 
-未完待续
+### 🌸 品牌logo显示图片
 
+我们可以看到`品牌logo`是地址样式的, 这不太好看, 所以我们可以把他换成图片显示
+
+![](images/Pasted%20image%2020231015095549.png)
+
+我们直接把图片组件贴上就行了
+
+https://element.eleme.cn/#/zh-CN/component/image
+
+```vue
+<el-table-column prop="logo" header-align="center" align="center" label="品牌logo地址">
+<template slot-scope="scope">
+  <el-image style="width: 100px; height: 100px" :src="scope.row.logo" fit="fit"></el-image>
+</template>
+</el-table-column>
+```
+
+然后我们发现报错了, 我我们的`el-image`没有注册, 然后我们去`main.js`可以看到, 项目开启了部分引入, 引入模块的地方在`element-ui/index.js`中, 视频中是带我们把组件都添加上, 这样会很麻烦, 还要查缺补漏, 所以我们可以直接全部导入
+
+```js
+// import '@/element-ui'
+
+import ElementUI from 'element-ui';
+Vue.use(ElementUI)
+```
+
+完活, 回来看图片已经可以显示了
+
+![](images/Pasted%20image%2020231015110434.png)
+
+但是我们会发现图片样式不对, 这是由于项目`main.js`使用的主题`css`样式有问题, 我们把他改成默认的
+
+```js
+// import '@/element-ui-theme'
+import 'element-ui/lib/theme-chalk/index.css';
+```
+
+然后发现图片就可以正常显示了
+
+![](images/Pasted%20image%2020231015110700.png)
 
 
 

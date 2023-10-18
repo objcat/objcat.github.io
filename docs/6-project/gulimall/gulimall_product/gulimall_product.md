@@ -2539,7 +2539,11 @@ dataRule: {
 
 #### 🌵 javax.validation校验
 
-视频中讲的是使用`javax.validation`来进行校验, 我们看看吧, 首先在接口的实体前使用注解
+视频中讲的是使用`javax.validation`来进行校验, 我们看看吧
+
+##### 🐔 校验注解
+
+首先在接口的实体前使用校验注解, 把参数加入校验
 
 ```java
 @RequestMapping("/save")
@@ -2562,9 +2566,11 @@ private String name;
 
 意思是`不能为空`和`不能为空格`, 重启服务, 然后我们调用接口访问一下
 
+##### 🐔 测试
+
 ```
 ### 品牌新增
-POST http://localhost:8081/product/brand/save
+POST http://localhost:90/product/brand/save
 Content-Type: application/json
 
 {"name": ""}
@@ -2586,6 +2592,8 @@ Content-Type: application/json
 ```shell
 2023-10-18 14:57:35.812  WARN 26788 --- [nio-8081-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public com.objcat.common.utils.R com.objcat.product.controller.BrandController.save(com.objcat.product.entity.BrandEntity): [Field error in object 'brandEntity' on field 'name': rejected value []; codes [NotBlank.brandEntity.name,NotBlank.name,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [brandEntity.name,name]; arguments []; default message [name]]; default message [不能为空]] ]
 ```
+
+##### 🐔 优化json返回
 
 我们可以看到, 是`Validation failed`的错误, 但是响应`json`的提示是不尽人意的, 里面甚至连错误信息都没有, 我们要怎么获取错误信息呢?
 
@@ -2615,7 +2623,9 @@ public R save(@Valid @RequestBody BrandEntity brand, BindingResult result) {
 }
 ```
 
-那如果我们有两个以上的字段校验失败呢, 比如我们给`logo`也添加上校验不能为空, 并且这次我们写一个段提示语
+##### 🐔 修改提示语
+
+我们可以修改校验出错后的提示语, 比如我们给`logo`也添加上校验不能为空, 并且这次我们写一个段提示语
 
 ```java
 /**
@@ -2639,6 +2649,71 @@ private String logo;
 ```
 
 我们发现`logo`的校验信息也能提示了
+
+##### 🐔 校验URL
+
+我们使用URL注解来校验URL
+
+```java
+@NotBlank(message = "logo不能为空啊大哥")
+@URL(message = "logo必须是URL")
+private String logo;
+```
+
+然后我们测试一下
+
+```
+### 品牌新增
+POST http://localhost:90/product/brand/save
+Content-Type: application/json
+
+{"logo": "1234"}
+```
+
+当`logo`不为空时回去校验`URL`
+
+```json
+{
+  "msg": "提交的数据不合法",
+  "code": 400,
+  "data": {
+    "name": "不能为空",
+    "logo": "logo必须是URL"
+  }
+}
+```
+
+##### 🐔 自定义校验
+
+我们可以使用正则表达式来实现自定义的校验, 我们一起来看看吧
+
+```java
+@NotBlank(message = "检索首字母不能为空")
+@Pattern(regexp = "/*[a-zA-Z]$/", message = "首字母必须是字母并且只有一个")
+private String firstLetter;
+```
+
+我们测试一下
+
+```
+### 品牌新增
+POST http://localhost:90/product/brand/save
+Content-Type: application/json
+
+{"logo": "1234", "firstLetter": "1"}
+```
+
+我们看一下返回
+
+```json
+"data": {
+    "name": "不能为空",
+    "logo": "logo必须是URL",
+    "firstLetter": "首字母必须是字母并且只有一个"
+}
+```
+
+这里需要注意一点`@NotBlank`是必须加上的, 否则没有`firstLetter`这个参数就会不校验, 那么程序就是`有bug`的
 
 #### 🌵 spring-validation校验
 

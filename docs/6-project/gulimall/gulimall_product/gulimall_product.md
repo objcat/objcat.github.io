@@ -88,7 +88,13 @@ public R listCategory(@RequestParam Map<String, Object> params){
 }
 ```
 
-白猫有话要说, 虽然有经验的同学都能写出来, 但是这对于新手来说可能是「毁灭性打击」, 所以白猫建议如果实在跟不下来直接把代码粘贴到你的项目中, 先把程序运行出来, 然后再去分析结构反推代码, 这样更有利于学习
+然后我们访问一下试试吧
+
+http://localhost:8081/product/category/listCategoryTree
+
+可以访问通就对上了
+
+> 白猫有话要说, 虽然有经验的同学都能写出来, 但是这对于新手来说可能是「毁灭性打击」, 所以白猫建议如果实在跟不下来直接把代码粘贴到你的项目中, 先把程序运行出来, 然后再去分析结构反推代码, 这样更有利于学习
 
 # 🍎 菜单管理(46集)
 
@@ -1524,7 +1530,7 @@ localhost/:158 Uncaught SyntaxError: Unexpected token ':'
 
 我不知道这是用的哪门子技术, 反正写的我唉声叹气的, 我只能给自己洗脑, 我要学的是后端, 先不管前端的破问题
 
-然后我在`utils`下面新建一个配置文件叫做`mytools`, 然后在里面写一个`api`变量
+然后我在`utils`下面新建一个配置文件叫做`apimap`, 然后在里面写一个`api`变量
 
 ```js
 const api = {
@@ -1532,7 +1538,6 @@ const api = {
     api_product_brand_delete: process.env.GULIMALL_HOST + "/product/brand/delete",
     api_product_brand_info: process.env.GULIMALL_HOST + "/product/brand/info",
     api_product_brand_save: process.env.GULIMALL_HOST + "/product/brand/save",
-
 }
 
 export {
@@ -1549,7 +1554,7 @@ export {
 ```js
 <script>
 import AddOrUpdate from './brand-add-or-update'
-import { api } from  "@/utils/mytools.js"
+import { api } from  "@/utils/apimap.js"
 ```
 
 然后替换掉url前面的串
@@ -2118,7 +2123,7 @@ http://localhost:30000/thirdparty/oss/getPolicy
 {"msg":"success","code":0,"data":{"accessid":"LTAI5tMiAPE8b1cs6vGcoxya","policy":"eyJleHBpcmF0aW9uIjoiMjAyMy0xMC0xMlQwODoxMjozMC40MDlaIiwiY29uZGl0aW9ucyI6W1siY29udGVudC1sZW5ndGgtcmFuZ2UiLDAsMTA0ODU3NjAwMF0sWyJzdGFydHMtd2l0aCIsIiRrZXkiLCIyMDIzLTEwLTEyLyJdXX0=","signature":"stJwWUN6RpeAchdEYJQEaIZ8NC4=","dir":"2023-10-12/","host":"https://gulimall2024.oss-cn-shanghai.aliyuncs.com","expire":"1697098350"}}
 ```
 
-发现已经可以获取了, 然后我们把接口加入到`mytools`中管理
+发现已经可以获取了, 然后我们把接口加入到`apimap`中管理
 
 ```json
 api_thirdpart_oss_policy: "http://localhost:30000" + "/thirdparty/oss/policy",
@@ -2166,7 +2171,7 @@ export default {
 
 ```js
 import http from '@/utils/httpRequest.js'
-import { api } from '@/utils/mytools.js'
+import { api } from '@/utils/apimap.js'
 export function policy() {
    return  new Promise((resolve,reject)=>{
         http({
@@ -2322,7 +2327,7 @@ module.exports = merge(prodEnv, {
 
 改成`90`重启服务器, 完活
 
-然后我们修改请求工具, 这下就爽了, 有网关, 所有微服务统一, 我们把`category, brand`的接口都交给`mytools`管理
+然后我们修改请求工具, 这下就爽了, 有网关, 所有微服务统一, 我们把`category, brand`的接口都交给`apimap`管理
 
 ```js
 const api = {
@@ -2395,9 +2400,9 @@ https://gulimall2024.oss-cn-shanghai.aliyuncs.com
 
 ![](images/Pasted%20image%2020231015094657.png)
 
-点击确定就可以保存了, 白猫提醒一下, 学习这里需要「得过且过」, 因为上传是非常复杂的, 对于新手来说要先以学习后台为重点, 实在搞不明白的就先把功能做出来, 然后往后学习, 而不是一直卡住, 否则很容易放弃
+点击确定就可以保存了, 到此我们第三方服务也创建好了, 白猫提醒一下, 学习这里需要「得过且过」, 因为上传是非常复杂的, 对于新手来说要先以学习后台为重点, 实在搞不明白的就先把功能做出来, 然后往后学习, 而不是一直卡住, 否则很容易放弃
 
-### 🌸 品牌logo显示图片
+## 🌲 品牌logo显示图片
 
 我们可以看到`品牌logo`是地址样式的, 这不太好看, 所以我们可以把他换成图片显示
 
@@ -2439,9 +2444,216 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 ![](images/Pasted%20image%2020231015110700.png)
 
-### 🌸 完善表单校验
+## 🌲 重构后台管理系统
 
-未完待续
+由于老的客户端过于臃肿, 我用了两天时间使用`vite`重构客户端, 新客户端的名字叫`renren-fast-vite`, 可以直接在项目根目录中找到, 新老版本我都保留了, 但是以后我将全面替换成新的客户端, 我使用`yarn`进行包管理
+
+```shell
+# 安装yarn
+sudo npm install -g yarn
+# 拉取依赖
+yarn
+# 启动
+yarn dev
+```
+
+## 🌲 完善表单校验(65集)
+
+### 🌸 前端
+
+https://element.eleme.cn/#/zh-CN/component/form
+
+这集的后半段开始讲修改表单的校验规则了, 我觉得这并不是很重要, 但是为了以学习为目的还是简的做一做, 我们打开`brand-add-or-update.vue`先看看原来的规则
+
+```js
+dataRule: {
+	name: [
+	  { required: true, message: '品牌名不能为空', trigger: 'blur' }
+	],
+	logo: [
+	  { required: true, message: '品牌logo地址不能为空', trigger: 'blur' }
+	],
+	descript: [
+	  { required: true, message: '介绍不能为空', trigger: 'blur' }
+	],
+	showStatus: [
+	  { required: true, message: '显示状态不能为空', trigger: 'blur' }
+	],
+	firstLetter: [
+	  { required: true, message: '检索首字母不能为空', trigger: 'blur' }
+	],
+	sort: [
+	  { required: true, message: '排序不能为空', trigger: 'blur' }
+	]
+  }
+```
+
+自带的规则比较简单, 就是不能为空, 视频中讲的是自定义校验规则
+
+```js
+dataRule: {
+	name: [
+	  { required: true, message: '品牌名不能为空', trigger: 'blur' }
+	],
+	logo: [
+	  { required: true, message: '品牌logo地址不能为空', trigger: 'blur' }
+	],
+	descript: [
+	  { required: true, message: '介绍不能为空', trigger: 'blur' }
+	],
+	showStatus: [
+	  { required: true, message: '显示状态不能为空', trigger: 'blur' }
+	],
+	firstLetter: [
+	  {
+		validator: (rule, value, callback) => {
+		  if (value == '') {
+			callback(new Error("必须填写首字母"));
+		  } else if (!/^[a-zA-Z]$/.test(value)) {
+			callback(new Error("必须是英文字母, 并且只有一个"));
+		  } else {
+			callback();
+		  }
+		}, trigger: 'blur'
+	  }
+	],
+	sort: [
+	  { validator: (rule, value, callback) => {
+		  if (value == '') {
+			callback(new Error("排序字段必须填写"));
+		  } else if (!Number.isInteger) {
+			callback(new Error("排序字段必须是整数"));
+		  } else {
+			callback();
+		  }
+		}, trigger: 'blur' }
+	]
+  }
+```
+
+自定义规则也简单, 就是添加一个`validator`, 然后里面用一个箭头函数写校验规则就可以了
+
+### 🌸 后端
+
+不仅前端需要校验, 后端的校验更加重要, 因为有些情况下用户是直接调用接口去访问服务的, 而不是在前端页面点点点, 那我们就要进行后端校验了
+
+#### 🌵 javax.validation校验
+
+视频中讲的是使用`javax.validation`来进行校验, 我们看看吧, 首先在接口的实体前使用注解
+
+```java
+@RequestMapping("/save")
+public R save(@Valid @RequestBody BrandEntity brand){
+	brandService.save(brand);
+
+	return R.ok();
+}
+```
+
+然后我们去`BrandEntity`实体里面使用注解来校验名称
+
+```java
+/**
+ * 品牌名
+ */
+@NotBlank
+private String name;
+```
+
+意思是`不能为空`和`不能为空格`, 重启服务, 然后我们调用接口访问一下
+
+```
+### 品牌新增
+POST http://localhost:8081/product/brand/save
+Content-Type: application/json
+
+{"name": ""}
+```
+
+我们会发现访问不通, 错误如下
+
+```json
+{
+  "timestamp": "2023-10-18T06:57:35.822+00:00",
+  "status": 400,
+  "error": "Bad Request",
+  "path": "/product/brand/save"
+}
+```
+
+然后我们来看一下后台
+
+```shell
+2023-10-18 14:57:35.812  WARN 26788 --- [nio-8081-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public com.objcat.common.utils.R com.objcat.product.controller.BrandController.save(com.objcat.product.entity.BrandEntity): [Field error in object 'brandEntity' on field 'name': rejected value []; codes [NotBlank.brandEntity.name,NotBlank.name,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [brandEntity.name,name]; arguments []; default message [name]]; default message [不能为空]] ]
+```
+
+我们可以看到, 是`Validation failed`的错误, 但是响应`json`的提示是不尽人意的, 里面甚至连错误信息都没有, 我们要怎么获取错误信息呢?
+
+```java
+@RequestMapping("/save")
+public R save(@Valid @RequestBody BrandEntity brand, BindingResult result) {
+	if (result.hasErrors()) {
+		Map<String, Object> map = new HashMap<>();
+		result.getFieldErrors().forEach((item) -> {
+			map.put(item.getField(), item.getDefaultMessage());
+		});
+		return R.error(400, "提交的数据不合法").put("data", map);
+	} brandService.save(brand);
+	return R.ok();
+}
+```
+
+我们可以写一个`BindingResult`来判断校验有没有出错, 然后我们访问一下
+
+```json
+{
+  "msg": "提交的数据不合法",
+  "code": 400,
+  "data": {
+    "name": "不能为空"
+  }
+}
+```
+
+那如果我们有两个以上的字段校验失败呢, 比如我们给`logo`也添加上校验不能为空, 并且这次我们写一个段提示语
+
+```java
+/**
+ * 品牌logo地址
+ */
+@NotBlank(message = "logo不能为空啊大哥")
+private String logo;
+```
+
+然后我们再来看一下请求数据
+
+```json
+{
+  "msg": "提交的数据不合法",
+  "code": 400,
+  "data": {
+    "name": "不能为空",
+    "logo": "logo不能为空啊大哥"
+  }
+}
+```
+
+我们发现`logo`的校验信息也能提示了
+
+#### 🌵 spring-validation校验
+
+首先我们要在`common`中导入依赖
+
+```xml
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-validation</artifactId>
+</dependency>
+```
+
+未完待续...
+
+
 
 
 

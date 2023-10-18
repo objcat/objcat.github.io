@@ -2623,6 +2623,19 @@ public R save(@Valid @RequestBody BrandEntity brand, BindingResult result) {
 }
 ```
 
+我们可以看到提示语是`不能为空`, 这句话是怎么来的呢? 我们可以在程序里找一找
+
+```java
+public @interface NotBlank {
+    String message() default "{javax.validation.constraints.NotBlank.message}";
+```
+
+我们点进去注解可以看到一段话, 它是读取这个变量, 我们在程序中再去搜索这个变量
+
+![](images/Pasted%20image%2020231018232926.png)
+
+我们可以看到它在一个定义好的文件里, 是一个`properties`, 到这里提示消息也理解了
+
 ##### 🐔 修改提示语
 
 我们可以修改校验出错后的提示语, 比如我们给`logo`也添加上校验不能为空, 并且这次我们写一个段提示语
@@ -2714,6 +2727,64 @@ Content-Type: application/json
 ```
 
 这里需要注意一点`@NotBlank`是必须加上的, 否则没有`firstLetter`这个参数就会不校验, 那么程序就是`有bug`的
+
+##### 🐔 全局异常处理
+
+通过上面的练习, 我们可以捕获校验异常并返回一个正常的有用的信息了,  但是如果我们写的接口很多, 这种处理方式还是很麻烦的, 所以我们就在想有没有更方便的方法捕获异常并返回对应的`json`结构, 还真有, 我们可以使用`@ControllerAdvice`, 首先我们创建一个`exception`包然后写入下面内容
+
+```java
+@Slf4j
+@ControllerAdvice
+public class GulimallExceptionControllerAdvice {
+
+    @ResponseBody
+    @ExceptionHandler(value = Exception.class)
+    public R exceptionHandler(Exception e) {
+        log.info("拦截到错误{}", e.toString());
+        return R.error(e.toString());
+    }
+}
+```
+
+然后我们访问`save`接口返现错误被拦截到了
+
+```json
+{
+  "msg": "org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public com.objcat.common.utils.R com.objcat.product.controller.BrandController.save(com.objcat.product.entity.BrandEntity) with 3 errors: [Field error in object 'brandEntity' on field 'logo': rejected value [1234]; codes [URL.brandEntity.logo,URL.logo,URL.java.lang.String,URL]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [brandEntity.logo,logo]; arguments []; default message [logo],[Ljavax.validation.constraints.Pattern$Flag;@589007ce,,-1,,.*]; default message [logo必须是URL]] [Field error in object 'brandEntity' on field 'name': rejected value [null]; codes [NotBlank.brandEntity.name,NotBlank.name,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [brandEntity.name,name]; arguments []; default message [name]]; default message [不能为空]] [Field error in object 'brandEntity' on field 'firstLetter': rejected value [1]; codes [Pattern.brandEntity.firstLetter,Pattern.firstLetter,Pattern.java.lang.String,Pattern]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [brandEntity.firstLetter,firstLetter]; arguments []; default message [firstLetter],[Ljavax.validation.constraints.Pattern$Flag;@5f54e3c4,/*[a-zA-Z]$/]; default message [首字母必须是字母并且只有一个]] ",
+  "code": 500
+}
+```
+
+我们可以在上面的报错提示中看到, 异常是一个`MethodArgumentNotValidException`, 翻译过来是参数没有通过校验的一个错误, 那么这个时候我们就应该把异常精确化一下, 添加一个`handler`
+
+```java
+@ResponseBody
+@ExceptionHandler(value = MethodArgumentNotValidException.class)
+public R methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
+	log.info("methodArgumentNotValidExceptionHandler: 拦截到错误{}", e.toString());
+	Map<String, Object> map = new HashMap<>();
+	e.getBindingResult().getFieldErrors().forEach((fieldError) -> {
+		map.put(fieldError.getField(), fieldError.getDefaultMessage());
+	});
+	return R.error().put("data", map);
+}
+```
+
+然后我们测试一下发现与上面是一样的显示效果
+
+```json
+{
+  "msg": "未知异常，请联系管理员",
+  "code": 500,
+  "data": {
+    "name": "不能为空",
+    "logo": "logo必须是URL",
+    "firstLetter": "首字母必须是字母并且只有一个"
+  }
+}
+```
+
+到这里, 我们就学会全局拦截异常了
 
 #### 🌵 spring-validation校验
 

@@ -1788,11 +1788,9 @@ switchChange(row) {
 
 然后可以发现开关状态可以改变了
 
-# 🍎 品牌上传
+## 🌲 OSS
 
 在微服务开发中, 由于我们可能有多个集群, 所以在保存图片的时候一般不会保存在当前服务器, 而是存放在「云服务商」的服务器中, 这样我们所有的服务器都能访问到资源, 比如我们常说的`阿里云OSS桶/七牛云/京东云/华为云`等都有类似产品
-
-## 🌲 OSS
 
 [跳转 gulimall_oss](../gulimall_oss/gulimall_oss.md)
 
@@ -2539,7 +2537,7 @@ dataRule: {
 
 #### 🌵 javax.validation校验
 
-视频中讲的是使用`javax.validation`来进行校验, 我们看看吧
+视频中讲的是使用`JSR303`进行校验`JSR303`是`Java`为`Bean`数据合法性校验提供给的标准框架
 
 ##### 🐔 校验注解
 
@@ -2730,7 +2728,7 @@ Content-Type: application/json
 
 ##### 🐔 全局异常处理
 
-通过上面的练习, 我们可以捕获校验异常并返回一个正常的有用的信息了,  但是如果我们写的接口很多, 这种处理方式还是很麻烦的, 所以我们就在想有没有更方便的方法捕获异常并返回对应的`json`结构, 还真有, 我们可以使用`@ControllerAdvice`, 首先我们创建一个`exception`包然后写入下面内容
+通过上面的练习, 我们可以捕获校验异常并返回一个正常的有用的信息了,  但是如果我们写的接口很多, 这种处理方式还是很麻烦的, 所以我们就在想有没有更方便的方法捕获异常并返回对应的`json`结构, 是有的, 我们可以使用`@ControllerAdvice`, 首先我们创建一个`exception`包然后新建文件`GulimallExceptionControllerAdvice.java`写入下面内容, 需要注意的是`BindingResult result`需要去掉, 否则异常会被它捕获, 就到不了全局异常处理了
 
 ```java
 @Slf4j
@@ -2740,11 +2738,32 @@ public class GulimallExceptionControllerAdvice {
     @ResponseBody
     @ExceptionHandler(value = Exception.class)
     public R exceptionHandler(Exception e) {
-        log.info("拦截到错误{}", e.toString());
+        log.info("捕获到异常 {}", e.toString());
         return R.error(e.toString());
     }
 }
+// 也可以写成下面的样子
+@ResponseBody
+@ExceptionHandler(value = Throwable.class)
+public R exceptionHandler(Throwable e) {
+	log.info("捕获到异常 {}", e.toString());
+	return R.error(e.toString());
+}
 ```
+
+这里再加一句, 看视频的时候有人说这个`GulimallExceptionControllerAdvice`应该定义到`common`中, 我同意你的看法, 但是当你定义到`common`中的时候你会发现它不起作用, 这是为什么呢? 其实很简单, product启动的之后`spring`默认扫自己启动文件所在的包, 但并不会去扫你`common`下的包, 问题出来了我们就要配置扫包
+
+```java
+@SpringBootApplication
+@ComponentScan(basePackages = {"com.objcat.product", "com.objcat.common"})
+public class ProductApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(ProductApplication.class, args);
+    }
+}
+```
+
+我们把自己的包名和`com.objcat.common`的包名配置到`@ComponentScan`注解下就可以在启动时把`common`中的`bean`放入`spring容器`管理了, 这只是其中一种方法, 我们先用着
 
 然后我们访问`save`接口返现错误被拦截到了
 
@@ -2755,7 +2774,7 @@ public class GulimallExceptionControllerAdvice {
 }
 ```
 
-我们可以在上面的报错提示中看到, 异常是一个`MethodArgumentNotValidException`, 翻译过来是参数没有通过校验的一个错误, 那么这个时候我们就应该把异常精确化一下, 添加一个`handler`
+我们可以在上面的报错提示中看到, 异常是一个`MethodArgumentNotValidException`, 翻译过来是参数没有通过校验的一个错误, 那么这个时候我们就应该把异常精确化一下, 添加一个`methodArgumentNotValidExceptionHandler`
 
 ```java
 @ResponseBody
@@ -2766,11 +2785,11 @@ public R methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException 
 	e.getBindingResult().getFieldErrors().forEach((fieldError) -> {
 		map.put(fieldError.getField(), fieldError.getDefaultMessage());
 	});
-	return R.error().put("data", map);
+	return R.error(400, "参数格式校验失败").put("data", map);
 }
 ```
 
-然后我们测试一下发现与上面是一样的显示效果
+然后我们测试一下发现可以正常提示错误了
 
 ```json
 {
@@ -2784,9 +2803,265 @@ public R methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException 
 }
 ```
 
-到这里, 我们就学会全局拦截异常了
+而且我们发现拦截异常的时候会先拦截`MethodArgumentNotValidException`如果不是这个异常才会走`exceptionHandler`
+
+##### 🐔 公共状态码
+
+我们发现状态码都是我们手写的, 这样很不规范, 所以我们可以在`common`模块中去定义枚举来管理状态码, 我们在`common`中建立一个枚举`BizCodeEnum`
+
+```java
+public enum BizCodeEnum {
+    UNKNOW_EXCEPTION(10000, "系统未知异常"),
+    VAILD_EXCEPTION(10002, "参数格式校验失败");
+
+    private int code;
+    private String msg;
+
+    BizCodeEnum(int code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+}
+```
+
+然后就能愉快的使用状态码了
+
+```java
+@ResponseBody
+@ExceptionHandler(value = MethodArgumentNotValidException.class)
+public R methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
+	log.info("methodArgumentNotValidExceptionHandler: 拦截到错误{}", e.toString());
+	Map<String, Object> map = new HashMap<>();
+	e.getBindingResult().getFieldErrors().forEach((fieldError) -> {
+		map.put(fieldError.getField(), fieldError.getDefaultMessage());
+	});
+	return R.error(BizCodeEnum.VAILD_EXCEPTION.getCode(), BizCodeEnum.VAILD_EXCEPTION.getMsg()).put("data", map);
+}
+```
+
+我们看一下返回的数据
+
+```json
+{
+  "msg": "参数格式校验失败",
+  "code": 10002,
+  "data": {
+    "name": "不能为空",
+    "logo": "logo必须是URL",
+    "firstLetter": "首字母必须是字母并且只有一个"
+  }
+}
+```
+
+##### 🐔 分组校验
+
+有时候我们使用同一个`实体`来进行不同的`CRUD`操作的时候, 它们需要校验的属性可能是不同的, 比如新增的时候我们就不需要去校验`id`, 而修改的时候我们是需要校验`id`不为空的, 这就需要给校验添加分组, 主要依靠注解上面的`group`属性, 而为了标注分组, 我们需要建立两个接口类, 不用写内容
+
+```java
+public interface UpdateGroup {
+}
+
+public interface UpdateGroup {
+}
+```
+
+然后我们在`实体`上标注分组, 意思是修改的时候id不能为空, 在新增的时候id一定要为空
+
+```java
+@TableId
+@NotNull(message = "修改必须指定品牌id", groups = {UpdateGroup.class})
+@Null(message = "新增不需要品牌id", groups = {AddGroup.class})
+private Long brandId;
+```
+
+然后我们修改接口, 让它可以分组, 我们使用`@Validated`里面携带`group`来指定分组校验
+
+```java
+/**
+ * 保存
+ */
+@RequestMapping("/save")
+public R save(@Validated({AddGroup.class}) @RequestBody BrandEntity brand) {
+	return R.ok();
+}
+
+/**
+ * 修改
+ */
+@RequestMapping("/update")
+public R update(@Validated({UpdateGroup.class}) @RequestBody BrandEntity brand) {
+	brandService.updateById(brand);
+
+	return R.ok();
+}
+```
+
+然后我们发送请求试试
+
+```json
+### 品牌新增
+POST http://localhost:8081/product/brand/save
+Content-Type: application/json
+
+{"brandId": "123"}
+```
+
+然后看看返回数据
+
+```json
+{
+  "msg": "参数格式校验失败",
+  "code": 10002,
+  "data": {
+    "brandId": "新增不需要品牌id"
+  }
+}
+```
+
+我们发现新增不需要`id`这个校验成功了, 但是你会发现一个问题, 就是它不校验品牌名是否为空了, 这就是分组的隔离性, 分组只检验分组里面的, 因为`name`没有在分组中, 所以不校验, 想要校验我们需要把它加入分组, 因为`groups`是个数组, 所以可以添加多个分组
+
+```java
+/**
+ * 品牌名
+ */
+@NotBlank(groups = {AddGroup.class, UpdateGroup.class})
+private String name;
+```
+
+配置好分组后, 我们发现它有可以校验了
+
+```json
+{
+  "msg": "参数格式校验失败",
+  "code": 10002,
+  "data": {
+    "brandId": "新增不需要品牌id",
+    "name": "不能为空"
+  }
+}
+```
+
+##### 🐔 有点问题
+
+但是如果这样设置, 那么我们修改的时候会有点问题, 因为修改都是增量更新, 不传值就不改, 如果我传的是`id`和`logo`, 那么意思就是只想更新`logo`, 但是你却不让我改, 说名字不能为空, 这逻辑是说不通的, 我们先不说这个问题埋一个伏笔
+
+##### 🐔 自定义注解
+
+有时候我们使用自带的注解已经不能达到校验的目的了, 那么这时候就要`自定义校验注解`
+
+```java
+@Documented
+@Constraint(validatedBy = {ListValueConstraintValidator.class})
+@Target({ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.CONSTRUCTOR, ElementType.PARAMETER, ElementType.TYPE_USE})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface ListValue {
+    String message() default "必须提交指定的值 0,1";
+
+    Class<?>[] groups() default {};
+
+    Class<? extends Payload>[] payload() default {};
+
+    int[] vals() default {};
+}
+```
+
+`message`的值我们也可以写在一个文件中, 在`resources`目录下新建一个`ValidationMessages.properties`
+
+```java
+com.objcat.common.valid.listValue.message=必须提交指定的值 0,1
+```
+
+然后把属性改成这样
+
+```java
+String message() default "{com.objcat.common.valid.listValue.message}";
+```
+
+有时候你可能会发现`Payload`报红, 那么你就要跟视频中一样引入一个依赖库
+
+```xml
+<dependency>
+    <groupId>javax.validation</groupId>
+    <artifactId>validation-api</artifactId>
+    <version>2.0.1.Final</version>
+</dependency>
+```
+
+然后我们需要写一个校验器
+
+```java
+public class ListValueConstraintValidator implements ConstraintValidator<ListValue, Integer> {
+
+    private Set<Integer> set = new HashSet<>();
+
+    @Override
+    public void initialize(ListValue constraintAnnotation) {
+        ConstraintValidator.super.initialize(constraintAnnotation);
+
+        int[] vals = constraintAnnotation.vals();
+        for (int val : vals) {
+            set.add(val);
+        }
+
+    }
+
+    /***
+     * description: 校验值 <br>
+     * version: 1.0 <br>
+     * date: 2023/10/19 13:09 <br>
+     * author: objcat <br>
+     *
+     * @param integer 当前校验数字
+     * @param constraintValidatorContext 校验上下文
+     * @return boolean
+     */
+    @Override
+    public boolean isValid(Integer integer, ConstraintValidatorContext constraintValidatorContext) {
+        return set.contains(integer);
+    }
+}
+```
+
+可以看到还是非常简单的, 我们初始化的时候把`vals`放到集合, 然后调用`contains`方法来判断值是不是规定范围的, 我们访问一下接口
+
+```java
+### 品牌新增
+POST http://localhost:8081/product/brand/save
+Content-Type: application/json
+
+{"showStatus": 2}
+```
+
+然后我们来看一下返回值
+
+```json
+{
+  "msg": "参数格式校验失败",
+  "code": 10002,
+  "data": {
+    "name": "不能为空",
+    "showStatus": "必须提交指定的值 0,1"
+  }
+}
+```
+
+可以看到我们传`2`的时候校验是不通过的
+
+##### 🐔 有话要说
+
+这章学完之后, 如果你觉得`问题很大`, 那么你可能高手, 如果你觉得没啥问题, 那么你就是个新手, 不过无论是`高手`还是`新手`我推荐你们把注解都注释掉, 否则可能会出现一大堆的问题, 比如想修改一个状态但是因为名字为空不能进行修改, 我们先学这种思想以后再优化
 
 #### 🌵 spring-validation校验
+
+##### 🐔 导入依赖
 
 首先我们要在`common`中导入依赖
 
@@ -2797,7 +3072,17 @@ public R methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException 
 </dependency>
 ```
 
-未完待续...
+因为老师并没有去讲这个, 所以我这个坑暂时挖着, 先学下面的以后可能把这个地方补上
+
+# 🍎 属性分组(70集)
+
+## 🌲 SPU/SKU
+
+未完待续
+
+
+
+
 
 
 

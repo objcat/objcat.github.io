@@ -2706,7 +2706,7 @@ private String firstLetter;
 
 我们测试一下
 
-```
+```java
 ### 品牌新增
 POST http://localhost:90/product/brand/save
 Content-Type: application/json
@@ -3078,7 +3078,154 @@ Content-Type: application/json
 
 ## 🌲 SPU/SKU
 
+SPU：Standard Product Unit，标准产品单元，可以理解为一个产品型号，比如上面图片看到的iPhone 14 (A2884) 就是一个标准的产品单元，它属于生产制造过程的一个标准品，标准品在缺乏具体规格信息的时候是不能直接售卖的（除非这个产品系列只有一个规格）。
+
+SKU：Stock Keeping Unit，最小库存单元，也就是对应仓库中的一件商品，这个商品的规格信息在入库的时候就已经确定了的，因此是可以直接售卖的。
+
+## 🌲 规格参数与销售属性
+
+- 属性是以三级分类组织起来的
+- 规格参数中有些是可以提供检索的
+- 规格参数也是基本属性, 他们具有自己的分组
+- 属性的分组也是以三级分类组织起来的
+- 属性名确定的, 但是值是根据每一个商品不同来决定的
+
+## 🌲 建表
+
+当然谷粒商城已经把表给我们建好了, 我们只需要拿来用, 但是我们也要理解表中是怎么建的
+
+### 🌸 属性表(pms_attr)
+
+```sql
+CREATE TABLE pms_attr
+(
+    attr_id      bigint AUTO_INCREMENT COMMENT '属性id'
+        PRIMARY KEY,
+    attr_name    char(30)     NULL COMMENT '属性名',
+    search_type  tinyint      NULL COMMENT '是否需要检索[0-不需要，1-需要]',
+    value_type   tinyint      NULL COMMENT '值类型[0-为单个值，1-可以选择多个值]',
+    icon         varchar(255) NULL COMMENT '属性图标',
+    value_select char(255)    NULL COMMENT '可选值列表[用逗号分隔]',
+    attr_type    tinyint      NULL COMMENT '属性类型[0-销售属性，1-基本属性',
+    enable       bigint       NULL COMMENT '启用状态[0 - 禁用，1 - 启用]',
+    catelog_id   bigint       NULL COMMENT '所属分类',
+    show_desc    tinyint      NULL COMMENT '快速展示【是否展示在介绍上；0-否 1-是】，在sku中仍然可以调整'
+) COMMENT '商品属性';
+```
+
+可以看到属性表中都是一些属性, 什么叫做属性呢, 我们来看一组数据
+
+```
+7,入网型号,0,0,xxx,A2217;C3J;以官网信息为准,1,1,225,0
+8,上市年份,0,0,xxx,2018;2019,1,1,225,0
+9,颜色,0,0,xxx,黑色;白色;蓝色,0,1,225,0
+10,内存,0,0,xxx,4GB;6GB;8GB;12GB,0,1,225,0
+11,机身颜色,0,0,xxx,黑色;白色,1,1,225,1
+12,版本,0,0,xxx,"",0,1,225,0
+13,机身长度（mm）,0,0,xx,158.3;135.9,1,1,225,0
+14,机身材质工艺,0,1,xxx,以官网信息为准;陶瓷;玻璃,1,1,225,0
+15,CPU品牌,1,0,xxx,高通(Qualcomm);海思（Hisilicon）;以官网信息为准,1,1,225,1
+16,CPU型号,1,0,xxx,骁龙665;骁龙845;骁龙855;骁龙730;HUAWEI Kirin 980;HUAWEI Kirin 970,1,1,225,0
+```
+
+### 🌸 属性分组表(pms_attr_group)
+
+```sql
+CREATE TABLE pms_attr_group
+(
+    attr_group_id   bigint AUTO_INCREMENT COMMENT '分组id'
+        PRIMARY KEY,
+    attr_group_name char(20)     NULL COMMENT '组名',
+    sort            int          NULL COMMENT '排序',
+    descript        varchar(255) NULL COMMENT '描述',
+    icon            varchar(255) NULL COMMENT '组图标',
+    catelog_id      bigint       NULL COMMENT '所属分类id'
+) COMMENT '属性分组';
+```
+
+用来描述属性在哪一组中, 我们来看一组数据
+
+```
+1,主体,0,主体,dd,225
+2,基本信息,0,基本信息,xx,225
+4,屏幕,0,屏幕,xx,233
+7,主芯片,0,主芯片,xx,225
+```
+
+### 🌸 属性&属性分组关联表(pms_attr_attrgroup_relation)
+
+```sql
+CREATE TABLE pms_attr_attrgroup_relation
+(
+    id            bigint AUTO_INCREMENT COMMENT 'id'
+        PRIMARY KEY,
+    attr_id       bigint NULL COMMENT '属性id',
+    attr_group_id bigint NULL COMMENT '属性分组id',
+    attr_sort     int    NULL COMMENT '属性组内排序'
+) COMMENT '属性&属性分组关联';
+```
+
+用来描述属性在哪一个分组中
+
+```
+23,7,1,
+24,8,1,
+26,11,2,
+27,13,2,
+28,14,2,
+29,15,7,
+30,16,7,
+```
+
+### 🌸 spu属性值表(pms_product_attr_value)
+
+```sql
+CREATE TABLE pms_product_attr_value
+(
+    id         bigint AUTO_INCREMENT COMMENT 'id'
+        PRIMARY KEY,
+    spu_id     bigint       NULL COMMENT '商品id',
+    attr_id    bigint       NULL COMMENT '属性id',
+    attr_name  varchar(200) NULL COMMENT '属性名',
+    attr_value varchar(200) NULL COMMENT '属性值',
+    attr_sort  int          NULL COMMENT '顺序',
+    quick_show tinyint      NULL COMMENT '快速展示【是否展示在介绍上；0-否 1-是】'
+) COMMENT 'spu属性值';
+```
+
+描述`spu`的属性值
+
+```
+55,13,7,入网型号,A2217,,0
+56,13,8,上市年份,2018,,0
+57,13,13,机身长度（mm）,158.3,,0
+58,13,14,机身材质工艺,以官网信息为准,,0
+59,13,15,CPU品牌,以官网信息为准,,1
+60,13,16,CPU型号,A13仿生,,1
+61,11,7,入网型号,LIO-AL00,,1
+62,11,8,上市年份,2019,,0
+63,11,11,机身颜色,黑色,,1
+64,11,13,机身长度（mm）,158.3,,1
+65,11,14,机身材质工艺,玻璃;陶瓷,,0
+66,11,15,CPU品牌,海思（Hisilicon）,,1
+67,11,16,CPU型号,HUAWEI Kirin 970,,1
+```
+
 未完待续
+
+## 🌲 表关系
+
+因为这个地方实在太多了, 我也很难听懂, 所以之后如果听懂了就把这些表补上
+
+## 🌲 属性分组
+
+未完待续...
+
+
+
+
+
+
 
 
 

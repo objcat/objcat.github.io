@@ -3057,7 +3057,7 @@ Content-Type: application/json
 
 ##### 🐔 有话要说
 
-这章学完之后, 如果你觉得`问题很大`, 那么你可能高手, 如果你觉得没啥问题, 那么你就是个新手, 不过无论是`高手`还是`新手`我推荐你们把注解都注释掉, 否则可能会出现一大堆的问题, 比如想修改一个状态但是因为名字为空不能进行修改, 我们先学这种思想以后再优化
+这章学完之后, 如果你觉得`问题很大`, 那么你可能是高手, 如果你觉得没啥问题, 那么你就是个新手, 不过无论是`高手`还是`新手`我推荐你们把注解都注释掉, 否则可能会出现一大堆的问题, 比如想修改一个状态但是因为名字为空不能进行修改, 我们先学这种思想以后再优化
 
 #### 🌵 spring-validation校验
 
@@ -3241,15 +3241,141 @@ http://localhost:5173/product-attrgroup
 
 ![](images3/Pasted%20image%2020231019174511.png)
 
+然后给它先布个局
+
+```vue
+<template>
+    <div>
+        <el-row :gutter="20">
+            <el-col :span="6">
+                菜单
+            </el-col>
+            
+	        <el-col :span="18">
+                表格
+            </el-col>
+        </el-row>
+    </div>
+</template>
+```
+
 ### 🌸 抽取三级分类
 
 因为`三级分类`后续都会用到, 所以我们把它封装成`组件`, 这样就可以方便的进行引入达到复用的效果, 创建一个`common/categoryTree.vue`
 
 然后我们把`category`中的代码直接拷贝进去, 修修补补之后是下面的代码了
 
+```vue
+<template>
+    <div>
+        <el-tree :data="menus" :props="defaultProps" ref="tree" node-key="catId">
+            <span class="custom-tree-node" slot-scope="{ node, data }">
+                <span>{{ node.label }}</span>
+            </span>
+        </el-tree>
+    </div>
+</template>
+  
+<script>
+import axios from 'axios'
+import { api } from '@/utils/apimap.js'
+export default {
+    data() {
+        return {
+            menus: [],
+            defaultProps: {
+                children: "children",
+                label: "name"
+            },
+        };
+    },
+    methods: {
+        requestMenus() {
+            axios.get(api.api_product_category_listCategoryTree).then((res) => {
+                if (res.data.code == 0) {
+                    this.menus = res.data.datas;
+                }
+            })
+        }
+    },
+    created() {
+        this.requestMenus();
+    }
+};
+</script>
 ```
-''
+
+然后用三级分类代替菜单
+
+```vue
+<el-col :span="6">
+	<CategoryTree></CategoryTree>
+</el-col>
+
+<script>
+
+import CategoryTree from "@/views/common/category-tree.vue"
+
+export default {
+    components: {
+        CategoryTree
+    },
 ```
+
+### 🌸 完善表格
+
+我们从自动生成的代码中把所有的东西直接对号入座拷贝过来, 其中`<template>`中的内容替换表格, 变量什么的都配置进来, 否则报错
+
+![](images/Pasted%20image%2020231020130837.png)
+
+然后我们会看到右边一直转圈, 查看控制台我们发现如下错误, 所以是网络请求不通导致的一直转圈
+
+```
+GET http://localhost:8080/renren-fast/product/attrgroup/list?t=1697778375360&page=1&limit=10&key= 404 (Not Found)
+```
+
+一看就是接口没通, 我们把它替换成网关的就可以了, 向`apimap.js`中增加接口
+
+```js
+const host = import.meta.env.VITE_GULIMALL_HOST;
+
+const api = {
+    api_product_category_listCategoryTree: host + "/product/category/listCategoryTree",
+    api_product_category_delete: host + "/product/category/delete",
+    api_product_category_save: host + "/product/category/save",
+    api_product_category_update: host + "/product/category/update",
+
+    api_product_brand_list: host + "/product/brand/list",
+    api_product_brand_delete: host + "/product/brand/delete",
+    api_product_brand_info: host + "/product/brand/info",
+    api_product_brand_save: host + "/product/brand/save",
+    api_product_brand_update: host + "/product/brand/update",
+
+    api_product_attrgroup_list: host + "/product/attrgroup/list",
+    api_product_attrgroup_delete: host + "/product/attrgroup/delete",
+    api_product_attrgroup_info: host + "/product/attrgroup/info",
+    api_product_attrgroup_save: host + "/product/attrgroup/save",
+    api_product_attrgroup_update: host + "/product/attrgroup/update",
+
+    api_thirdpart_oss_policy: host + "/thirdparty/oss/getPolicy",
+}
+
+export {
+    api
+}
+```
+
+然后我们改写接口, 改写过程我不多说了, 然后可以看到不会一直转圈了
+
+![](images/Pasted%20image%2020231020131601.png)
+
+### 🌸 完成联动
+
+我们想实现点击分类后传递一个消息给父组件, 然后让它去刷新列表, 这就需要用到`子组件向父组件传值的功能了`
+
+未完待续...
+
+
 
 
 

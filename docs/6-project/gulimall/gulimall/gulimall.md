@@ -48,9 +48,9 @@ https://gitee.com/objcat/gulimall2024
 
 # 🍎 开始
 
-## 🌲 环境搭建
+## 🌲 环境搭建(6集)
 
-按照视频中的要求去安装就行, 我顺便提供一下我的安装方式, 仅供参考
+按照视频中的要求去安装就行, 我顺便提供一下我的安装方式, 可能不全仅供参考
 
 - docker [跳转docker_env](../../../3-program/env/docker/docker_env.md)
 - java [跳转 java_env](../../../3-program/env/java/java_env.md)
@@ -69,6 +69,7 @@ openjdk version "17.0.5" 2022-10-18
 
 node -v
 v18.16.1
+
 npm -v
 9.5.1
 
@@ -83,11 +84,11 @@ redis:7
 
 ### 🌸 创建父工程
 
-`jdk`最好用`1.8`因为是目前的「主流版本」😂  我这里是逆天而行选的`java17`, 但要注意的是你选择`java17`未来在服务器运行的时候就要使用`java17`的`jdk`否则会跑不起来
+`jdk`最好用`1.8`因为是目前的「主流版本」我这里是逆天而行选的`java17`  , 但要注意的是你选择`java17`就要承受开发环境不同出现可能会出现的各种问题, 未来在服务器运行的时候就要使用`java17`的`jdk`否则可能出现未知的错误, 还有别再听什么「Java之父」说的生产环境只需要`jre`, 害人不浅, 首先我们新建一个父工程, 父工程主要用来写一些通用配置和管理子工程
 
 ![](images2/Pasted%20image%2020230925150719.png)
 
-他是后配置父模块, 我这里是先配置父模块的`pom`, 我选择的版本是`2.7.15`
+然后配置父工程的`pom`, 我选择的`boot`版本是`2.7.15`
 
 ```xml
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -211,7 +212,7 @@ redis:7
 
 ### 🌸 创建微服务
 
-视频中要求创建以下服务
+视频中要求创建以下服务, 一个一个去创建, 并且依赖只配置`web和openfeign`
 
 - 商品服务 gulimall-product
 - 订单服务 gulimall-order
@@ -219,11 +220,9 @@ redis:7
 - 优惠券服务 gulimall-coupon
 - 用户服务 gulimall-member
 
-一个一个去创建, 并且依赖只配置`web和openfeign`
-
 ![](images2/Pasted%20image%2020230925153931.png)
 
-我这边不喜欢使用`Spring Initializr`, 就使用了IDEA自带的`new Module`, 把微服务一个一个的创建出来, 这里就贴一张图, 不演示了, 然后你可以把一个一个把配置粘到微服务中去, 我嫌那样比较麻烦, 所以我是创建了通用模块, 然后让子项目依赖于通用模块
+我这边不喜欢使用`Spring Initializr`, 就使用了IDEA自带的`new Module`, 把微服务一个一个的创建出来, 这里就贴一张图, 其他不演示了, 然后你大可以跟着视频把一个一个把依赖库粘到微服务中去, 我嫌那样比较麻烦, 所以我是创建了通用模块, 然后让子项目依赖于通用模块, 视频后期也会抽出通用模块, 但我在之前就把它做了
 
 ### 🌸 创建通用模块
 
@@ -269,7 +268,7 @@ redis:7
 
 ### 🌸 配置微服务pom
 
-然后把每个微服务都配上这个依赖包, 我就用`product`来举例子了
+然后把每个微服务上都配置这个依赖包, 我就用`product`来举例子了
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -300,9 +299,9 @@ redis:7
 
 ![](images2/Pasted%20image%2020230925155615.png)
 
-## 🌲 上传到码云
+## 🌲 上传到码云(13集)
 
-然后说是要上传到码云, 那我就开一个仓库
+然后说是要上传到码云, 那我就开一个仓库, 新手直接用`URL`也行, 不一定非得要`ssh`
 
 ![](images2/Pasted%20image%2020230925160333.png)
 
@@ -314,7 +313,7 @@ redis:7
 
 ![](images2/Pasted%20image%2020230925161035.png)
 
-## 🌲 配置数据库
+## 🌲 配置数据库(15集)
 
 视频中是使用`power designer`来设计的数据库, 但是`mac`上面没有, 我先加群拿资料, 但是管理员反应的很慢, 所以我在下面的网盘中拿的
 
@@ -355,7 +354,7 @@ redis:7
 
 ![](images2/Pasted%20image%2020230925173043.png)
 
-所以我们直接执行SQL
+所以我们直接执行SQL创建
 
 ```sql
 CREATE SCHEMA IF NOT EXISTS gulimall_admin;  
@@ -380,9 +379,9 @@ CREATE SCHEMA IF NOT EXISTS gulimall_wms;
 
 可以看到每个里面都有很多张表
 
-## 🌲 后台管理系统
+## 🌲 后台管理系统(16集)
 
-视频上强烈推荐人人开源, 上面的是后台管理系统的服务端, 下面是后台管理系统的前端页面
+`雷神`强烈推荐人人开源, 那我们就跟着视频用这一套框架
 
 https://gitee.com/renrenio
 
@@ -394,7 +393,7 @@ https://gitee.com/renrenio/renren-fast
 
 ![](images2/Pasted%20image%2020230925174440.png)
 
-根据视频的操作, 直接把项目放到工程中, 这个db不用导入, 因为上面的`gulimall_admin`就是
+根据视频的操作, 直接把项目放到工程中, 这个db不用导入, 因为上面的`gulimall_admin`就是这个项目的数据库
 
 ![](images2/Pasted%20image%2020230925175715.png)
 
@@ -442,7 +441,7 @@ java: 找不到符号
   位置: 类型为io.renren.modules.sys.entity.SysUserEntity的变量 user
 ```
 
-看了很久不知道怎么回事, 后来更新了一下`lombok`好了, 我把java版本也改成了17
+看了很久不知道怎么回事, 后来更新了一下`lombok`好了
 
 ```
 // <lombok.version>1.18.4</lombok.version>
@@ -469,7 +468,7 @@ LICENSE                 build                   demo-screenshot         index.ht
 yarn
 ```
 
-你也可以使用`npm`如果不会就过去学 [跳转 npm](../../../4-package-manager/npm/npm.md)
+你也可以使用`npm`我比较习惯`yarn`因为打着顺手
 
 安装过程中我们发现`node-sass`报错了, 说没有xxx命令不能编译, 网上的解决方案是什么下载c++的编译环境, 但是我没有采用, 我是把它的版本进行了更新
 
@@ -525,7 +524,11 @@ yarn add chromedriver
 
 ![](images/Pasted%20image%2020230926121720.png)
 
-## 🌲 解决报错 ⭐ (难)
+后来我发现这个`node-sass`实在是个毒瘤, 所以我用`vite`代替了`webpack`, 重构了项目`renren-fast-vite`在项目中就能找到, 启动时间从10秒优化到了1秒
+
+## 🌲 解决报错 ⭐ (难 17集)
+
+我之所以标注难是因为这一章节不光要解决问题, 还要把工具包拷来拷去, 对新手来说实在是很麻烦, 所以我建议直接使用资料中配置好的`common`或者使用我的`common`也可以
 
 https://gitee.com/renrenio/renren-generator
 
@@ -751,7 +754,7 @@ public class ProductApplication {
 
 ![](images/Pasted%20image%2020230926173840.png)
 
-这个表是`undo_log`, 里面发现有一个类型是`Longblob`, 我可以把它替换成了`Blob`, 但这个类不属于我们的系统, 可能是mysql自动创建的, 我们需要把它完全移除, 否则会报错, 如果你在前面没有勾选, 那么就谢天谢地了
+这个表是`undo_log`, 里面发现有一个类型是`Longblob`, 我可以把它替换成了`Blob`, 但这个类不属于我们的系统, 可能生成代码的时候忘了打钩了, 我们需要把它完全移除, 否则会报错, 如果你在前面没有勾选, 那么就谢天谢地了
 
 然后我们运行项目, 能运行起来就对了
 
@@ -789,25 +792,25 @@ public class ProductApplicationTests {
 }
 ```
 
-如果列表被打印出来证明是对的
+如果列表被打印出来证明是对的, 到这里我们项目基础环境调通了
 
 ## 🌲 完善其他服务
 
-根据视频步骤来, 他让把其他服务也跟`product`一样使用自动生成代码配置上, 你可以去配置, 但是因为这是个体力活, 我选择先往后面看看, 有什么其他要改的, 需要用到的时候再去创建
+根据视频步骤来, 他让把其他服务也跟`product`一样使用自动生成代码配置上, 你可以去配置, 但是因为这是个体力活, 我选择先往后面看看, 有什么其他要改的, 需要用到的时候再去创建, 这在变成中成为「懒加载」
 
-## 🌲 Nacos
+## 🌲 Nacos(20集)
 
-下面是视频中有关于nacos的章节 20 ~ 25
+下面是nacos章节, 由于各个模块的内容都比较多, 一篇文章很难装下, 所以下面的文章我都是抽出单独的文章去写单独的模块, 这样也方便阅读
 
 [跳转 gulimall_nacos](../gulimall_nacos/gulimall_nacos.md)
 
-## 🌲 Gateway
+## 🌲 Gateway(26集)
 
-下面是视频中有关于gateway的章节 26 ~ 27
+下面是gateway章节
 
 [跳转 gulimall_gateway](../gulimall_gateway/gulimall_gateway.md)
 
-## 🌲 前端基础
+## 🌲 前端基础(28集)
 
 作为一个移动端来说, 终于是跳到和自己工作沾边的领域了, 不过前端和后端一起学习对于新手来说简直是「泰难啦」但是你心中要有一个理想就是学习完你就是全栈了
 
@@ -825,7 +828,7 @@ public class ProductApplicationTests {
 
 [跳转 vue](../../../1-framework/javascript/vue/vue/vue.md)
 
-## 🌲 product模块
+## 🌲 product模块(45集)
 
 [跳转 gulimall_product](../gulimall_product/gulimall_product.md)
 

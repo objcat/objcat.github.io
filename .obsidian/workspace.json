@@ -18,6 +18,18 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "8a1302172160b4a7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "docs/6-project/gulimall/gulimall_product/gulimall_product.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ]
       }
@@ -154,30 +166,29 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "d44b0fe33b731759",
+  "active": "eee7dabbf81aba60",
   "lastOpenFiles": [
-    "docs/6-project/gulimall/gulimall_product/images/Pasted image 20231019174511.png",
-    "docs/6-project/gulimall/gulimall_product/images/Pasted image 20231019173808.png",
-    "docs/6-project/gulimall/gulimall_product/images/Pasted image 20231019170624.png",
+    "docs/6-project/gulimall/gulimall/gulimall.md",
     "docs/6-project/gulimall/gulimall_product/gulimall_product.md",
+    "docs/6-project/gulimall/gulimall_product/images3/Pasted image 20231019174511.png",
+    "docs/6-project/gulimall/gulimall_product/images3/Pasted image 20231019173808.png",
+    "docs/6-project/gulimall/gulimall_product/images/Pasted image 20231019170624.png",
     "docs/6-project/gulimall/gulimall_product/images/2023-10-19 17.02.36.png",
     "README.md",
     "docs/README.md",
-    "docs/6-project/gulimall/gulimall/gulimall.md",
-    "docs/6-project/gulimall/gulimall_product/images/Pasted image 20231018232926.png",
-    "docs/6-project/gulimall/gulimall_product/images/Pasted image 20231015110700.png",
-    "docs/6-project/gulimall/gulimall_product/images/Pasted image 20231015110434.png",
-    "docs/6-project/gulimall/gulimall_product/images/Pasted image 20231015095549.png",
-    "docs/6-project/gulimall/gulimall_product/images/Pasted image 20231015094657.png",
+    "docs/6-project/gulimall/gulimall_product/images3/Pasted image 20231018232926.png",
+    "docs/6-project/gulimall/gulimall_product/images3/Pasted image 20231015110700.png",
+    "docs/6-project/gulimall/gulimall_product/images3/Pasted image 20231015110434.png",
+    "docs/6-project/gulimall/gulimall_product/images3/Pasted image 20231015095549.png",
+    "docs/6-project/gulimall/gulimall_product/images3/Pasted image 20231015094657.png",
     "docs/6-project/gulimall/gulimall_product/images/Pasted image 20231012175314.png",
     "docs/6-project/gulimall/gulimall_oss/gulimall_oss.md",
-    "docs/6-project/gulimall/gulimall_oss/images2/Pasted image 20231010180604.png",
     "docs/6-project/gulimall/gulimall_oss/images",
     "docs/6-project/gulimall/gulimall_oss/images/Pasted image 20231010201108.png.sb-408b9c48-fr4lon",
     "docs/6-project/gulimall/gulimall_nacos/gulimall_nacos.md",
     "docs/6-project/gulimall/gulimall_oss/images2",
     "docs/6-project/gulimall/gulimall_oss",
-    "docs/6-project/gulimall/gulimall_product/images",
+    "docs/6-project/gulimall/gulimall_product/images3",
     "docs/6-project/gulimall/gulimall_gateway/gulimall_gateway.md",
     "docs/6-project/gulimall/gulimall_product/images2/CategoryController.java",
     "docs/js/search.min.js",

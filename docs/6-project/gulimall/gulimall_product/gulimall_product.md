@@ -1567,6 +1567,24 @@ url: this.$http.adornUrl('/product/brand/delete'),
 url: api.api_product_brand_delete,
 ```
 
+但是我们发现以后每一个文件中都引入一个`api`变量会比较麻烦, 所以我们就搞一个全局变量, 打开`main.js`
+
+```js
+import { api } from '@/utils/apimap.js'
+
+Vue.prototype.$api = api;
+```
+
+把`api`绑定上去, 然后就可以全局使用了
+
+```js
+url: this.$http.adornUrl('/product/brand/list'),
+url: this.$api.api_product_brand_list,
+
+url: this.$http.adornUrl('/product/brand/delete'),
+url: this.$api.api_product_brand_delete,
+```
+
 替换完成后我们发现页面出来了
 
 ![](images2/Pasted%20image%2020231010123904.png)
@@ -1577,10 +1595,10 @@ url: api.api_product_brand_delete,
 
 ```js
 url: this.$http.adornUrl(`/product/brand/info/${this.dataForm.brandId}`)
-url: `${api.api_product_brand_info}/${this.dataForm.brandId}`,
+url: `${this.$api.api_product_brand_info}/${this.dataForm.brandId}`,
 
 url: this.$http.adornUrl(`/product/brand/${!this.dataForm.brandId ? 'save' : 'update'}`),
-url: `${!this.dataForm.brandId ? api.api_product_brand_save : api.api_product_brand_update}`,
+url: `${!this.dataForm.brandId ? this.$api.api_product_brand_save : this.$api.api_product_brand_update}`,
 ```
 
 ## 🌲 开放权限
@@ -2165,7 +2183,7 @@ export default {
 
 ### 🌸 配置policy地址
 
-我们找到`upload/policy.js`, 然后修改里面的地址
+我们找到`upload/policy.js`, 然后修改里面的地址, 因为js不在vue对象内, 无法识别全局变量, 所以这里我们可以手动导入
 
 ```js
 import http from '@/utils/httpRequest.js'
@@ -3280,7 +3298,6 @@ http://localhost:5173/product-attrgroup
   
 <script>
 import axios from 'axios'
-import { api } from '@/utils/apimap.js'
 export default {
     data() {
         return {
@@ -3293,7 +3310,7 @@ export default {
     },
     methods: {
         requestMenus() {
-            axios.get(api.api_product_category_listCategoryTree).then((res) => {
+            axios.get(this.$api.api_product_category_listCategoryTree).then((res) => {
                 if (res.data.code == 0) {
                     this.menus = res.data.datas;
                 }
@@ -3507,6 +3524,144 @@ getDataList() {
 ```
 
 ### 🌸 属性分组新增
+
+我们可以看一下属性分组的新增页面
+
+![](images/Pasted%20image%2020231024133443.png)
+
+我们发现所属分类`id`是需是需要手动填写的, 这就很不方便, 所以我们可以把它改成选择的, 视频中使用了`级联选择器`
+
+https://element.eleme.cn/#/zh-CN/component/cascader
+
+我这里直接把他封装成一个组件, 因为页面中元素实在太多了, 新建`category-cascader.vue`, 然后把示例代码拷贝进去
+
+然后我们在`attrgroup-add-or-update.vue`页面中引入即可
+
+```html
+<el-form-item label="所属分类id" prop="catelogId">
+	<CategoryCascader></CategoryCascader>
+</el-form-item>
+```
+
+`CategoryCascader`是一个组件别忘了注册
+
+```js
+<script>
+import CategoryCascader from '@/views/common/category-cascader.vue'
+export default {
+  components: {
+    CategoryCascader
+  },
+```
+
+可以看到已经可以选择了
+
+![](images/Pasted%20image%2020231024134852.png)
+
+但是数据还不是我们三级分类的数据, 那要怎么做呢? 没错就是做个网络请求来获取数据, 我们直接把`category-tree`组件中的请求函数拿过来, 然后别忘了配置`属性对应`, 否则菜单能显示出来, 但文字还是空白
+
+显示出来之后我们会遇到另外一个问题
+
+![](images/Pasted%20image%2020231024140635.png)
+
+我们发现三级分类下面还能选, 那我们岂不是永远都点不到选项了, 经过分析是因为我们的数据问题, 因为第三级的分类下有个属性叫`children`是个空数组, `element`把他解析成了空菜单, 所以会这样, 想要解决这个问题我们只需要在后台做一个小的处理, 配置当数组为空就不返回这个属性了
+
+```java
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@TableField(exist = false)
+private List<CategoryEntity> children;
+```
+
+然后我们看一下效果
+
+![](images/Pasted%20image%2020231024141150.png)
+
+我们发现第三级的菜单终于是可以选择了, 选择虽然没问题了, 但是我们发现选择后再打开它默认把我们所有的选项都选上了
+
+![](images/Pasted%20image%2020231024141811.png)
+
+后来经过调试查到是我自己的问题, 我没有设置好value的取值, 导致了value取到的都是空值, 导致了列表错乱, 下面是正确的配置
+
+```js
+defaultProps: {
+	children: "children",
+	label: "name",
+	value: "catId"
+}
+```
+
+我们选择一个分类后在控制台就会打印出来, 很明显它是把三级分类的列表保存在`value`中了
+
+```json
+[1, 22, 165]
+```
+
+我们来看一下完整页面把
+
+```vue
+<template>
+    <div>
+        <el-cascader v-model="value" :options="options" :props="defaultProps" @change="handleChange"></el-cascader>
+    </div>
+</template>
+<script>
+import axios from 'axios';
+export default {
+    data() {
+        return {
+            value: [],
+            options: [],
+            defaultProps: {
+                children: "children",
+                label: "name",
+                value: "catId"
+            }
+        };
+    },
+    methods: {
+        requestMenus() {
+            axios.get(this.$api.api_product_category_listCategoryTree).then((res) => {
+                if (res.data.code == 0) {
+                    this.options = res.data.datas;
+                }
+            })
+        },
+        handleChange(value) {
+            console.log(value);
+        }
+    },
+    created() {
+        this.requestMenus();
+    }
+};
+</script>
+```
+
+然后我们使用`emit`直接把值传出去就完事了
+
+```js
+handleChange(value) {
+	// 传递数组中最后一个值, 也就是我们第三个分类
+	this.$emit("nodeClick", value[value.length - 1]);
+}
+```
+
+然后在主页面绑定方法接收
+
+```vue
+<CategoryCascader @nodeClick="categoryCascaderClick"></CategoryCascader>
+<script>
+categoryCascaderClick(value) {
+  // 把value传过来
+  this.dataForm.catelogId = value;
+}
+```
+
+我们把获取到的value值直接传给`catelogId`就能够进行表单提交了
+
+### 🌸 属性分组修改
+
+我们点击修改
 
 未完待续...
 

@@ -3243,6 +3243,8 @@ http://localhost:5173/product-attrgroup
 
 然后给它先布个局
 
+- attrgroup.vue
+
 ```vue
 <template>
     <div>
@@ -3369,17 +3371,142 @@ export {
 
 ![](images/Pasted%20image%2020231020131601.png)
 
-### 🌸 获取分类的属性分组功能(72集)
+### 🌸 属性分组接口根据分类和key检索(72集)
 
-这一块老师讲的不好, 我非常迷惑, 所以决定自己做了
+这一块老师讲的不好, 迷惑的点在于`IPage`没有详细讲解知识一笔带过, 新手肯定听的云里雾里的, 我这里推荐先把东西做出来, 之后再慢慢理解
 
-这一块说白了就是个筛选, 我们想实现点击左侧的三级分类后获取到`categoryId`带到右侧的列表做一个筛选, 值得注意的是我们能够看见页面上面也有一个搜索, 所以我们可以看出这个获取属性分组的接口需要很多的参数, 我们能想到的就是`categoryId`和`key(搜索的值)`, 我们首先需要一个接口, 我们先去找控制器`AttrGroupController.java`, 对应的功能应该写在对应的控制器中
+这一块说白了就是个筛选, 我们想实现点击左侧的三级分类后获取到`id`带到右侧的列表做一个筛选, 值得注意的是我们能够看见页面上面也有一个搜索, 我们第一个想到的参数就是`key(搜索的值)`, 接口中使用`params`来接收key, 其实我们也可以使用`params`来接收`catelogId`, 这里为了跟视频保持一致就使用路径参数了, 我们就跟着他把接口先写出来, 我的接口和他有一个地方不一样, 上面都有注释自己读
 
+```java
+@Override
+public PageUtils queryPage(Map<String, Object> params, Long catelogId) {
+	IPage<AttrGroupEntity> page = null;
+	// 获取搜索关键字
+	String key = (String) params.get("key");
+	// 创建QueryWrapper
+	QueryWrapper<AttrGroupEntity> queryWrapper = new QueryWrapper<>();
+
+	// catelogId传0查所有, 反之按照id查询
+	if (catelogId != 0) {
+		queryWrapper.eq("catelog_id", catelogId);
+	}
+
+	// key为空就不搜索, 反之按照attr_group_id和attr_group_name进行搜索
+	if (!StringUtils.isEmpty(key)) {
+		queryWrapper.and((obj) -> {
+			obj.eq("attr_group_id", key).or().like("attr_group_name", key);
+		});
+	}
+
+	// 执行检索
+	page = this.page(new Query<AttrGroupEntity>().getPage(params), queryWrapper);
+
+	// 返回数据
+	return new PageUtils(page);
+}
 ```
 
+可以看到最后返回了一个`PageUtils`, 是非常唬人的, 因为命名不规范, 应该叫`PageEntity`更加直观, 我们也不用管那么多, 三下五除二先测试一下, 我们的表是这样的
+
+- pms_attr_group
+
+![](images/Pasted%20image%2020231024104021.png)
+
+然后我们写一个方法来查询
+
+```java
+@Resource
+private AttrGroupService attrGroupService;
+
+@Test
+public void testListById() {
+	Map<String, Object> map = new HashMap<>();
+	map.put("key", "主体");
+	System.out.println(attrGroupService.queryPage(map, 225L));
+}
 ```
 
+我们可以看到`catelogId`传了`225`, 因为只有这个分类下面有值, `key`传的主体, 这就是我们的筛选, 然后可以看到数据返回出来了
 
+```java
+PageUtils(totalCount=0, pageSize=10, totalPage=0, currPage=1, list=[AttrGroupEntity(attrGroupId=1, attrGroupName=主体, sort=0, descript=主体, icon=dd, catelogId=225)])
+```
+
+### 🌸 属性分组搜索
+
+分两步, 简略说一下, 非常简单哈
+
+#### 🌵 获取子组件传值
+
+在`vue`获取子组件的传值是要用`$emit`的
+
+- category-tree.vue
+
+```vue
+<el-tree :data="menus" :props="defaultProps" ref="tree" node-key="catId" @node-click="nodeClick">
+	<span class="custom-tree-node" slot-scope="{ node, data }">
+		<span>{{ node.label }}</span>
+	</span>
+</el-tree>
+```
+
+首先绑定一个`nodeClick`方法, 然后在方法中`emit`出去
+
+```js
+nodeClick(data, node, component) {
+	this.$emit("nodeClick", data, node, component);
+}
+```
+
+#### 🌵 父组件中接收并刷新数据
+
+然后子组件就能接收到了
+
+```vue
+<CategoryTree @nodeClick="nodeClick"></CategoryTree>
+```
+
+我们在接收方法中取到id并重新获取数据就可以了
+
+```js
+nodeClick(data, node, component) {
+	// 只有三级分类才开始处理
+	if (data.catLevel == 3) {
+		// 获取到catId
+		this.catelogId = data.catId;
+		// 刷新数据
+		this.getDataList();
+	}
+}
+```
+
+我们来看一下`getDataList`如何改写
+
+```js
+getDataList() {
+	this.dataListLoading = true
+	this.$http({
+		url: api.api_product_attrgroup_list + "/" + this.catelogId,
+		method: 'get',
+		params: this.$http.adornParams({
+			'page': this.pageIndex,
+			'limit': this.pageSize,
+			'key': this.dataForm.key
+		})
+	}).then(({ data }) => {
+		if (data && data.code === 0) {
+			this.dataList = data.page.list
+			this.totalPage = data.page.totalCount
+		} else {
+			this.dataList = []
+			this.totalPage = 0
+		}
+		this.dataListLoading = false
+	})
+}
+```
+
+### 🌸 属性分组新增
 
 未完待续...
 

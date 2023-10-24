@@ -3590,7 +3590,7 @@ defaultProps: {
 }
 ```
 
-我们选择一个分类后在控制台就会打印出来, 很明显它是把三级分类的列表保存在`value`中了
+我们选择电子书分类后在控制台就会打印出来, 很明显它是把三级分类的列表保存在`value`中了
 
 ```json
 [1, 22, 165]
@@ -3661,7 +3661,40 @@ categoryCascaderClick(value) {
 
 ### 🌸 属性分组修改
 
-我们点击修改
+我们刷新页面点击修改, 发现修改没有获取到分类
+
+![](images/Pasted%20image%2020231024163303.png)
+
+那我们要怎么获取呢? 很简单我们只需要把`id`带过去就行了, 我们先在子组件中写死试一下
+
+```vue
+<CategoryCascader @nodeClick="categoryCascaderClick" :catelogIdArray="[1, 22, 165]"></CategoryCascader>
+```
+
+然后我们在`CategoryCascader`组件内接收参数并把它赋值到`value`上, `element`就能自动帮我们选择了
+
+```js
+props: [
+	"catelogIdArray"
+],
+data() {
+	return {
+		value: this.catelogIdArray ? this.catelogIdArray : [],
+		options: [],
+		defaultProps: {
+			children: "children",
+			label: "name",
+			value: "catId"
+		}
+	};
+},
+```
+
+然后我们发现能显示出来了
+
+![](images/Pasted%20image%2020231024165825.png)
+
+所以我们只需要构造出这三个`id`的结构, 就可以让`element`做默认选择了
 
 未完待续...
 

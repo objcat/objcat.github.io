@@ -3533,7 +3533,7 @@ getDataList() {
 
 https://element.eleme.cn/#/zh-CN/component/cascader
 
-我这里直接把他封装成一个组件, 因为页面中元素实在太多了, 新建`category-cascader.vue`, 然后把示例代码拷贝进去
+我这里直接把他封装成一个组件, 因为页面中元素实在太多了, 新建`category-cascader.vue`, 然后把示例代码拷贝进去, 组件后面会分享
 
 然后我们在`attrgroup-add-or-update.vue`页面中引入即可
 
@@ -3580,7 +3580,7 @@ private List<CategoryEntity> children;
 
 ![](images/Pasted%20image%2020231024141811.png)
 
-后来经过调试查到是我自己的问题, 我没有设置好value的取值, 导致了value取到的都是空值, 导致了列表错乱, 下面是正确的配置
+后来经过调试查到是我自己的问题, 我没有设置好`value`的取值, 导致了value取到的都是空值, 导致了列表错乱, 下面是正确的配置
 
 ```js
 defaultProps: {
@@ -3659,9 +3659,9 @@ categoryCascaderClick(value) {
 
 我们把获取到的value值直接传给`catelogId`就能够进行表单提交了
 
-### 🌸 属性分组修改
+### 🌸 属性分组修改(分类回填)
 
-我们刷新页面点击修改, 发现修改没有获取到分类
+我们刷新页面点击修改, 发现修改没有获取到分类, 很多人说它能获取到分类, 那是因为刚新增完有缓存, 刷新一下页面就不行了
 
 ![](images/Pasted%20image%2020231024163303.png)
 
@@ -3695,6 +3695,132 @@ data() {
 ![](images/Pasted%20image%2020231024165825.png)
 
 所以我们只需要构造出这三个`id`的结构, 就可以让`element`做默认选择了
+
+### 🌸 后台构造id
+
+这个构造可以让前端做也可以让后端做, 本文先跟随视频内容在后端构造id, 这个不难啊, 我们先捋清思路, 思路就是使用第三级分类的`catelogId`在数据库中查询, 最终得到一个装有`id`的数组, 
+
+- CategoryServiceImpl.java
+
+```java
+@Override
+public List<Long> findCatelogPath(Long catelogId) {
+	List<Long> list = new ArrayList<>();
+	// 获取第三级分类的实体
+	CategoryEntity category3 = this.getById(catelogId);
+	// 如果这个id所属不是第三级分类就返回null, 因为链条不全
+	if (category3.getCatLevel() != 3) {
+		return null;
+	} else {
+		// 如果是第三级分类就再查它父类的实体, 这样三级的id都能拿到了
+		CategoryEntity category2 = this.getById(category3.getParentCid());
+		list.add(category2.getParentCid());
+		list.add(category3.getParentCid());
+		list.add(category3.getCatId());
+		return list;
+	}
+}
+```
+
+写好了我们直接测试一下
+
+```java
+@Test
+public void testFindCatelogPath() {
+	System.out.println(categoryService.findCatelogPath(311L));
+	// [3, 41, 311]
+}
+```
+
+然后我们在`controller`中使用这个方法, 我们改写获取用户信息的接口
+
+- AttrGroupEntity.java
+
+我们给分组实体中添加一个属性, 因为这个属性不在数据库中, 所以需要使用注解`@TableField(exist = false)`
+
+```java
+@TableField(exist = false)
+private List<Long> catelogPath;
+```
+
+然后我们直接在`AttrGroupController.java`中改写一下`info`接口
+
+```java
+@Resource
+private AttrGroupService attrGroupService;
+@Resource
+private CategoryService categoryService;
+    
+@RequestMapping("/info/{attrGroupId}")
+public R info(@PathVariable("attrGroupId") Long attrGroupId) {
+	AttrGroupEntity attrGroup = attrGroupService.getById(attrGroupId);
+	List<Long> catelogPath = categoryService.findCatelogPath(attrGroup.getCatelogId());
+	attrGroup.setCatelogPath(catelogPath);
+	return R.ok().put("attrGroup", attrGroup);
+}
+```
+
+
+### 🌸 前端读取id
+
+这个就比较简单了, 我们直接获取刚才返回的数据`this.catelogPath = data.attrGroup.catelogPath;`
+
+```js
+init(id) {
+  this.dataForm.attrGroupId = id || 0
+  this.visible = true
+  this.$nextTick(() => {
+	this.$refs['dataForm'].resetFields()
+	if (this.dataForm.attrGroupId) {
+	  this.$http({
+		url: this.$api.api_product_attrgroup_info + "/" + this.dataForm.attrGroupId,
+		method: 'get',
+		params: this.$http.adornParams()
+	  }).then(({ data }) => {
+		if (data && data.code === 0) {
+		  this.dataForm.attrGroupName = data.attrGroup.attrGroupName
+		  this.dataForm.sort = data.attrGroup.sort
+		  this.dataForm.descript = data.attrGroup.descript
+		  this.dataForm.icon = data.attrGroup.icon
+		  this.dataForm.catelogId = data.attrGroup.catelogId
+		  this.catelogIdArray = data.attrGroup.catelogPath;
+		}
+	  })
+	}
+  })
+}
+```
+
+当然我们在`data`中提前定义好`catelogIdArray`
+
+```json
+data() {
+    return {
+        catelogIdArray: [],
+    }
+}
+```
+
+然后传给子组件就行了
+
+```html
+<CategoryCascader @nodeClick="categoryCascaderClick" :catelogIdArray="catelogIdArray"></CategoryCascader>
+```
+
+划重点来了
+
+```vue
+<template>
+    <div>
+        <el-cascader v-model="catelogIdArray" :options="options" :props="defaultProps" @change="handleChange"></el-cascader>
+    </div>
+</template>
+```
+
+子组件中直接使用这个`catelogIdArray`作为参数, 然后把`value`直接删了
+
+然后我们发现可以正常显示了, 所测试几个栏目, 确保没有缓存
+
 
 未完待续...
 

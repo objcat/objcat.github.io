@@ -3841,6 +3841,8 @@ categoryCascaderClick(value) {
 [Vue warn]: Avoid mutating a prop directly since the value will be overwritten whenever the parent component re-renders. Instead, use a data or computed property based on the prop's value. Prop being mutated: "catelogIdArray"
 ```
 
+新手常见错误, 意思就是不能在子组件中修改`props`里面的值, 所以我们把`v-model`改成`:value`就可以了, 这样就是单向绑定了
+
 ### 🌸 清除初始值
 
 我们新增完一个属性后, 再次打开窗口发现值还在, 我们想清楚它要怎么做呢? 这个很简单, 我们只需要把`catelogIdArray`置空就可以了, 首先我们找到对话框关闭的监听

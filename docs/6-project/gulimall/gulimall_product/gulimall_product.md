@@ -3698,7 +3698,7 @@ data() {
 
 ### 🌸 后台构造id
 
-这个构造可以让前端做也可以让后端做, 本文先跟随视频内容在后端构造id, 这个不难啊, 我们先捋清思路, 思路就是使用第三级分类的`catelogId`在数据库中查询, 最终得到一个装有`id`的数组, 
+这个构造可以让前端做也可以让后端做, 本文先跟随视频内容在后端构造id, 这个不难啊, 我们先捋清思路, 思路就是使用第三级分类的`catelogId`在数据库中查询, 最终得到一个装有`id`的数组
 
 - CategoryServiceImpl.java
 
@@ -3819,7 +3819,48 @@ data() {
 
 子组件中直接使用这个`catelogIdArray`作为参数, 然后把`value`直接删了
 
-然后我们发现可以正常显示了, 所测试几个栏目, 确保没有缓存
+然后我们发现可以正常显示了, 测试几个栏目, 确保没有缓存, 但是当我们新增的时候, 我们发现在先选择分类的前提下, 随便修改一个其他框, 原来的分类值就没了, 这也不是啥大问题, 哪里错了点哪里, 造成这个错误的原因是由于我们的`catelogIdArray`始终没有保存上值, 经过检查是因为`catelogIdArray`没有保存上值, 那么我们采取的方案就是当值传递到`attrgroup-add-or-update`的时候保存一份, 改动两处地方
+
+```js
+handleChange(value) {
+	// 传递所有的值
+	this.$emit("nodeClick", value);
+}
+
+categoryCascaderClick(value) {
+  // 保存id用于展示
+  this.catelogIdArray = value;
+  // 把value传过来用于表单上传
+  this.dataForm.catelogId = value[value.length - 1];
+}
+```
+
+然后选择与遇到这个错误
+
+```
+[Vue warn]: Avoid mutating a prop directly since the value will be overwritten whenever the parent component re-renders. Instead, use a data or computed property based on the prop's value. Prop being mutated: "catelogIdArray"
+```
+
+### 🌸 清除初始值
+
+我们新增完一个属性后, 再次打开窗口发现值还在, 我们想清楚它要怎么做呢? 这个很简单, 我们只需要把`catelogIdArray`置空就可以了, 首先我们找到对话框关闭的监听
+
+```vue
+<el-dialog :title="!dataForm.attrGroupId ? '新增' : '修改'" :close-on-click-modal="false" :visible.sync="visible"
+    @close="close">
+
+<script>
+close() {
+  console.log("关闭");
+  this.catelogIdArray = [];
+}
+```
+
+随便写一写就好了, 然后添加搜索
+
+```html
+<el-cascader filterable
+```
 
 
 未完待续...

@@ -3092,6 +3092,44 @@ Content-Type: application/json
 
 因为老师并没有去讲这个, 所以我这个坑暂时挖着, 先学下面的以后可能把这个地方补上
 
+### 🌸 完善搜索
+
+我们发现品牌管理页面的搜索不能使用了, 我们来找一下原因, 首先随便搜索一个关键字`9`
+
+http://localhost:90/product/brand/list?t=1698388135429&page=1&limit=10&key=9
+
+可以看到调用的是这个接口, 那我们就去接口中看一看是怎么实现的, 最后我们定位到了是在`BrandServiceImpl`里面实现的
+
+```java
+@Override
+public PageUtils queryPage(Map<String, Object> params) {
+	IPage<BrandEntity> page = this.page(
+			new Query<BrandEntity>().getPage(params),
+			new QueryWrapper<BrandEntity>()
+	);
+
+	return new PageUtils(page);
+}
+```
+
+可以看到它是什么条件都没有的, 直接返回全部数据, 我们给他加一个筛选
+
+```java
+@Override
+public PageUtils queryPage(Map<String, Object> params) {
+	QueryWrapper<BrandEntity> brandEntityQueryWrapper = new QueryWrapper<>();
+	Object key = params.get("key");
+	brandEntityQueryWrapper.eq("brand_id", key).or().like("name", key);
+	IPage<BrandEntity> page = this.page(
+			new Query<BrandEntity>().getPage(params),
+			brandEntityQueryWrapper
+	);
+	return new PageUtils(page);
+}
+```
+
+然后我们发现可以搜索了
+
 # 🍎 属性分组(70集)
 
 ## 🌲 SPU/SKU
@@ -3449,6 +3487,24 @@ public void testListById() {
 PageUtils(totalCount=0, pageSize=10, totalPage=0, currPage=1, list=[AttrGroupEntity(attrGroupId=1, attrGroupName=主体, sort=0, descript=主体, icon=dd, catelogId=225)])
 ```
 
+但是我们发现是有问题的, 因为`totalCount`为`0`, 有1条数据却显示总条数为0, 显然是分页插件的问题, 我们在程序中配置一个分页插件
+
+```java
+@Configuration
+public class MybatisPlusConfig {
+    @Bean
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
+        mybatisPlusInterceptor.addInnerInterceptor(new PaginationInnerInterceptor());
+        return mybatisPlusInterceptor;
+    }
+}
+```
+
+然后我们发现可以分页了
+
+![](images/Pasted%20image%2020231027142741.png)
+
 ### 🌸 属性分组搜索
 
 分两步, 简略说一下, 非常简单哈
@@ -3564,7 +3620,7 @@ export default {
 
 ![](images/Pasted%20image%2020231024140635.png)
 
-我们发现三级分类下面还能选, 那我们岂不是永远都点不到选项了, 经过分析是因为我们的数据问题, 因为第三级的分类下有个属性叫`children`是个空数组, `element`把他解析成了空菜单, 所以会这样, 想要解决这个问题我们只需要在后台做一个小的处理, 配置当数组为空就不返回这个属性了
+我们发现三级分类下面还能选, 那我们岂不是永远都点不到选项了, 经过分析是因为我们的数据问题, 因为第三级的分类下有个属性叫`children`是个空数组, `element`把他解析成了空菜单, 所以会这样, 想要解决这个问题我们只需要在后台做一个小的处理, 配置`@JsonInclude(JsonInclude.Include.NON_EMPTY)`当数组为空就不返回这个属性了
 
 ```java
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -3576,21 +3632,7 @@ private List<CategoryEntity> children;
 
 ![](images/Pasted%20image%2020231024141150.png)
 
-我们发现第三级的菜单终于是可以选择了, 选择虽然没问题了, 但是我们发现选择后再打开它默认把我们所有的选项都选上了
-
-![](images/Pasted%20image%2020231024141811.png)
-
-后来经过调试查到是我自己的问题, 我没有设置好`value`的取值, 导致了value取到的都是空值, 导致了列表错乱, 下面是正确的配置
-
-```js
-defaultProps: {
-	children: "children",
-	label: "name",
-	value: "catId"
-}
-```
-
-我们选择电子书分类后在控制台就会打印出来, 很明显它是把三级分类的列表保存在`value`中了
+我们选择电子书分类后在控制台就会打印出来, 很明显它是把三级分类的列表保存在数组中了
 
 ```json
 [1, 22, 165]
@@ -3642,7 +3684,7 @@ export default {
 ```js
 handleChange(value) {
 	// 传递数组中最后一个值, 也就是我们第三个分类
-	this.$emit("nodeClick", value[value.length - 1]);
+	this.$emit("nodeClick", value);
 }
 ```
 
@@ -3652,8 +3694,8 @@ handleChange(value) {
 <CategoryCascader @nodeClick="categoryCascaderClick"></CategoryCascader>
 <script>
 categoryCascaderClick(value) {
-  // 把value传过来
-  this.dataForm.catelogId = value;
+  // 取数组中最后一个值
+  this.dataForm.catelogId = value[value.length - 1];
 }
 ```
 
@@ -3665,21 +3707,27 @@ categoryCascaderClick(value) {
 
 ![](images/Pasted%20image%2020231024163303.png)
 
-那我们要怎么获取呢? 很简单我们只需要把`id`带过去就行了, 我们先在子组件中写死试一下
+那我们要怎么获取呢? 很简单我们只需要把`id`带过去就行了, 我们先在子组件中`写死`试一下
 
 ```vue
 <CategoryCascader @nodeClick="categoryCascaderClick" :catelogIdArray="[1, 22, 165]"></CategoryCascader>
 ```
 
-然后我们在`CategoryCascader`组件内接收参数并把它赋值到`value`上, `element`就能自动帮我们选择了
+然后我们在`CategoryCascader`组件内接收参数并把它赋值, `element`就能自动帮我们选择了
 
-```js
+```vue
+<template>
+    <div>
+        <el-cascader filterable v-model="catelogIdArray" :options="options" :props="defaultProps"
+            @change="handleChange"></el-cascader>
+    </div>
+</template>
+<script>
 props: [
 	"catelogIdArray"
 ],
 data() {
 	return {
-		value: this.catelogIdArray ? this.catelogIdArray : [],
 		options: [],
 		defaultProps: {
 			children: "children",
@@ -3791,7 +3839,7 @@ init(id) {
 }
 ```
 
-当然我们在`data`中提前定义好`catelogIdArray`
+别忘了我们父组件中`data`中提前定义好`catelogIdArray`
 
 ```json
 data() {
@@ -3807,41 +3855,18 @@ data() {
 <CategoryCascader @nodeClick="categoryCascaderClick" :catelogIdArray="catelogIdArray"></CategoryCascader>
 ```
 
-划重点来了
-
-```vue
-<template>
-    <div>
-        <el-cascader v-model="catelogIdArray" :options="options" :props="defaultProps" @change="handleChange"></el-cascader>
-    </div>
-</template>
-```
-
-子组件中直接使用这个`catelogIdArray`作为参数, 然后把`value`直接删了
-
-然后我们发现可以正常显示了, 测试几个栏目, 确保没有缓存, 但是当我们新增的时候, 我们发现在先选择分类的前提下, 随便修改一个其他框, 原来的分类值就没了, 这也不是啥大问题, 哪里错了点哪里, 造成这个错误的原因是由于我们的`catelogIdArray`始终没有保存上值, 经过检查是因为`catelogIdArray`没有保存上值, 那么我们采取的方案就是当值传递到`attrgroup-add-or-update`的时候保存一份, 改动两处地方
-
-```js
-handleChange(value) {
-	// 传递所有的值
-	this.$emit("nodeClick", value);
-}
-
-categoryCascaderClick(value) {
-  // 保存id用于展示
-  this.catelogIdArray = value;
-  // 把value传过来用于表单上传
-  this.dataForm.catelogId = value[value.length - 1];
-}
-```
-
-然后选择与遇到这个错误
+在我们选择后会出现这样的错误
 
 ```
 [Vue warn]: Avoid mutating a prop directly since the value will be overwritten whenever the parent component re-renders. Instead, use a data or computed property based on the prop's value. Prop being mutated: "catelogIdArray"
 ```
 
-新手常见错误, 意思就是不能在子组件中修改`props`里面的值, 所以我们把`v-model`改成`:value`就可以了, 这样就是单向绑定了
+新手常见错误, 意思就是不能在子组件中修改`props`里面的值, 所以我们把`v-model`改成`:value`就可以了, 这样就是单向绑定了, 不会修改`catelogIdArray`的值
+
+```vue
+<el-cascader filterable :value="catelogIdArray" :options="options" :props="defaultProps"
+            @change="handleChange"></el-cascader>
+```
 
 ### 🌸 清除初始值
 
@@ -3864,6 +3889,19 @@ close() {
 <el-cascader filterable
 ```
 
+### 🌸 配置分页(75集)
+
+在上文我们已经配置过了, 所以我们页码显示是正常的
+
+### 🌸 关联分类
+
+我们会发现品牌管理页面新加了个`关联分类`按钮, 但是我没有见过视频中这么操作过, 你们见过吗? 所以不管他「三七二十一」, 我们自己加一个按钮, 在`brand`页面中
+
+```vue
+<el-button type="text" size="small" @click="">关联分类</el-button>
+```
+
+然后是弹出的`dialog`页面, 这是一个难题, 幸运的是我们可以拿到完整工程, 从里面把这一块的代码拷贝过来就可以了, 我们把它封装为一个页面, 我们新建一个`category-relation-brand`页面, 写入下面代码
 
 未完待续...
 

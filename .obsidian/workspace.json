@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "8937e3a7e2013ed2",
+        "id": "8233addf7642e2db",
         "type": "tabs",
         "children": [
           {
-            "id": "ef60aee464bf7863",
+            "id": "bbea9b88a4c7894e",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -18,21 +18,8 @@
                 "source": false
               }
             }
-          },
-          {
-            "id": "76b06cc872a98f98",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "docs/6-project/gulimall/gulimall_product/gulimall_product.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -106,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/6-project/gulimall/gulimall_product/gulimall_product.md",
+                "file": "docs/6-project/gulimall/gulimall/gulimall.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -123,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/6-project/gulimall/gulimall_product/gulimall_product.md",
+                "file": "docs/6-project/gulimall/gulimall/gulimall.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -146,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/6-project/gulimall/gulimall_product/gulimall_product.md"
+                "file": "docs/6-project/gulimall/gulimall/gulimall.md"
               }
             }
           }
@@ -167,13 +154,14 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "76b06cc872a98f98",
+  "active": "bbea9b88a4c7894e",
   "lastOpenFiles": [
-    "docs/6-project/gulimall/gulimall_product/images/Pasted image 20231024141811.png",
+    "docs/6-project/gulimall/gulimall/gulimall.md",
+    "docs/4-package-manager/maven/maven.md",
     "docs/6-project/gulimall/gulimall_product/gulimall_product.md",
+    "docs/6-project/gulimall/gulimall_product/images/Pasted image 20231024141811.png",
     "docs/6-project/gulimall/gulimall_product/images/Pasted image 20231027150803.png",
     "docs/6-project/gulimall/gulimall_product/images/Pasted image 20231027142741.png",
-    "docs/6-project/gulimall/gulimall/gulimall.md",
     "docs/6-project/gulimall/gulimall_product/images/Pasted image 20231024165825.png",
     "docs/6-project/gulimall/gulimall_product/images/Pasted image 20231024163303.png",
     "docs/6-project/gulimall/gulimall_product/images/Pasted image 20231024141150.png",
@@ -209,7 +197,6 @@
     "docs/0-language/python/python.md",
     "docs/0-language/java/images/java.svg.md",
     "docs/1-framework/java/spring/springcloud/SpringCloudMaven/SpringCloudMaven.md",
-    "docs/4-package-manager/maven/maven.md",
     "docs/4-package-manager/Maven.bak/maven.md",
     "docs/4-package-manager/Maven.bak/Maven.md",
     "docs/1-framework/java/spring/mybatis/mybatis_plus/mybatis_plus.md",

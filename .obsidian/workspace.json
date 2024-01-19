@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/README.md",
+                "file": "docs/3-program/mobile/flutter/flutter/flutter.md",
                 "mode": "source",
                 "source": false
               }
@@ -103,7 +103,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/README.md",
+                "file": "docs/3-program/mobile/flutter/flutter/flutter.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -120,7 +120,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/README.md",
+                "file": "docs/3-program/mobile/flutter/flutter/flutter.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -143,7 +143,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/README.md"
+                "file": "docs/3-program/mobile/flutter/flutter/flutter.md"
               }
             }
           }
@@ -164,12 +164,16 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "bbea9b88a4c7894e",
+  "active": "eee7dabbf81aba60",
   "lastOpenFiles": [
+    "docs/js/prism-dart.min.js",
+    "docs/js/prism-dart.js",
+    "docs/3-program/mobile/flutter/layout/container/container.md",
+    "docs/3-program/mobile/flutter/flutter/flutter.md",
+    "docs/README.md",
     "docs/images/spring-logo.svg",
     "docs/images/Pasted image 20240119201608.png",
     "docs/images/Pasted image 20240119201608.png.sb-694359c2-b0rUM1",
-    "docs/README.md",
     "docs/images/Vue.js_Logo_2.svg",
     "docs/images/oc-icon.png",
     "docs/images/Pasted image 20240119201424.png",
@@ -180,7 +184,6 @@
     "docs/0-language/dart/dart.md",
     "docs/0-language/dart/images/image-20210826105732855.png",
     "docs/0-language/dart/images/image-20210826105652844.png",
-    "docs/0-language/dart/images/c83d70cf3bc79f3d068c6661b6a1cd11728b2976.webp",
     "docs/0-language/dart/images",
     "docs/0-language/dart",
     "docs/6-project/gulimall/gulimall/gulimall.md",
@@ -197,11 +200,8 @@
     "docs/3-program/mobile/flutter/flutter_plugin/dio/dio.md",
     "docs/3-program/mobile/flutter/flutter_plugin/chewie/chewie.md",
     "docs/3-program/mobile/flutter/flutter_plugin/cached_network_image/cached_network_image.md",
-    "docs/3-program/mobile/flutter/flutter_plugin/video_player",
     "docs/3-program/mobile/flutter/navigator/navigator.md",
-    "docs/3-program/mobile/flutter/flutter/flutter.md",
     "docs/3-program/mobile/flutter/component/component.md",
-    "docs/3-program/mobile/flutter/layout/container/container.md",
     "docs/3-program/mobile/flutter/layout/column/column.md",
     "docs/3-program/mobile/flutter/framework/webview_flutter/webview_flutter.md",
     "docs/3-program/mobile/flutter/widget/listview/listview.md",

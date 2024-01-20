@@ -13,19 +13,9 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/3-program/mobile/flutter/flutter/flutter.md",
+                "file": "docs/README.md",
                 "mode": "source",
                 "source": false
-              }
-            }
-          },
-          {
-            "id": "572ba346299267f3",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "docs/images/Pasted image 20240119201424.png"
               }
             }
           }
@@ -103,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/3-program/mobile/flutter/flutter/flutter.md",
+                "file": "docs/README.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -120,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/3-program/mobile/flutter/flutter/flutter.md",
+                "file": "docs/README.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -143,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/3-program/mobile/flutter/flutter/flutter.md"
+                "file": "docs/README.md"
               }
             }
           }
@@ -164,12 +154,13 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "eee7dabbf81aba60",
+  "active": "bbea9b88a4c7894e",
   "lastOpenFiles": [
+    "README.md",
+    "docs/3-program/mobile/flutter/flutter/flutter.md",
     "docs/js/prism-dart.min.js",
     "docs/js/prism-dart.js",
     "docs/3-program/mobile/flutter/layout/container/container.md",
-    "docs/3-program/mobile/flutter/flutter/flutter.md",
     "docs/README.md",
     "docs/images/spring-logo.svg",
     "docs/images/Pasted image 20240119201608.png",
@@ -196,7 +187,6 @@
     "docs/3-program/mobile/flutter/flutter_plugin/logger/images",
     "docs/3-program/mobile/flutter/flutter_plugin/json_serializable/json_serializable.md",
     "docs/3-program/mobile/flutter/flutter_plugin/json_serializable/images",
-    "docs/3-program/mobile/flutter/flutter_plugin/dio/images",
     "docs/3-program/mobile/flutter/flutter_plugin/dio/dio.md",
     "docs/3-program/mobile/flutter/flutter_plugin/chewie/chewie.md",
     "docs/3-program/mobile/flutter/flutter_plugin/cached_network_image/cached_network_image.md",
@@ -210,7 +200,6 @@
     "docs/3-program/mobile/flutter/ad/ad/ad.md",
     "docs/4-package-manager/maven/maven.md",
     "docs/6-project/gulimall/gulimall_product/gulimall_product.md",
-    "README.md",
     "docs/0-language/javascript/javascript.md"
   ]
 }

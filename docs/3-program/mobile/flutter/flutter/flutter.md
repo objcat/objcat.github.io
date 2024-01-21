@@ -1,8 +1,8 @@
 # 🍎 简介
 
-![b999a9014c086e061d95330fcf446cf40ad162d95d68](images2/b999a9014c086e061d95330fcf446cf40ad162d95d68.webp)
+![](images/Pasted%20image%2020240121100403.png)
 
-Flutter是[Google](https://baike.baidu.com/item/Google/86964)开源的构建[用户界面](https://baike.baidu.com/item/用户界面/6582461)（UI）工具包，帮助开发者通过一套[代码库](https://baike.baidu.com/item/代码库/969653)高效构建多平台精美应用，支持移动、[Web](https://baike.baidu.com/item/Web/150564)、[桌面](https://baike.baidu.com/item/桌面/4773626)和嵌入式平台。 [5] Flutter 开源、免费，拥有宽松的[开源协议](https://baike.baidu.com/item/开源协议/10642383)，适合商业项目。目前，Flutter已推出稳定的2.0版本。
+Flutter是Google开源的构建用户界面（UI）工具包，帮助开发者通过一套代码库高效构建多平台精美应用，支持移动、Web、桌面和嵌入式平台。 [5]Flutter 开源、免费，拥有宽松的开源协议，适合商业项目。
 
 # 🍎 环境搭建
 
@@ -33,6 +33,8 @@ sudo softwareupdate --install-rosetta --agree-to-license
 
 ## 🌲 配置镜像源
 
+因为国内的网络环境不好, 所以要配置镜像源
+
 ```
 vim ~/.zshrc
 ```
@@ -59,8 +61,7 @@ export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
 ```shell
 open -a xcode ~/.zshrc
 # 写入
-PATH="/Users/objcat/sdk/flutter/bin:${PATH}"
-export PATH
+export PATH="/Users/objcat/sdk/flutter/bin:${PATH}"
 
 # 或者直接追加
 echo 'export PATH="/Users/objcat/sdk/flutter/bin:${PATH}"' >> ~/.zshrc
@@ -169,7 +170,7 @@ Doctor summary (to see all details, run flutter doctor -v):
 本教程使用的版本是最新的`3.13.9`
 
 ```shell
---version
+flutter --version
 Flutter 3.13.9 • channel stable • https://github.com/flutter/flutter.git
 Framework • revision d211f42860 (2 weeks ago) • 2023-10-25 13:42:25 -0700
 Engine • revision 0545f8705d
@@ -180,7 +181,7 @@ Tools • Dart 3.1.5 • DevTools 2.25.0
 
 https://flutter.cn/docs/release/upgrade
 
-如果你的版本比较久远可以选择更新
+如果你的版本比较久远可以选择更新, 不过更新要慎重, 因为实际工作中可能都用的是老版本, 更新可能会导致不兼容
 
 ```shell
 flutter upgrade
@@ -209,11 +210,15 @@ flutter channel beta
 
 ![image-20210826105652844](images2/image-20210826105652844.png)
 
-安装完成后 可以在应用程序的主界面创建Flutter项目了
+安装完成后 可以在应用程序的主界面创建Flutter项目了, 如果你使用vscode在扩展商店里也能找到`flutter`插件
 
 # 🍎 允许使用https
 
-我们可能会遇到这样的问题
+安卓和苹果对http默认都有限制, 我们在启动flutter项目后经常发现请求http接口网络不通, 这个时候我们就需要去原生端进行配置
+
+## 🌲 安卓
+
+我们可能会遇到这样的问题, 这是因为谷歌在安卓9之后为了加强安全默认就不允许使用http请求了
 
 ```shell
 E/ExoPlayerImplInternal( 5051):   Caused by: com.google.android.exoplayer2.upstream.HttpDataSource$CleartextNotPermittedException: Cleartext HTTP traffic not permitted. See https://developer.android.com/guide/topics/media/issues/cleartext-not-permitted
@@ -230,6 +235,26 @@ E/ExoPlayerImplInternal( 5051):   Caused by: com.google.android.exoplayer2.upstr
 ```
 
 值得注意的是做完这个步骤你还有可能发现不好用, 那是因为缓存的原因, 杀掉App, 必要时候运行`flutter clean`, 然后重新运行即可, 明白了伐? 
+
+## 🌲 苹果
+
+iOS中也比较好配置
+
+![](images/Pasted%20image%2020240121101055.png)
+
+我们也可以直接在plist中使用代码配置
+
+![](images/Pasted%20image%2020240121101120.png)
+
+然后添加下面的代码进去
+
+```xml
+<key>NSAppTransportSecurity</key>
+<dict>
+	<key>NSAllowsArbitraryLoads</key>
+	<true/>
+</dict>
+```
 
 # 🍎 命令
 
@@ -267,7 +292,7 @@ flutter create -i swift .
 
 ![](images2/Pasted%20image%2020230826152530.png)
 
-然后起一个好听的名字, 我的叫`test_flutter`
+然后起一个好听的名字, 我的叫`test_flutter`, 我这里比较习惯`java`和`oc`所以就这么选择了
 
 ![](images2/Pasted%20image%2020230826152707.png)
 
@@ -283,7 +308,7 @@ flutter create -i swift .
 
 # 🍎 运行项目
 
-我们直接在`Android Studio`中选择一个模拟器就可以运行了
+我们直接在`Android Studio`中选择一个模拟器就可以运行了, 如果没有在你的设备里自己创建一个
 
 ![](images2/Pasted%20image%2020230727140606.png)
 
@@ -291,11 +316,11 @@ flutter create -i swift .
 
 ![](images2/WechatIMG86.jpg)
 
-如果一直卡在`Running Gradle task 'assembleDebug'`中, 请查看`FAQ`解决
+如果一直卡在`Running Gradle task 'assembleDebug'`中, 那么你就可能要去原生项目中拉取一下依赖, 具体请查看`FAQ`
 
 # 🍎 应用程序入口
 
-这是创建flutterApp自带的代码
+这是创建`flutterApp`自带的代码
 
 ```dart
 import 'package:flutter/material.dart';
@@ -425,7 +450,7 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 ```
 
-我们可以看到应用程序是使用下面代码启动的
+我们可以看到应用程序是使用下面代码启动的, 也就是我们的`runApp`, 这个函数是包含在`flutterSDK`中的`binding.dart`文件中
 
 ```dart
 void main() {
@@ -433,7 +458,7 @@ void main() {
 }
 ```
 
-所有视图的根`Widget`是继承于`StatelessWidget`的`MyApp`, 它是无状态的, 然后扩展它的`home`属性来加载更多的视图, 这样创建出来的App是安卓风格的
+所有视图的`根`是继承于`StatelessWidget`的`MyApp`, 它里面有一个`build`方法, 里面是初始化了一个`MaterialApp`来控制全局样式
 
 如果想把App切换成iOS风格也是可以的 只需要使用`CupertinoApp`即可
 
@@ -495,7 +520,7 @@ class _MyHomePageState2 extends State<MyHomePage2> {
 
 # 🍎 脚手架
 
-`Scaffold`就是脚手架, 我们可以使用安卓的脚手架也可以使用`iOS`的脚手架, 他们是两种风格
+`Scaffold`就是脚手架, 我们可以使用安卓的脚手架也可以使用`iOS`的脚手架, 他们是两种不同的风格
 
 > Android
 
@@ -550,9 +575,11 @@ const MaterialApp({
 
 # 🍎 导航栏
 
-## 🌲 配置导航栏
+导航栏分为顶部导航栏和底部导航栏, 顶部导航栏叫`AppBar`底部导航栏叫`BottomNavigationBar`, 当然导航栏也分为两种风格, 安卓和iOS各不相同, 本文主要以安卓为主
 
-添加导航栏非常简单 使用`Scaffold`, 它是flutter提供的一套脚手架, 里面有一个属性叫`AppBar`
+## 🌲 配置顶部导航栏
+
+添加导航栏非常简单使用`Scaffold`, 它是`flutter`提供的一套脚手架, 里面有一个属性叫`AppBar`
 
 > Android
 
@@ -577,7 +604,123 @@ return CupertinoPageScaffold(
 };
 ```
 
-本文下面默认就使用`Scaffold`来写, 因为谷歌肯定对自己家的`UI`支持是最好的
+## 🌲 配置底部导航栏
+
+### 🌸 基础配置
+
+在脚手架中有个`bottomNavigationBar`属性可以配置底部导航栏
+
+```dart
+return Scaffold(
+        bottomNavigationBar: BottomNavigationBar(items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "首页"),
+          BottomNavigationBarItem(icon: Icon(Icons.category), label: "分类"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings), label: "系统设置"),
+        ]),
+```
+
+就是这么简单, 就问你服不服? 我们运行项目看看
+
+![](images/Pasted%20image%2020240120181159.png)
+
+但是我们发现这几个导航栏都无法点击, 所以我们需要配置他们的跳转逻辑
+
+### 🌸 选中逻辑
+
+我们使用`BottomNavigationBar`中的`currentIndex`就可以设置点击选中哪个导航了, 我们定义一个`_currentIndex`变量为0, 然后把他赋值到`currentIndex`那么每次默认就是选中第1个导航, 当我们点击`BottomNavigationBar`后, 我们可以在value中获取到index, 从而使用`setState`来设置`index`就可以改变底部导航的选中了
+
+```dart
+class _MyHomePageState extends State<MyHomePage> {
+  var _currentIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        bottomNavigationBar: BottomNavigationBar(
+            currentIndex: _currentIndex,
+            onTap: (value) {
+              setState(() {
+                _currentIndex = value;
+              });
+            },
+            items: const [
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: "首页"),
+              BottomNavigationBarItem(icon: Icon(Icons.category), label: "分类"),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.settings), label: "系统设置"),
+            ]),
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: Text(widget.title),
+        ),
+        body: ListView(
+          children: [
+            Container(
+              height: 50,
+              color: Colors.amber[600],
+              child: const Center(child: Text('Entry A')),
+            ),
+            Container(
+              height: 50,
+              color: Colors.amber[500],
+              child: const Center(child: Text('Entry B')),
+            ),
+            Container(
+              height: 50,
+              color: Colors.amber[100],
+              child: const Center(child: Text('Entry C')),
+            ),
+          ],
+        ));
+  }
+}
+```
+
+### 🌸 跳转逻辑
+
+更简单了, 一句话, 就是替换body, 我们之前的body是一个listView, 而加了导航页面, 那么我们的body就是各个页面了
+
+```dart
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key, required this.title});
+
+  final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  var _currentIndex = 0;
+  var pages = const [
+    SecondPage(title: "第二个页面"),
+    ThirdPage(title: "第三个页面"),
+    VideoPage()
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        bottomNavigationBar: BottomNavigationBar(
+            currentIndex: _currentIndex,
+            onTap: (value) {
+              setState(() {
+                _currentIndex = value;
+              });
+            },
+            items: const [
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: "首页"),
+              BottomNavigationBarItem(icon: Icon(Icons.category), label: "分类"),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.settings), label: "系统设置"),
+            ]),
+        body: pages[_currentIndex]);
+  }
+}
+```
+
+所以我就往里面塞了几个页面, 然后把原本的导航栏去掉, 否则导航栏会重复, 这就是页面跳转的逻辑了
 
 # 🍎 Page
 
@@ -609,7 +752,7 @@ class MyHomePage extends StatefulWidget {
 
 # 🍎 State
 
-`State<MyHomePage> createState() => _MyHomePageState();` 这个的意思是创建一个`_MyHomePageState`来画页面, 我们一起来看看这个页面
+我们可以看到一个关键性的代码`State<MyHomePage> createState() => _MyHomePageState();` 这个的意思是创建一个`_MyHomePageState`来管理面, 我们一起来看看这个页面
 
 ```dart
 class _MyHomePageState extends State<MyHomePage> {
@@ -689,7 +832,353 @@ class _MyHomePageState extends State<MyHomePage> {
 
 `void _incrementCounter()`按钮点击后触发这个方法来给`_counter`加1
 
+# 🍎 生命周期
+
+提起生命周期, 移动端的开发者应该并不陌生, 它是应用从创建到更新到销毁的一个流程, 在这个流程中会经历很多方法, 那我们接下来就看一看生命周期吧, flutter中的widget分为两种, 有状态和无状态的
+
+## 🌲 无状态widget
+
+因为无状态页面最简单, 我们就先去搞这个页面, 我们打开`StatelessWidget`可以看到, 里面非常简单, 可以看到包含构造方法, 除此之外还有两个方法`createElement`和`build`
+
+```dart
+abstract class StatelessWidget extends Widget {
+  /// Initializes [key] for subclasses.
+  const StatelessWidget({ super.key });
+
+  /// Creates a [StatelessElement] to manage this widget's location in the tree.
+  ///
+  /// It is uncommon for subclasses to override this method.
+  @override
+  StatelessElement createElement() => StatelessElement(this);
+
+  /// Describes the part of the user interface represented by this widget.
+  ///
+  /// The framework calls this method when this widget is inserted into the tree
+  /// in a given [BuildContext] and when the dependencies of this widget change
+  /// (e.g., an [InheritedWidget] referenced by this widget changes). This
+  /// method can potentially be called in every frame and should not have any side
+  /// effects beyond building a widget.
+  ///
+  /// The framework replaces the subtree below this widget with the widget
+  /// returned by this method, either by updating the existing subtree or by
+  /// removing the subtree and inflating a new subtree, depending on whether the
+  /// widget returned by this method can update the root of the existing
+  /// subtree, as determined by calling [Widget.canUpdate].
+  ///
+  /// Typically implementations return a newly created constellation of widgets
+  /// that are configured with information from this widget's constructor and
+  /// from the given [BuildContext].
+  ///
+  /// The given [BuildContext] contains information about the location in the
+  /// tree at which this widget is being built. For example, the context
+  /// provides the set of inherited widgets for this location in the tree. A
+  /// given widget might be built with multiple different [BuildContext]
+  /// arguments over time if the widget is moved around the tree or if the
+  /// widget is inserted into the tree in multiple places at once.
+  ///
+  /// The implementation of this method must only depend on:
+  ///
+  /// * the fields of the widget, which themselves must not change over time,
+  ///   and
+  /// * any ambient state obtained from the `context` using
+  ///   [BuildContext.dependOnInheritedWidgetOfExactType].
+  ///
+  /// If a widget's [build] method is to depend on anything else, use a
+  /// [StatefulWidget] instead.
+  ///
+  /// See also:
+  ///
+  ///  * [StatelessWidget], which contains the discussion on performance considerations.
+  @protected
+  Widget build(BuildContext context);
+}
+```
+
+你可能会有疑问, 为什么会有这么简单的组件呢? 我认为这是因为分工不同, 无状态组件可以说它并没有生命周期, 就是根据外部传进来的数据去渲染视图, 这样简洁的设计可以让它比有状态组件拥有更高的性能
+
+## 🌲 有状态widget
+
+我们首先也来看一下源码
+
+```dart
+abstract class StatefulWidget extends Widget {
+  /// Initializes [key] for subclasses.
+  const StatefulWidget({ super.key });
+
+  /// Creates a [StatefulElement] to manage this widget's location in the tree.
+  ///
+  /// It is uncommon for subclasses to override this method.
+  @override
+  StatefulElement createElement() => StatefulElement(this);
+
+  /// Creates the mutable state for this widget at a given location in the tree.
+  ///
+  /// Subclasses should override this method to return a newly created
+  /// instance of their associated [State] subclass:
+  ///
+  /// ```dart
+  /// @override
+  /// State<SomeWidget> createState() => _SomeWidgetState();
+  /// ```
+  ///
+  /// The framework can call this method multiple times over the lifetime of
+  /// a [StatefulWidget]. For example, if the widget is inserted into the tree
+  /// in multiple locations, the framework will create a separate [State] object
+  /// for each location. Similarly, if the widget is removed from the tree and
+  /// later inserted into the tree again, the framework will call [createState]
+  /// again to create a fresh [State] object, simplifying the lifecycle of
+  /// [State] objects.
+  @protected
+  @factory
+  State createState();
+}
+```
+
+可以看到它也很简单, 但是你有没有发现它并没有`build`方法, 新增了`createState`方法, 它让有状态的`widget`创建出一个`状态管理器State`来管理页面状态和渲染页面, 做到分工明确
+
+### 🌸 State
+
+我们在上面提到过了`State`是状态管理器, 我们把它常用的生命周期都实现出来, 这样方便我们进行学习, 我们一切从简, 就从系统demo上修改
+
+```dart
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key, required this.title});
+
+  final String title;
+
+  // 创建状态
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      // This call to setState tells the Flutter framework that something has
+      // changed in this State, which causes it to rerun the build method below
+      // so that the display can reflect the updated values. If we changed
+      // _counter without calling setState(), then the build method would not be
+      // called again, and so nothing would appear to happen.
+      _counter++;
+    });
+  }
+
+  // 初始化状态
+  @override
+  void initState() {
+    super.initState();
+    debugPrint("initState");
+  }
+
+  // 依赖项更改状态时调用
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    debugPrint("didChangeDependencies");
+  }
+
+  // 本身要作为子组件, 当父组件重新构建时调用
+  @override
+  void didUpdateWidget(covariant MyHomePage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    debugPrint("didUpdateWidget");
+  }
+
+  // 停用时调用
+  @override
+  void deactivate() {
+    super.deactivate();
+    debugPrint("deactivate");
+  }
+
+  // 释放时调用
+  @override
+  void dispose() {
+    super.dispose();
+    debugPrint("dispose");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    debugPrint("build");
+
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: Text(widget.title),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(
+              'You have pushed the button this many times:',
+            ),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
+}
+```
+
+#### 🌵 第一次启动
+
+项目第一次启动的执行顺序是`createState -> initState -> build`
+
+#### 🌵 更新数据
+
+一般更新数据要使用我们的`setState`, 执行后父视图中的`build`会被重新调用以刷新数据, 所以执行就是`setState -> build`
+
+#### 🌵 销毁页面
+
+销毁页面我们也可以模拟一下, 过程就是先push再pop, 看看生命周期如何执行
+
+```dart
+void _incrementCounter() {
+Navigator.push(context, MaterialPageRoute(builder: (BuildContext buildContext) {
+  return const MyHomePage(title: "第二个页面");
+}));
+}
+```
+
+我们把方法改一下, 点击`navigator`推出一个新页面, 当然我们还是使用`MyHomePage`这个类, 我们来看一下执行顺序
+
+- push
+
+```
+I/flutter (10343): initState
+I/flutter (10343): didChangeDependencies
+I/flutter (10343): build
+```
+
+- pop
+
+```
+I/flutter (10343): deactivate
+I/flutter (10343): dispose
+```
+
+我们可以看到push的时候执行顺序是我们了解的, 但是页面返回也就是做pop这个操作后, 页面会被销毁, 销毁的时候先执行`deactivate`后执行`dispose`
+
+#### 🌵 子组件刷新
+
+我们在上面的例子中看到, 还有一个生命周期方法没有被触发过, 那就是`didUpdateWidget`, 因为我们并没有使用子组件, 那么下面我们就创建一个子组件来体验一下这个生命周期方法, 我们创建一个`TestSubComponent`, 然后把生命周期函数写全
+
+```dart
+import 'package:flutter/material.dart';
+
+class TestSubComponent extends StatefulWidget {
+  final String title;
+  const TestSubComponent({super.key, required this.title});
+
+  @override
+  State<TestSubComponent> createState() => _TestSubComponentState();
+}
+
+class _TestSubComponentState extends State<TestSubComponent> {
+
+  // 初始化状态
+  @override
+  void initState() {
+    super.initState();
+    debugPrint("子组件initState");
+  }
+
+  // 依赖项更改状态时调用
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    debugPrint("子组件didChangeDependencies");
+  }
+
+  // 本身要作为子组件, 当父组件重新构建时调用
+  @override
+  void didUpdateWidget(covariant TestSubComponent oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    debugPrint("子组件didUpdateWidget");
+  }
+
+  // 停用时调用
+  @override
+  void deactivate() {
+    super.deactivate();
+    debugPrint("子组件deactivate");
+  }
+
+  // 释放时调用
+  @override
+  void dispose() {
+    super.dispose();
+    debugPrint("子组件dispose");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    debugPrint("子组件build");
+    return Text(widget.title);
+  }
+}
+```
+
+然后把他放到首页中
+
+```dart
+body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(
+              'You have pushed the button this many times:',
+            ),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            TestSubComponent(title: title)
+          ],
+        ),
+      ),
+```
+
+然后重新运行程序
+
+```dart
+I/flutter (10343): initState
+I/flutter (10343): didChangeDependencies
+I/flutter (10343): build
+I/flutter (10343): 子组件initState
+I/flutter (10343): 子组件didChangeDependencies
+I/flutter (10343): 子组件build
+```
+
+我们发现子组件的生命周期与我们父页面几乎一致, 第一次加载的时候都是这样, 那当我们修改子组件的标题
+
+```
+I/flutter (10343): build
+I/flutter (10343): 子组件didUpdateWidget
+I/flutter (10343): 子组件build
+```
+
+会触发三个回调方法`父build -> 子组件didUpdateWidget -> 子组件build`
+
+值得注意的是, 这个子组件必须是非`const`的, 才会重新构建, 如果是const, 那么已经是一个常量组件就不会受到状态的影响了, 掌握了这一点可以在搭建界面时节约性能
+
 # 🍎 控件
+
+`widget`在`flutter`中有很多名字, 英文翻译为`小器物，小装置，小玩意儿`, 我喜欢把它叫做控件, 你也可以把它叫做`组件`, `视图`, `页面`等, 他们可能是很大的一个页面, 也可能是很小的一个文本框, 但他们都是表示我们构建界面的一个基本构建单位或基本组成单位
 
 https://flutter.cn/docs/ui/widgets
 
@@ -715,7 +1204,7 @@ return Scaffold(
 
 ![](images/Pasted%20image%2020231112110045.png)
 
-完全没有难点, 我们还可以看到文本框的宽度是随文字长度改变的, 而不是占满一行, 这跟`html`中的行内元素类似
+完全没有难点, 我们还可以看到文本框的宽度是随文字长度改变的, 而不是占满一行, 这跟`html`中的行内元素类似, 比如`span`
 
 ## 🌲 布局控件(Layout widgets)
 
@@ -920,20 +1409,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
 ## 🌲 列表
 
-```dart
-child: Container(
-color: Colors.yellow,
-child: ListView(
-  // 高度
-  itemExtent: 50,
-  // padding
-  padding: const EdgeInsets.all(10),
-  children: <Widget>[
-    Container(child: Text("练习"), color: Colors.red,),
-    Container(child: Text("列表"), color: Colors.red,),
-  ],
-)),
-```
+列表包含在可滚动视图内, 是十分常用的组件
+
+[跳转 listview](../widget/scrollable_widget/listview/listview.md)
 
 ## 🌲 下拉刷新
 
@@ -951,7 +1429,7 @@ RefreshIndicator(
 
 网格布局
 
-[跳转gridview](../widget/gridview/gridview.md)
+[跳转gridview](../widget/scrollable_widget/gridview/gridview.md)
 
 ## 🌲 图片
 
@@ -1071,6 +1549,12 @@ Icon(Icons.bike_scooter, color: Colors.pink,),
 组件顾名思义就是组合在一起的控件, 我们可以把常用的控件组合在一起, 来达到一个随时随地复用的目的
 
 [跳转 component](../component/component.md)
+
+# 🍎 自定义插件
+
+插件顾名思义就是可插拔的组件, 在`flutter`中一般指借助原生能力来完成某些功能的库
+
+[跳转 flutter_plugin_custom](../flutter_plugin/flutter_plugin_custom/flutter_plugin_custom.md)
 
 # 🍎 包管理
 

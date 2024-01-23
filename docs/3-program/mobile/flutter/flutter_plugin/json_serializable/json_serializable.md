@@ -89,3 +89,21 @@ main() {
   print(jsonString);
 }
 ```
+
+## 🌲 列表解析
+
+我们也可以从一个列表中去解析
+
+```dart
+List<Person> list = jsonList.map((e) => Person.fromJson(e)).toList();
+```
+
+## 🌲 常见崩溃
+
+这一章节的名字很奇怪, 但是很直白, 你只需要记住一点, 只要是不确定一定不是`null`的地方用`?`可空类型可以解决大多数问题, 比如我们的Person要这么设置, 否则一旦map中存在一个`null`就容易引发崩溃
+
+```dart
+class Person {
+  String? name;
+  int? age;
+```

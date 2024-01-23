@@ -8,8 +8,13 @@ Flutter是Google开源的构建用户界面（UI）工具包，帮助开发者�
 
 ## 🌲 官方网站
 
+有两种一个是国内的, 一个是国外的, 自行选择
+
 https://flutter.cn
 https://flutter.cn/docs/get-started/install
+
+https://flutter.dev/
+https://docs.flutter.dev/
 
 ## 🌲 IDE下载
 
@@ -19,13 +24,15 @@ https://docs.flutter.dev/tools/android-studio
 
 https://developer.android.google.cn/studio
 
+实际开发下来我两个是一起使用的
+
 ## 🌲 下载flutter
 
 https://flutter.cn/docs/get-started/install/macos
 
-自行在官网下载, 注意对应平台
+自行在官网下载, 注意对应平台, 我的是Mac
 
-## 🌲 Apple芯片电脑需要安装一些工具
+## 🌲 Apple芯片电脑可能需要安装一些工具
 
 ```
 sudo softwareupdate --install-rosetta --agree-to-license
@@ -67,7 +74,7 @@ export PATH="/Users/objcat/sdk/flutter/bin:${PATH}"
 echo 'export PATH="/Users/objcat/sdk/flutter/bin:${PATH}"' >> ~/.zshrc
 ```
 
-安装配置完之后可以运行, `flutter doctor`诊断一下, 如果都是绿色对号就是没问题, 如果跟我一样就是有问题
+安装配置完之后可以运行, `flutter doctor`诊断一下, 如果都是绿色对号就是没问题, 如果跟我一样就是有问题, 不要慌, 有问题就去解决问题
 
 ![](images2/Pasted%20image%2020230826153648.png)
 
@@ -111,7 +118,7 @@ Doctor summary (to see all details, run flutter doctor -v):
 [✓] VS Code (version 1.81.1)
 ```
 
-哪里有问题就点哪里, 我是配置了一下sdk的路径, 如果你是新手没有安卓sdk就往下看, 先不用配置了
+哪里出事点哪里, 我是配置了一下sdk的路径
 
 ```shell
 objcat@objcatdeMini ~ % flutter doctor                   
@@ -214,7 +221,7 @@ flutter channel beta
 
 # 🍎 允许使用https
 
-安卓和苹果对http默认都有限制, 我们在启动flutter项目后经常发现请求http接口网络不通, 这个时候我们就需要去原生端进行配置
+安卓和苹果对http默认都有限制, 我们在启动flutter项目后经常发现请求http接口网络不通, 这个时候我们就需要去原生端进行配置, 为了方便学习这一块我优先写在前面, 是不是很贴心呢?
 
 ## 🌲 安卓
 
@@ -256,32 +263,6 @@ iOS中也比较好配置
 </dict>
 ```
 
-# 🍎 命令
-
-## 🌲 拉取依赖
-
-```shell
-flutter packages get
-```
-
-## 🌲 打包
-
-```
-flutter build ios
-```
-
-## 🌲 生成模板
-
-flutter在创建完成后会给我们生成一个安卓项目模板, 如果你不小心删掉了, 我们也可以创建
-
-```shell
-# 创建安卓模板
-flutter create -a java .
-flutter create -a kotlin .
-# 创建iOS模板
-flutter create -i swift .
-```
-
 # 🍎 快速开始
 
 ## 🌲 创建项目
@@ -306,7 +287,7 @@ flutter create -i swift .
 
 ![](images2/Pasted%20image%2020230826153358.png)
 
-# 🍎 运行项目
+## 🌲 运行项目
 
 我们直接在`Android Studio`中选择一个模拟器就可以运行了, 如果没有在你的设备里自己创建一个
 
@@ -318,7 +299,7 @@ flutter create -i swift .
 
 如果一直卡在`Running Gradle task 'assembleDebug'`中, 那么你就可能要去原生项目中拉取一下依赖, 具体请查看`FAQ`
 
-# 🍎 应用程序入口
+## 🌲 应用程序入口
 
 这是创建`flutterApp`自带的代码
 
@@ -458,9 +439,9 @@ void main() {
 }
 ```
 
-所有视图的`根`是继承于`StatelessWidget`的`MyApp`, 它里面有一个`build`方法, 里面是初始化了一个`MaterialApp`来控制全局样式
+所有视图的`根`是继承于`StatelessWidget`的`MyApp`, 它里面有一个`build`方法, 里面是初始化了一个`MaterialApp`来管理App
 
-如果想把App切换成iOS风格也是可以的 只需要使用`CupertinoApp`即可
+如果想把App切换成iOS风格也是可以的 只需要使用`CupertinoApp`即可, 在实际工作中使用`MaterialApp`要更多一些
 
 ```dart
 class MyApp2 extends StatelessWidget {
@@ -571,160 +552,11 @@ const MaterialApp({
     ...
 ```
 
-这些属性我不一一介绍了, 用到了再自己学, 不过有两个是非常重要的, 一个是`body`, 这个是放我们的内容, 一个是`appBar`, 这个是放我们的导航栏
-
-# 🍎 导航栏
-
-导航栏分为顶部导航栏和底部导航栏, 顶部导航栏叫`AppBar`底部导航栏叫`BottomNavigationBar`, 当然导航栏也分为两种风格, 安卓和iOS各不相同, 本文主要以安卓为主
-
-## 🌲 配置顶部导航栏
-
-添加导航栏非常简单使用`Scaffold`, 它是`flutter`提供的一套脚手架, 里面有一个属性叫`AppBar`
-
-> Android
-
-```dart
-return Scaffold(
-    appBar: AppBar(
-	  // 标题样式
-      title: Text(widget.title, style: TextStyle(color: Global.naviTitleColor)),
-      // 背景颜色
-      backgroundColor: Global.naviBgColor,
-      // 图标颜色
-      iconTheme: IconThemeData(color: Global.naviTitleColor),
-    ),
-};
-```
-
-> iOS
-
-```dart
-return CupertinoPageScaffold(
-    navigationBar: CupertinoNavigationBar(middle: Text("123")));
-};
-```
-
-## 🌲 配置底部导航栏
-
-### 🌸 基础配置
-
-在脚手架中有个`bottomNavigationBar`属性可以配置底部导航栏
-
-```dart
-return Scaffold(
-        bottomNavigationBar: BottomNavigationBar(items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "首页"),
-          BottomNavigationBarItem(icon: Icon(Icons.category), label: "分类"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.settings), label: "系统设置"),
-        ]),
-```
-
-就是这么简单, 就问你服不服? 我们运行项目看看
-
-![](images/Pasted%20image%2020240120181159.png)
-
-但是我们发现这几个导航栏都无法点击, 所以我们需要配置他们的跳转逻辑
-
-### 🌸 选中逻辑
-
-我们使用`BottomNavigationBar`中的`currentIndex`就可以设置点击选中哪个导航了, 我们定义一个`_currentIndex`变量为0, 然后把他赋值到`currentIndex`那么每次默认就是选中第1个导航, 当我们点击`BottomNavigationBar`后, 我们可以在value中获取到index, 从而使用`setState`来设置`index`就可以改变底部导航的选中了
-
-```dart
-class _MyHomePageState extends State<MyHomePage> {
-  var _currentIndex = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        bottomNavigationBar: BottomNavigationBar(
-            currentIndex: _currentIndex,
-            onTap: (value) {
-              setState(() {
-                _currentIndex = value;
-              });
-            },
-            items: const [
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: "首页"),
-              BottomNavigationBarItem(icon: Icon(Icons.category), label: "分类"),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.settings), label: "系统设置"),
-            ]),
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: Text(widget.title),
-        ),
-        body: ListView(
-          children: [
-            Container(
-              height: 50,
-              color: Colors.amber[600],
-              child: const Center(child: Text('Entry A')),
-            ),
-            Container(
-              height: 50,
-              color: Colors.amber[500],
-              child: const Center(child: Text('Entry B')),
-            ),
-            Container(
-              height: 50,
-              color: Colors.amber[100],
-              child: const Center(child: Text('Entry C')),
-            ),
-          ],
-        ));
-  }
-}
-```
-
-### 🌸 跳转逻辑
-
-更简单了, 一句话, 就是替换body, 我们之前的body是一个listView, 而加了导航页面, 那么我们的body就是各个页面了
-
-```dart
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  var _currentIndex = 0;
-  var pages = const [
-    SecondPage(title: "第二个页面"),
-    ThirdPage(title: "第三个页面"),
-    VideoPage()
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        bottomNavigationBar: BottomNavigationBar(
-            currentIndex: _currentIndex,
-            onTap: (value) {
-              setState(() {
-                _currentIndex = value;
-              });
-            },
-            items: const [
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: "首页"),
-              BottomNavigationBarItem(icon: Icon(Icons.category), label: "分类"),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.settings), label: "系统设置"),
-            ]),
-        body: pages[_currentIndex]);
-  }
-}
-```
-
-所以我就往里面塞了几个页面, 然后把原本的导航栏去掉, 否则导航栏会重复, 这就是页面跳转的逻辑了
+这些属性我不一一介绍了, 用到了再自己学, 不过有一个你必须要知道, 那就是`body`, 这个是放我们的内容的属性, 我们就是从这里来构建页面
 
 # 🍎 Page
 
-我们学习完脚手架, 就要学习页面了, 正如官方例子中一样, 我们需要创建一个`page`, 来代表我们的页面
+我们学习完脚手架, 就要学习构建页面了, 正如官方例子中一样, 我们需要创建一个`page`, 来代表我们的页面, 我们可以看到一个关键性的代码`State<MyHomePage> createState() => _MyHomePageState();` 这个的意思是创建一个`_MyHomePageState状态管理器`来管理面
 
 ```dart
 class MyHomePage extends StatefulWidget {
@@ -746,13 +578,11 @@ class MyHomePage extends StatefulWidget {
 }
 ```
 
-- `StatefulWidget`说明页面的数据是可刷新的, 如果是`StatelessWidget`, 那么页面是无法刷新的, 因为我们的页面要点击按钮增加计数, 所以需要继承于前者
+- `StatefulWidget`有状态页面, 数据可以在内部进行刷新等操作, 如果是`StatelessWidget`, 那么页面本身是无法刷新的, 因为没有`State`状态管理器, 但是我们仍然可以通过在外部刷新, 或者在`StatelessWidget`中再添加`StatefulWidget`所以`flutter`对于状态管理是很灵活的
 
-- `const MyHomePage({super.key, required this.title});`这个一看就知道, 这是我们`MyHomePage`的初始化方法, 用于传一个标题进来
+- `const MyHomePage({super.key, required this.title});`这个一看就知道, 这是我们`MyHomePage`的初始化方法, 用于传一个标题进来, 而`final String title;`是我们的成员变量用来接收`title`
 
-# 🍎 State
-
-我们可以看到一个关键性的代码`State<MyHomePage> createState() => _MyHomePageState();` 这个的意思是创建一个`_MyHomePageState`来管理面, 我们一起来看看这个页面
+有状态页面绘制UI是在`_MyHomePageState`状态管理器中去绘制的, 其中`build`是最关键的, 在里面放一个`widget`就能在屏幕中显示出来了, 当然案例界面并不复杂, 首先最外层是脚手架, 它能赋予页面一个大体的框架, 我们在上面绘制了`AppBar`导航栏, 还有`Column`一个竖排的组件, 里面放`Text`, 值是`_counter`用来计数, 当我们点击`floatingActionButton`时会改变计数的值, 然后我们使用`setState`进行更新数据, 就能看到动态改变的计数了
 
 ```dart
 class _MyHomePageState extends State<MyHomePage> {
@@ -760,50 +590,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
       _counter++;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
@@ -820,17 +619,11 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ), 
     );
   }
 }
 ```
-
-`Widget build`这里面最核心的代码就是它, 因为在`state`中需要使用这个方法来返回`UI`, 我们可以看到它返回了一个脚手架`Scaffold`, 否则页面会没有导航栏, 然后在`body`中它绘制了页面的视图
-
-- `int _counter = 0;`它定义了一个计数变量来计数
-
-`void _incrementCounter()`按钮点击后触发这个方法来给`_counter`加1
 
 # 🍎 生命周期
 
@@ -1176,6 +969,198 @@ I/flutter (10343): 子组件build
 
 值得注意的是, 这个子组件必须是非`const`的, 才会重新构建, 如果是const, 那么已经是一个常量组件就不会受到状态的影响了, 掌握了这一点可以在搭建界面时节约性能
 
+# 🍎 导航栏
+
+导航栏分为`顶部导航栏`和`底部导航栏`, 顶部导航栏叫`AppBar`底部导航栏叫`BottomNavigationBar`, 当然导航栏也分为两种风格, 安卓和iOS各不相同, 本文主要以安卓为主
+
+## 🌲 配置顶部导航栏
+
+添加导航栏非常简单使用`Scaffold`, 它是`flutter`提供的一套脚手架, 里面有一个属性叫`AppBar`
+
+> Android
+
+```dart
+return Scaffold(
+    appBar: AppBar(
+	  // 标题样式
+      title: Text(widget.title, style: TextStyle(color: Global.naviTitleColor)),
+      // 背景颜色
+      backgroundColor: Global.naviBgColor,
+      // 图标颜色
+      iconTheme: IconThemeData(color: Global.naviTitleColor),
+    ),
+};
+```
+
+> iOS
+
+```dart
+return CupertinoPageScaffold(
+    navigationBar: CupertinoNavigationBar(middle: Text("123")));
+};
+```
+
+## 🌲 配置底部导航栏
+
+### 🌸 基础配置
+
+在脚手架中有个`bottomNavigationBar`属性可以配置底部导航栏
+
+```dart
+return Scaffold(
+        bottomNavigationBar: BottomNavigationBar(items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "首页"),
+          BottomNavigationBarItem(icon: Icon(Icons.category), label: "分类"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings), label: "系统设置"),
+        ]),
+```
+
+就是这么简单, 就问你服不服? 我们运行项目看看
+
+![](images/Pasted%20image%2020240120181159.png)
+
+但是我们发现这几个导航栏都无法点击, 所以我们需要配置他们的跳转逻辑
+
+### 🌸 选中逻辑
+
+我们使用`BottomNavigationBar`中的`currentIndex`就可以设置点击选中哪个导航了, 我们定义一个`_currentIndex`变量为0, 然后把他赋值到`currentIndex`那么每次默认就是选中第1个导航, 当我们点击`BottomNavigationBar`后, 我们可以在value中获取到index, 从而使用`setState`来设置`index`就可以改变底部导航的选中了
+
+```dart
+class _MyHomePageState extends State<MyHomePage> {
+  var _currentIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        bottomNavigationBar: BottomNavigationBar(
+            currentIndex: _currentIndex,
+            onTap: (value) {
+              setState(() {
+                _currentIndex = value;
+              });
+            },
+            items: const [
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: "首页"),
+              BottomNavigationBarItem(icon: Icon(Icons.category), label: "分类"),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.settings), label: "系统设置"),
+            ]),
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: Text(widget.title),
+        ),
+        body: ListView(
+          children: [
+            Container(
+              height: 50,
+              color: Colors.amber[600],
+              child: const Center(child: Text('Entry A')),
+            ),
+            Container(
+              height: 50,
+              color: Colors.amber[500],
+              child: const Center(child: Text('Entry B')),
+            ),
+            Container(
+              height: 50,
+              color: Colors.amber[100],
+              child: const Center(child: Text('Entry C')),
+            ),
+          ],
+        ));
+  }
+}
+```
+
+### 🌸 跳转逻辑
+
+跳转逻辑也很好实现, 一句话, 就是替换body, 我们之前的body是一个listView, 而且加了导航页面, 那么现在我们的`body`就要替换成各个页面了, 所以我们要先创建这几个页面, 我创建了首页, 导航页, 设置页三个页面, 然后把他们放在数组中
+
+```dart
+class _MyHomePageState extends State<MyHomePage> {
+  var _currentIndex = 0;
+  var pages = const [MainPage(), CategoryPage(), SettingPage()];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        bottomNavigationBar: BottomNavigationBar(
+            currentIndex: _currentIndex,
+            onTap: (value) {
+              setState(() {
+                _currentIndex = value;
+              });
+            },
+            items: const [
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: "首页"),
+              BottomNavigationBarItem(icon: Icon(Icons.category), label: "分类"),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.settings), label: "系统设置"),
+            ]),
+        body: pages[_currentIndex]);
+  }
+}
+```
+
+所以我就往里面塞了几个页面, 然后把原本的导航栏去掉, 否则导航栏会重复, 这就是页面跳转的逻辑了
+
+### 🌸 底部导航封装
+
+在实际开发中我们把底部导航直接写在脚手架中可能确实不太雅观, 所以一般的我们会对底部导航进行封装
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:test_flutter/pages/category_page.dart';
+import 'package:test_flutter/pages/main_page.dart';
+import 'package:test_flutter/pages/setting_page.dart';
+
+class Tabs extends StatefulWidget {
+  const Tabs({super.key});
+
+  @override
+  State<Tabs> createState() => _TabsState();
+}
+
+class _TabsState extends State<Tabs> {
+  var _currentIndex = 0;
+  var pages = const [MainPage(), CategoryPage(), SettingPage()];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        bottomNavigationBar: BottomNavigationBar(
+            currentIndex: _currentIndex,
+            onTap: (value) {
+              setState(() {
+                _currentIndex = value;
+              });
+            },
+            items: const [
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: "首页"),
+              BottomNavigationBarItem(icon: Icon(Icons.category), label: "分类"),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.settings), label: "系统设置"),
+            ]),
+        body: pages[_currentIndex]);
+  }
+}
+```
+
+我们把`_MyHomePageState`中的视图和变量都抽出来, 放到`Tabs`, 然后`_MyHomePageState`只需要这样配置就可以了
+
+```dart
+class _MyHomePageState extends State<MyHomePage> {
+  
+  @override
+  Widget build(BuildContext context) {
+    return const Tabs();
+  }
+}
+```
+
+这就是底部导航最简单的封装了, 是不是瞬间感觉清爽了
+
 # 🍎 控件
 
 `widget`在`flutter`中有很多名字, 英文翻译为`小器物，小装置，小玩意儿`, 我喜欢把它叫做控件, 你也可以把它叫做`组件`, `视图`, `页面`等, 他们可能是很大的一个页面, 也可能是很小的一个文本框, 但他们都是表示我们构建界面的一个基本构建单位或基本组成单位
@@ -1407,7 +1392,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 ![](images/Pasted%20image%2020231109140857.png)
 
-## 🌲 列表
+## 🌲 列表(ListView)
 
 列表包含在可滚动视图内, 是十分常用的组件
 
@@ -1552,9 +1537,20 @@ Icon(Icons.bike_scooter, color: Colors.pink,),
 
 # 🍎 插件
 
-也可以叫做第三方库, 我们可以借助官方或第三库来方便我们的开发
+也可以叫做第三方库, 我们可以借助官方或第三库来方便我们的开发, 我这里只列举了一些哈, 并且我都配上了最基本的用法, 时间原因以后会完善文档
 
-[跳转 plugins](../flutter_plugin/plugins/plugins.md)
+| 名称 | 用途 | 文档 |
+| -- | -- | -- |
+| dio | 网络请求 | [dio](../dio/dio.md) |
+| video_player | 官方视频框架 | [video_player](../video_player/video_player.md) |
+| chewie | 视频UI框架 | [chewie](../chewie/chewie.md) |
+| cached_network_image | 图片加载 | [cached_network_image](../cached_network_image/cached_network_image.md) |
+| getx | 状态, 路由, dialog, 本地化 | [getx](../getx/getx.md) |
+| provider | 状态管理 | [provider](../provider/provider.md) |
+| logger | 日志 | [logger](../logger/logger.md) |
+| sqflite | 数据库框架 | [sqlflite](../sqlflite/sqlflite.md) |
+| shared_preferences | 轻量级存储 | [shared_preferences](../shared_preferences/shared_preferences.md) |
+| json_serializable | json转model | [json_serializable](../json_serializable/json_serializable.md) |
 
 # 🍎 自定义插件
 
@@ -1770,6 +1766,30 @@ https://flutter.cn/docs/release/whats-new
 
 https://flutter.dev/docs/development/add-to-app
 
-# 🍎 打包
+# 🍎 命令
+
+## 🌲 拉取依赖
+
+```shell
+flutter packages get
+```
+
+## 🌲 打包
 
 https://docs.flutter.dev/deployment/android
+
+```
+flutter build ios
+```
+
+## 🌲 生成模板
+
+flutter在创建完成后会给我们生成一个安卓项目模板, 如果你不小心删掉了, 我们也可以创建
+
+```shell
+# 创建安卓模板
+flutter create -a java .
+flutter create -a kotlin .
+# 创建iOS模板
+flutter create -i swift .
+```

@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/README.md",
+                "file": "docs/8-others/helloworld.md",
                 "mode": "source",
                 "source": false
               }
@@ -106,7 +106,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/README.md",
+                "file": "docs/8-others/helloworld.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -123,7 +123,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/README.md",
+                "file": "docs/8-others/helloworld.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -146,7 +146,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/README.md"
+                "file": "docs/8-others/helloworld.md"
               }
             }
           }
@@ -167,10 +167,12 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "eee7dabbf81aba60",
+  "active": "cb3f64f0d674c0bb",
   "lastOpenFiles": [
-    "README.md",
     "docs/README.md",
+    "docs/8-others/helloworld.md",
+    "README.md",
+    "docs/8-others",
     "docs/3-program/mobile/flutter/flutter_plugin/video_player/images/Pasted image 20240119115534.png",
     "docs/3-program/mobile/flutter/flutter_plugin/video_player/images/Pasted image 20240119113157.png",
     "docs/3-program/mobile/flutter/flutter_plugin/video_player/images/Pasted image 20240119112909.png",
@@ -202,7 +204,6 @@
     "docs/3-program/mobile/flutter/flutter_plugin/cached_network_image/cached_network_image.md",
     "docs/3-program/mobile/flutter/flutter_plugin/video_player",
     "docs/3-program/mobile/flutter/flutter_plugin/sqlflite",
-    "docs/3-program/mobile/flutter/flutter_plugin/shared_preferences",
     "docs/3-program/mobile/flutter/navigator/navigator.md",
     "docs/3-program/mobile/flutter/flutter/flutter.md",
     "docs/3-program/mobile/flutter/component/component.md",

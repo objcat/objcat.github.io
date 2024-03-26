@@ -18,21 +18,8 @@
                 "source": false
               }
             }
-          },
-          {
-            "id": "cb3f64f0d674c0bb",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "docs/README.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -167,10 +154,11 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "eee7dabbf81aba60",
+  "active": "bbea9b88a4c7894e",
   "lastOpenFiles": [
-    "README.md",
+    "docs/0-language/swift/swift.md",
     "docs/README.md",
+    "README.md",
     "docs/3-program/mobile/flutter/flutter_plugin/video_player/images/Pasted image 20240119115534.png",
     "docs/3-program/mobile/flutter/flutter_plugin/video_player/images/Pasted image 20240119113157.png",
     "docs/3-program/mobile/flutter/flutter_plugin/video_player/images/Pasted image 20240119112909.png",

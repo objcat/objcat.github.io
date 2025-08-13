@@ -108,7 +108,7 @@ https://unity.cn/releases
 
 新建项目应该要安装很多依赖包, 所以是非常慢的, 需要耐心等待, 大概5-10分钟吧
 
-![](images2/Pasted%20image%2020250811194517.png)
+![](images2/Pasted%20image%2020250811194517.jpg)
 
 新建完成后目录是这样的
 

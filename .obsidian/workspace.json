@@ -151,12 +151,12 @@
               "title": "unity3d 的大纲"
             }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -168,8 +168,10 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "e1a2b21e727f48b6",
+  "active": "123a06fa5a3c86b4",
   "lastOpenFiles": [
+    "docs/6-project/gulimall/gulimall/gulimall.md",
+    "docs/7-software/unity/unity3d/unity3d.md",
     "docs/7-software/unity/unity3d/images2/Pasted image 20250811195353.bak.png",
     "docs/7-software/unity/unity3d/images2/Pasted image 20250811203159.bak.png",
     "docs/7-software/unity/unity3d/images2/Pasted image 20250811203159 (小).png",
@@ -180,8 +182,6 @@
     "docs/7-software/unity/unity3d/images2/Pasted image 20250811195437.bak.png",
     "docs/7-software/unity/unity3d/images2/Pasted image 20250812235423.png",
     "docs/7-software/unity/unity3d/images2/Pasted image 20250812235324.png",
-    "docs/7-software/unity/unity3d/images2/Pasted image 20250812235350.png",
-    "docs/7-software/unity/unity3d/unity3d.md",
     "docs/7-software/unity/unity2d/unity2d.md",
     "docs/README.md",
     "run.bat",

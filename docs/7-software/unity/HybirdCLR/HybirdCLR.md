@@ -34,5 +34,20 @@ System.IO.FileNotFoundException: Could not find file "D:\project\unity\zzjb2d\Un
 
 ![](images/Pasted%20image%2020250814204717.png)
 
-安装完成后我们可以看到`installed`变成了`True`
+安装完成后我们可以看到`installed`变成了`True`, 后来知道了, 我们在包管理器中也是可以安装这个的
+
+![](images/Pasted%20image%2020250814223015.png)
+
+官方的方法是
+
+![](images/Pasted%20image%2020250814223040.png)
+
+然后输入
+
+```
+https://gitee.com/focus-creative-games/hybridclr_unity.git
+```
+
+如果把这个包卸载掉`HybirdCLR`选项就会消失, 然后我要说这个包应该是`Unity`内置了, 所以我们只需要做第一步的`install初始化(打开菜单HybridCLR/Installer...， 点击安装按钮进行安装。 耐心等待30s左右，安装完成后会在最后打印 安装成功日志。)`就好, 如果发现`HybirdCLR`消失了再去按照官方的做法安装包, 那到这里我们就安装好了
+
 

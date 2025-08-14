@@ -52,9 +52,11 @@ https://unity.cn/releases
 
 ![](images/Pasted%20image%2020250814200927.png)
 
-发现也是行不通的, 说我有东西没安装, 那我只能脑补一下, 有一个包管理器, 然后可以拉取package, 这条路也堵死了, 那我们尝试解决上面运行单个场景的错误吧
+发现也是行不通的, 说我有东西没安装, 那我只能脑补一下, 有一个包管理器, 然后可以拉取package, 这条路也堵死了
 
-## 🌲 修补运行错误
+## 🌲 修补运行错误1
+
+那我们尝试解决上面的`Unity.Model.dll.bytes`没找到的错误吧
 
 ```shell
 System.IO.FileNotFoundException: Could not find file "D:\project\unity\zzjb2d\Unity\Assets\Bundles\Code\Unity.Model.dll.bytes"
@@ -63,11 +65,11 @@ File name: 'D:\project\unity\zzjb2d\Unity\Assets\Bundles\Code\Unity.Model.dll.by
   at System.IO.FileStream..ctor (System.String path, System.IO.FileMode mode, System.IO.FileAccess access, System.IO.FileShare share, System.Int32 bufferSize) [0x00000] in <17d9ce77f27a4bd2afb5ba32c9bea976>:0 
 ```
 
-单凭现在的我是无法解决这个问题的, 我问了GPT它说是一个热更新用的东西, 就在一筹莫展的时候突然想起了前两天`霸哥`给发的文档, 顿时感觉我站在了巨人的肩膀上
+单凭现在的我是无法解决这个问题的, 我问了GPT它说是一个`热更新`用的东西, 就在一筹莫展的时候突然想起了前两天`霸哥`给发的文档, 顿时感觉我站在了巨人的肩膀上
 
 ![](images/Pasted%20image%2020250814201713.png)
 
-第一步切换成`DEBUG`环境, 在我看来这个应该是可以切换成开发服务器的配置, 而开发服务器一般都是在自己本地的, 所以我推测有一个地方就可以配置本地的服务器+mysql+mango, 这里我就先切换过来, 然后再看
+第一步切换成`DEBUG`环境, 在我看来这个应该是可以切换成开发服务器的配置, 而开发服务器一般都是在自己本地的, 所以我推测有一个地方就可以配置本地的服务器+mysql+mango, 这里我就先切换过来, 配置的地方我先不去看 先解决问题
 
 接下来`霸哥`说要安装`HybirdCLR`
 
@@ -92,3 +94,74 @@ File name: 'D:\project\unity\zzjb2d\Unity\Assets\Bundles\Code\Unity.Model.dll.by
 ```
 IL2CPP是Unity 官方的脚本后端（Scripting Backend）技术，全称是Intermediate Language To C++, 其作用是把C#代码转化成C++代码
 ```
+
+安装完之后运行单个场景仍然会报错, 点击报错信息定位到了一个`CodeLoader`中
+
+```cs
+namespace ET
+{
+    public class CodeLoader : Singleton<CodeLoader>, ISingletonAwake
+    {
+        private Assembly modelAssembly;
+        private Assembly modelViewAssembly;
+
+        private Dictionary<string, TextAsset> dlls;
+        private Dictionary<string, TextAsset> aotDlls;
+        private bool enableDll;
+        ...
+```
+
+我不知道这是干啥的, 但是大致可以推断出来就是程序启动的时候要进行热更新, 在这里找到出错的代码
+
+```cs
+if (this.enableDll)
+{
+    byte[] modelAssBytes = File.ReadAllBytes(Path.Combine(Define.CodeDir, "Unity.Model.dll.bytes"));
+    byte[] modelPdbBytes = File.ReadAllBytes(Path.Combine(Define.CodeDir, "Unity.Model.pdb.bytes"));
+    byte[] modelViewAssBytes = File.ReadAllBytes(Path.Combine(Define.CodeDir, "Unity.ModelView.dll.bytes"));
+    byte[] modelViewPdbBytes = File.ReadAllBytes(Path.Combine(Define.CodeDir, "Unity.ModelView.pdb.bytes"));
+    this.modelAssembly = Assembly.Load(modelAssBytes, modelPdbBytes);
+    this.modelViewAssembly = Assembly.Load(modelViewAssBytes, modelViewPdbBytes);
+}
+```
+
+可以看到它是在本地文件去读取这个, 但是热跟新去读本地文件是没用的啊, 所以我觉得肯定没这么简单, 说不定是先所以我查看了`enableDll`是做什么用的, 找到了这行
+
+```cs
+this.enableDll = Resources.Load<GlobalConfig>("GlobalConfig").EnableDll;
+```
+
+然后点入属性
+
+```cs
+[CreateAssetMenu(menuName = "ET/CreateGlobalConfig", fileName = "GlobalConfig", order = 0)]
+public class GlobalConfig : ScriptableObject
+{
+    public CodeMode CodeMode;
+
+    public bool EnableDll;
+
+    public BuildType BuildType;
+
+    public AppType AppType;
+
+    public EPlayMode EPlayMode;
+
+    [HideInInspector] public string ServerIP = "111.229.241.78";
+    [HideInInspector] public string ABundlesIP = "https://mmros.itjiale.com";
+    [HideInInspector] public string ABundlesVersion = "v1.0";
+
+    [HideInInspector] public ConnectType ConnectType = ConnectType.Remote;
+}
+```
+
+虽然不懂这是什么, 但是从`GlobalConfig`字面意义上理解和对代码中出现了服务器地址`ServerIP`, 可以推断出就是相当于一个配置文件, 要从远程服务器上获取, 到这里线索中断了, 我不知道它为什么要在本地读取一个补丁
+
+## 🌲 学习HybirdCLR
+
+所以我只能去学习一下`HybirdCLR`了解原理
+
+[HybirdCLR学习文档](../../7-software/unity/HybirdCLR/HybirdCLR.md)
+
+## 🌲学习ET
+

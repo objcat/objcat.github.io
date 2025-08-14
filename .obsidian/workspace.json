@@ -13,6 +13,20 @@
             "state": {
               "type": "markdown",
               "state": {
+                "file": "docs/7-software/unity/HybirdCLR/HybirdCLR.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "HybirdCLR"
+            }
+          },
+          {
+            "id": "998e79fc21f126ec",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
                 "file": "docs/7-software/unity/unity3d/unity3d.md",
                 "mode": "source",
                 "source": false
@@ -142,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/7-software/unity/unity3d/unity3d.md",
+                "file": "docs/7-software/unity/HybirdCLR/HybirdCLR.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "unity3d 的大纲"
+              "title": "HybirdCLR 的大纲"
             }
           }
         ],
@@ -170,32 +184,36 @@
   },
   "active": "14e105c4287041f5",
   "lastOpenFiles": [
-    "docs/7-software/unity/inspector/inspector.md",
-    "docs/7-software/unity/packing/packing.md",
-    "docs/7-software/unity/packing/images/Pasted image 20250814192419.png",
-    "docs/7-software/unity/packing/images/Pasted image 20250814192321.png",
-    "docs/7-software/unity/packing/images/Pasted image 20250814192227.png",
-    "docs/7-software/unity/packing/images/Pasted image 20250814192123.png",
-    "docs/7-software/unity/packing/images/Pasted image 20250814191942.png",
-    "docs/7-software/unity/packing/images/Pasted image 20250814191610.png",
-    "docs/7-software/unity/packing/images/Pasted image 20250814191525.png",
-    "docs/7-software/unity/packing/images/Pasted image 20250814191432.png",
-    "docs/7-software/unity/packing/images/Pasted image 20250814191357.png",
-    "docs/7-software/unity/packing/images",
-    "docs/7-software/unity/unity3d/unity3d.md",
+    "docs/7-software/unity/HybirdCLR/images/Pasted image 20250814204922.png",
+    "docs/7-software/unity/HybirdCLR/images/Pasted image 20250814204717.png",
+    "docs/7-software/unity/HybirdCLR/images/Pasted image 20250814204650.png",
+    "docs/7-software/unity/HybirdCLR/images/Pasted image 20250814204544.png",
+    "docs/7-software/unity/HybirdCLR/images",
     "README.md",
-    "docs/7-software/unity/packing",
-    "docs/7-software/unity/unity3d/images2/Pasted image 20250811202358.png",
-    "docs/7-software/unity/inspector/images",
+    "docs/7-software/unity/inspector/inspector.md",
+    "docs/7-software/unity/HybirdCLR/HybirdCLR.md",
+    "docs/6-project/zzjb/zzjb.md",
+    "docs/7-software/unity/HybirdCLR",
+    "docs/6-project/zzjb/images/Pasted image 20250814202639.png",
+    "docs/6-project/zzjb/images/Pasted image 20250814202622.png",
+    "docs/6-project/zzjb/images/Pasted image 20250814202440.png",
+    "docs/6-project/zzjb/images/Pasted image 20250814202111.png",
+    "docs/6-project/zzjb/images/Pasted image 20250814202042.png",
+    "docs/6-project/zzjb/images/Pasted image 20250814201713.png",
+    "docs/6-project/zzjb/images/Pasted image 20250814200927.png",
+    "docs/7-software/unity/unity3d/unity3d.md",
+    "docs/6-project/zzjb/images",
+    "docs/6-project/gulimall/gulimall_nacos/gulimall_nacos.md",
     "docs/README.md",
+    "docs/6-project/zzjb",
+    "docs/7-software/unity/packing/packing.md",
+    "docs/7-software/unity/packing/images",
+    "docs/7-software/unity/packing",
+    "docs/7-software/unity/inspector/images",
     "docs/7-software/unity/inspector",
     "docs/6-project/gulimall/gulimall/gulimall.md",
     "docs/7-software/unity/unity2d/unity2d.md",
     "run.bat",
-    "docs/7-software/unity/unity3d/images",
-    "docs/7-software/unity/unity3d/images2",
-    "docs/7-software/unity/unity3d",
-    "docs/7-software/unity/unity2d/images",
-    "docs/7-software/unity/unity2d"
+    "docs/7-software/unity/unity3d/images"
   ]
 }

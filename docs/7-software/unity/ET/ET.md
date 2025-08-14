@@ -60,6 +60,107 @@ https://www.jetbrains.com/zh-cn/rider/
 
 ![](images/Pasted%20image%2020250815003251.png)
 
+## 🌲 Unity
+
+### 🌸 工程讲解
+
+我们先来看这个模块, 根据视频讲解, 这是作者给我们根据功能分出来的不同的`程序集`, 在我理解和Java中的`Maven Module`差不多, 就是根据分工把一个项目拆成一堆小项目
+
+- 与定义相关的放在`Model`中
+- 与实现相关的放在`Hotfix`中
+- 与视图相关的定义放在`ModelView`中
+- 与视图相关的实现放在`HotfixView`中
+
+举个例子, 我们找到
+
+![](images/Pasted%20image%2020250815012037.png)
+
+然后看一下它的代码
+
+```cs
+using UnityEngine;
+
+namespace ET.Client
+{
+	[ComponentOf(typeof(UI))]
+	public class UILoginComponent: Entity, IAwake
+	{
+		public GameObject account;
+		public GameObject password;
+		public GameObject loginBtn;
+	}
+}
+```
+
+它的实现就在`Hotfix`中
+
+![](images/Pasted%20image%2020250815012141.png)
+
+```cs
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace ET.Client
+{
+	[EntitySystemOf(typeof(UILoginComponent))]
+	[FriendOf(typeof(UILoginComponent))]
+	public static partial class UILoginComponentSystem
+	{
+		[EntitySystem]
+		private static void Awake(this UILoginComponent self)
+		{
+			ReferenceCollector rc = self.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
+			self.loginBtn = rc.Get<GameObject>("LoginBtn");
+			
+			self.loginBtn.GetComponent<Button>().onClick.AddListener(()=> { self.OnLogin(); });
+			self.account = rc.Get<GameObject>("Account");
+			self.password = rc.Get<GameObject>("Password");
+		}
+
+		
+		public static void OnLogin(this UILoginComponent self)
+		{
+			LoginHelper.Login(
+				self.Root(), 
+				self.account.GetComponent<InputField>().text, 
+				self.password.GetComponent<InputField>().text).Coroutine();
+		}
+	}
+}
+```
+
+### 🌸 程序集依赖
+
+程序集之间是存在依赖关系的, 我们可以看一下它的依赖文件
+
+![](images/Pasted%20image%2020250815012954.png)
+
+可以看到一个叫做`Unity.Core.asmdef`的, 我们打开
+
+```json
+{
+    "name": "Unity.Core",
+    "rootNamespace": "ET",
+    "references": [
+        "Unity.ThirdParty",
+        "Unity.Mathematics",
+        "MemoryPack"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
+```
+
+可以看到`Core`依赖`Unity.ThirdParty`, 其他程序集的依赖关系也可以自己看看
+
+
 
 
 

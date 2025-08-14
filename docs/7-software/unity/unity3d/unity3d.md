@@ -366,6 +366,16 @@ https://unity.cn/releases
 
 [inspector使用教程](../inspector/inspector.md)
 
+# 🍎 ET框架
+
+[ET学习文档](../ET/ET.md)
+
+# 🍎 HybirdCLR
+
+热更新
+
+[HybirdCLR学习文档](../HybirdCLR/HybirdCLR.md)
+
 # 🍎 打包
 
 我们的项目开发完毕后就要打包发布了, 那我们这个模块就讲一下如何打包

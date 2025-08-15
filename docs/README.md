@@ -16,19 +16,25 @@
 
 ![](images/csharp.png)
 
-一本粗略的学习文档, 耗时2小时, 因为我看到ET框架和`Unity`脚本都要用这个, 不先学啥都看不懂
+一份粗略的新手学习文档, 本来打算放到后面学, 但是看到`ET`框架和`Unity`脚本都很常用不先学啥都看不懂, 耗时3小时
 
 [csharp学习文档](0-language/csharp/csharp.md)
 
 ## 🌲 3D
 
+3D踩坑小笔记
+
 [unity3d学习笔记](7-software/unity/unity3d/unity3d.md)
 
 ## 🌲 2D
 
+2D踩坑小笔记
+
 [unity2d学习笔记](7-software/unity/unity2d/unity2d.md)
 
 ## 🌲 重装机兵-霸主
+
+项目解析, 目前只完成了运行
 
 [重装机兵项目解读](6-project/zzjb/zzjb.md)
 

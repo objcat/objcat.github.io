@@ -55,6 +55,10 @@ double testDouble = 1000.0;
 string testString = "objcat";    
 // 数组
 int[] testArr = [1, 2, 3];
+// 列表
+List<int> list = new List<int>() { 1, 2, 3 };
+// 字典
+
 ```
 
 ## 🌲 推导类型
@@ -377,6 +381,12 @@ Dictionary<string, object> dic = new Dictionary<string, object>
 {
     {"name", "张三" },
     {"age", 18 }
+};
+// 带初始值的字典 写法2
+Dictionary<string, object> dic = new Dictionary<string, object>
+{
+    ["name"] = "张三",
+    ["age"] = 18
 };
 ```
 

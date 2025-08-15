@@ -159,7 +159,7 @@ public class GlobalConfig : ScriptableObject
 
 `敏感信息我隐藏了`, 虽然不懂这是什么, 但是从`GlobalConfig`字面意义上理解和对代码中出现了服务器地址`ServerIP`, 可以推断出就是相当于一个配置文件, 要从远程服务器上获取, 到这里线索中断了, 我不知道它为什么要在本地读取一个补丁
 
-## 🌲 解决运行错误1
+## 🌲 解决运行错误1(成功运行场景)
 
 后来大佬说要按一下F6来运行
 
@@ -168,3 +168,32 @@ public class GlobalConfig : ScriptableObject
 经过编译发现这些文件自动生成了, 然后点击运行单个场景是可以的
 
 ![](images/Pasted%20image%2020250815124328.png)
+
+## 🌲 登录页面分析
+
+当我输入我的账号密码时等待一会会有报错
+
+![](images/Pasted%20image%2020250815234831.png)
+
+### 🌸 问题1
+
+我们先看一下错误日志
+
+```shell
+Error: 100208
+ET.RpcException: Rpc error: actorId: 1:10000002:1 request: ET.Main2NetClient_Login, response: { "_t" : "NetClient2Main_Login", "RpcId" : 2, "Error" : 100208, "Message" : "Error: 100208\nET.RpcException: session dispose: 2942900818 127.0.0.1:30002\r\n  ET.ETTask`1[T].GetResult () [0x00036]
+...
+ET.Init:Update () (at Assets/Scripts/Loader/MonoBehaviour/Init.cs:47)
+```
+
+这个问题我们通过分析错误日志就能看出来, 本地的`127.0.0.1:30002`服务器没有开启, 导致登录失败, 那么我们反推得到这个服务器就是我们登录用的, 我们现在需要做的就是找打服务器运行起来
+
+### 🌸 问题2
+
+我们先看一下错误日志
+
+```shell
+System.TimeoutException: A timeout occurred after 30000ms selecting a server using CompositeServerSelector{ Selectors = MongoDB.Driver.MongoClient+AreSessionsSupportedServerSelector, LatencyLimitingServerSelector{ AllowedLatencyRange = 00:00:00.0150000 }, OperationsCountServerSelector }. Client view of cluster state is { ClusterId : "1", Type : "Unknown", State : "Disconnected", Servers : [{ ServerId: "{ ClusterId : 1, EndPoint : "127.0.0.1:27017" }", EndPoint: "127.0.0.1:27017", ReasonChanged: "Heartbeat", State: "Disconnected", ServerVersion: , TopologyVersion: , Type: "Unknown", HeartbeatException: "MongoDB.Driver.MongoConnectionException: An exception occurred while opening a connection to the server. ---> System.Net.Sockets.SocketException: 由于目标计算机积极拒绝，无法连接。
+```
+
+这个问题我们能够看出来是向服务器发送了心跳包, 服务器没响应

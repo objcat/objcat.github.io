@@ -160,6 +160,11 @@ namespace ET.Client
 
 可以看到`Core`依赖`Unity.ThirdParty`, 其他程序集的依赖关系也可以自己看看
 
+# 🍎 配表
+
+配表的用途用一句话总结就是xxx
+
+源码位置为`Share/Tool/ExcelExporter/ExcelExporter.cs`有兴趣可以自己看看
 
 
 

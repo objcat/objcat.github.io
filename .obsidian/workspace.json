@@ -13,15 +13,30 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/7-software/unity/ET/ET.md",
+                "file": "docs/7-software/unity/unity3d/unity3d.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "ET"
+              "title": "unity3d"
+            }
+          },
+          {
+            "id": "31c8b355236eaece",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "docs/6-project/zzjb/zzjb.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "zzjb"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -142,13 +157,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/7-software/unity/ET/ET.md",
+                "file": "docs/6-project/zzjb/zzjb.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "ET 的大纲"
+              "title": "zzjb 的大纲"
             }
           }
         ],
@@ -168,12 +183,14 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "98d423fcb53a17bc",
+  "active": "31c8b355236eaece",
   "lastOpenFiles": [
+    "docs/6-project/zzjb/images/Pasted image 20250815124328.png",
+    "docs/6-project/zzjb/images/Pasted image 20250815124110.png",
+    "docs/7-software/unity/ET/ET.md",
+    "docs/7-software/unity/unity3d/unity3d.md",
     "docs/7-software/unity/ET/images/Pasted image 20250815012954.png",
     "docs/7-software/unity/HybirdCLR/HybirdCLR.md",
-    "docs/7-software/unity/unity3d/unity3d.md",
-    "docs/7-software/unity/ET/ET.md",
     "docs/7-software/unity/ET/images/Pasted image 20250815012141.png",
     "docs/7-software/unity/ET/images/Pasted image 20250815012139.png",
     "docs/7-software/unity/ET/images/Pasted image 20250815012037.png",
@@ -182,8 +199,6 @@
     "docs/7-software/unity/ET/images/Pasted image 20250815002712.png",
     "docs/7-software/unity/ET/images/Pasted image 20250815002539.png",
     "docs/7-software/unity/ET/images/Pasted image 20250815002020.png",
-    "docs/7-software/unity/ET/images/Pasted image 20250815001453.png",
-    "docs/7-software/unity/ET/images/Pasted image 20250815001132.png",
     "docs/7-software/unity/ET/images",
     "README.md",
     "docs/6-project/zzjb/zzjb.md",

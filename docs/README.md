@@ -12,6 +12,12 @@
 
 # 🍎 Unity
 
+## 🌲 `C#`
+
+一本粗略的学习文档, 2小时写完, 因为我看到ET框架和`Unity`脚本都要用这个, 不先学啥都看不懂
+
+[csharp学习文档](0-language/csharp/csharp.md)
+
 ## 🌲 3D
 
 [unity3d学习笔记](7-software/unity/unity3d/unity3d.md)
@@ -19,6 +25,10 @@
 ## 🌲 2D
 
 [unity2d学习笔记](7-software/unity/unity2d/unity2d.md)
+
+## 🌲 重装机兵-霸主
+
+[重装机兵项目解读](6-project/zzjb/zzjb.md)
 
 # 🍎 Java
 

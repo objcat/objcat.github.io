@@ -16,7 +16,7 @@ C# 是一种 **新式**、**创新**、**开放源代码**、**跨平台**，�
 
 # 🍎 Hello World
 
-```c#
+```cs
 using System;
 
 namespace ConsoleApp1

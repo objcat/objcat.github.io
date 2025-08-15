@@ -149,15 +149,15 @@ public class GlobalConfig : ScriptableObject
 
     public EPlayMode EPlayMode;
 
-    [HideInInspector] public string ServerIP = "111.229.241.78";
-    [HideInInspector] public string ABundlesIP = "https://mmros.itjiale.com";
+    [HideInInspector] public string ServerIP = "xxx.xxx.xxx";
+    [HideInInspector] public string ABundlesIP = "https://xxx";
     [HideInInspector] public string ABundlesVersion = "v1.0";
 
     [HideInInspector] public ConnectType ConnectType = ConnectType.Remote;
 }
 ```
 
-虽然不懂这是什么, 但是从`GlobalConfig`字面意义上理解和对代码中出现了服务器地址`ServerIP`, 可以推断出就是相当于一个配置文件, 要从远程服务器上获取, 到这里线索中断了, 我不知道它为什么要在本地读取一个补丁
+`敏感信息我隐藏了`, 虽然不懂这是什么, 但是从`GlobalConfig`字面意义上理解和对代码中出现了服务器地址`ServerIP`, 可以推断出就是相当于一个配置文件, 要从远程服务器上获取, 到这里线索中断了, 我不知道它为什么要在本地读取一个补丁
 
 ## 🌲 解决运行错误1
 

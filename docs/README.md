@@ -14,7 +14,9 @@
 
 ## 🌲 `C#`
 
-一本粗略的学习文档, 2小时写完, 因为我看到ET框架和`Unity`脚本都要用这个, 不先学啥都看不懂
+![](images/csharp.png)
+
+一本粗略的学习文档, 耗时2小时, 因为我看到ET框架和`Unity`脚本都要用这个, 不先学啥都看不懂
 
 [csharp学习文档](0-language/csharp/csharp.md)
 

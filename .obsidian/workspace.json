@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/6-project/zzjb/zzjb.md",
+                "file": "docs/README.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "zzjb"
+              "title": "README"
             }
           }
         ],
@@ -157,13 +157,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/6-project/zzjb/zzjb.md",
+                "file": "docs/README.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "zzjb 的大纲"
+              "title": "README 的大纲"
             }
           }
         ],
@@ -183,15 +183,19 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "e1a2b21e727f48b6",
+  "active": "31c8b355236eaece",
   "lastOpenFiles": [
+    "docs/images/unity.bak.png",
+    "docs/images/unity (Custom).png",
+    "docs/images/unity.png",
+    "docs/6-project/zzjb/zzjb.md",
+    "docs/images/csharp.png",
     "docs/js/prism-csharp.min.js",
     "docs/README.md",
     "docs/0-language/csharp/csharp.md",
     "0-language/c.md",
     "0-language",
     "README.md",
-    "docs/6-project/zzjb/zzjb.md",
     "docs/0-language/csharp/images/Pasted image 20230927094609.png",
     "docs/0-language/csharp/images/Pasted image 20230927094606.png",
     "docs/0-language/csharp/images",
@@ -204,9 +208,6 @@
     "docs/7-software/unity/HybirdCLR/HybirdCLR.md",
     "docs/7-software/unity/ET/images/Pasted image 20250815012141.png",
     "docs/7-software/unity/ET/images/Pasted image 20250815012139.png",
-    "docs/7-software/unity/ET/images/Pasted image 20250815012037.png",
-    "docs/7-software/unity/ET/images/Pasted image 20250815003251.png",
-    "docs/7-software/unity/ET/images/Pasted image 20250815002739.png",
     "docs/7-software/unity/ET/images",
     "docs/7-software/unity/ET",
     "docs/7-software/unity/HybirdCLR/images",
@@ -216,7 +217,6 @@
     "docs/6-project/gulimall/gulimall_nacos/gulimall_nacos.md",
     "docs/6-project/zzjb",
     "docs/7-software/unity/packing/packing.md",
-    "docs/7-software/unity/packing/images",
     "docs/6-project/gulimall/gulimall/gulimall.md",
     "docs/7-software/unity/unity2d/unity2d.md"
   ]

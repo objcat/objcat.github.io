@@ -231,7 +231,126 @@ ET的目录结构是这样的, 我们先总览一下, 其中`DotNet`这个区域
 
 ## 🌲 Unity
 
-### 🌸 模块讲解
+### 🌸 程序入口
+
+`Unity`的程序入口文件是这个`Assets/Scripts/Loader/MonoBehaviour/Init.cs`, 我们简略的看看它都做了什么
+
+```cs
+using System;
+using CommandLine;
+using UnityEngine;
+
+namespace ET
+{
+	public class Init: MonoBehaviour
+	{
+		private void Start()
+		{
+			this.StartAsync().Coroutine();
+		}
+		
+		private async ETTask StartAsync()
+		{
+			DontDestroyOnLoad(gameObject);
+			
+			AppDomain.CurrentDomain.UnhandledException += (sender, e) =>
+			{
+				Log.Error(e.ExceptionObject.ToString());
+			};
+
+			// 命令行参数
+			string[] args = "".Split(" ");
+			Parser.Default.ParseArguments<Options>(args)
+				.WithNotParsed(error => throw new Exception($"命令行格式错误! {error}"))
+				.WithParsed((o)=>World.Instance.AddSingleton(o));
+			Options.Instance.StartConfig = $"StartConfig/Localhost";
+			
+			World.Instance.AddSingleton<Logger>().Log = new UnityLogger();
+			ETTask.ExceptionHandler += Log.Error;
+			
+			World.Instance.AddSingleton<TimeInfo>();
+			World.Instance.AddSingleton<FiberManager>();
+
+			await World.Instance.AddSingleton<ResourcesComponent>().CreatePackageAsync("DefaultPackage", true);
+			
+			CodeLoader codeLoader = World.Instance.AddSingleton<CodeLoader>();
+			await codeLoader.DownloadAsync();
+			
+			codeLoader.Start();
+		}
+
+		private void Update()
+		{
+			TimeInfo.Instance.Update();
+			FiberManager.Instance.Update();
+		}
+
+		private void LateUpdate()
+		{
+			FiberManager.Instance.LateUpdate();
+		}
+
+		private void OnApplicationQuit()
+		{
+			World.Instance.Dispose();
+		}
+	}
+}
+```
+
+代码很多我们找关键的去讲以下, 让大家知道程序启动的时候都做了什么, 首先是这个
+
+```
+World.Instance
+```
+
+这个东西是一个全局管理器, 它是一个单例, 没错就是单例设计模式, 可以在整个程序的声明周期内都可以向里面存东西或者把东西取出来, 我们可以看到下面几行代码就是使用`AddSingleton`往`World`中去注册组件
+
+```cs
+World.Instance.AddSingleton<Logger>().Log = new UnityLogger();
+ETTask.ExceptionHandler += Log.Error;
+			
+World.Instance.AddSingleton<TimeInfo>();
+World.Instance.AddSingleton<FiberManager>();
+```
+
+注册组件的方法是`AddSingleton`
+
+```cs
+public T AddSingleton<T>() where T : ASingleton, ISingletonAwake, new()
+{
+	T singleton = new();
+	singleton.Awake();
+
+	AddSingleton(singleton);
+	return singleton;
+}
+```
+
+我们可以看到, 注册的具体步骤就是先通过泛型初始化对象, 然后调用`Awake`方法来注册, 那么它是怎么知道我们的组件中有`Awake`这个方法呢? 没错就是继承
+
+```cs
+public class TimeInfo: Singleton<TimeInfo>, ISingletonAwake
+{
+	public void Awake()
+	{
+		this.dt1970 = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+		this.dt = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+		this.FrameTime = this.ClientNow();
+	}
+	此处省略一万行......
+}
+```
+
+我们可以看到, 它继承了`Singleton`并实现了里面的`Awake`方法
+
+### 🌸 CodeLoader
+
+这个东西是重中之重
+
+
+
+### 🌸 编码目录规则
 
 我们先来看这个模块, 根据视频讲解, 这是作者给我们根据功能分出来的不同的`程序集`, 在我理解和Java中的`Maven Module`差不多, 就是根据分工把一个项目拆成一堆小项目
 
@@ -330,6 +449,10 @@ namespace ET.Client
 ```
 
 可以看到`Core`依赖`Unity.ThirdParty`, 其他程序集的依赖关系也可以自己看看
+
+## 🌲 DotNet
+
+## 🌲 Tool
 
 # 🍎 配表
 

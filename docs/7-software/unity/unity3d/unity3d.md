@@ -366,10 +366,6 @@ https://unity.cn/releases
 
 [inspector使用教程](../inspector/inspector.md)
 
-# 🍎 ET框架
-
-[ET学习文档](../ET/ET.md)
-
 # 🍎 HybirdCLR
 
 热更新

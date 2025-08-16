@@ -523,7 +523,7 @@ foreach (var item in list)
 
 ## 🌲 while
 
-```kotlin
+```cs
 int i = 0;
 while (i < 3)
 {
@@ -725,7 +725,7 @@ class Student : Person
 
 我们在定义变量的时候可以使用`{ get; set; }`进行修饰, 比如`Name`成员变量, `get`是取值的意思, `set`是赋值的意思, 所以连起来就是`可读可写`的意思, 我们可以看到`Age`只有一个`{ get; }`意思是只读, 所以代码中的`person.Age = 30;`报错了
 
-```kotlin
+```cs
 var person = new Person();
 person.Name = "张三";
 person.Age = 30; ❌
@@ -1072,7 +1072,7 @@ new Thread(() =>
 
 ## 🌲 扩展实例方法
 
-```kotlin
+```cs
 fun main() {
     var str: String = "123"
     println(str.lenth2())
@@ -1085,7 +1085,7 @@ fun String.lenth2(): Int {
 
 ## 🌲 扩展静态方法
 
-```kotlin
+```cs
 fun main() {
     String.hello()
 }

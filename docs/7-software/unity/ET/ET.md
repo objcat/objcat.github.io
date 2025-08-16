@@ -1,6 +1,6 @@
 # 🍎 简介
 
-`ET`是`tanghai`大佬开发的一个`Unity`游戏框架, 它是一个帮我们设置好架构的项目, 并且它包含`前端+后端`, 是全栈的项目, 我们可以在此基础上去开发我们自己的游戏, 把时间更多的用在设计上
+`ET`是`tanghai`大佬开发的一个`Unity`全栈游戏框架, 它采用了`ESC`的设计思想, 包含`前端+后端`, 我们可以在此基础上去开发我们自己的游戏, 更专注与设计
 
 https://github.com/egametang/ET
 
@@ -38,7 +38,7 @@ https://gitee.com/objcat/test-et81
 
 ## 🌲 打开项目
 
-我们使用`Unity Hub`中的`Open`打开里面的`Unity`文件夹, 作者推荐的`Unity`的版本是`2022.3.15`, 非必要不要去用别的版本, 我是懒得下载了, 用的`2023.3.16` - -
+我们使用`Unity Hub`中的`Open`打开里面的`Unity`文件夹, 作者推荐的`Unity`的版本是`2022.3.15`, 非必要不要去用别的版本, 我是懒得下载了, 用的`2022.3.16` - -
 
 ![](images/Pasted%20image%2020250815002712.png)
 
@@ -189,6 +189,16 @@ D:\project\unity\test-et81\Share\Analyzer\bin\Debug\Share.Analyzer.dll
 
 点击`Compile`或者是`F6`快捷键
 
+![](images/Pasted%20image%2020250817003416.png)
+
+但是这个`编译时间`感觉要比在`Rider`中的时间长, 编译前是空的
+
+![](images/Pasted%20image%2020250817003146.png)
+
+编译后发现确实都出来了
+
+![](images/Pasted%20image%2020250817003458.png)
+
 ## 🌲 运行项目
 
 ![](images/Pasted%20image%2020250816124818.png)
@@ -233,13 +243,13 @@ T是切换地图
 
 # 🍎 工程讲解
 
-## 🌲 目录讲解
+## 🌲 目录结构
 
-ET的目录结构是这样的, 我们先总览一下, 其中`DotNet`这个区域是`服务端`, `Share`是工具, `Unity`是`游戏端`
+我们先总览一下目录结构, 其中`DotNet`这个区域是`服务端`, `Share`是工具区, `Unity`是`游戏端`也可以叫`客户端`
 
 ![](images/Pasted%20image%2020250815003251.png)
 
-## 🌲 Unity
+## 🌲 Unity(客户端)
 
 ### 🌸 程序入口
 
@@ -310,7 +320,7 @@ namespace ET
 
 代码很多我们找关键的去讲以下, 让大家知道程序启动的时候都做了什么, 首先是这个
 
-```
+```cs
 World.Instance
 ```
 
@@ -337,7 +347,7 @@ public T AddSingleton<T>() where T : ASingleton, ISingletonAwake, new()
 }
 ```
 
-我们可以看到, 注册的具体步骤就是先通过泛型初始化对象, 然后调用`Awake`方法来注册, 那么它是怎么知道我们的组件中有`Awake`这个方法呢? 没错就是继承
+我们可以看到, 注册的具体步骤就是通过`new()`推断泛型来创建对象, 然后来调用`Awake`, 这个`Awake`我们称为注册方法, 那么它是怎么知道我们的组件中有`Awake`这个方法呢? 没错就是继承, 我们可以看到`public abstract class Singleton<T>: ASingleton where T: Singleton<T>`是个抽象类
 
 ```cs
 public class TimeInfo: Singleton<TimeInfo>, ISingletonAwake
@@ -364,7 +374,7 @@ await codeLoader.DownloadAsync();
 codeLoader.Start();
 ```
 
-我们首先看这三行, 第一行就是创建一个`代码加载器`, 然后是`await codeLoader.DownloadAsync();`这句话从字面意义上看是异步下载, 但是我们看一下它的实现逻辑
+我们首先看这三行, 第一行就是创建一个`代码加载器`, 然后是`await codeLoader.DownloadAsync();`这句话从字面意义上看是`异步下载`, 但是我们看一下它的实现逻辑则不然
 
 ```cs
 public async ETTask DownloadAsync()
@@ -377,7 +387,7 @@ public async ETTask DownloadAsync()
 }
 ```
 
-发现它是在本地去加载代码的, 加载成功后其实是一个字典
+我们发现它是在本地去加载代码的, 根本就没有远程请求, 加载成功后其实是一个字典, 所以`this.dlls`和`this.aotDlls`就是两个装有`TextAsset`的字典, 而字典的key是`Unity.Model.dll, Unity.Model.pdb, Unity.ModelView.dll, Unity.ModelView.pdb`, 这个`TextAsset`类的介绍是`Represents a raw text or binary file asset.` 表示原始文本或二进制文件资产, 以下简称`代码资产`
 
 ```cs
 public async ETTask<Dictionary<string, T>> LoadAllAssetsAsync<T>(string location) where T : UnityEngine.Object
@@ -471,7 +481,7 @@ public void Start()
 }
 ```
 
-现阶段我们只关注一个核心代码`Assembly.Load`就是动态的去加载我们的程序, 它实现程序调用大概是通过下面的方法, 我们模拟声明一个类
+现阶段我们只关注一个核心代码`Assembly.Load`就是动态的去加载我们的程序, 传入的参数就是我们的`代码资产`, 它实现程序调用大概是通过下面的方法, 我们模拟声明一个类
 
 ```cs
 namespace MyHotfix
@@ -495,7 +505,7 @@ MethodInfo say = helloType.GetMethod("Say");
 say.Invoke(null, null); // 输出 "Hello Hotfix!"
 ```
 
-这就是`ET`动态加载代码的原理了, 就是为了配合热更新的扩展
+所以`ET`的热更新的原理就是动态替换这些`dll`, 这也是它为什么要搞的这么麻烦的原因
 
 ### 🌸 编码目录规则
 
@@ -564,7 +574,7 @@ namespace ET.Client
 }
 ```
 
-也就是说我们每一个`Model`实现的东西都在`HotFix`中是有一一对应的实现文件的, 并且这个文件是`xxxComponentSystem`来命名的
+也就是说我们每一个`Model`实现的东西都在`HotFix`中是有一一对应的实现文件的, 并且这个文件是`xxxComponentSystem`来命名的, 这个文件在编译的时候就会编译到我们刚才`CodeLoader`读取`代码资产`的目录
 
 ### 🌸 程序集依赖
 

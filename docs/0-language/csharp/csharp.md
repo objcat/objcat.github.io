@@ -58,7 +58,13 @@ int[] testArr = [1, 2, 3];
 // 列表
 List<int> list = new List<int>() { 1, 2, 3 };
 // 字典
-
+Dictionary<string, object> dic = new Dictionary<string, object>
+{
+    ["name"] = "张三",
+    ["age"] = 18
+};
+// 布尔
+bool testBool = true;
 ```
 
 ## 🌲 推导类型

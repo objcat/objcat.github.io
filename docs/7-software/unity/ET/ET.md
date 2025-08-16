@@ -183,6 +183,12 @@ D:\project\unity\test-et81\Share\Analyzer\bin\Debug\Share.Analyzer.dll
 
 所以我们得到了结论, 缺少`dll`是因为没有编译`ET`导致的
 
+我们也可以使用另外一种更简单的编译`ET`的方式
+
+![](images/Pasted%20image%2020250816145855.png)
+
+点击`Compile`或者是`F6`快捷键
+
 ## 🌲 运行项目
 
 ![](images/Pasted%20image%2020250816124818.png)
@@ -211,9 +217,13 @@ D:\project\unity\test-et81\Share\Analyzer\bin\Debug\Share.Analyzer.dll
 
 ![](images/Pasted%20image%2020250816125422.png)
 
-R是热重载, 如果我们修改了`ET`的代码可以重新`Build`一次`ET`, 然后点击`R`可以直接热重载`dll`, 营业就是这些东西
+R是热重载, 如果我们修改了`ET`的代码可以重新`Build`一次`ET`, 然后点击`R`可以直接热重载`dll`, 也就是这些东西
 
 ![](images/Pasted%20image%2020250816125759.png)
+
+在工程目录看到的会不太一样, `Unity`可能隐藏了后缀
+
+![](images/Pasted%20image%2020250816150211.png)
 
 T是切换地图
 
@@ -346,9 +356,146 @@ public class TimeInfo: Singleton<TimeInfo>, ISingletonAwake
 
 ### 🌸 CodeLoader
 
-这个东西是重中之重
+这个东西是重中之重, 它的主要用途和他的名字一样, 就是加载代码用的
 
+```cs
+CodeLoader codeLoader = World.Instance.AddSingleton<CodeLoader>();
+await codeLoader.DownloadAsync();			
+codeLoader.Start();
+```
 
+我们首先看这三行, 第一行就是创建一个`代码加载器`, 然后是`await codeLoader.DownloadAsync();`这句话从字面意义上看是异步下载, 但是我们看一下它的实现逻辑
+
+```cs
+public async ETTask DownloadAsync()
+{
+	if (!Define.IsEditor)
+	{
+		this.dlls = await ResourcesComponent.Instance.LoadAllAssetsAsync<TextAsset>($"Assets/Bundles/Code/Unity.Model.dll.bytes");
+		this.aotDlls = await ResourcesComponent.Instance.LoadAllAssetsAsync<TextAsset>($"Assets/Bundles/AotDlls/mscorlib.dll.bytes");
+	}
+}
+```
+
+发现它是在本地去加载代码的, 加载成功后其实是一个字典
+
+```cs
+public async ETTask<Dictionary<string, T>> LoadAllAssetsAsync<T>(string location) where T : UnityEngine.Object
+{
+	AllAssetsHandle allAssetsOperationHandle = YooAssets.LoadAllAssetsAsync<T>(location);
+	await allAssetsOperationHandle.Task;
+	Dictionary<string, T> dictionary = new Dictionary<string, T>();
+	foreach (UnityEngine.Object assetObj in allAssetsOperationHandle.AllAssetObjects)
+	{
+		T t = assetObj as T;
+		dictionary.Add(t.name, t);
+	}
+
+	allAssetsOperationHandle.Release();
+	return dictionary;
+}
+```
+
+我们再来看一下`codeLoader.Start();`
+
+```cs
+public void Start()
+{
+	if (!Define.IsEditor)
+	{
+		byte[] modelAssBytes = this.dlls["Unity.Model.dll"].bytes;
+		byte[] modelPdbBytes = this.dlls["Unity.Model.pdb"].bytes;
+		byte[] modelViewAssBytes = this.dlls["Unity.ModelView.dll"].bytes;
+		byte[] modelViewPdbBytes = this.dlls["Unity.ModelView.pdb"].bytes;
+		// 如果需要测试，可替换成下面注释的代码直接加载Assets/Bundles/Code/Unity.Model.dll.bytes，但真正打包时必须使用上面的代码
+		//modelAssBytes = File.ReadAllBytes(Path.Combine(Define.CodeDir, "Unity.Model.dll.bytes"));
+		//modelPdbBytes = File.ReadAllBytes(Path.Combine(Define.CodeDir, "Unity.Model.pdb.bytes"));
+		//modelViewAssBytes = File.ReadAllBytes(Path.Combine(Define.CodeDir, "Unity.ModelView.dll.bytes"));
+		//modelViewPdbBytes = File.ReadAllBytes(Path.Combine(Define.CodeDir, "Unity.ModelView.pdb.bytes"));
+
+		if (Define.EnableIL2CPP)
+		{
+			foreach (var kv in this.aotDlls)
+			{
+				TextAsset textAsset = kv.Value;
+				RuntimeApi.LoadMetadataForAOTAssembly(textAsset.bytes, HomologousImageMode.SuperSet);
+			}
+		}
+		this.modelAssembly = Assembly.Load(modelAssBytes, modelPdbBytes);
+		this.modelViewAssembly = Assembly.Load(modelViewAssBytes, modelViewPdbBytes);
+	}
+	else
+	{
+		if (this.enableDll)
+		{
+			byte[] modelAssBytes = File.ReadAllBytes(Path.Combine(Define.CodeDir, "Unity.Model.dll.bytes"));
+			byte[] modelPdbBytes = File.ReadAllBytes(Path.Combine(Define.CodeDir, "Unity.Model.pdb.bytes"));
+			byte[] modelViewAssBytes = File.ReadAllBytes(Path.Combine(Define.CodeDir, "Unity.ModelView.dll.bytes"));
+			byte[] modelViewPdbBytes = File.ReadAllBytes(Path.Combine(Define.CodeDir, "Unity.ModelView.pdb.bytes"));
+			this.modelAssembly = Assembly.Load(modelAssBytes, modelPdbBytes);
+			this.modelViewAssembly = Assembly.Load(modelViewAssBytes, modelViewPdbBytes);
+		}
+		else
+		{
+			Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+			foreach (Assembly ass in assemblies)
+			{
+				string name = ass.GetName().Name;
+				if (name == "Unity.Model")
+				{
+					this.modelAssembly = ass;
+				}
+				else if (name == "Unity.ModelView")
+				{
+					this.modelViewAssembly = ass;
+				}
+
+				if (this.modelAssembly != null && this.modelViewAssembly != null)
+				{
+					break;
+				}
+			}
+		}
+	}
+	
+	(Assembly hotfixAssembly, Assembly hotfixViewAssembly) = this.LoadHotfix();
+
+	World.Instance.AddSingleton<CodeTypes, Assembly[]>(new[]
+	{
+		typeof (World).Assembly, typeof (Init).Assembly, this.modelAssembly, this.modelViewAssembly, hotfixAssembly,
+		hotfixViewAssembly
+	});
+
+	IStaticMethod start = new StaticMethod(this.modelAssembly, "ET.Entry", "Start");
+	start.Run();
+}
+```
+
+现阶段我们只关注一个核心代码`Assembly.Load`就是动态的去加载我们的程序, 它实现程序调用大概是通过下面的方法, 我们模拟声明一个类
+
+```cs
+namespace MyHotfix
+{
+    public class Hello
+    {
+        public static void Say() => Console.WriteLine("Hello Hotfix!");
+    }
+}
+```
+
+然后我们使用`cs`的反射来调用这个代码
+
+```cs
+byte[] dllBytes = File.ReadAllBytes("MyHotfix.dll");
+Assembly hotfixAss = Assembly.Load(dllBytes);
+
+// 反射调用
+Type helloType = hotfixAss.GetType("MyHotfix.Hello");
+MethodInfo say = helloType.GetMethod("Say");
+say.Invoke(null, null); // 输出 "Hello Hotfix!"
+```
+
+这就是`ET`动态加载代码的原理了, 就是为了配合热更新的扩展
 
 ### 🌸 编码目录规则
 

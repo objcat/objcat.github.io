@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "4cd55066c13ad7e9",
+        "id": "3ddbcb6b36d3ca3a",
         "type": "tabs",
         "children": [
           {
-            "id": "d878f7339f529e2c",
+            "id": "4372058796a65cc5",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -168,15 +168,16 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "d878f7339f529e2c",
+  "active": "4372058796a65cc5",
   "lastOpenFiles": [
+    "docs/7-software/unity/ET/images/Entity.cs",
+    "docs/0-language/csharp/csharp.md",
+    "docs/7-software/unity/ET/ET.md",
     "README.md",
     "docs/README.md",
-    "docs/7-software/unity/ET/ET.md",
     "docs/7-software/unity/ET/images/Pasted image 20250817143529.png",
     "docs/7-software/unity/ET/images/Pasted image 20250817085851.png",
     "docs/7-software/unity/ET/images/Pasted image 20250817085116.png",
-    "docs/0-language/csharp/csharp.md",
     "docs/7-software/unity/ET/images/Pasted image 20250817003458.png",
     "docs/7-software/unity/ET/images/Pasted image 20250817003052.png",
     "docs/7-software/unity/ET/images/Pasted image 20250817003146.png",

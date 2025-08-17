@@ -720,6 +720,7 @@ Entity
 位置`Unity/Assets/Scripts/Core/Entity/Entity.cs`
 
 ```cs
+// abstract 抽象 partial 多个同名合并成一个class
 public abstract partial class Entity: DisposeObject, IPool
 {
 	public long InstanceId { get; protected set; }
@@ -730,6 +731,10 @@ public abstract partial class Entity: DisposeObject, IPool
 - 提供唯一实例`id` -> InstanceId
 - 实现对象的销毁逻辑
 - 对象池接口 不用的对象放入对象池而不是直接销毁
+
+我们来看看它的常用方法
+
+- IsComponent 判断是否是一个组件 或者是一个实体
 
 ## 🌲 Scene
 

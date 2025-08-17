@@ -199,6 +199,8 @@ D:\project\unity\test-et81\Share\Analyzer\bin\Debug\Share.Analyzer.dll
 
 ![](images/Pasted%20image%2020250817003458.png)
 
+`.bytes`是为了让`Unity`读取更加方便, 可以通过`TextAsset`进行加载, `.pdb`是调试文件
+
 ## 🌲 运行项目
 
 ![](images/Pasted%20image%2020250816124818.png)
@@ -374,7 +376,7 @@ await codeLoader.DownloadAsync();
 codeLoader.Start();
 ```
 
-我们首先看这三行, 第一行就是创建一个`代码加载器`, 然后是`await codeLoader.DownloadAsync();`这句话从字面意义上看是`异步下载`, 但是我们看一下它的实现逻辑则不然
+我们首先看这三行, 第一行就是创建一个`代码加载器`, 然后是`await codeLoader.DownloadAsync();`这句话从字面意义上看是`异步下载`, 说到下载我们都会第一时间想到从远程服务器下载
 
 ```cs
 public async ETTask DownloadAsync()
@@ -387,7 +389,7 @@ public async ETTask DownloadAsync()
 }
 ```
 
-我们发现它是在本地去加载代码的, 根本就没有远程请求, 加载成功后其实是一个字典, 所以`this.dlls`和`this.aotDlls`就是两个装有`TextAsset`的字典, 而字典的key是`Unity.Model.dll, Unity.Model.pdb, Unity.ModelView.dll, Unity.ModelView.pdb`, 这个`TextAsset`类的介绍是`Represents a raw text or binary file asset.` 表示原始文本或二进制文件资产, 以下简称`代码资产`
+但是我们发现它是在本地去加载代码的, 这一点还是比较奇怪的, 我们后面再看, 加载`dll`成功后`this.dlls`和`this.aotDlls`就是两个装有`TextAsset`的字典, 而字典的key是`Unity.Model.dll, Unity.Model.pdb, Unity.ModelView.dll, Unity.ModelView.pdb`这些`dll`的名字, 这个`TextAsset`类官方的介绍是`Represents a raw text or binary file asset.` 它是一种可以被`Unity`加载的资源, 是`dll`被加载进来的二进制数据
 
 ```cs
 public async ETTask<Dictionary<string, T>> LoadAllAssetsAsync<T>(string location) where T : UnityEngine.Object
@@ -481,7 +483,7 @@ public void Start()
 }
 ```
 
-现阶段我们只关注一个核心代码`Assembly.Load`就是动态的去加载我们的程序, 传入的参数就是我们的`代码资产`, 它实现程序调用大概是通过下面的方法, 我们模拟声明一个类
+现阶段我们只关注一个核心代码`Assembly.Load`它是`C#`提供的方法, 可以把`dll`动态加载到内存中, 然后我们就能方便的使用`dll`中的代码了
 
 ```cs
 namespace MyHotfix
@@ -505,9 +507,25 @@ MethodInfo say = helloType.GetMethod("Say");
 say.Invoke(null, null); // 输出 "Hello Hotfix!"
 ```
 
-所以`ET`的热更新的原理就是动态替换这些`dll`, 这也是它为什么要搞的这么麻烦的原因
+所以`ET`的`热更新原理`就是动态替换这些`dll`, 这也是它不太好理解的原因
 
-### 🌸 编码目录规则
+### 🌸 反编译
+
+我们接下来使用`dnSpy`来反编译生成的`dll`来看一下里面的代码
+
+![](images/Pasted%20image%2020250817085116.png)
+
+直接把`dll`拖拽到里面即可, 我们来看一下`Model`, 可以看到反编译过来的代码文件和工程中都是一一对应的
+
+![](images/Pasted%20image%2020250817085851.png)
+
+所以`dll`就是我们编译过的代码, `Unity`可以从远程拉取我们更新过的`dll`并替换这些, 然后重新启动程序就可以实现替换代码的逻辑, 不用重新发版本了, 省时省力, 但是实际上不是所有的脚本都支持热更新, 比如挂在`inspector`中的`Monobehaver`脚本就不能加入热更新, 但是可以通过套壳的形式来实现热更新, 这是我了解到的
+
+### 🌸 编译过程
+
+你可能有一个疑问, `dll`是如何编译到我们工程中的`Code`文件夹的, 这个我们以后再去研究, 你现在可以认为`ET`给我们封装了这样的流程, 我们直接用就好了, 这一章我后面会详细说
+
+### 🌸 代码分区
 
 我们先来看这个模块, 根据视频讲解, 这是作者给我们根据功能分出来的不同的`程序集`, 在我理解和Java中的`Maven Module`差不多, 就是根据分工把一个项目拆成一堆小项目
 
@@ -578,11 +596,11 @@ namespace ET.Client
 
 ### 🌸 程序集依赖
 
-程序集之间是存在依赖关系的, 我们可以看一下它的依赖文件
+程序集之间是存在依赖关系的, 我们可以看一下, `.asmdef`就是记录当前`程序集`的依赖文件
 
 ![](images/Pasted%20image%2020250815012954.png)
 
-可以看到一个叫做`Unity.Core.asmdef`的, 我们打开
+我们打开它
 
 ```json
 {
@@ -605,11 +623,93 @@ namespace ET.Client
 }
 ```
 
-可以看到`Core`依赖`Unity.ThirdParty`, 其他程序集的依赖关系也可以自己看看
+可以看到`Core`依赖`Unity.ThirdParty`, 因此它可以使用`Unity.ThirdParty`里面的代码
 
 ## 🌲 DotNet
 
+待完善
+
 ## 🌲 Tool
+
+待完善
+
+# 🍎 实体
+
+```cs
+Entity
+ ├── Scene
+ │    ├── Unit (玩家/怪物/NPC)
+ │    │     └── Component (移动/AI/动画/血条...)
+ │    ├── UI (窗口)
+ │    │     └── Component (按钮/文本/逻辑...)
+ │    └── Room (房间)
+ │          ├── Player (玩家逻辑)
+ │          └── Player (玩家逻辑)
+```
+
+## 🌲 Entity
+
+待完善
+
+## 🌲 Scene
+
+待完善
+
+## 🌲 Unit
+
+待完善
+
+## 🌲 UI
+
+待完善
+
+## 🌲 Room
+
+待完善
+
+## 🌲 Player
+
+待完善
+
+# 🍎 组件
+
+```
+Scene (Entity)
+ ├── CurrentScenesComponent   (管理子场景)
+ ├── UnitComponent            (管理所有Unit)
+ ├── UIComponent              (管理所有UI窗口)
+ ├── RoomManagerComponent     (管理所有房间)
+ ├── PlayerComponent          (管理所有玩家逻辑)
+```
+
+```
+UI (Entity)
+ └── UILSRoomComponent  (房间列表UI逻辑)
+```
+
+## 🌲 CurrentScenesComponent
+
+待完善
+
+## 🌲 UnitComponent
+
+待完善
+
+## 🌲 UIComponent
+
+待完善
+
+## 🌲 RoomManagerComponent
+
+待完善
+
+## 🌲 UILSRoomComponent
+
+待完善
+
+## 🌲 PlayerComponent
+
+待完善
 
 # 🍎 配表
 

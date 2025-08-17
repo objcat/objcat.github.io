@@ -320,6 +320,28 @@ private GameObject eg_register;
 private GameObject eg_name;
 ```
 
+这些组件在`Awake`的时候从脚本中使用`transform.Find`加载进来
+
+```cs
+private void Awake()
+{
+	// Application.targetFrameRate = 30;
+	
+	eg_login = transform.Find("EG_Login").gameObject;
+	eg_register = transform.Find("EG_Register").gameObject;
+	eg_name = transform.Find("EG_Name").gameObject;
+	e_update = transform.Find("E_Update").GetComponent<Text>();
+
+	Init();
+}
+```
+
+比如`Login`组件
+
+![](images/Pasted%20image%2020250817182354.png)
+
+我们获取到这个组件了, 当点击组件的时候发送一个网络请求去登录, 然后传递用户名和密码的参数就可以了, 我们来找找逻辑在哪里
+
 
 
 

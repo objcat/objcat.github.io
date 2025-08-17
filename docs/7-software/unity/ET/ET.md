@@ -14,9 +14,11 @@ https://github.com/EllanJiang/GameFramework
 
 我这里选择了ET`8.1`, 参考视频如下
 
+上上签UpUpDraw
 https://www.bilibili.com/video/BV1rhYyeKExP
 
-https://www.bilibili.com/video/BV1wy411Y7oY
+和v诺
+https://www.bilibili.com/video/BV1Ls421A7mS
 
 ## 🌲 下载并解压
 
@@ -242,6 +244,41 @@ T是切换地图
 ![](images/Pasted%20image%2020250816125829.png)
 
 我这里项目就运行好了
+
+## 🌲 调试
+
+### 🌸 第二种运行项目的方式
+
+我们回到`Rider`, 我指的这个`Rider`是打开`Unity`端的, 发现它的上面也有几个按钮类似`Unity`
+
+![](images/Pasted%20image%2020250817190534.png)
+
+这几个按钮的意思和`Unity`一样, 绿色的按钮就是运行游戏, 很明显`Rider`给我们提供了快捷关联
+
+### 🌸 打断点
+
+我们想调试第一步就需要打断点, 打断点告诉你需要在哪里中断, 打断点的方式是鼠标左键点击序号, 比如我在`Init`入口上打断点
+
+![](images/Pasted%20image%2020250817191305.png)
+
+### 🌸 启动调试
+
+断点打好了已经完成`50%`, 下面就开始运行项目调试, 往右看, 有一个小虫子一样的图标
+
+![](images/Pasted%20image%2020250817190922.png)
+点击后会进入到调试模式, 
+
+![](images/Pasted%20image%2020250817190936.png)
+
+这时候再点击绿色按钮, 让游戏重新启动即可, 如果不是重新启动有可能断不到, 因为我们打断点的位置在`Init`入口
+
+![](images/Pasted%20image%2020250817191022.png)
+
+然后程序就会停在你打断点的地方, 然后我们可以通过鼠标放在变量上, 看里面的属性
+
+![](images/Pasted%20image%2020250817191621.png)
+
+到这里断点教程完成
 
 # 🍎 工程讲解
 
@@ -862,6 +899,15 @@ UI (Entity)
 配表的用途用一句话总结就是xxx
 
 源码位置为`Share/Tool/ExcelExporter/ExcelExporter.cs`有兴趣可以自己看看
+
+# 🍎 FAQ
+
+## 🌲 Unity项目崩溃后调试慢
+
+这个是正常的, 项目崩溃后它可能会清除掉所有的`dll`重新进行编译, 所以启动时会非常慢
+
+![](images/Pasted%20image%2020250817190134.png)
+
 
 
 

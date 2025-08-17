@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/README.md",
+                "file": "docs/0-language/csharp/csharp.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "README"
+              "title": "csharp"
             }
           }
         ]
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/README.md",
+                "file": "docs/0-language/csharp/csharp.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "README 的大纲"
+              "title": "csharp 的大纲"
             }
           }
         ],
@@ -170,6 +170,9 @@
   },
   "active": "d04e2e8c112d3e0e",
   "lastOpenFiles": [
+    "README.md",
+    "docs/README.md",
+    "docs/0-language/csharp/csharp.md",
     "docs/6-project/zzjb/zzjb.md",
     "docs/7-software/unity/unity3d/unity3d.md",
     "docs/6-project/zzjb/images/Pasted image 20250817231310.png",
@@ -180,7 +183,6 @@
     "docs/6-project/zzjb/images/Pasted image 20250817222936.png",
     "docs/6-project/zzjb/images/Pasted image 20250817222512.png",
     "docs/7-software/unity/aoc/aoc.md",
-    "README.md",
     "docs/7-software/unity/aoc",
     "docs/7-software/unity/ET/ET.md",
     "docs/7-software/unity/ET/images/Pasted image 20250817191621.png",
@@ -190,8 +192,6 @@
     "docs/7-software/unity/自动生成代码",
     "docs/7-software/unity/HybirdCLR/HybirdCLR.md",
     "docs/7-software/unity/ET/images/Entity.cs",
-    "docs/0-language/csharp/csharp.md",
-    "docs/README.md",
     "docs/7-software/IDE/VisualStudio/images",
     "docs/7-software/IDE/VisualStudio/VisualStudio.md",
     "docs/7-software/IDE/VisualStudio",

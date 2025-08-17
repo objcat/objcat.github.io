@@ -2,6 +2,18 @@
 
 这篇文档主要分析`重装机兵-霸主`项目, 中间会添加自己思考的方式, 也当是记录生活, 感谢作者`Dr隆鹰`
 
+# 🍎 学习日志
+
+| 日期         | 学习内容                                    | --  |
+| ---------- | --------------------------------------- | --- |
+| 2025.08.11 | 没学, 拉取了一下项目加班去了                         | 第1天 |
+| 2025.08.12 | 安装unity, 发现无法运行项目, 开始学习unity            | 第2天 |
+| 2025.08.13 | 新建项目, 项目配置, 场景和层级, 灯光和摄影机, 创建游戏对象, 场景轴向 | 第3天 |
+| 2025.08.14 | 练习1, 场景快捷键, 切换模式, 游戏窗口, 项目窗口, 控制台, 检查窗口 | 第4天 |
+| 2025.08.15 | 打包模块, ET, HybridCLR                     | 第5天 |
+| 2025.08.16 | 学习ET场景相关                                | 第6天 |
+| 2025.08.17 | 学习ET组件相关                                | 第7天 |
+
 # 🍎 快速开始
 
 拿到一个项目后把他运行起来是最重要的, 之后再分析它的源码
@@ -311,7 +323,7 @@ namespace ET
 }
 ```
 
-代码并不多, 我们全贴出来, 可以看到这个脚本上来定义了很多组件
+代码并不多, 我们全贴出来, 可以看到这个脚本上来定义了很多组件, 这些组件用来接收`层级窗口`中定义好的`游戏对象`
 
 ```cs
 private GameObject eg_login;
@@ -320,7 +332,7 @@ private GameObject eg_register;
 private GameObject eg_name;
 ```
 
-这些组件在`Awake`的时候从脚本中使用`transform.Find`加载进来
+这些组件在`Awake`的时候从脚本中使用`transform.Find`加载进来, 有人可能会有疑问, 为什么用一个控制位置的变量来寻找子组件, 其实是这样的这个方法是用来找`固定名称`的子组件的`transform`, 然后通过`.gameObject`获取到的对应组件
 
 ```cs
 private void Awake()
@@ -336,16 +348,100 @@ private void Awake()
 }
 ```
 
+其实有更好的方法来绑定, 那就是拖拽, 我们需要先把变量改成`public`
+
+```cs
+public GameObject eg_login;
+public Text e_update;
+public GameObject eg_register;
+public GameObject eg_name;
+```
+
+然后再`Dlg_Login`中会出现这些变量的引用
+
+![](images/Pasted%20image%2020250817222512.png)
+
+在`Scene`场景窗口把对应的对象拖拽到上面即可
+
+![](images/Pasted%20image%2020250817222936.png)
+
+然后可以看到绑定上了
+
+![](images/Pasted%20image%2020250817223041.png)
+
+这个拖拽的实现原理其实是通过修改`Init.unity`文件来实现的, 它就是`ET`给我们的初始化场景文件, 其实它是一个`yaml`
+
+![](images/Pasted%20image%2020250817223731.png)
+
+我们拿刚才的东西举例子, 其实是通过id绑定的, 这样无论怎么改名字也都能找到组件
+
+![](images/Pasted%20image%2020250817223912.png)
+
+扯远了, 我们话说回来, 怎么找到点击登录按钮的方法呢
+
 比如`Login`组件
 
 ![](images/Pasted%20image%2020250817182354.png)
 
-我们获取到这个组件了, 当点击组件的时候发送一个网络请求去登录, 然后传递用户名和密码的参数就可以了, 我们来找找逻辑在哪里
+我们获取到这个组件了, 当点击组件的时候发送一个网络请求去登录, 然后传递用户名和密码的参数就可以了, 我们来找找逻辑在哪里, 我们知道`eg_login`就是登录按钮, 那我们看看它绑定的方法在哪里?
 
+呃, 在本页我是没有找到这个方法的
 
+### 🌸 脚本Instance
 
+就在一筹莫展的时候这段代码引起了我的注意
 
+```cs
+private static InitLogin instance;
+public static InitLogin Instance
+{
+	get
+	{
+		if (instance == null)
+		{
+			instance = GameObject.Find("Canvas/DlgLogin").GetComponent<InitLogin>();
+		}
+		return instance;
+	}
+}
+```
 
+可以看到它使用了`GameObject.Find`方法, 获取到了场景中的`DlgLogin`组件的`InitLogin`组件, 也就是脚本本身, 因为脚本本身也是一个组件, 也就是我们脚本绑定的组件
+
+![](images/Pasted%20image%2020250817224431.png)
+
+我们可以会看一下, 确实是在`Canvas`对象下面的, `Canvas/DlgLogin`游戏对象竟然可以用这种路径, 那我是否可以理解游戏对象也是个`文件夹`手动滑稽
+
+我们可以看到它是一个`static`的实例, 那我有充分理由怀疑他是在别的脚本中去获取这个`instance`实例, 然后取出`EG_Login`游戏对象并绑定方法的
+
+![](images/Pasted%20image%2020250817231310.png)
+
+但是在我看来大多都是去修改更新文案的, 所以应该不是用这种方法去做的, 这条路又断了
+
+### 🌸 事件注册
+
+又在一筹莫展的时候我找到了这玩意, 因为我在搜索的时候注意到了`DlgLogin`和我的场景是`重名的`, 所以我发现了这个代码
+
+```cs
+namespace ET.Client
+{
+	[FriendOf(typeof(UIBaseWindow))]
+	[AUIEvent(WindowID.WindowID_Login)]
+	public  class DlgLoginEventHandler : IAUIEventHandler
+	{
+
+		public void OnInitWindowCoreData(UIBaseWindow uiBaseWindow)
+		{
+		  uiBaseWindow.windowType = UIWindowType.Normal; 
+		}
+
+		public void OnInitComponent(UIBaseWindow uiBaseWindow)
+		{
+		  uiBaseWindow.AddComponent<DlgLogin>().AddComponent<DlgLoginViewComponent>();
+		}
+```
+
+未完待续
 
 # 🍎 FAQ
 

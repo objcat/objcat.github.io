@@ -253,9 +253,13 @@ T是切换地图
 
 ## 🌲 Unity(客户端)
 
-### 🌸 程序入口
+### 🌸 ET程序入口
 
-`Unity`的程序入口文件是这个`Assets/Scripts/Loader/MonoBehaviour/Init.cs`, 我们简略的看看它都做了什么
+`ET`的程序入口文件是这个`Assets/Scripts/Loader/MonoBehaviour/Init.cs`, 它是绑定在`Glocal`场景下的, 我们点击场景就能够看到一个`Init.cs`
+
+![](images/Pasted%20image%2020250817143529.png)
+
+我们简略的看看它都做了什么
 
 ```cs
 using System;
@@ -320,13 +324,51 @@ namespace ET
 }
 ```
 
-代码很多我们找关键的去讲以下, 让大家知道程序启动的时候都做了什么, 首先是这个
+#### 🌵 逐帧执行
+
+首先我们可以看到这个类是继承于我们最熟悉的`MonoBehaviour`, 在`Update`方法里表示我们每一帧更新的时候做什么, 可以看到它做了两件事
+
+```cs
+TimeInfo.Instance.Update();
+FiberManager.Instance.Update();
+```
+
+`TimeInfo`是`ET`框架里的时间管理器, `Update`用于记录每一帧的时间, 在里面就调用了一个方法`ClientNow`, 这个很好理解, `DateTime.UtcNow.Ticks`是现在的时间戳, `this.dt1970.Ticks`是`1970-01-01 00:00:00`的时间戳, 两个相减就是当前的时间戳, 注意`DateTime.UtcNow.Ticks`并不是从`1970`开始的, 所以需要相减, 代码如下
+
+```cs
+public long ClientNow()
+{
+	return (DateTime.UtcNow.Ticks - this.dt1970.Ticks) / 10000;
+}
+```
+
+然后这个变量保存在`this.FrameTime = this.ClientNow();`下面
+
+然后我们来看`FiberManager`, 我把它看做整个项目的逻辑运行容器, 比如
+
+```cs
+FiberA：战斗逻辑
+
+里面跑各种 System：AI、技能、血量计算……
+
+全部封闭在这个 Fiber 内，不会被外部线程打扰。
+
+FiberB：聊天逻辑
+
+里面跑聊天相关的 System：频道消息、好友私聊……
+
+和战斗 Fiber 完全独立，互不干扰。
+```
+
+#### 🌵 Word
+
+我们还能看到一个关键的东西`Word`
 
 ```cs
 World.Instance
 ```
 
-这个东西是一个全局管理器, 它是一个单例, 没错就是单例设计模式, 可以在整个程序的声明周期内都可以向里面存东西或者把东西取出来, 我们可以看到下面几行代码就是使用`AddSingleton`往`World`中去注册组件
+这个东西是一个`全局单例管理器`, 它也是一个单例, 没错就是单例设计模式, 可以在整个程序的声明周期内都可以向里面存东西或者把东西取出来, 我们可以看到下面几行代码就是使用`AddSingleton`往`World`中去注册组件
 
 ```cs
 World.Instance.AddSingleton<Logger>().Log = new UnityLogger();
@@ -657,6 +699,8 @@ namespace ET.Client
 
 # 🍎 实体
 
+在上一个章节我们已经学习过ECS设计思想了, 那么这一章就是对实体的具体讲解, 在`ET`中实体也是有分类的
+
 ```cs
 Entity
  ├── Scene
@@ -671,27 +715,60 @@ Entity
 
 ## 🌲 Entity
 
-待完善
+实体基类, 所有的实体包括组件都是继承于这个
+
+位置`Unity/Assets/Scripts/Core/Entity/Entity.cs`
+
+```cs
+public abstract partial class Entity: DisposeObject, IPool
+{
+	public long InstanceId { get; protected set; }
+	...此处略去一万字
+}
+```
+
+- 提供唯一实例`id` -> InstanceId
+- 实现对象的销毁逻辑
+- 对象池接口 不用的对象放入对象池而不是直接销毁
 
 ## 🌲 Scene
 
-待完善
+表示一个游戏场景或逻辑空间
+
+位置`Unity/Assets/Scripts/Core/Entity/Scene.cs`
+
+```cs
+public class Scene: Entity, IScene
+```
+
+- 管理场景中的`Unit` -> 怪物/角色/树/草 .... 
+- 常用组件`UnitComponent`负责管理Unit
 
 ## 🌲 Unit
 
-待完善
+表示场景中可操作对象（角色 / 怪物 / NPC）
+
+- 可以挂载各种 Component（移动、AI、动画、血条…）
+- 具备交互性，是场景中最常用的实体之一
 
 ## 🌲 UI
 
-待完善
+表示一个 UI 窗口或界面
+
+- 可以挂载不同 Component（按钮逻辑、文本、关闭逻辑…）
 
 ## 🌲 Room
 
-待完善
+表示 一个逻辑房间，常用于多人游戏（对局/战斗/副本）
+
+- 管理一个对局中的所有玩家
 
 ## 🌲 Player
 
-待完善
+表示 玩家逻辑实体，一般挂在 Room 下
+
+- 不是场景中的角色模型（那是 Unit），而是和服务器交互的逻辑层
+- 管理玩家的账户数据（ID、名字、分数、连接状态…）
 
 # 🍎 组件
 

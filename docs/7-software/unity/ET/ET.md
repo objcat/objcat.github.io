@@ -711,6 +711,28 @@ UI (Entity)
 
 待完善
 
+# 🍎 生命周期
+
+## 🌲 IAwake
+
+待完善
+
+## 🌲 IUpdate
+
+待完善
+
+## 🌲 ILateUpdate
+
+待完善
+
+## 🌲 IDestroy
+
+待完善
+
+## 🌲 IScene
+
+待完善 Fiber SceneType
+
 # 🍎 配表
 
 配表的用途用一句话总结就是xxx

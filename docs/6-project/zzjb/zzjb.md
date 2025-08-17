@@ -2,7 +2,7 @@
 
 这篇文档主要分析`重装机兵-霸主`项目, 中间会添加自己思考的方式, 也当是记录生活, 感谢作者`Dr隆鹰`
 
-# 🍎 运行项目
+# 🍎 快速开始
 
 拿到一个项目后把他运行起来是最重要的, 之后再分析它的源码
 
@@ -169,6 +169,10 @@ public class GlobalConfig : ScriptableObject
 
 ![](images/Pasted%20image%2020250815124328.png)
 
+# 🍎 页面分析
+
+经过上面的步骤我们已经可以运行项目了
+
 ## 🌲 登录页面分析
 
 当我输入我的账号密码时等待一会会有报错
@@ -197,3 +201,138 @@ System.TimeoutException: A timeout occurred after 30000ms selecting a server usi
 ```
 
 这个问题我们能够看出来是向服务器发送了心跳包, 服务器没响应
+
+### 🌸 分析UI
+
+那我们就从`UI`开始入手, 一步一步的分析它是如何登录的
+
+![](images/Pasted%20image%2020250817175454.png)
+
+可以看到这就是我们的登录界面, 与之对应的游戏界面是
+
+![](images/Pasted%20image%2020250817175537.png)
+
+运行项目过一段时间后, 我们就能看到登录框出来了
+
+![](images/Pasted%20image%2020250817175616.png)
+
+这说明这个登录框最开始是隐藏的, 运行游戏之前先`检查更新`, 如果`没有可用更新`或者`检测更新失败`就显示登录框让玩家进行登录
+
+我们从上面的层级面板也可以看到`EG_Login`是灰色的, 证明最开始它是隐藏的, 我们把他显示出来, 只需要在`inspector`中勾选显示即可
+
+![](images/Pasted%20image%2020250817175917.png)
+
+然后我们看画面就是显示的, 与检测更新叠加在一起了
+
+![](images/Pasted%20image%2020250817175932.png)
+
+我们看一下里面所有的对象
+
+![](images/Pasted%20image%2020250817180002.png)
+
+通过文字我们就能看出来`E_Username`是用户名输入框,, `E_Password`是密码输入框, `E_Login`是登录游戏, `E_Register`是注册, 当我点击`E_Login`是如何知道点击的呢? 新手肯定会很懵, 因为在`inspector`上面根本没有绑定任何脚本, 不要慌, 我们点击到`DlgLogin`可以看到这个大的组件上面绑定着脚本
+
+![](images/Pasted%20image%2020250817180253.png)
+
+![](images/Pasted%20image%2020250817180245.png)
+
+我们来看一下代码
+
+```cs
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace ET
+{
+    public class InitLogin : MonoBehaviour
+    {
+        private static InitLogin instance;
+        public static InitLogin Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = GameObject.Find("Canvas/DlgLogin").GetComponent<InitLogin>();
+                }
+                return instance;
+            }
+        }
+
+        private GameObject eg_login;
+
+        private Text e_update;
+
+        private GameObject eg_register;
+
+        private GameObject eg_name;
+        
+        private void Awake()
+        {
+            // Application.targetFrameRate = 30;
+            
+            eg_login = transform.Find("EG_Login").gameObject;
+            eg_register = transform.Find("EG_Register").gameObject;
+            eg_name = transform.Find("EG_Name").gameObject;
+            e_update = transform.Find("E_Update").GetComponent<Text>();
+
+            Init();
+        }
+
+        private void Init()
+        {
+            eg_login.SetActive(false);
+            eg_register.SetActive(false);
+            eg_name.SetActive(false);
+        }
+
+        // 显示更新界面
+        public void ShowUpdate(string text)
+        {
+            e_update.text = text;
+        }
+
+        // 显示登录界面
+        public void ShowLogin()
+        {
+            this.e_update.gameObject.SetActive(false);
+            eg_login.SetActive(true);
+            eg_register.SetActive(false);
+            eg_name.SetActive(false);
+        }
+
+        // 关闭UI
+        public void Close()
+        {
+            Destroy(gameObject);
+        }
+
+    }
+}
+```
+
+代码并不多, 我们全贴出来, 可以看到这个脚本上来定义了很多组件
+
+```cs
+private GameObject eg_login;
+private Text e_update;
+private GameObject eg_register;
+private GameObject eg_name;
+```
+
+
+
+
+
+
+# 🍎 FAQ
+
+## 🌲 DOTween.Modules.dll
+
+双编就能解决, 编译`霸主Unity`和`ET`
+
+```
+13>CSC: Error CS0006 : 未能找到元数据文件“D:\project\unity\zzjb2d\Unity\Temp\bin\Debug\DOTween.Modules.dll”
+13>CSC: Error CS0006 : 未能找到元数据文件“D:\project\unity\zzjb2d\Unity\Temp\bin\Debug\game.dll”
+13>------- Finished building project: Unity.HotfixView. Succeeded: False. Errors: 2. Warnings: 0
+```

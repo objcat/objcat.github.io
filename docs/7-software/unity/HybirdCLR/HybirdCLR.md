@@ -50,4 +50,41 @@ https://gitee.com/focus-creative-games/hybridclr_unity.git
 
 如果把这个包卸载掉`HybirdCLR`选项就会消失, 然后我要说这个包应该是`Unity`内置了, 所以我们只需要做第一步的`install初始化(打开菜单HybridCLR/Installer...， 点击安装按钮进行安装。 耐心等待30s左右，安装完成后会在最后打印 安装成功日志。)`就好, 如果发现`HybirdCLR`消失了再去按照官方的做法安装包, 那到这里我们就安装好了
 
+# 🍎 ET8.1配置热更新
 
+参考大佬的方案
+
+https://toxicstar.top/index.php/archives/281/
+
+## 🌲 新建组件
+
+运行Unity，定位到目录Assets/Scripts/Loader/Resource，创建DownloadComponent.cs。
+
+```cs
+public class DownloadComponent: Singleton<DownloadComponent>, ISingletonAwake
+{
+    //添加Awake方法，检查是否需要下载
+
+    //添加CheckDownloadStatus方法，检查是否下载完毕
+}
+```
+
+
+打开YooAsset资源更新篇，拷贝官方推荐代码，填入即可。
+然后打开场景的Global，找到Init，双击进去，在热更代码前添加DownloadComponent，修改后如下：
+
+```cs
+private async ETTask StartAsync()
+{
+    //xxxxxx
+
+    DownloadComponent downloadComponent = World.Instance.AddSingleton<DownloadComponent>();
+    await downloadComponent.CheckDownloadStatus();
+
+    CodeLoader codeLoader = World.Instance.AddSingleton<CodeLoader>();
+
+    //xxxxxx
+}
+```
+
+打开ResourcesComponent调整CDN地址，选择菜单YooAsset/AssetBundle Collector配置要打包的目录。如此，热更新就配置完成了。

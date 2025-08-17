@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/7-software/unity/ET/ET.md",
+                "file": "docs/6-project/zzjb/zzjb.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "ET"
+              "title": "zzjb"
             }
           }
         ]
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/7-software/unity/ET/ET.md",
+                "file": "docs/6-project/zzjb/zzjb.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "ET 的大纲"
+              "title": "zzjb 的大纲"
             }
           }
         ],
@@ -168,24 +168,28 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "4372058796a65cc5",
+  "active": "123a06fa5a3c86b4",
   "lastOpenFiles": [
+    "docs/6-project/zzjb/images/Pasted image 20250817180253.png",
+    "docs/6-project/zzjb/images/Pasted image 20250817180245.png",
+    "docs/6-project/zzjb/images/Pasted image 20250817180002.png",
+    "docs/6-project/zzjb/images/Pasted image 20250817175932.png",
+    "docs/6-project/zzjb/images/Pasted image 20250817175917.png",
+    "docs/6-project/zzjb/images/Pasted image 20250817175616.png",
+    "docs/6-project/zzjb/images/Pasted image 20250817175537.png",
+    "docs/6-project/zzjb/images/Pasted image 20250817175454.png",
+    "docs/7-software/unity/自动生成代码/自动生成代码.md",
+    "docs/7-software/unity/unity3d/unity3d.md",
+    "README.md",
+    "docs/7-software/unity/ET/ET.md",
+    "docs/7-software/unity/自动生成代码",
+    "docs/7-software/unity/HybirdCLR/HybirdCLR.md",
+    "docs/7-software/unity/ET/images/Pasted image 20250817154513.png",
     "docs/7-software/unity/ET/images/Entity.cs",
     "docs/0-language/csharp/csharp.md",
-    "docs/7-software/unity/ET/ET.md",
-    "README.md",
     "docs/README.md",
     "docs/7-software/unity/ET/images/Pasted image 20250817143529.png",
     "docs/7-software/unity/ET/images/Pasted image 20250817085851.png",
-    "docs/7-software/unity/ET/images/Pasted image 20250817085116.png",
-    "docs/7-software/unity/ET/images/Pasted image 20250817003458.png",
-    "docs/7-software/unity/ET/images/Pasted image 20250817003052.png",
-    "docs/7-software/unity/ET/images/Pasted image 20250817003146.png",
-    "docs/7-software/unity/ET/images/Pasted image 20250817003301.png",
-    "docs/7-software/unity/ET/images/Pasted image 20250817003416.png",
-    "docs/7-software/unity/ET/images/Pasted image 20250817002802.png",
-    "docs/7-software/unity/unity3d/unity3d.md",
-    "docs/7-software/unity/ET/images/Pasted image 20250816150211.png",
     "docs/6-project/zzjb/zzjb.md",
     "docs/7-software/IDE/VisualStudio/images",
     "docs/7-software/IDE/VisualStudio/VisualStudio.md",
@@ -196,10 +200,7 @@
     "0-language",
     "docs/0-language/csharp/images",
     "docs/0-language/csharp",
-    "docs/7-software/unity/HybirdCLR/HybirdCLR.md",
     "docs/7-software/unity/ET/images",
-    "docs/7-software/unity/ET",
-    "docs/7-software/unity/HybirdCLR/images",
     "docs/7-software/unity/inspector/inspector.md",
     "docs/6-project/gulimall/gulimall_nacos/gulimall_nacos.md",
     "docs/7-software/unity/packing/packing.md",

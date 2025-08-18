@@ -197,6 +197,12 @@ public class GlobalConfig : ScriptableObject
 
 可以登录说明切换成功了, 但是我试过战斗服务器不能连接不知道为何
 
+# 🍎 登录页分析
+
+本模块在技术层面分析登录页是如何实现的
+
+[登录页分析](../login/login.md)
+
 # 🍎 FAQ
 
 ## 🌲 DOTween.Modules.dll

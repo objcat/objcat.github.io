@@ -1,6 +1,6 @@
 # 🍎 登录页面分析
 
-经过上面的步骤我们已经可以运行项目了
+经过上面的步骤我们已经可以运行项目了, 现在可以开始深入的去分析登录页, 本文章运行的环境是本地环境
 
 ## 🌲 登录报错
 
@@ -10,7 +10,7 @@
 
 ### 🌸 问题
 
-我们先看一下错误日志
+- 我们先看一下错误日志
 
 ```shell
 Error: 100208
@@ -21,7 +21,7 @@ ET.Init:Update () (at Assets/Scripts/Loader/MonoBehaviour/Init.cs:47)
 
 这个问题我们通过分析错误日志就能看出来, 本地的`127.0.0.1:30002`服务器没有开启, 导致登录失败, 那么我们反推得到这个服务器就是我们登录用的, 我们现在需要做的就是找打服务器运行起来
 
-我们看另外一个错误日志
+- 我们看另外一个错误日志
 
 ```shell
 System.TimeoutException: A timeout occurred after 30000ms selecting a server using CompositeServerSelector{ Selectors = MongoDB.Driver.MongoClient+AreSessionsSupportedServerSelector, LatencyLimitingServerSelector{ AllowedLatencyRange = 00:00:00.0150000 }, OperationsCountServerSelector }. Client view of cluster state is { ClusterId : "1", Type : "Unknown", State : "Disconnected", Servers : [{ ServerId: "{ ClusterId : 1, EndPoint : "127.0.0.1:27017" }", EndPoint: "127.0.0.1:27017", ReasonChanged: "Heartbeat", State: "Disconnected", ServerVersion: , TopologyVersion: , Type: "Unknown", HeartbeatException: "MongoDB.Driver.MongoConnectionException: An exception occurred while opening a connection to the server. ---> System.Net.Sockets.SocketException: 由于目标计算机积极拒绝，无法连接。

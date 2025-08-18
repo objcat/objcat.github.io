@@ -20,6 +20,76 @@
               "icon": "lucide-file",
               "title": "zzjb"
             }
+          },
+          {
+            "id": "6df500ec5db9a1b7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "docs/7-software/unity/ET/ET.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "ET"
+            }
+          },
+          {
+            "id": "fda0dfbae87db922",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "docs/7-software/unity/ET/ET.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "ET"
+            }
+          },
+          {
+            "id": "d5e69cd41e95b822",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "docs/7-software/unity/ET/ET.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "ET"
+            }
+          },
+          {
+            "id": "820457285f3cac3c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "docs/7-software/unity/ET/ET.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "ET"
+            }
+          },
+          {
+            "id": "8151f2ab8a7af9b4",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "docs/7-software/unity/ET/ET.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "ET"
+            }
           }
         ]
       }
@@ -170,8 +240,10 @@
   },
   "active": "72c64d86104d102b",
   "lastOpenFiles": [
-    "docs/6-project/zzjb/login/login.md",
+    "docs/7-software/unity/ET/ET.md",
     "docs/6-project/zzjb/zzjb/zzjb.md",
+    "docs/7-software/unity/inspector/inspector.md",
+    "docs/6-project/zzjb/login/login.md",
     "docs/6-project/zzjb/zzjb/images/Pasted image 20250818235211.png",
     "docs/6-project/zzjb/zzjb/images/Pasted image 20250818235034.png",
     "docs/6-project/zzjb/zzjb/images/Pasted image 20250818234345.png",
@@ -191,7 +263,6 @@
     "docs/7-software/unity/unity3d/unity3d.md",
     "docs/7-software/unity/aoc/aoc.md",
     "docs/7-software/unity/aoc",
-    "docs/7-software/unity/ET/ET.md",
     "docs/7-software/unity/自动生成代码/自动生成代码.md",
     "docs/7-software/unity/自动生成代码",
     "docs/7-software/unity/HybirdCLR/HybirdCLR.md",
@@ -202,7 +273,6 @@
     "docs/7-software/IDE",
     "docs/js/prism-csharp.min.js",
     "0-language/c.md",
-    "docs/7-software/unity/inspector/inspector.md",
     "docs/6-project/gulimall/gulimall_nacos/gulimall_nacos.md",
     "docs/7-software/unity/packing/packing.md",
     "docs/6-project/gulimall/gulimall/gulimall.md",

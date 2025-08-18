@@ -5,5 +5,7 @@
   "newFileLocation": "current",
   "newLinkFormat": "relative",
   "attachmentFolderPath": "./images",
-  "autoConvertHtml": false
+  "autoConvertHtml": false,
+  "showLineNumber": false,
+  "readableLineLength": true
 }

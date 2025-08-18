@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/0-language/csharp/csharp.md",
+                "file": "docs/6-project/zzjb/zzjb.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "csharp"
+              "title": "zzjb"
             }
           }
         ]
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/0-language/csharp/csharp.md",
+                "file": "docs/6-project/zzjb/zzjb.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "csharp 的大纲"
+              "title": "zzjb 的大纲"
             }
           }
         ],
@@ -170,9 +170,14 @@
   },
   "active": "d04e2e8c112d3e0e",
   "lastOpenFiles": [
+    "docs/6-project/zzjb/images/Pasted image 20250818131931.png",
+    "docs/6-project/zzjb/images/Pasted image 20250818131743.png",
+    "docs/6-project/zzjb/images/Pasted image 20250818130437.png",
+    "docs/6-project/zzjb/images/Pasted image 20250818130416.png",
+    "docs/6-project/zzjb/images/Pasted image 20250818130247.png",
+    "docs/0-language/csharp/csharp.md",
     "README.md",
     "docs/README.md",
-    "docs/0-language/csharp/csharp.md",
     "docs/6-project/zzjb/zzjb.md",
     "docs/7-software/unity/unity3d/unity3d.md",
     "docs/6-project/zzjb/images/Pasted image 20250817231310.png",
@@ -181,13 +186,9 @@
     "docs/6-project/zzjb/images/Pasted image 20250817223731.png",
     "docs/6-project/zzjb/images/Pasted image 20250817223041.png",
     "docs/6-project/zzjb/images/Pasted image 20250817222936.png",
-    "docs/6-project/zzjb/images/Pasted image 20250817222512.png",
     "docs/7-software/unity/aoc/aoc.md",
     "docs/7-software/unity/aoc",
     "docs/7-software/unity/ET/ET.md",
-    "docs/7-software/unity/ET/images/Pasted image 20250817191621.png",
-    "docs/7-software/unity/ET/images/Pasted image 20250817191305.png",
-    "docs/7-software/unity/ET/images/Pasted image 20250817191022.png",
     "docs/7-software/unity/自动生成代码/自动生成代码.md",
     "docs/7-software/unity/自动生成代码",
     "docs/7-software/unity/HybirdCLR/HybirdCLR.md",

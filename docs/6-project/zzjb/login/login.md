@@ -280,9 +280,9 @@ namespace ET.Client
 
 ![](images/Pasted%20image%2020250818131931.png)
 
-### 🌸 分析登录方法
+### 🌸 定位到请求位置(重要)
 
-点进去代码是这样的, 符合登录代码的样子, 我们打断点后发现`登录`确实是调用的这个方法, 那我们接下来就分析这个登录页面都做了哪些操作吧
+点进去代码是这样的, 符合登录代码的样子, 我们打断点后发现`登录`确实是调用的这个方法, 那这就是我们的请求位置, 我们通过注解`MessageHandler`可以看到这个类接到消息之后就会执行登录操作, 那到底是谁发送的消息呢? 我们继续往下看
 
 ```cs
 using System;
@@ -299,76 +299,302 @@ namespace ET.Client
             string account = request.Account;
             string password = request.Password;
             string version = request.Version;
-            // 创建一个ETModel层的Session
-            root.RemoveComponent<RouterAddressComponent>();
-            
-            // 获取路由跟realmDispatcher地址
-            RouterAddressComponent routerAddressComponent =
-                    root.AddComponent<RouterAddressComponent, string, int>(request.RouterHttpHost, ConstValue.RouterHttpPort);
-            await routerAddressComponent.Init();
-            root.AddComponent<NetComponent, AddressFamily, NetworkProtocol>(routerAddressComponent.RouterManagerIPAddress.AddressFamily, NetworkProtocol.UDP);
-            root.GetComponent<FiberParentComponent>().ParentFiberId = request.OwnerFiberId;
+			......此处略去一万字 以后解读
+```
 
-            NetComponent netComponent = root.GetComponent<NetComponent>();
+然后里面最有用的信息是`MessageHandler<Scene, Main2NetClient_Login, NetClient2Main_Login>`, 我可以看到`Main2NetClient_Login`和`NetClient2Main_Login`应该就是和我们消息有关的模块
 
-            IPEndPoint realmAddress = routerAddressComponent.GetRealmAddress(account);
+所以我进入了`Main2NetClient_Login`
 
-            R2C_Login r2CLogin;
-            using (Session session = await netComponent.CreateRouterSession(realmAddress, account, password))
-            {
-                C2R_Login c2RLogin = C2R_Login.Create();
-                c2RLogin.Account = account;
-                c2RLogin.Password = password;
-                c2RLogin.Version = version;
-                r2CLogin = (R2C_Login)await session.Call(c2RLogin);
-
-                // 登录错误
-                if (r2CLogin.Error != ErrorCode.ERR_Success)
-                {
-                    response.Error = r2CLogin.Error;
-                    return;
-                }
-            }
-
-            // 创建一个gate Session,并且保存到SessionComponent中
-            Session gateSession = await netComponent.CreateRouterSession(NetworkHelper.ToIPEndPoint(r2CLogin.Address), account, password);
-            gateSession.AddComponent<ClientSessionErrorComponent>();
-
-            C2G_LoginGate c2GLoginGate = C2G_LoginGate.Create();
-            c2GLoginGate.Key = r2CLogin.Key;
-            c2GLoginGate.GateId = r2CLogin.GateId;
-            c2GLoginGate.Account = account;
-            G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await gateSession.Call(c2GLoginGate);
-
-            if (g2CLoginGate.Error != ErrorCode.ERR_Success)
-            {
-                response.Error = g2CLoginGate.Error;
-                gateSession.Dispose(); // 登录失败，清理 Session
-                Log.Error("登录 Gate 失败");
-                return;
-            }
-
-
-            Log.Debug("登陆gate成功!");
-
-
-            // 登陆Gate失败
-            // TODO: 这里需要处理登陆Gate失败的逻辑 
-            // 上面 root.AddComponent<SessionComponent>().Session = gateSession; 在成功之后在添加否则不保存
-
-            root.AddComponent<SessionComponent>().Session = gateSession;
-            response.Error = ErrorCode.ERR_Success;
-            response.PlayerId = g2CLoginGate.PlayerId;
-            response.HavRole = g2CLoginGate.HavRole;
-            response.Gold = g2CLoginGate.Gold;
-            response.PurpleGold = g2CLoginGate.PurpleGold;
-            response.SwanGold = g2CLoginGate.SwanGold;
-            response.SwanPoints = g2CLoginGate.SwanPoints;
-            response.Address = r2CLogin.Address;
-            
+```cs
+namespace ET
+{
+    [MemoryPackable]
+    [Message(ClientMessage.Main2NetClient_Login)]
+    [ResponseType(nameof(NetClient2Main_Login))]
+    public partial class Main2NetClient_Login : MessageObject, IRequest
+    {
+        public static Main2NetClient_Login Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(Main2NetClient_Login), isFromPool) as Main2NetClient_Login;
         }
+```
+
+可以看到它有一个`Create`方法, 那么这个就是创建消息的方法, 我们只需要看到底是谁创建它, 只有一个地方调用了`Main2NetClient_Login.Create`, 这个文件是`ClientSenderComponentSystem.cs`
+
+```cs
+public static async ETTask<NetClient2Main_Login> LoginAsync(this ClientSenderComponent self, string account, string password, string version, string ip)
+{
+	if (self.netClientActorId == default)
+	{
+		self.fiberId = await FiberManager.Instance.Create(SchedulerType.ThreadPool, 0, SceneType.NetClient, "");
+		self.netClientActorId = new ActorId(self.Fiber().Process, self.fiberId);
+	}
+
+
+	Main2NetClient_Login main2NetClientLogin = Main2NetClient_Login.Create();
+	main2NetClientLogin.OwnerFiberId = self.Fiber().Id;
+	main2NetClientLogin.Account = account;
+	main2NetClientLogin.Password = password;
+	main2NetClientLogin.Version = version;
+	main2NetClientLogin.RouterHttpHost = ip;
+	return await self.Root().GetComponent<ProcessInnerSender>().Call(self.netClientActorId, main2NetClientLogin) as NetClient2Main_Login;
+}
+```
+
+我们可以看到, `Account`和`Password`都是在这里传递的, 我们看看是谁调用了`LoginAsync`, 可以看到最终的源头是`LoginHelper.cs`, 我们只看这个关键性的代码
+
+```cs
+public static async ETTask<(int, bool)> Login(Scene root, string account, string password, string version, string ip)
+{
+	root.RemoveComponent<ClientSenderComponent>();
+
+
+	ClientSenderComponent clientSenderComponent = root.AddComponent<ClientSenderComponent>();
+
+	NetClient2Main_Login response = await clientSenderComponent.LoginAsync(account, password, version, ip);
+
+	if (response.Error != ErrorCode.ERR_Success)
+	{
+		return (response.Error, false);
+	}
+
+	root.GetComponent<PlayerComponent>().Account = account;
+	root.GetComponent<PlayerComponent>().Password = password;
+	root.GetComponent<PlayerComponent>().Address = response.Address;
+
+
+	if (response.HavRole)
+	{
+		root.GetComponent<PlayerComponent>().MyId = response.PlayerId;
+		root.GetComponent<PlayerComponent>().Gold = response.Gold;
+		root.GetComponent<PlayerComponent>().PurpleGold = response.PurpleGold;
+		root.GetComponent<PlayerComponent>().SwanGold = response.SwanGold;
+		root.GetComponent<PlayerComponent>().SwanPoints = response.SwanPoints;
+	}
+
+	return (ErrorCode.ERR_Success, response.HavRole);
+}
+```
+
+可以看到下面的就是登录的代码, 这里进入我的擅长领域, 我一眼就能看出来`NetClient2Main_Login`就是我们登录后返回的一个参数模型, 里面有用户id之类的个人信息
+
+```cs
+NetClient2Main_Login response = await clientSenderComponent.LoginAsync(account, password, version, ip);
+```
+
+然后这个`response`在下面是有用途的
+
+```cs
+if (response.HavRole)
+{
+	root.GetComponent<PlayerComponent>().MyId = response.PlayerId;
+	root.GetComponent<PlayerComponent>().Gold = response.Gold;
+	root.GetComponent<PlayerComponent>().PurpleGold = response.PurpleGold;
+	root.GetComponent<PlayerComponent>().SwanGold = response.SwanGold;
+	root.GetComponent<PlayerComponent>().SwanPoints = response.SwanPoints;
+}
+```
+
+这个意思应该就是如果有角色`HavRole`, 就把我们的`PlayerComponent`的属性设置上去, 然后就应该是进入游戏, 可以看到如果没有问题的话就返回一个错误码 这个码应该是没有问题的意思 - -, 然后把`haveRole`传回去这个用意应该是没有角色的时候让用户去创建角色之类的
+
+```cs
+return (ErrorCode.ERR_Success, response.HavRole);
+```
+
+ 我们顺着看看调用`LoginHelper`的地方, 一下就找到了`DlgLoginSystem.cs`, 原来我与绑定页面失之交臂, 在最开始的时候就看到了`DlgLogin`和我的场景名一样, 并且我也点进去看了, 但是没有找到这个`System`, 下面的逻辑就比较简单了, 都是正常的
+
+```cs
+// 登录按钮事件
+private static void OnLoginClickEventHandler(this DlgLogin self)
+{
+	self.Root().GetComponent<MusicComponent>().PlaySoundEffect(100).Coroutine();
+	string account = self.View.E_UsernameInputField.text.Trim();
+	string password = self.View.E_PasswordInputField.text;
+
+	try
+	{
+		self.OnLogin(account, password).Coroutine();
+	}
+	catch (Exception e)
+	{
+		Log.Error(e.ToString());
+	}
+}
+private static async ETTask OnLogin(this DlgLogin self, string account, string password)
+{
+
+	int fieldError = ValidateAccountAndPassword(account, password);
+
+	if (fieldError != ErrorCode.ERR_Success)
+	{
+		self.OnMsg("账号或密码不能为空").Coroutine();
+		return;
+	}
+	GlobalConfig globalConfig = Resources.Load<GlobalConfig>("GlobalConfig");
+
+	(int err, bool havRole) = await LoginHelper.Login(self.Root(), account, password, Application.version, globalConfig.ServerIP);
+
+	// 如果未绑定手机打开绑定界面绑定
+	if (err == ErrorCode.ERR_NOTbindPhoneOrEmail)
+	{
+		await EventSystem.Instance.PublishAsync(self.Root(), new BindPhoneOrEmailEvent()
+		{
+			open = true,
+			account = account
+		});
+
+		self.Root().GetComponent<UIComponent>().GetDlgLogic<DlgNotification>().NotificationWaring("您需要验证绑定的邮箱或电话号码！");
+		return;
+	}
+
+
+	if (err == ErrorCode.ERR_Success)
+	{
+		Log.Debug("do login success");
+
+		// 保存账号密码到PlayerPrefs
+		PlayerPrefs.SetString(self.PlayerPrefsAccount, account);
+		PlayerPrefs.SetString(self.PlayerPrefsPassword, password);
+
+		if (!havRole)
+		{
+			//首次创建角色，打开命名页面
+			self.View.EG_LoginRectTransform.gameObject.SetActive(false);
+			self.View.EG_RegisterRectTransform.gameObject.SetActive(false);
+			self.View.EG_NameRectTransform.gameObject.SetActive(true);
+			return;
+		}
+
+		await EventSystem.Instance.PublishAsync(self.Root(), new LoginFinish());
+		return;
+	}
+
+	Log.Debug("do login fail");
+	switch (err)
+	{
+		case ErrorCode.ERR_LoginPasswordError:
+			self.OnMsg("密码错误").Coroutine();
+			break;
+		case ErrorCode.ERR_LoginAccountNotExist:
+			self.OnMsg("账号不存在").Coroutine();
+			break;
+		default:
+			self.OnMsg("登录失败").Coroutine();
+			break;
+	}
+}
+```
+
+越来越兴奋了, 以为这个代码真的很正常, 哭了...., `OnLoginClickEventHandler`这玩意不就是点击登录按钮的`Handler`吗, 我们看看在哪
+
+```cs
+namespace ET.Client
+{
+    [FriendOf(typeof(DlgLogin))]
+    public static class DlgLoginSystem
+    {
+
+        public static void RegisterUIEvent(this DlgLogin self)
+        {
+
+            self.View.E_LoginButton.AddListener(self.Root(), self.OnLoginClickEventHandler);
+            self.View.E_RegisterButton.AddListener(self.Root(), self.OnRegisterClickEventHandler);
+
+            self.View.E_Rgt_BackButton.AddListener(self.Root(), self.OnBackClickEventHandler);
+            self.View.E_Rgt_SubmitButton.AddListener(self.Root(), self.OnRgtSubmitClickEventHandler);
+
+            self.View.E_Nm_SubmitButton.AddListener(self.Root(), self.OnNmSubmitClickEventHandler);
+
+            self.View.E_Rgt_SendSmsCodeButton.AddListener(self.Root(), () =>
+            {
+                self.OnRgtSendSmsCodeClickEventHandler().Coroutine();
+            });
+
+            self.View.E_Button_ForgetButton.AddListener(self.Root(), self.OnForgetClickHandler);
+        }
+......此处略去一万行
+```
+
+可以看到就是这句
+
+```cs
+self.View.E_LoginButton.AddListener(self.Root(), self.OnLoginClickEventHandler);
+```
+
+看似平平无奇, 但是我们还是有点可说的, 我们看到它的`self.View.E_LoginButton`直接就能获取到`登录按钮`, 这是怎么做到的呢
+
+```cs
+namespace ET.Client
+{
+    [ComponentOf(typeof(UIBaseWindow))]
+    public class DlgLogin : Entity, IAwake, IUILogic
+    {
+        public DlgLoginViewComponent View { get => this.GetComponent<DlgLoginViewComponent>(); }
+
+        public Dictionary<int, EntityRef<Scroll_Item_test>> Dictionary;
+
+        public string PlayerPrefsAccount = "PlayerPrefsAccount";
+        public string PlayerPrefsPassword = "PlayerPrefsPassword";
+
+        public Boolean isSendingSmsCode = false;
+
+
+
     }
 }
 ```
+
+我们可以看到这个`self`表示的就是`DlgLogin`这个类继承`Entity`说明它是一个实体, 我们都学过组件实体表数据对吧, 而这个类中绑定了一个`View`, `DlgLoginViewComponent`, 这个东西就可以获取到我们绑定的`E_LoginButton`
+
+```cs
+public UnityEngine.UI.Button E_LoginButton
+{
+	get
+	{
+		if (this.uiTransform == null)
+		{
+			Log.Error("uiTransform is null.");
+			return null;
+		}
+		if (this.m_E_LoginButton == null)
+		{
+			this.m_E_LoginButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject, "EG_Login/E_Login");
+		}
+		return this.m_E_LoginButton;
+	}
+}
+```
+
+可以看到它就是依靠名字来找的, 通过`FindDeepChild`方法, 这个方法中的原理我不用看都知道, 就是个`transform.Find`, 大不了就加个`递归`呗
+
+```cs
+public static Transform FindDeepChild(GameObject _target, string _childName)
+{
+	Transform resultTrs = null;
+	resultTrs = _target.transform.Find(_childName);
+	if (resultTrs == null)
+	{
+		foreach (Transform trs in _target.transform)
+		{
+			resultTrs = UIFindHelper.FindDeepChild(trs.gameObject, _childName);
+			if (resultTrs != null)
+				return resultTrs;
+		}
+	}
+	return resultTrs;
+}
+```
+
+所以可以看到在`DlgLoginViewComponent`这个里面写了大量的代码来获取`E_LoginButton`等数十个`UI`对象, 我从开发经验来看, 这里写的十分麻烦, 十分笨拙...
+
+在问了`gpt`之后发现有`UI Prefab`这个东西, 原来这里面的代码是自动生成的, 有工具, 坏消息是砍了
+
+![](images/Pasted%20image%2020250818205407.png)
+
+真让真炸毛
+
+
+
 
 

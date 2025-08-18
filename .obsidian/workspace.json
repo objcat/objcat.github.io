@@ -74,7 +74,8 @@
               "title": "书签"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -170,6 +171,7 @@
   },
   "active": "72c64d86104d102b",
   "lastOpenFiles": [
+    "docs/6-project/zzjb/login/images/Pasted image 20250818205407.png",
     "docs/6-project/zzjb/login/images/Pasted image 20250818131931.png",
     "docs/6-project/zzjb/login/login.md",
     "docs/6-project/zzjb/login/images/Pasted image 20250818131743.png",

@@ -12,14 +12,6 @@ https://github.com/EllanJiang/GameFramework
 
 # 🍎 快速开始
 
-我这里选择了ET`8.1`, 参考视频如下
-
-上上签UpUpDraw
-https://www.bilibili.com/video/BV1rhYyeKExP
-
-和v诺
-https://www.bilibili.com/video/BV1Ls421A7mS
-
 ## 🌲 下载并解压
 
 直接去官网, 切换分支到`8.1`
@@ -908,7 +900,32 @@ UI (Entity)
 
 ![](images/Pasted%20image%2020250817190134.png)
 
+# 🍎 参考资料
 
+我这里选择了ET`8.1`, 参考视频如下
 
+## 🌲 视频
 
+上上签UpUpDraw
+https://www.bilibili.com/video/BV1rhYyeKExP
+
+和v诺
+https://www.bilibili.com/video/BV1Ls421A7mS
+
+字母哥ET 6.0教程
+https://www.bilibili.com/video/BV1xK4y1E76q
+
+烟雨迷离半世殇
+https://www.bilibili.com/video/BV1BJ411H7oZ
+
+## 🌲 文章
+
+- 官方社区
+https://et-framework.cn/t/Course?utm_source=chatgpt.com
+
+- 【ET框架】基础及实践难题解答 - 幸运淦淦
+https://blog.csdn.net/u014685437/article/details/132273445
+
+- 小弟的ET笔记
+https://www.yuque.com/et-xd/docs
 

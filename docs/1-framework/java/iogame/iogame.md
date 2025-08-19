@@ -255,6 +255,191 @@ TCP    127.0.0.1:53344        127.0.0.1:10100        ESTABLISHED     31220
 
 中间的两条表示`客户端与服务端`已经建立了`TCP`连接, 一个 TCP 连接只有一条(协议层面)，但是在操作系统里,, `服务端`和`客户端`各自持有一个 socket, 所以`netstat`会显示两条记录, 这两个 socket 互为对端, 它们构成完整的双向通信通道
 
+# 🍎 架构
+
+学一个东西要先了解一下架构知识, 不然学着学着就懵了, 这里引用官方的图
+
+![](images/Pasted%20image%2020250819200125.png)
+
+从架构简图中, 我们知道了整体架构由三部分组成, 分别是
+
+- 1.游戏对外服
+- 2.游戏网关
+- 3.游戏逻辑服，
+
+三者既可相互独立，又可相互融合。
+
+我觉得作者设计的非常好, 可以相互独立和可以融合, 独立方便我们去拓展业务, 融合可以在单应用时节省大量的部署时间
+
+下面是作者的介绍
+
+```
+游戏对外服、Broker（游戏网关）、游戏逻辑服这三部分，在一个进程中。(单体应用，在开发分布式时，调试更加方便)
+游戏对外服、Broker（游戏网关）、游戏逻辑服这三部分，在多个进程中。(分布式)
+游戏对外服、Broker（游戏网关）这两部分在一个进程中，而游戏逻辑服在多个进程中。(类似之前游戏的传统架构)
+甚至可以不需要游戏对外服，只使用 Broker（游戏网关）和游戏逻辑服这两部分，用于其他系统业务。
+
+因为 ioGame 遵循面向对象的设计原则（单一职责原则、开闭原则、里式替换原则、依赖倒置原则、接口隔离原则、迪米特法则）等， 所以使得架构的职责分明，可以灵活的进行组合。
+
+开发人员几乎都遇见过这么一种情况，在项目初期阶段，通常是以单体项目的方式进行开发，随着需求不断的增加与迭代，会演变成一个臃肿的项目。 此时在对一个整体进行拆分是困难的，成本是极高的。甚至是不可完成的，最后导致完全的重新重构。
+
+ioGame 提供了在结构组合上的部署多样性，通过组合的方式，在项目初期就可以避免这些拆分问题。 在开发阶段中，我们可以使用单体应用开发思维，降低了开发成本。 通过单体应用的开发方式，在开发分布式项目时，调试更加的方便。 这既能兼顾分布式开发、项目模块的拆分，又能降低团队的开发成本。
+```
+
+可以看到作者非常懂架构的, 而且考虑到了开发初期到后期的这个过程, 服务器的变化
+
+我们查看官方文档, 他说
+
+```
+游戏逻辑服需要继承 AbstractBrokerClientStartup ， 有三个方法需要实现
+
+createBarSkeleton，当前游戏逻辑服使用的业务框架。
+createBrokerClientBuilder，当前游戏逻辑服信息。
+createBrokerAddress，游戏网关的连接地址。
+```
+
+# 🍎 三层架构
+
+我们刚才简单了解了`整体架构`, 现在就分别学习这三个模块, 我给他的起的名`三层架构`, 哈哈
+
+## 🌲 逻辑服
+
+因为它离我们最近, 我就先学这个
+
+### 🌸 从入口出发
+
+逻辑服就是我们写业务的服务器, 本人理解应该是类似于`spring`中的`Controller`控制器, 因为它能写业务, 但是又不完全一样, 因为它是服务器的角色, 我们先从`服务端入口`来看, 可以看到一个关键性代码
+
+```java
+// 游戏逻辑服
+var demoLogicServer = new DemoLogicServer();
+// 启动
+NettySimpleHelper.run(port, List.of(demoLogicServer));
+```
+
+很明显这个就是创建一个`DemoLogicServer`, 然后在启动的时候应用它, 就能给我们服务器提供服务了, 我们来看看`DemoLogicServer`的代码
+
+```java
+public class DemoLogicServer extends AbstractBrokerClientStartup {
+    @Override
+    public BarSkeleton createBarSkeleton() {
+        // 业务框架构建器 配置
+        var config = new BarSkeletonBuilderParamConfig()
+                // 扫描 action 类所在包
+                .scanActionPackage(DemoAction.class);
+
+        // 业务框架构建器
+        var builder = config.createBuilder();
+
+        // 添加控制台输出插件
+        builder.addInOut(new DebugInOut());
+
+        return builder.build();
+    }
+
+    @Override
+    public BrokerClientBuilder createBrokerClientBuilder() {
+        BrokerClientBuilder builder = BrokerClient.newBuilder();
+        builder.appName("demoLogicServer");
+        return builder;
+    }
+
+    @Override
+    public BrokerAddress createBrokerAddress() {
+        String localIp = "127.0.0.1";
+        int brokerPort = IoGameGlobalConfig.brokerPort;
+        return new BrokerAddress(localIp, brokerPort);
+    }
+}
+```
+
+和官方说的一样, 我们要实现三个方法, 下面我们一个一个看
+
+### 🌸 createBarSkeleton
+
+这个方法用于配置`当前游戏逻辑服使用的业务框架`, 我们来看代码
+
+```java
+// 业务框架构建器 配置
+var config = new BarSkeletonBuilderParamConfig()
+// 扫描 action 类所在包
+.scanActionPackage(DemoAction.class);
+```
+
+这个就是创建一个配置, 然后把`DemoAction.class`绑定上去
+
+```java
+@ActionController(DemoCmd.cmd)
+public class DemoAction {
+    /**
+     * 示例 here 方法
+     *
+     * @param helloMessage helloReq
+     * @return HelloReq
+     */
+    @ActionMethod(DemoCmd.here)
+    public HelloMessage here(HelloMessage helloMessage) {
+        HelloMessage newHelloMessage = new HelloMessage();
+        newHelloMessage.name = helloMessage.name + ", I'm here";
+        return newHelloMessage;
+    }
+```
+
+可以看到`DemoAction`中才是我们的业务代码, 代码最后是配置了个`日志打印器`
+
+```java
+// 业务框架构建器
+var builder = config.createBuilder();
+// 添加控制台输出插件
+builder.addInOut(new DebugInOut());
+return builder.build();
+```
+
+最后返回的是一个`BarSkeleton`业务框架对象
+
+### 🌸 createBarSkeleton
+
+配置游戏网关
+
+```java
+@Override
+public BrokerClientBuilder createBrokerClientBuilder() {
+	BrokerClientBuilder builder = BrokerClient.newBuilder();
+	builder.appName("demoLogicServer");
+	return builder;
+}
+```
+
+我们可以看到这一块代码非常少, 它只是配置了一个`appName`也就是应用的名字, 我们来看看它里面还有啥
+
+```java
+public class BrokerClientBuilder {
+    static final String ioGamePidRandom = UUID.randomUUID().toString();
+    private final Map<ConnectionEventType, Supplier<ConnectionEventProcessor>> connectionEventProcessorMap = new NonBlockingHashMap();
+    private final List<Supplier<UserProcessor<?>>> processorList = new ArrayList();
+    private final List<Class<?>> removeProcessorList = new ArrayList();
+    private final BrokerClientListenerRegion brokerClientListenerRegion = new BrokerClientListenerRegion();
+    private String id;
+    private String tag;
+    private String appName;
+    private BarSkeleton barSkeleton;
+    private BrokerClientType brokerClientType;
+    private BrokerAddress brokerAddress;
+    private int timeoutMillis;
+    private ClientProcessorHooks clientProcessorHooks;
+    private BrokerClientManager brokerClientManager;
+    private AwareInject awareInject;
+    private int status;
+    private int withNo;
+```
+
+可以看到属性还是蛮多的, 这一块他没去动, 我们也先不动, 知道就行
+
+### 🌸 createBrokerAddress
+
+游戏网关的连接地址
+
+
 
 
 

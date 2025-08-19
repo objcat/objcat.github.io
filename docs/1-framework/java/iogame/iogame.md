@@ -263,9 +263,9 @@ TCP    127.0.0.1:53344        127.0.0.1:10100        ESTABLISHED     31220
 
 从架构简图中, 我们知道了整体架构由三部分组成, 分别是
 
-- 1.游戏对外服
-- 2.游戏网关
-- 3.游戏逻辑服，
+- 游戏对外服
+- 游戏网关
+- 游戏逻辑服
 
 三者既可相互独立，又可相互融合。
 
@@ -304,11 +304,11 @@ createBrokerAddress，游戏网关的连接地址。
 
 ## 🌲 逻辑服
 
-因为它离我们最近, 我就先学这个
+逻辑服全称`逻辑服务器`, 他离业务最近, 所以我们先学习它, 以下简称`逻辑服`, 就是我们写业务的服务器, 类比下来像`tomcat+spring`, `tomcat`负责启动服务, `spring`负责业务, `逻辑服`可以管理`action`, 类似于`Controller`控制器, 因为它能写业务
 
 ### 🌸 从入口出发
 
-逻辑服就是我们写业务的服务器, 本人理解应该是类似于`spring`中的`Controller`控制器, 因为它能写业务, 但是又不完全一样, 因为它是服务器的角色, 我们先从`服务端入口`来看, 可以看到一个关键性代码
+我们看入口是这样的, 创建一个`DemoLogicServer`, 然后使用`NettySimpleHelper`来启动它
 
 ```java
 // 游戏逻辑服
@@ -317,7 +317,7 @@ var demoLogicServer = new DemoLogicServer();
 NettySimpleHelper.run(port, List.of(demoLogicServer));
 ```
 
-很明显这个就是创建一个`DemoLogicServer`, 然后在启动的时候应用它, 就能给我们服务器提供服务了, 我们来看看`DemoLogicServer`的代码
+我们可以看到参数有两个, 一个是端口, 一是个列表, 说明可以存在多个`逻辑服`, 我们来看看`DemoLogicServer`的代码, 我们的服务器类需要继承`AbstractBrokerClientStartup`抽象类, 并实现里面的三个方法
 
 ```java
 public class DemoLogicServer extends AbstractBrokerClientStartup {
@@ -353,7 +353,7 @@ public class DemoLogicServer extends AbstractBrokerClientStartup {
 }
 ```
 
-和官方说的一样, 我们要实现三个方法, 下面我们一个一个看
+可以看到有三个方法需要实现
 
 ### 🌸 createBarSkeleton
 
@@ -366,7 +366,7 @@ var config = new BarSkeletonBuilderParamConfig()
 .scanActionPackage(DemoAction.class);
 ```
 
-这个就是创建一个配置, 然后把`DemoAction.class`绑定上去
+通过这个`框架构建器`, 可以把`DemoAction`加载上去, 那么可以推测出这个就是用来管理`逻辑服`的管理器, 因为`DemoAction`里面是我们的业务代码
 
 ```java
 @ActionController(DemoCmd.cmd)
@@ -385,7 +385,7 @@ public class DemoAction {
     }
 ```
 
-可以看到`DemoAction`中才是我们的业务代码, 代码最后是配置了个`日志打印器`
+代码最后是配置了个`日志打印器`
 
 ```java
 // 业务框架构建器
@@ -395,11 +395,9 @@ builder.addInOut(new DebugInOut());
 return builder.build();
 ```
 
-最后返回的是一个`BarSkeleton`业务框架对象
-
 ### 🌸 createBarSkeleton
 
-配置游戏网关
+大胆猜测这段应该是把`逻辑服`的名字`注册到网关上`
 
 ```java
 @Override
@@ -437,7 +435,37 @@ public class BrokerClientBuilder {
 
 ### 🌸 createBrokerAddress
 
-游戏网关的连接地址
+告诉`逻辑服`网关的地址是多少, 我们使用默认的即可
+
+```java
+@Override
+public BrokerAddress createBrokerAddress() {
+	String localIp = "127.0.0.1";
+	int brokerPort = IoGameGlobalConfig.brokerPort;
+	return new BrokerAddress(localIp, brokerPort);
+}
+```
+
+可以看到这三个方法还是比较通俗易懂的
+
+## 🌲 网关
+
+`Broker`即`ioGame`中的网关, 类比是SpringCloud中的`Gateway`或`Zuul`
+
+```
+游戏网关是在架构中扮演一个中间调度者的角色，职责如下
+
+负载均衡逻辑服，即使某个逻辑服挂掉也不会影响整个系统。
+转发游戏逻辑服和游戏对外服的请求与响应。
+```
+
+我们先知道这个概念, 详情待完善
+
+## 🌲 对外服
+
+对外服就是我们对外开放的服务器, 我们在入口设置的那个端口号就是它的
+
+未完待续
 
 
 

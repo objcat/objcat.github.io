@@ -38,43 +38,60 @@ https://iohao.github.io/game/
 
 然后等待依赖库拉取完
 
-## 🌲 学习文档
+## 🌲 学习ioGame
 
-运行项目我们需要去`ioGame`文档学习
+[iogame学习文档](../../../1-framework/java/iogame/iogame.md)
 
-https://iohao.github.io/game/docs/installation
+## 🌲 启动项目
 
-```
-ioGame 是一个轻量级的网络编程框架，适用于网络游戏服务器、物联网、内部系统及各种需要长连接的场景。
-源码完全开放、最新文档阅读完全开放，使用完全自由、免费（遵守开源协议）。
+我们在目录中找到这样一个类
 
-ioGame 具备一次编写到处对接的能力，为客户端提供了代码生成的辅助功能，能够帮助客户端开发者减少巨大的工作量。
+![](images/Pasted%20image%2020250820004431.png)
 
-你只需要编写一次 java 代码，就能为 Godot、UE、Unity、CocosCreator、Laya、React、Vue、Angular ...等项目生成统一的交互接口。 交互接口确保了方法的参数类型安全且明确，使我们在编译阶段就能发现潜在问题。 这种做法有效避免了安全隐患，并减少了联调时可能出现的低级错误。
+`SdkApplication`这就是我们的主启动类, 右键点击`Run`即可
 
-支持语言: C#、TypeScript、GDScript、C++、Lua。
-```
-
-![](images/Pasted%20image%2020250819182013.png)
-
-这就是`ioGame`的文档了, 目前看到的写的最全面的文档之一, 完爆`ET`的文档
-
-## 🌲 从0开始学习
-
-我们可以看到上面有醒目的`从0开始编写`, 这种教程通常最容易理解, 我们直接过去看关键信息就可以学会怎么运行项目了, 万变不离其中
-
-https://iohao.github.io/game/docs/quick_zero_demo
-
-我一眼就从中发现了东西
-
-```
-运行步骤
-
-服务器启动类 DemoApplication.java
-模拟客户端启动类 DemoClient.java
+```shell
++----------+-----------------------##-------------+----------##---------+-------------------------
+| ioGame                           ## Memory                 ## Time                            
++----------+-----------------------##-------------+----------##---------+-------------------------
+| pid      | 13008                 ## used        | 30.61MB  ## start   | 2025-08-20 00:41:47.753 
+| version  | 21.28                 ## freeMemory  | 113.39MB ## end     | 2025-08-20 00:41:48.316 
+| document | http://game.iohao.com ## totalMemory | 144.0MB  ## consume | 0.56 s                  
++----------+-----------------------##-------------+----------##---------+-------------------------
+|          | ioGame javadoc - https://iohao.github.io/javadoc
++----------+--------------------------------------------------------------------------------------
+| adv      | MMO - https://iohao.github.io/game/docs/practices/mmo
++----------+--------------------------------------------------------------------------------------
+| News     | 游戏对外服 - 统一协议说明 - https://iohao.github.io/game/docs/manual_high/external_message
+| News     | 游戏对外服 - 路由访问权限控制 - https://iohao.github.io/game/docs/external/access_authentication
++----------+--------------------------------------------------------------------------------------
 ```
 
-我们从这里可以得知有里面有两个启动类, 一个是启动服务器的, 一个是启动客户端模拟的, 通常关键信息都是一步一步收集来的
+这个字样说明成功了, 在日志中我们可以看到所有的路由
+
+```shell
+路由: 1 - 0 --- action : SdkAction.loginVerify(LoginVerifyMessage verifyMessage, FlowContext flowContext)  --- return UserMessage  ~~~ see.(SdkAction.java:58)
+路由: 1 - 1 --- action : SdkAction.triggerBroadcast(FlowContext flowContext)  --- return void  ~~~ see.(SdkAction.java:224)
+路由: 1 - 2 --- action : SdkAction.intValue(IntValue value, FlowContext flowContext)  --- return IntValue  ~~~ see.(SdkAction.java:79)
+路由: 1 - 3 --- action : SdkAction.longValue(LongValue value)  --- return LongValue  ~~~ see.(SdkAction.java:92)
+路由: 1 - 4 --- action : SdkAction.boolValue(BoolValue value)  --- return BoolValue  ~~~ see.(SdkAction.java:103)
+路由: 1 - 5 --- action : SdkAction.stringValue(StringValue value)  --- return StringValue  ~~~ see.(SdkAction.java:114)
+路由: 1 - 6 --- action : SdkAction.value(LoginVerifyMessage loginVerifyMessage)  --- return UserMessage  ~~~ see.(SdkAction.java:125)
+路由: 1 - 12 --- action : SdkAction.listInt(IntValueList value)  --- return IntValueList  ~~~ see.(SdkAction.java:148)
+路由: 1 - 13 --- action : SdkAction.listLong(LongValueList value)  --- return LongValueList  ~~~ see.(SdkAction.java:161)
+路由: 1 - 14 --- action : SdkAction.listBool(BoolValueList value)  --- return BoolValueList  ~~~ see.(SdkAction.java:174)
+路由: 1 - 15 --- action : SdkAction.listString(StringValueList value)  --- return StringValueList  ~~~ see.(SdkAction.java:187)
+路由: 1 - 16 --- action : SdkAction.listValue(List<LoginVerifyMessage> value)  --- return List<UserMessage>  ~~~ see.(SdkAction.java:200)
+路由: 1 - 20 --- action : SdkAction.testError(IntValue value)  --- return IntValue  ~~~ see.(SdkAction.java:213)
+路由: 1 - 21 --- action : SdkAction.noParam()  --- return IntValue  ~~~ see.(SdkAction.java:256)
+路由: 1 - 22 --- action : SdkAction.noReturn(StringValue name)  --- return void  ~~~ see.(SdkAction.java:267)
+路由: 1 - 23 --- action : SdkAction.bulletMessage(BulletMessage message)  --- return BulletMessage  ~~~ see.(SdkAction.java:277)
+路由: 1 - 30 --- action : SdkAction.internalAddMoney(IntValue money)  --- return IntValue  ~~~ see.(SdkAction.java:272)
+路由: 2 - 1 --- action : MyAction.hello(StringValue name)  --- return StringValue  ~~~ see.(MyAction.java:41)
+路由: 2 - 2 --- action : MyAction.loginVerify(LoginVerifyMessage verifyMessage)  --- return UserMessage  ~~~ see.(MyAction.java:52)
+```
+
+
 
 # 🍎 项目分析
 

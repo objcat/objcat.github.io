@@ -225,9 +225,11 @@ public class GlobalConfig : ScriptableObject
 
 [开发计划浏览](../devplan/devplan.md)
 
-# 🍎 登录页分析
+# 🍎 技术分析
 
-本模块在技术层面分析登录页是如何实现的
+本模块在`代码`层面分析游戏中不同的模块是如何实现的, 新手分析, 仅供参考
+
+## 🌲 登录页分析
 
 [登录页分析](../login/login.md)
 

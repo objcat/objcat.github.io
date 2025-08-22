@@ -1141,7 +1141,7 @@ public void testSelectUsers2() {
 }
 ```
 
-![](spring/mybatis/mybatis_plus/images/1.png)
+![](images/1.png)
 
 # 🍎 分页
 

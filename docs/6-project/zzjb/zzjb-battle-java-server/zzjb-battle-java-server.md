@@ -38,7 +38,7 @@ https://iohao.github.io/game/
 
 ## 🌲 学习ioGame
 
-[iogame学习文档](../../../1-framework/java/iogame/iogame.md)
+[iogame学习文档](../../../1-tecnology/java/iogame/iogame.md)
 
 ## 🌲 启动项目
 

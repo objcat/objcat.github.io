@@ -186,7 +186,7 @@ public GameObject eg_name;
 
 这个拖拽的实现原理其实是通过修改`Init.unity`文件来实现的, 它就是`ET`给我们的初始化场景文件, 其实它是一个`yaml`
 
-![](images/Pasted%20image%2020250817223731.png)
+![](../zzjb-unity/images/Pasted%20image%2020250817223731.png)
 
 我们拿刚才的东西举例子, 其实是通过id绑定的, 这样无论怎么改名字也都能找到组件
 

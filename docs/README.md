@@ -30,7 +30,7 @@
 
 项目解析, 目前只完成了运行
 
-[重装机兵项目解读](6-project/zzjb/zzjb/zzjb.md)
+[重装机兵项目解读](6-project/zzjb/zzjb-unity/zzjb-unity.md)
 
 ## 🌲 ioGame框架
 

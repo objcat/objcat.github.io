@@ -1,5 +1,7 @@
 # 🍎 简介
 
+a fast and friendly git client for Mac and Windows
+
 Fork is getting better and better day after day and we are happy to share our results with you.
 
 https://git-fork.com/

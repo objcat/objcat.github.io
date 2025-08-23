@@ -244,3 +244,25 @@ public class GlobalConfig : ScriptableObject
 13>CSC: Error CS0006 : 未能找到元数据文件“D:\project\unity\zzjb2d\Unity\Temp\bin\Debug\game.dll”
 13>------- Finished building project: Unity.HotfixView. Succeeded: False. Errors: 2. Warnings: 0
 ```
+
+## 🌲 AppellationConfigCategory二义性错误
+
+```
+类型“AppellationConfigCategory”已经包含“Points”的定义
+类型“AppellationConfigCategory”已经包含“Appellations”的定义
+类型“AppellationConfigCategory”已定义了一个名为“GetAppellation”的具有相同参数类型的成员
+在“AppellationConfigCategory.Points”和“AppellationConfigCategory.Points”之间具有二义性
+在“AppellationConfigCategory.Appellations”和“AppellationConfigCategory.Appellations”之间具有二义性
+类型“AppellationConfigCategory”已定义了一个名为“EndInit”的具有相同参数类型的成员
+以下方法或属性之间的调用具有二义性:“AppellationConfigCategory.GetAll()”和“AppellationConfigCategory.GetAll()”
+在“AppellationConfigCategory.Appellations”和“AppellationConfigCategory.Appellations”之间具有二义性
+在“AppellationConfig.Points”和“AppellationConfig.Points”之间具有二义性
+```
+
+![](images/Pasted%20image%2020250823144959.png)
+
+代码和最新的分支完全一样
+
+![](images/Pasted%20image%2020250823145026.png)
+
+群里大佬告诉我说重新编译项目, 但是我发现并不能解决问题, 所以开始调查这个问题, 明明我之前的版本都是没问题的

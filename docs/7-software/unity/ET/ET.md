@@ -16,15 +16,15 @@ https://github.com/EllanJiang/GameFramework
 
 直接去官网, 切换分支到`8.1`
 
-![](images/Pasted%20image%2020250814234248.png)
+![](images2/Pasted%20image%2020250814234248.png)
 
 然后直接把项目下载下来就可以了, 解压出来大概是`84M`
 
-![](images/Pasted%20image%2020250814234413.png)
+![](images2/Pasted%20image%2020250814234413.png)
 
 可以看到里面的目录结构是这样的
 
-![](images/Pasted%20image%2020250814234804.png)
+![](images2/Pasted%20image%2020250814234804.png)
 
 文件的变化我这里建了一个`Git`仓库
 
@@ -34,57 +34,57 @@ https://gitee.com/objcat/test-et81
 
 我们使用`Unity Hub`中的`Open`打开里面的`Unity`文件夹, 作者推荐的`Unity`的版本是`2022.3.15`, 非必要不要去用别的版本, 我是懒得下载了, 用的`2022.3.16` - -
 
-![](images/Pasted%20image%2020250815002712.png)
+![](images2/Pasted%20image%2020250815002712.png)
 
 我的会提示我版本不对
 
-![](images/Pasted%20image%2020250816121006.png)
+![](images2/Pasted%20image%2020250816121006.png)
 
 然后我选择的是`Choose another Editor verison`, 然后点击下面的`Open`
 
-![](images/Pasted%20image%2020250816121048.png)
+![](images2/Pasted%20image%2020250816121048.png)
 
 然后会有一个修改`Unity版本`的提示
 
-![](images/Pasted%20image%2020250816121129.png)
+![](images2/Pasted%20image%2020250816121129.png)
 
 直接点击`Change verison`, 如果和作者使用的不是同一个`Unity`版本中间会有多个小提示
 
-![](images/Pasted%20image%2020250816121252.png)
+![](images2/Pasted%20image%2020250816121252.png)
 
 点击`Continue`就可以了
 
-![](images/Pasted%20image%2020250815001132.png)
+![](images2/Pasted%20image%2020250815001132.png)
 
 可以看到, 它在安装我们游戏所需要的库
 
-![](images/Pasted%20image%2020250816121327.png)
+![](images2/Pasted%20image%2020250816121327.png)
 
 ## 🌲 解决管理员提示
 
-![](images/Pasted%20image%2020250823120954.png)
+![](images2/Pasted%20image%2020250823120954.png)
 
 有时候打开会提示这个框, 我们可以直接选择`I wish`, 如果你嫌烦也可以修改`win`系统配置
 
 我们需要在系统配置中开启两个东西, 首先我们`win+R`打开控制台界面
 
-![](images/Pasted%20image%2020250823121232.png)
+![](images2/Pasted%20image%2020250823121232.png)
 
 输入`secpol.msc`
 
 出现`本地安全策略`窗口, 在里面选择`安全选项`, 把图中标记的两个配置改为`已启用`即可
 
-![](images/Pasted%20image%2020250823121147.png)
+![](images2/Pasted%20image%2020250823121147.png)
 
 ## 🌲 打开项目
 
 项目打开是这个样子
 
-![](images/Pasted%20image%2020250816121911.png)
+![](images2/Pasted%20image%2020250816121911.png)
 
 初始项目打开是这样的, 啥也没有, 我们来看一下文件变化
 
-![](images/Pasted%20image%2020250816122132.png)
+![](images2/Pasted%20image%2020250816122132.png)
 
 我们可以看到都是有关项目的配置, 这类配置是`Unity`帮我们自动改动的
 
@@ -92,11 +92,11 @@ https://gitee.com/objcat/test-et81
 
 我们首先双击`Scenes`中的`init`
 
-![](images/Pasted%20image%2020250815001453.png)
+![](images2/Pasted%20image%2020250815001453.png)
 
 我打开后是这样的, 到这里我们场景就看到了
 
-![](images/Pasted%20image%2020250815002020.png)
+![](images2/Pasted%20image%2020250815002020.png)
 
 ## 🌲 配置Unity
 
@@ -104,7 +104,7 @@ https://gitee.com/objcat/test-et81
 
 打开工程后, 点击`菜单上的 -> Edit -> Preferences -> External Tools`, 点击下拉框`External Script Editor`选择`Rider`, `Generate .csproj files for`中的选项全部不要勾选  
 
-![](images/Pasted%20image%2020250816115413.png)
+![](images2/Pasted%20image%2020250816115413.png)
 
 我的`Generate .csproj files for`保持了默认配置
 
@@ -112,7 +112,7 @@ https://gitee.com/objcat/test-et81
 
 在`Project`视图中选中`Assets/Resources/GlobalConfig`, 把`AppType`选择成`Demo(状态同步)`或者`LockStep(帧同步)`
 
-![](images/Pasted%20image%2020250816122319.png)
+![](images2/Pasted%20image%2020250816122319.png)
 
 默认是这样的, 我们可以看到`App Type`默认选中的是`Demo`, 那这个我们可以不用改动
 
@@ -122,27 +122,27 @@ https://gitee.com/objcat/test-et81
 
 https://www.jetbrains.com/zh-cn/rider/
 
-![](images/Pasted%20image%2020250814235146.png)
+![](images2/Pasted%20image%2020250814235146.png)
 
 ## 🌲 编译项目
 
 ### 🌸 编译Unity
 
-![](images/Pasted%20image%2020250816122613.png)
+![](images2/Pasted%20image%2020250816122613.png)
 
 我们在项目窗口, 空白的地方点击鼠标右键, 选择`Open C# Project`, 打开是这样的
 
-![](images/Pasted%20image%2020250816122804.png)
+![](images2/Pasted%20image%2020250816122804.png)
 
 然后我们等待它加载项目
 
-![](images/Pasted%20image%2020250816122748.png)
+![](images2/Pasted%20image%2020250816122748.png)
 
-![](images/Pasted%20image%2020250816122821.png)
+![](images2/Pasted%20image%2020250816122821.png)
 
 这个时间比较长, 需要耐心等待, 然后点击小锤子编译下
 
-![](images/Pasted%20image%2020250816122917.png)
+![](images2/Pasted%20image%2020250816122917.png)
 
 我们发现会出现错误
 
@@ -167,91 +167,91 @@ D:\project\unity\test-et81\Share\Analyzer\bin\Debug\Share.Analyzer.dll
 
 我们在工程目录使用`Rider`打开`ET`
 
-![](images/Pasted%20image%2020250816123156.png)
+![](images2/Pasted%20image%2020250816123156.png)
 
 打开项目是这样的
 
-![](images/Pasted%20image%2020250816123514.png)
+![](images2/Pasted%20image%2020250816123514.png)
 
 我们等待加载
 
-![](images/Pasted%20image%2020250816123450.png)
+![](images2/Pasted%20image%2020250816123450.png)
 
 我们直接点击编译
 
-![](images/Pasted%20image%2020250816123609.png)
+![](images2/Pasted%20image%2020250816123609.png)
 
 可以看到日志滚动
 
-![](images/Pasted%20image%2020250816124454.png)
+![](images2/Pasted%20image%2020250816124454.png)
 
 这里我是能编译成功的
 
-![](images/Pasted%20image%2020250816124521.png)
+![](images2/Pasted%20image%2020250816124521.png)
 
 然后我们再回头编译`Unity`发现可以了
 
-![](images/Pasted%20image%2020250816124604.png)
+![](images2/Pasted%20image%2020250816124604.png)
 
 所以我们得到了结论, 缺少`dll`是因为没有编译`ET`导致的
 
 我们也可以使用另外一种更简单的编译`ET`的方式
 
-![](images/Pasted%20image%2020250816145855.png)
+![](images2/Pasted%20image%2020250816145855.png)
 
 点击`Compile`或者是`F6`快捷键
 
-![](images/Pasted%20image%2020250817003416.png)
+![](images2/Pasted%20image%2020250817003416.png)
 
 但是这个`编译时间`感觉要比在`Rider`中的时间长, 编译前是空的
 
-![](images/Pasted%20image%2020250817003146.png)
+![](images2/Pasted%20image%2020250817003146.png)
 
 编译后发现确实都出来了
 
-![](images/Pasted%20image%2020250817003458.png)
+![](images2/Pasted%20image%2020250817003458.png)
 
 `.bytes`是为了让`Unity`读取更加方便, 可以通过`TextAsset`进行加载, `.pdb`是调试文件
 
 ## 🌲 运行项目
 
-![](images/Pasted%20image%2020250816124818.png)
+![](images2/Pasted%20image%2020250816124818.png)
 
 我们点击`Unity`的运行场景, 可以看到场景可以运行起来
 
-![](images/Pasted%20image%2020250816125145.png)
+![](images2/Pasted%20image%2020250816125145.png)
 
 我们可以右键`Game`, 能够看到一个`Maximize`可以把窗口放大到全屏
 
-![](images/Pasted%20image%2020250816125114.png)
+![](images2/Pasted%20image%2020250816125114.png)
 
 然后是输入密码
 
-![](images/Pasted%20image%2020250816125234.png)
+![](images2/Pasted%20image%2020250816125234.png)
 
 这个没有做限制随便输入即可, 然后点击进入
 
-![](images/Pasted%20image%2020250816125252.png)
+![](images2/Pasted%20image%2020250816125252.png)
 
 我们可以看到能进入游戏了
 
-![](images/Pasted%20image%2020250816125313.png)
+![](images2/Pasted%20image%2020250816125313.png)
 
 这就是`ET`给我们提供的`Demo`, 鼠标右键点击可以移动角色
 
-![](images/Pasted%20image%2020250816125422.png)
+![](images2/Pasted%20image%2020250816125422.png)
 
 R是热重载, 如果我们修改了`ET`的代码可以重新`Build`一次`ET`, 然后点击`R`可以直接热重载`dll`, 也就是这些东西
 
-![](images/Pasted%20image%2020250816125759.png)
+![](images2/Pasted%20image%2020250816125759.png)
 
 在工程目录看到的会不太一样, `Unity`可能隐藏了后缀
 
-![](images/Pasted%20image%2020250816150211.png)
+![](images2/Pasted%20image%2020250816150211.png)
 
 T是切换地图
 
-![](images/Pasted%20image%2020250816125829.png)
+![](images2/Pasted%20image%2020250816125829.png)
 
 我这里项目就运行好了
 
@@ -261,7 +261,7 @@ T是切换地图
 
 我们回到`Rider`, 我指的这个`Rider`是打开`Unity`端的, 发现它的上面也有几个按钮类似`Unity`
 
-![](images/Pasted%20image%2020250817190534.png)
+![](images2/Pasted%20image%2020250817190534.png)
 
 这几个按钮的意思和`Unity`一样, 绿色的按钮就是运行游戏, 很明显`Rider`给我们提供了快捷关联
 
@@ -269,24 +269,24 @@ T是切换地图
 
 我们想调试第一步就需要打断点, 打断点告诉你需要在哪里中断, 打断点的方式是鼠标左键点击序号, 比如我在`Init`入口上打断点
 
-![](images/Pasted%20image%2020250817191305.png)
+![](images2/Pasted%20image%2020250817191305.png)
 
 ### 🌸 启动调试
 
 断点打好了已经完成`50%`, 下面就开始运行项目调试, 往右看, 有一个小虫子一样的图标
 
-![](images/Pasted%20image%2020250817190922.png)
+![](images2/Pasted%20image%2020250817190922.png)
 点击后会进入到调试模式, 
 
-![](images/Pasted%20image%2020250817190936.png)
+![](images2/Pasted%20image%2020250817190936.png)
 
 这时候再点击绿色按钮, 让游戏重新启动即可, 如果不是重新启动有可能断不到, 因为我们打断点的位置在`Init`入口
 
-![](images/Pasted%20image%2020250817191022.png)
+![](images2/Pasted%20image%2020250817191022.png)
 
 然后程序就会停在你打断点的地方, 然后我们可以通过鼠标放在变量上, 看里面的属性
 
-![](images/Pasted%20image%2020250817191621.png)
+![](images2/Pasted%20image%2020250817191621.png)
 
 到这里断点教程完成
 
@@ -296,7 +296,7 @@ T是切换地图
 
 我们先总览一下目录结构, 其中`DotNet`这个区域是`服务端`, `Share`是工具区, `Unity`是`游戏端`也可以叫`客户端`
 
-![](images/Pasted%20image%2020250815003251.png)
+![](images2/Pasted%20image%2020250815003251.png)
 
 ## 🌲 Unity(客户端)
 
@@ -304,7 +304,7 @@ T是切换地图
 
 `ET`的程序入口文件是这个`Assets/Scripts/Loader/MonoBehaviour/Init.cs`, 它是绑定在`Glocal`场景下的, 我们点击场景就能够看到一个`Init.cs`
 
-![](images/Pasted%20image%2020250817143529.png)
+![](images2/Pasted%20image%2020250817143529.png)
 
 我们简略的看看它都做了什么
 
@@ -419,7 +419,7 @@ ET框架的客户端初始时有两个Fiber，分别是Main和NetClient，分别
 
 http://www.toxicstar.top/index.php/archives/266/
 
-![](images/Pasted%20image%2020250817154513.png)
+![](images2/Pasted%20image%2020250817154513.png)
 
 #### 🌵 Word
 
@@ -622,11 +622,11 @@ https://toxicstar.top/index.php/archives/281/
 
 我们接下来使用`dnSpy`来反编译生成的`dll`来看一下里面的代码
 
-![](images/Pasted%20image%2020250817085116.png)
+![](images2/Pasted%20image%2020250817085116.png)
 
 直接把`dll`拖拽到里面即可, 我们来看一下`Model`, 可以看到反编译过来的代码文件和工程中都是一一对应的
 
-![](images/Pasted%20image%2020250817085851.png)
+![](images2/Pasted%20image%2020250817085851.png)
 
 所以`dll`就是我们编译过的代码, `Unity`可以从远程拉取我们更新过的`dll`并替换这些, 然后重新启动程序就可以实现替换代码的逻辑, 不用重新发版本了, 省时省力, 但是实际上不是所有的脚本都支持热更新, 比如挂在`inspector`中的`Monobehaver`脚本就不能加入热更新, 但是可以通过套壳的形式来实现热更新, 这是我了解到的
 
@@ -645,7 +645,7 @@ https://toxicstar.top/index.php/archives/281/
 
 举个例子, 我们找到
 
-![](images/Pasted%20image%2020250815012037.png)
+![](images2/Pasted%20image%2020250815012037.png)
 
 然后看一下它的代码
 
@@ -666,7 +666,7 @@ namespace ET.Client
 
 它的实现就在`Hotfix`中
 
-![](images/Pasted%20image%2020250815012141.png)
+![](images2/Pasted%20image%2020250815012141.png)
 
 ```cs
 using UnityEngine;
@@ -707,7 +707,7 @@ namespace ET.Client
 
 程序集之间是存在依赖关系的, 我们可以看一下, `.asmdef`就是记录当前`程序集`的依赖文件
 
-![](images/Pasted%20image%2020250815012954.png)
+![](images2/Pasted%20image%2020250815012954.png)
 
 我们打开它
 
@@ -912,7 +912,137 @@ UI (Entity)
 
 首先我们要打开`ET`的配表目录
 
+![](images2/Pasted%20image%2020250823133508.png)
 
+## 🌲 配表规则
+
+![](images2/Pasted%20image%2020250823134329.png)
+
+- 三行三列开始配表, 也就是第一个字段从`C3`开始
+- 「标记1」所在行是字段的中文说明
+- 「标记2」标记行是字段的实际使用名称, 生成代码的时候可以看到
+- 「标记3」是数据类型, 生成代码的时候可以看到
+- 「标记4和6」为注释, 使用`#`, 标记一列就是注释一列, 标记一行就是注释一行, 我用错了写的汉字
+- 「标记5」标记`s`的数据只给服务端使用, 标记`c`的数据只给客户端使用
+
+## 🌲 生成代码
+
+数据配置好了, 我们需要使用`ET`提供的代码生成工具, 生成可以直接使用数据的`类`
+
+![](images2/Pasted%20image%2020250823135659.png)
+
+![](images2/Pasted%20image%2020250823135713.png)
+
+然后我们找到目录`Assets -> Model -> Generate -> ClientServer -> Config`
+
+![](images2/Pasted%20image%2020250823140057.png)
+
+然后我们来看看它给我们生成的代码
+
+```cs
+namespace ET
+{
+    [Config]
+    public partial class UnitConfigCategory : Singleton<UnitConfigCategory>, IMerge
+    {
+        [BsonElement]
+        [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
+        private Dictionary<int, UnitConfig> dict = new();
+		
+        public void Merge(object o)
+        {
+            UnitConfigCategory s = o as UnitConfigCategory;
+            foreach (var kv in s.dict)
+            {
+                this.dict.Add(kv.Key, kv.Value);
+            }
+        }
+		
+        public UnitConfig Get(int id)
+        {
+            this.dict.TryGetValue(id, out UnitConfig item);
+
+            if (item == null)
+            {
+                throw new Exception($"配置找不到，配置表名: {nameof (UnitConfig)}，配置id: {id}");
+            }
+
+            return item;
+        }
+		
+        public bool Contain(int id)
+        {
+            return this.dict.ContainsKey(id);
+        }
+
+        public Dictionary<int, UnitConfig> GetAll()
+        {
+            return this.dict;
+        }
+
+        public UnitConfig GetOne()
+        {
+            if (this.dict == null || this.dict.Count <= 0)
+            {
+                return null;
+            }
+            
+            var enumerator = this.dict.Values.GetEnumerator();
+            enumerator.MoveNext();
+            return enumerator.Current; 
+        }
+    }
+
+	public partial class UnitConfig: ProtoObject, IConfig
+	{
+		/// <summary>Id</summary>
+		public int Id { get; set; }
+		/// <summary>Type</summary>
+		public int Type { get; set; }
+		/// <summary>名字</summary>
+		public string Name { get; set; }
+		/// <summary>位置</summary>
+		public int Position { get; set; }
+		/// <summary>身高</summary>
+		public int Height { get; set; }
+
+	}
+}
+```
+
+## 🌲 使用方法
+
+### 🌸 打印所有数据
+
+```cs
+Console.WriteLine(UnitConfigCategory.Instance.GetAll());
+```
+
+### 🌸 在哪使用
+
+这是一个好问题, 因为我尝试过在`Unity\Assets\Scripts\Loader\MonoBehaviour\Init.cs`脚本中打印
+
+![](images/Pasted%20image%2020250824002035.png)
+
+发现根本行不通, 提示的是找不到这个类, 后来经过调研是因为`ET`是分层的, 我们生成的代码在`Unity.Model`访问不通, 为此我尝试了把依赖加上
+
+```json
+D:\project\unity\test-et81\Unity\Assets\Scripts\Loader\Unity.Loader.asmdef
+
+"references": [
+    "Unity.ThirdParty",
+    "Unity.Core",
+    "HybridCLR.Runtime",
+    "Unity.Model",
+    "MemoryPack",
+    "YooAsset",
+    "YooAsset.Editor"
+],
+```
+
+加上之后我先类是可以访问了, 但是访问的时候报错
+
+![](images/Pasted%20image%2020250824002445.png)
 
 # 🍎 FAQ
 
@@ -920,7 +1050,7 @@ UI (Entity)
 
 这个是正常的, 项目崩溃后它可能会清除掉所有的`dll`重新进行编译, 所以启动时会非常慢
 
-![](images/Pasted%20image%2020250817190134.png)
+![](images2/Pasted%20image%2020250817190134.png)
 
 # 🍎 参考资料
 
@@ -928,19 +1058,22 @@ UI (Entity)
 
 ## 🌲 视频
 
-上上签UpUpDraw
-https://www.bilibili.com/video/BV1rhYyeKExP
-
-和v诺
+- 和v诺
 https://www.bilibili.com/video/BV1Ls421A7mS
 
-字母哥ET 6.0教程
+- 上上签UpUpDraw
+https://www.bilibili.com/video/BV1rhYyeKExP
+
+- 字母哥ET 6.0教程
 https://www.bilibili.com/video/BV1xK4y1E76q
 
-烟雨迷离半世殇
+- 烟雨迷离半世殇
 https://www.bilibili.com/video/BV1BJ411H7oZ
 
 ## 🌲 文章
+
+- 荷兰猪小灰灰
+https://blog.csdn.net/m0_48781656/article/details/123483915?utm_source=chatgpt.com
 
 - 官方社区
 https://et-framework.cn/t/Course?utm_source=chatgpt.com

@@ -471,7 +471,7 @@ public class TimeInfo: Singleton<TimeInfo>, ISingletonAwake
 
 ### 🌸 CodeLoader
 
-这个东西是重中之重, 它的主要用途和他的名字一样, 就是加载代码用的
+这个东西是重中之重, 它的主要用途和他的名字一样, 就是加载代码用的, 为了实现热更新而采取程序内动态加载`dll`的方式
 
 ```cs
 CodeLoader codeLoader = World.Instance.AddSingleton<CodeLoader>();

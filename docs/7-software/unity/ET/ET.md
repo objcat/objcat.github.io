@@ -1142,10 +1142,89 @@ void Update()
 
 `json`转换不研究了, 有点心累, 先把文档做出来
 
+后来缓过来了, 安装了`Newtonsoft`, 瞬间世界清净了
+
+```cs
+void Update()
+{
+    if (UnitConfigCategory.Instance != null)
+    {
+        var unit = JsonConvert.SerializeObject(UnitConfigCategory.Instance.Get(1001), Formatting.Indented);
+        Debug.Log(unit);
+    } else
+    {
+        Debug.Log("空空如也");
+    }
+}
+```
+
+```json
+{
+  "Id": 1001,
+  "Type": 1,
+  "Name": "米克尔",
+  "Position": 1,
+  "Height": 178,
+  "Weight": 68
+}
+```
+
 ### 🌸 GetAll
 
 获取所有的呗
 
+```cs
+void Update()
+{
+    if (UnitConfigCategory.Instance != null)
+    {
+        var list = JsonConvert.SerializeObject(UnitConfigCategory.Instance.GetAll(), Formatting.Indented);
+        Debug.Log(list);
+    } else
+    {
+        Debug.Log("空空如也");
+    }
+}
+```
+
+运行试试
+
+```json
+{
+  "1001": {
+    "Id": 1001,
+    "Type": 1,
+    "Name": "米克尔",
+    "Position": 1,
+    "Height": 178,
+    "Weight": 68
+  },
+  "1002": {
+    "Id": 1002,
+    "Type": 1,
+    "Name": "米克尔2",
+    "Position": 2,
+    "Height": 278,
+    "Weight": 78
+  },
+  "1003": {
+    "Id": 1003,
+    "Type": 1,
+    "Name": "米克尔3",
+    "Position": 1,
+    "Height": 178,
+    "Weight": 68
+  },
+  "1004": {
+    "Id": 1004,
+    "Type": 1,
+    "Name": "米克尔4",
+    "Position": 2,
+    "Height": 278,
+    "Weight": 78
+  }
+}
+```
 
 # 🍎 编译原理
 

@@ -1102,6 +1102,19 @@ D:\project\unity\test-et81\Unity\Assets\Scripts\Loader\Unity.Loader.asmdef
 
 在上面我们已经使用过了, 这个就是通过id去找一条数据
 
+```cs
+if (UnitConfigCategory.Instance != null)
+{
+	Debug.Log("我在这里");
+	var a = UnitConfigCategory.Instance.Get(1001);
+	Debug.Log(a);
+}
+else
+{
+	Debug.Log("空空如也");
+}
+```
+
 ```
 "{ \"_t\" : \"UnitConfig\", \"_id\" : 1001, \"Type\" : 1, \"Name\" : \"米克尔\", \"Position\" : 1, \"Height\" : 178, \"Weight\" : 68 }"
 ```
@@ -1109,6 +1122,27 @@ D:\project\unity\test-et81\Unity\Assets\Scripts\Loader\Unity.Loader.asmdef
 我们发现看的非常不清晰, 因为有转义符
 
 https://learn.microsoft.com/zh-cn/visualstudio/debugger/string-visualizer-dialog-box?view=vs-2022
+
+后来尝试了, 发现还是不行, `JsonUtility`是官方的库, 我把对象转化成`json`打印, 结果是`{}`, 说明并没有转换成功
+
+```cs
+void Update()
+{
+    if (UnitConfigCategory.Instance != null)
+    {
+        Debug.Log("我在这里");
+        var a = JsonUtility.ToJson(UnitConfigCategory.Instance.Get(1001), true);
+        Debug.Log(a);
+    } else
+    {
+        Debug.Log("空空如也");
+    }
+}
+```
+
+`json`转换下不研究了, 有点心累, 先把文档做出来
+
+
 
 # 🍎 编译原理
 

@@ -48,7 +48,7 @@ https://gitee.com/objcat/test-et81
 
 ![](images2/Pasted%20image%2020250816121129.png)
 
-直接点击`Change verison`, 如果和作者使用的不是同一个`Unity`版本中间会有多个小提示
+直接点击`Change verison`, 如果和作者使用的不是同一个`Unity`版本中间会有多个对话框, 我们直接点击继续就可以了
 
 ![](images2/Pasted%20image%2020250816121252.png)
 
@@ -1043,6 +1043,40 @@ D:\project\unity\test-et81\Unity\Assets\Scripts\Loader\Unity.Loader.asmdef
 加上之后我先类是可以访问了, 但是访问的时候报错
 
 ![](images/Pasted%20image%2020250824002445.png)
+
+```
+FileNotFoundException: Could not load file or assembly 'Unity.Model, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null' or one of its dependencies.
+
+NullReferenceException: Object reference not set to an instance of an object
+ET.Init.Update () (at Assets/Scripts/Loader/MonoBehaviour/Init.cs:48)
+
+NullReferenceException: Object reference not set to an instance of an object
+ET.Init.LateUpdate () (at Assets/Scripts/Loader/MonoBehaviour/Init.cs:54)
+```
+
+对此GPT给出的解释是这样的
+
+```gpt
+编译依赖 vs. 运行时依赖
+
+编译时依赖（asmdef 里写 references）
+运行时依赖（Unity 运行时能找到 DLL）
+
+Unity 自动加载的程序集
+Unity 会自动加载 Assembly-CSharp.dll、Assembly-CSharp-Editor.dll、以及所有位于 Assets/Plugins/ 目录下的 DLL。
+这些都属于“默认加载域”，不用你手动管。
+
+你自己编译的外部 DLL（比如 ET 的 Unity.Model.dll）
+如果你走的是 ET + 热更模式（HybridCLR / ILRuntime），Unity.Model.dll 是 热更程序集，Unity 不会主动加载
+```
+
+暂时没有解决
+
+# 🍎 编译原理
+
+由于不学这个很多东西都不理解, 而我自己又是一知半解, 所以只能做一些一知半解的讲解, 有错误请指出
+
+[编译原理](../编译原理/编译原理.md)
 
 # 🍎 FAQ
 

@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/7-software/unity/ET/ET.md",
+                "file": "docs/7-software/unity/编译原理/编译原理.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "ET"
+              "title": "编译原理"
             }
           }
         ]
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/7-software/unity/ET/ET.md",
+                "file": "docs/7-software/unity/编译原理/编译原理.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "ET 的大纲"
+              "title": "编译原理 的大纲"
             }
           }
         ],
@@ -170,21 +170,24 @@
   },
   "active": "671e6a85811167c8",
   "lastOpenFiles": [
+    "docs/7-software/unity/编译原理/images/Pasted image 20250824100926.png",
+    "docs/7-software/unity/编译原理/images/Pasted image 20250824100857.png",
+    "docs/7-software/unity/编译原理/images/Pasted image 20250824100448.png",
+    "README.md",
+    "docs/7-software/unity/编译原理/编译原理.md",
+    "docs/7-software/unity/ET/ET.md",
+    "docs/7-software/unity/编译原理/images/Pasted image 20250824095112.png",
+    "docs/7-software/unity/编译原理/images/Pasted image 20250824094421.png",
+    "docs/7-software/unity/编译原理/images/Pasted image 20250824093143.png",
+    "docs/7-software/unity/编译原理/images",
+    "docs/7-software/unity/编译原理",
     "docs/7-software/unity/ET/images/Pasted image 20250824002445.png",
     "docs/7-software/unity/ET/images/Pasted image 20250824002035.png",
     "docs/7-software/unity/ET/images",
     "docs/6-project/zzjb/zzjb-unity/zzjb-unity.md",
     "docs/6-project/zzjb/zzjb-unity/images/Pasted image 20250823145026.png",
     "docs/6-project/zzjb/zzjb-unity/images/Pasted image 20250823144959.png",
-    "docs/7-software/unity/ET/ET.md",
-    "README.md",
     "docs/7-software/unity/ET/images2/Pasted image 20250823140057.png",
-    "docs/7-software/unity/ET/images2/Pasted image 20250823135713.png",
-    "docs/7-software/unity/ET/images2/Pasted image 20250823135659.png",
-    "docs/7-software/unity/ET/images2/Pasted image 20250823134329.png",
-    "docs/7-software/unity/ET/images/Pasted image 20250823133641.png",
-    "docs/7-software/unity/ET/images2/Pasted image 20250823133508.png",
-    "docs/7-software/unity/ET/images2/Pasted image 20250823121232.png",
     "docs/7-software/unity/unity3d/unity3d.md",
     "docs/7-software/unity/自动生成代码/自动生成代码.md",
     "docs/7-software/unity/script/script.md",
@@ -202,8 +205,6 @@
     "docs/1-tecnology/csharp",
     "docs/6-project/zzjb/devplan/devplan.md",
     "docs/6-project/zzjb/design/design.md",
-    "docs/6-project/zzjb/design/images",
-    "docs/6-project/zzjb/design",
     "docs/7-software/unity/ioc/ioc.md",
     "docs/6-project/zzjb/zzjb-battle-java-server/zzjb-battle-java-server.md",
     "docs/1-tecnology/java/iogame/iogame.md",
@@ -214,7 +215,6 @@
     "docs/7-software/IDE/VisualStudio/VisualStudio.md",
     "0-language/c.md",
     "docs/6-project/gulimall/gulimall_nacos/gulimall_nacos.md",
-    "docs/7-software/unity/packing/packing.md",
-    "docs/6-project/gulimall/gulimall/gulimall.md"
+    "docs/7-software/unity/packing/packing.md"
   ]
 }

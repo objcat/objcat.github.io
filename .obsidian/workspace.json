@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/7-software/unity/ET/ET.md",
+                "file": "docs/6-project/zzjb/zzjb-unity/zzjb-unity.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "ET"
+              "title": "zzjb-unity"
             }
           },
           {
@@ -156,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/7-software/unity/ET/ET.md",
+                "file": "docs/6-project/zzjb/zzjb-unity/zzjb-unity.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "ET 的大纲"
+              "title": "zzjb-unity 的大纲"
             }
           }
         ],
@@ -184,25 +184,27 @@
   },
   "active": "38ca6a77aa505932",
   "lastOpenFiles": [
-    "docs/7-software/unity/unity3d/unity3d.md",
+    "docs/6-project/zzjb/zzjb-unity/images/Pasted image 20250825011609.png",
+    "docs/6-project/zzjb/zzjb-unity/images/Pasted image 20250825011117.png",
+    "docs/7-software/unity/ET/ET.md",
+    "docs/6-project/zzjb/zzjb-battle-java-server/zzjb-battle-java-server.md",
+    "docs/6-project/zzjb/zzjb-unity/zzjb-unity.md",
     "docs/7-software/unity/PackageManager/PackageManager.md",
+    "docs/6-project/zzjb/zzjb-unity/images/Pasted image 20250825001355.png",
+    "docs/6-project/zzjb/zzjb-unity/images/Pasted image 20250825001028.png",
+    "docs/6-project/zzjb/zzjb-unity/images/Pasted image 20250825001024.png",
+    "docs/6-project/zzjb/zzjb-unity/images/Pasted image 20250824235855.png",
+    "README.md",
+    "docs/7-software/unity/unity3d/unity3d.md",
     "docs/7-software/unity/PackageManager/images/Pasted image 20250824224209.png",
     "docs/7-software/unity/PackageManager/images/Pasted image 20250824224150.png",
     "docs/7-software/unity/PackageManager/images/Pasted image 20250824222001.png",
     "docs/7-software/unity/PackageManager/images/Pasted image 20250824222826.png",
     "docs/7-software/unity/PackageManager/images/Pasted image 20250824192436.png",
-    "docs/7-software/unity/PackageManager/images/Pasted image 20250824192004.png",
-    "docs/7-software/unity/PackageManager/images/Pasted image 20250824222228.png",
-    "docs/7-software/unity/PackageManager/images/Pasted image 20250824191802.png",
-    "docs/7-software/unity/PackageManager/images/Pasted image 20250824191750.png",
     "docs/7-software/unity/PackageManager/images",
-    "docs/7-software/unity/ET/ET.md",
     "docs/README.md",
-    "README.md",
     "docs/7-software/unity/PackageManager",
-    "docs/7-software/unity/unity3d/images/Pasted image 20250824221957.png",
     "docs/7-software/unity/编译原理/编译原理.md",
-    "docs/6-project/zzjb/zzjb-unity/zzjb-unity.md",
     "docs/7-software/unity/编译原理/images",
     "docs/7-software/unity/编译原理",
     "docs/7-software/unity/ET/images",
@@ -220,7 +222,6 @@
     "docs/6-project/zzjb/devplan/devplan.md",
     "docs/6-project/zzjb/design/design.md",
     "docs/7-software/unity/ioc/ioc.md",
-    "docs/6-project/zzjb/zzjb-battle-java-server/zzjb-battle-java-server.md",
     "docs/1-tecnology/java/iogame/iogame.md",
     "docs/4-package-manager/maven/maven.md",
     "docs/6-project/zzjb/login/login.md",

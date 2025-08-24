@@ -18,6 +18,8 @@
 | 2025.08.20 | 休息                                      | 第10天 |
 | 2025.08.21 | 休息                                      | 第11天 |
 | 2025.08.22 | 开始项目总览模块                                | 第12天 |
+| 2025.08.23 | 学习配表                                    | 第13天 |
+| 2025.08.24 | 完成编译原理模块, 包管理模块                         | 第14天 |
 
 # 🍎 快速开始
 
@@ -265,4 +267,87 @@ public class GlobalConfig : ScriptableObject
 
 ![](images/Pasted%20image%2020250823145026.png)
 
-群里大佬告诉我说重新编译项目, 但是我发现并不能解决问题, 所以开始调查这个问题, 明明我之前的版本都是没问题的
+群里大佬告诉我说`重新编译项目`和`重新生成配表文件`, 但是现在项目根本编译不起来, 菜单上面的`ET`都是不显示的, 那就无法去编译代码, 而想显示`ET`需要建议代码, 所以陷入了死循环, 开始想办法
+
+### 🌸 替换dll
+
+所以我在想是否可以把`Unity.Editor.dll`从别的工程拿过来, 是不是就能使用`ET`了
+
+```
+zzjb2d\Unity\Library\ScriptAssemblies
+```
+
+![](images/Pasted%20image%2020250824235855.png)
+
+放进来了, 没用
+
+### 🌸 分析源码
+
+我们去分析一下导出`excel`的源码
+
+```cs
+namespace ET
+{
+    public static class ToolsEditor
+    {
+        public static void ExcelExporter()
+        {
+#if UNITY_EDITOR_OSX || UNITY_EDITOR_LINUX
+            const string tools = "./Tool";
+#else
+            const string tools = ".\\Tool.exe";
+#endif
+            ShellHelper.Run($"{tools} --AppType=ExcelExporter --Console=1", "../Bin/");
+        }
+        
+        public static void Proto2CS()
+        {
+#if UNITY_EDITOR_OSX || UNITY_EDITOR_LINUX
+            const string tools = "./Tool";
+#else
+            const string tools = ".\\Tool.exe";
+#endif
+            ShellHelper.Run($"{tools} --AppType=Proto2CS --Console=1", "../Bin/");
+        }
+    }
+}
+```
+
+可以看到它其实就是使用`Tool.exe`工具来进行`excel`的编译, 我我在想是否可以直接使用这个`exe`来给我编译
+
+### 🌸 开始编译
+
+命令都在这里呢, 首先我们找到`Tool.exe`路径
+
+```
+\zzjb2d\Bin
+```
+
+我们进入到这个目录执行命令, 两个都生成一下吧
+
+```shell
+Tool.exe --AppType=ExcelExporter --Console=1
+Tool.exe --AppType=Proto2CS --Console=1
+```
+
+然后可以看到类被编译出来了
+
+![](images/Pasted%20image%2020250825001355.png)
+
+编译前是红色的, 编译后可以看到高亮了, 说明编译成功
+
+![](images/Pasted%20image%2020250825001028.png)
+
+然后运行项目还是不行, 但是解决了一部分问题了
+
+### 🌸 对比
+
+后来我对比的时候发现, 原包中有一个`Ignore.asmdef`, 而`zzjb2d`中没有这个`asmdef`文件, 导致了同一个类名打入了同样的dll
+
+![](images/Pasted%20image%2020250825011117.png)
+
+而且细思极恐的是这个文件如果误删是查不出来的
+
+![](images/Pasted%20image%2020250825011609.png)
+
+这就非常的绝望了, 找这个问题浪费2小时

@@ -927,7 +927,11 @@ UI (Entity)
 
 ## 🌲 生成代码
 
-数据配置好了, 我们需要使用`ET`提供的代码生成工具, 生成可以直接使用数据的`类`
+我们就用自带的数据来测试, 接下来我们需要使用`ET`提供的代码生成工具来生成可以直接使用数据的`类`
+
+![](images/Pasted%20image%2020250824175609.png)
+
+我们点击ET栏目中的`Build Tool`
 
 ![](images2/Pasted%20image%2020250823135659.png)
 
@@ -1010,21 +1014,15 @@ namespace ET
 }
 ```
 
-## 🌲 使用方法
+我们可以看到这个代码中有同名的文件`UnitConfig`, 这个就是我们数据的字段了, 还有一个东西`UnitConfigCategory`, 这个就是我们使用数据的时候用的类, 可以看到它里面有很多的方法, 比如Get, GetAll, 我们之后会学习
 
-### 🌸 打印所有数据
-
-```cs
-Console.WriteLine(UnitConfigCategory.Instance.GetAll());
-```
-
-### 🌸 在哪使用
+## 🌲 在哪使用
 
 这是一个好问题, 因为我尝试过在`Unity\Assets\Scripts\Loader\MonoBehaviour\Init.cs`脚本中打印
 
 ![](images/Pasted%20image%2020250824002035.png)
 
-发现根本行不通, 提示的是找不到这个类, 后来经过调研是因为`ET`是分层的, 我们生成的代码在`Unity.Model`访问不通, 为此我尝试了把依赖加上
+发现根本行不通, 提示的是找不到这个类, 后来经过调研是因为`ET`是分层的, 我们生成的代码在`Unity.Loader`程序集和`Unity.Model`访问不通, 为此我尝试了把依赖加上
 
 ```json
 D:\project\unity\test-et81\Unity\Assets\Scripts\Loader\Unity.Loader.asmdef
@@ -1054,27 +1052,67 @@ NullReferenceException: Object reference not set to an instance of an object
 ET.Init.LateUpdate () (at Assets/Scripts/Loader/MonoBehaviour/Init.cs:54)
 ```
 
-对此GPT给出的解释是这样的
+后来经过研究发现是这样的, 因为我们调用代码的时候, 游戏还没有把数据加载到字典类中, 所以导致了这个问题, 既然问题知道了, 那我们如何解决呢, 其实老手一下就解决了, 我们可以放到`Update`中进行测试, 因为每一帧都会调用一个`Update`, 并且加上`if`判断即可
 
-```gpt
-编译依赖 vs. 运行时依赖
-
-编译时依赖（asmdef 里写 references）
-运行时依赖（Unity 运行时能找到 DLL）
-
-Unity 自动加载的程序集
-Unity 会自动加载 Assembly-CSharp.dll、Assembly-CSharp-Editor.dll、以及所有位于 Assets/Plugins/ 目录下的 DLL。
-这些都属于“默认加载域”，不用你手动管。
-
-你自己编译的外部 DLL（比如 ET 的 Unity.Model.dll）
-如果你走的是 ET + 热更模式（HybridCLR / ILRuntime），Unity.Model.dll 是 热更程序集，Unity 不会主动加载
+```cs
+if (UnitConfigCategory.Instance != null)
+{
+	Debug.Log("我在这里");
+	var a = UnitConfigCategory.Instance.Get(1001);
+	Debug.Log(a);
+}
+else
+{
+	Debug.Log("空空如也");
+}
 ```
 
-暂时没有解决
+可以看到数据是可以打印出来的
+
+![](images/Pasted%20image%2020250824173915.png)
+
+要记住使用`Debug.Log`不要使用`cw`否则打印不出来, 虽然我们做出来了, 但是不建议在`Init`方法中来学习, 我们可以放一个空对象在视图上, 然后在主目录挂载一个脚本上去, 这样不用配置域也是可以访问的
+
+### 🌸 新建空对象和脚本
+
+![](images/Pasted%20image%2020250824174057.png)
+
+然后把上面做的依赖给还原回来, 测试代码删除掉就行了
+
+```
+D:\project\unity\test-et81\Unity\Assets\Scripts\Loader\Unity.Loader.asmdef
+
+"references": [
+    "Unity.ThirdParty",
+    "Unity.Core",
+    "HybridCLR.Runtime",
+    "MemoryPack",
+    "YooAsset",
+    "YooAsset.Editor"
+],
+```
+
+## 🌲 使用方法
+
+经过上面的学习, 我们已经知道可以在哪里测试配表的数据了, 我们就开始学习
+
+![](images/Pasted%20image%2020250824175609.png)
+
+### 🌸 Get
+
+在上面我们已经使用过了, 这个就是通过id去找一条数据
+
+```
+"{ \"_t\" : \"UnitConfig\", \"_id\" : 1001, \"Type\" : 1, \"Name\" : \"米克尔\", \"Position\" : 1, \"Height\" : 178, \"Weight\" : 68 }"
+```
+
+我们发现看的非常不清晰, 因为有转义符
+
+https://learn.microsoft.com/zh-cn/visualstudio/debugger/string-visualizer-dialog-box?view=vs-2022
 
 # 🍎 编译原理
 
-由于不学这个很多东西都不理解, 而我自己又是一知半解, 所以只能做一些一知半解的讲解, 有错误请指出
+学习完这一章我有了更深刻的认识, 我推荐不知道的可以点进来看一下
 
 [编译原理](../编译原理/编译原理.md)
 

@@ -358,6 +358,110 @@ https://unity.cn/releases
 
 # 🍎 Script
 
+[script学习](../script/script.md)
+
+# 🍎 Package Manager
+
+这是`Unity`内置的包管理工具
+
+## 🌲 可视化
+
+`Unity`提供给我们可视化的界面进行管理
+
+![](images/Pasted%20image%2020250824191750.png)
+
+我们打开它可以看到我们已经安装的包
+
+![](images/Pasted%20image%2020250824191802.png)
+
+## 🌲 安装新包
+
+### 🌸 Package Manager安装
+
+待完善
+
+### 🌸 Asset Store安装
+
+待完善
+
+### 🌸 清单安装
+
+```
+test-et81\Unity\Packages
+```
+
+找到`Packages`目录, 可以在里面看到一个文件
+
+![](images/Pasted%20image%2020250824192004.png)
+
+这个`manifest.json`就是我们的包管理文件, 是不是第一时间就能联想到安卓的`manifest.xml`呢, 这个承载的功能比安卓的清单会少很多, 我们使用`vscode`打开它
+
+```json
+{
+  "dependencies": {
+    "com.code-philosophy.hybridclr": "https://gitee.com/focus-creative-games/hybridclr_unity.git",
+    "com.cysharp.memorypack": "https://github.com/Cysharp/MemoryPack.git?path=src/MemoryPack.Unity/Assets/Plugins/MemoryPack#1.10.0",
+    "com.tuyoogame.yooasset": "2.1.1",
+    "com.unity.ai.navigation": "1.1.5",
+    "com.unity.ide.rider": "3.0.27",
+    "com.unity.ide.visualstudio": "2.0.22",
+    "com.unity.ide.vscode": "1.2.5",
+    "com.unity.render-pipelines.universal": "14.0.9",
+    "com.unity.textmeshpro": "3.0.6",
+    "com.unity.timeline": "1.7.6",
+    "com.unity.ugui": "1.0.0",
+    "com.unity.modules.ai": "1.0.0",
+    "com.unity.modules.androidjni": "1.0.0",
+    "com.unity.modules.animation": "1.0.0",
+    "com.unity.modules.assetbundle": "1.0.0",
+    "com.unity.modules.audio": "1.0.0",
+    "com.unity.modules.cloth": "1.0.0",
+    "com.unity.modules.director": "1.0.0",
+    "com.unity.modules.imageconversion": "1.0.0",
+    "com.unity.modules.imgui": "1.0.0",
+    "com.unity.modules.particlesystem": "1.0.0",
+    "com.unity.modules.physics": "1.0.0",
+    "com.unity.modules.physics2d": "1.0.0",
+    "com.unity.modules.screencapture": "1.0.0",
+    "com.unity.modules.terrain": "1.0.0",
+    "com.unity.modules.terrainphysics": "1.0.0",
+    "com.unity.modules.tilemap": "1.0.0",
+    "com.unity.modules.ui": "1.0.0",
+    "com.unity.modules.uielements": "1.0.0",
+    "com.unity.modules.umbra": "1.0.0",
+    "com.unity.modules.unityanalytics": "1.0.0",
+    "com.unity.modules.unitywebrequest": "1.0.0",
+    "com.unity.modules.unitywebrequestassetbundle": "1.0.0",
+    "com.unity.modules.unitywebrequestaudio": "1.0.0",
+    "com.unity.modules.unitywebrequesttexture": "1.0.0",
+    "com.unity.modules.unitywebrequestwww": "1.0.0",
+    "com.unity.modules.vehicles": "1.0.0",
+    "com.unity.modules.video": "1.0.0",
+    "com.unity.modules.wind": "1.0.0"
+  },
+  "scopedRegistries": [
+    {
+      "name": "package.openupm.com",
+      "url": "https://package.openupm.com",
+      "scopes": [
+        "com.tuyoogame.yooasset"
+      ]
+    }
+  ]
+}
+```
+
+可以看到是这样的, 我们想在里面加一个包可以直接加上去, 比如`newtonsoft.json`
+
+```
+"com.newtonsoft.json-for-unity": "https://github.com/jilleJr/Newtonsoft.Json-for-Unity.git#upm"
+```
+
+![](images/Pasted%20image%2020250824192436.png)
+
+
+
+
 
 
 # 🍎 HybirdCLR

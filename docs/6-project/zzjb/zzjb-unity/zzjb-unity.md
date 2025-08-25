@@ -20,6 +20,7 @@
 | 2025.08.22 | 开始项目总览模块                                | 第12天 |
 | 2025.08.23 | 学习配表                                    | 第13天 |
 | 2025.08.24 | 完成编译原理模块, 包管理模块                         | 第14天 |
+| 2025.08.25 | 增加大地图分析模块, 分析了移动监听器                     | 第15天 |
 
 # 🍎 快速开始
 
@@ -227,13 +228,17 @@ public class GlobalConfig : ScriptableObject
 
 [开发计划浏览](../devplan/devplan.md)
 
-# 🍎 技术分析
+# 🍎 代码分析
 
 本模块在`代码`层面分析游戏中不同的模块是如何实现的, 新手分析, 仅供参考
 
 ## 🌲 登录页分析
 
 [登录页分析](../login/login.md)
+
+## 🌲 大地图分析
+
+[大地图分析](../map/map.md)
 
 # 🍎 FAQ
 
@@ -247,7 +252,7 @@ public class GlobalConfig : ScriptableObject
 13>------- Finished building project: Unity.HotfixView. Succeeded: False. Errors: 2. Warnings: 0
 ```
 
-## 🌲 AppellationConfigCategory二义性错误
+## 🌲 二义性错误
 
 ```
 类型“AppellationConfigCategory”已经包含“Points”的定义
@@ -346,8 +351,66 @@ Tool.exe --AppType=Proto2CS --Console=1
 
 ![](images/Pasted%20image%2020250825011117.png)
 
-而且细思极恐的是这个文件如果误删是查不出来的
+而且细思极恐的是这个文件如果误删是查不出来的, 因为系统默认忽略了它, 我好奇的是既然他在云端, 为什么忽略会生效
 
 ![](images/Pasted%20image%2020250825011609.png)
 
-这就非常的绝望了, 找这个问题浪费2小时
+所以解决方案是把`Client和Server`中的`ignore.asmdef`补齐即可, 这样打包的时候就不会放到同一个`dll`中导致冲突了, 可以学到的是, `asmdef`不仅针对子工程, 针对某一个文件夹也是可以的, 唯一遗憾的是找这个问题浪费2小时
+
+## 🌲 Reflection错误
+
+刚解决完上面的问题就遇到了这个问题, 看上去是`IReLocationRequest`反射不到了, 也就是没有打包到`dll`中
+
+```shell
+System.Reflection.ReflectionTypeLoadException: Exception of type 'System.Reflection.ReflectionTypeLoadException' was thrown.
+Could not resolve type with token 01000047 from typeref (expected class 'ET.IReLocationRequest' in assembly 'Unity.Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null') assembly:Unity.Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null type:ET.IReLocationRequest member:(null)
+Could not resolve type with token 01000048 from typeref (expected class 'ET.IReLocationResponse' in assembly 'Unity.Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null') assembly:Unity.Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null type:ET.IReLocationResponse member:(null)
+Could not load type of field 'ET.Client.RoleSelectFinish:action' (0) due to: Could not resolve type with token 01000099 from typeref (expected class 'ET.RoleSelectAction' in assembly 'Unity.Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null') assembly:Unity.Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null type:ET.RoleSelectAction member:(null)
+```
+
+第一时间想到的就是`F6`重新编译一下, 但我发现并不能解决这个问题, 所以只能从代码了求找一下了, 我们发现`IReLocationRequest`和`IReLocationResponse`
+
+我们发现这三个`IRe`开头的接口在以前是没有定义过的
+
+```cs
+namespace ET
+{
+    public interface ILocationMessage: ILocationRequest
+    {
+    }
+
+    public interface ILocationRequest: IRequest
+    {
+    }
+
+    public interface ILocationResponse: IResponse
+    {
+    }
+    
+    public interface IReLocationMessage: IReLocationRequest
+    {
+    }
+
+    public interface IReLocationRequest: ILocationRequest
+    {
+    }
+
+    public interface IReLocationResponse: ILocationResponse
+    {
+    }
+}
+```
+
+我们只能反编译一下`Unity.Core.dll`
+
+![](images/Pasted%20image%2020250825125727.png)
+
+我们发现确实是搜索不到的`IRe`开头的三个都没有
+
+![](images/Pasted%20image%2020250825125809.png)
+
+我们只能把这个`Unity.Core.dll`删除, 然后重新`F6`编译试试
+
+![](images/Pasted%20image%2020250825130034.png)
+
+然后发现可以搜索出来了, 看来是在编译之前必须先删除原来的, 可能是由于某些问题没有删除成功吧

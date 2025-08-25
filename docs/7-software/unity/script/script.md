@@ -14,7 +14,7 @@
 
 ![](images/Pasted%20image%2020250823004754.png)
 
-双击这个脚本使用VS打开脚本, 脚本中的初始代码是这样的
+双击这个脚本使用VS打开脚本, 脚本中的初始代码是这样的, 可以看到他默认继承`MonoBehaviour`, 类名和文件名必须一致, 只有继承于这个类才能挂载到`游戏对象`上
 
 ```cs
 using System.Collections;
@@ -106,7 +106,7 @@ public class NewBehaviourScript : MonoBehaviour
 
 - Transform
 
-我们可以拖拽X, Y, Z来改变属性, 但是我们发现拖拽后物体并没有改变位置
+我们可以拖拽`X, Y, Z`来改变属性, 但是我们发现拖拽后物体并没有改变位置
 
 那是因为我们并没有`给物体赋值`
 
@@ -135,3 +135,40 @@ public class NewBehaviourScript : MonoBehaviour
 ```
 
 运行游戏, 发现可以通过改变`transform`来控制`Cube`的位置了, 你有没有想过为什么可以移动呢, 其实是因为`Update()`这个回调函数每一帧都会执行, 相当于一个循环在不断的读取数据
+
+## 🌲 打印变量
+
+# 🍎 生命周期
+
+## 🌲 Awake
+
+出生时调用, 类似构造函数, 一个只会调用一次
+
+## 🌲 OnEnable
+
+每次激活时调用
+
+## 🌲 Start
+
+自己被创建出来后, 第一帧更新之前调用, 一个对象只会调用一次
+
+## 🌲 FixedUpdate
+
+物理帧更新, 固定间隔时间执行, 间隔时间可以设置
+
+## 🌲 Update
+
+逻辑帧更新, 每帧执行
+
+## 🌲 LateUpdate
+
+每帧执行, 在`Update`之后执行
+
+## 🌲 OnDisable
+
+对象禁用时调用
+
+## 🌲 OnDestroy
+
+对象销毁时调用
+

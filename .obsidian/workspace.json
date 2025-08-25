@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/6-project/zzjb/zzjb-unity/zzjb-unity.md",
+                "file": "docs/7-software/unity/unity3d/unity3d.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "zzjb-unity"
+              "title": "unity3d"
             }
           },
           {
@@ -156,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/6-project/zzjb/zzjb-unity/zzjb-unity.md",
+                "file": "docs/7-software/unity/unity3d/unity3d.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "zzjb-unity 的大纲"
+              "title": "unity3d 的大纲"
             }
           }
         ],
@@ -184,25 +184,28 @@
   },
   "active": "38ca6a77aa505932",
   "lastOpenFiles": [
+    "docs/7-software/unity/unity3d/images/Pasted image 20250825201041.png",
+    "docs/7-software/unity/unity3d/images/Pasted image 20250825200950.png",
+    "docs/7-software/unity/unity3d/images/Pasted image 20250825200935.png",
+    "docs/7-software/unity/unity3d/images/Pasted image 20250825200820.png",
+    "docs/7-software/unity/unity3d/images/Pasted image 20250825200730.png",
+    "docs/7-software/unity/unity3d/images/Pasted image 20250825200503.png",
+    "docs/7-software/unity/unity3d/images/Pasted image 20250825200446.png",
+    "docs/7-software/unity/unity3d/images/Pasted image 20250825200412.png",
+    "docs/7-software/unity/unity3d/images/Pasted image 20250825200321.png",
+    "docs/7-software/unity/unity3d/images/Pasted image 20250825200243.png",
+    "docs/7-software/unity/unity3d/images/Pasted image 20250825200155.png",
+    "README.md",
+    "docs/7-software/unity/unity3d/unity3d.md",
+    "docs/7-software/unity/inspector/inspector.md",
+    "docs/6-project/zzjb/zzjb-unity/zzjb-unity.md",
+    "docs/7-software/unity/script/script.md",
     "docs/6-project/zzjb/map/map.md",
     "docs/6-project/zzjb/login/login.md",
     "docs/7-software/unity/PackageManager/PackageManager.md",
-    "README.md",
-    "docs/6-project/zzjb/zzjb-unity/zzjb-unity.md",
     "docs/6-project/zzjb/map",
-    "docs/6-project/zzjb/zzjb-unity/images/Pasted image 20250825130034.png",
-    "docs/6-project/zzjb/zzjb-unity/images/Pasted image 20250825125809.png",
-    "docs/6-project/zzjb/zzjb-unity/images/Pasted image 20250825125727.png",
-    "docs/6-project/zzjb/zzjb-unity/images/Pasted image 20250825011609.png",
-    "docs/6-project/zzjb/zzjb-unity/images/Pasted image 20250825011117.png",
     "docs/7-software/unity/ET/ET.md",
     "docs/6-project/zzjb/zzjb-battle-java-server/zzjb-battle-java-server.md",
-    "docs/6-project/zzjb/zzjb-unity/images/Pasted image 20250825001355.png",
-    "docs/6-project/zzjb/zzjb-unity/images/Pasted image 20250825001028.png",
-    "docs/6-project/zzjb/zzjb-unity/images/Pasted image 20250825001024.png",
-    "docs/6-project/zzjb/zzjb-unity/images/Pasted image 20250824235855.png",
-    "docs/7-software/unity/unity3d/unity3d.md",
-    "docs/7-software/unity/PackageManager/images/Pasted image 20250824224209.png",
     "docs/7-software/unity/PackageManager/images",
     "docs/README.md",
     "docs/7-software/unity/PackageManager",
@@ -211,11 +214,9 @@
     "docs/7-software/unity/编译原理",
     "docs/7-software/unity/ET/images",
     "docs/7-software/unity/自动生成代码/自动生成代码.md",
-    "docs/7-software/unity/script/script.md",
     "docs/7-software/unity/unity2d/unity2d.md",
     "docs/7-software/unity/script/images",
     "docs/7-software/unity/script",
-    "docs/7-software/unity/inspector/inspector.md",
     "docs/7-software/fork/fork.md",
     "docs/1-tecnology/csharp/luban/luban.md",
     "docs/7-software/fork/images",
@@ -228,7 +229,6 @@
     "docs/0-language/csharp/csharp.md",
     "docs/7-software/unity/HybirdCLR/HybirdCLR.md",
     "docs/7-software/IDE/VisualStudio/VisualStudio.md",
-    "0-language/c.md",
-    "docs/6-project/gulimall/gulimall_nacos/gulimall_nacos.md"
+    "0-language/c.md"
   ]
 }

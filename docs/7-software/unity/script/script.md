@@ -134,4 +134,4 @@ public class NewBehaviourScript : MonoBehaviour
 }
 ```
 
-运行游戏, 发现可以通过改变`transform`来控制`Cube`的位置了
+运行游戏, 发现可以通过改变`transform`来控制`Cube`的位置了, 你有没有想过为什么可以移动呢, 其实是因为`Update()`这个回调函数每一帧都会执行, 相当于一个循环在不断的读取数据

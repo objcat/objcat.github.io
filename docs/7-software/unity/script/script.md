@@ -37,14 +37,9 @@ public class NewBehaviourScript : MonoBehaviour
 }
 ```
 
+- 继承MonoBehavior的类不能写构造函数, 因为MonoBehavior不能通过new实例化
 - `Start`生命周期表示`开始`, 在物体启用后第一帧调用一次
 - `Update`生命周期表示`更新`, 在物体启用后每一帧都会调用一次
-
-生命周期顺序图
-
-```
-Awake → Start → Update → FixedUpdate → LateUpdate
-```
 
 ## 🌲 挂脚本
 
@@ -140,13 +135,55 @@ public class NewBehaviourScript : MonoBehaviour
 
 # 🍎 生命周期
 
+生命周期顺序图
+
+![](images/Pasted%20image%2020250909234910.png)
+
 ## 🌲 Awake
 
-出生时调用, 类似构造函数, 一个只会调用一次
+在脚本出生时调用, 类似构造函数, 一个只会调用一次
+
+### 🌸 打印
+
+我们来使用一下这个生命周期函数吧, 我在里面加了几个打印
+
+```csharp
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Awake()
+    {
+        Debug.Log("Awake");
+        print("1234567");
+        Console.WriteLine("78888999");
+    }
+}
+```
+
+![](images/Pasted%20image%2020250910000141.png)
+
+启动游戏后可以在控制台上看到输出, 我们可以看到`Console.WriteLine`是不会显示在`unity`界面中的
+
+### 🌸 骚操作
+
+我们可以在游戏启动后去添加脚本
+
+这个操作听起来很玄学, 其实可以, 并且这个还可以证明`Awake`是在脚本创建的时候调用的, 因为游戏运行后`游戏对象`已经被创建了, 比如
+
+![](images/Pasted%20image%2020250910002225.png)
+
+然后我们可以看到`Inspector`
+
+![](images/Pasted%20image%2020250910002245.png)
+
+脚本挂上去了, 然后会立刻打印出下面的内容
+
+![](images/Pasted%20image%2020250910002307.png)
+
+当我们停止游戏后, 我们发现刚才挂载的脚本只是临时的, 那个对象上面的组件会回到游戏运行前的状态
 
 ## 🌲 OnEnable
 
-每次激活时调用
+脚本依附的`游戏对象`每次激活时调用
 
 ## 🌲 Start
 
@@ -159,6 +196,23 @@ public class NewBehaviourScript : MonoBehaviour
 ## 🌲 Update
 
 逻辑帧更新, 每帧执行
+
+### 🌸 帧
+
+游戏运行的核心是一个死循环，每次循环处理游戏逻辑并更新画面, `unity`的底层已经帮我们做好这个死循环了, 因为我以前是做移动端开发的, 里面有一个概念叫`runloop`与此概念高度相似, 感兴趣的可以查一下
+
+60帧：每秒更新60次，单帧时间 ≈ 16.66ms
+30帧：每秒更新30次，单帧时间 ≈ 33.33ms
+
+所以我们会觉得60帧流畅, 因为它每一帧处理的足够快, 不会让画面停留太久
+
+### 🌸 游戏卡顿原因
+
+一帧中游戏逻辑的计算量过大, 导致处理的很慢, 所以会掉帧数
+
+### 🌸 Update能做什么
+
+这是我们游戏中最重要的一个, 使用它来处理每一帧的逻辑
 
 ## 🌲 LateUpdate
 

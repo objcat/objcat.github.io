@@ -725,6 +725,40 @@ class Student : Person
 
 看了一会才理解这个意思`base(name, age)`是去父类`Person`中调用构造函数, 这段代码的意思是把调用子类初始化时传入的参数`name和age`作为参数调用父类初始化方法, 这样就能给`Name和Age`赋值了
 
+## 🌲 重写
+
+我们的`Student`类可以去重写`Person`的方法, 与其他语言不同的是, 被重写的方法必须使用`virtual`修饰并且不能是`private`
+
+```csharp
+class Person
+{
+    public string Name;
+    public int Age;
+    public Person(string name, int age)
+    {
+        this.Name = name;
+        this.Age = age;
+    }
+    public virtual void Hello()
+    {
+        Console.WriteLine("hello i am " + Name);
+    }
+}
+
+class Student : Person
+{
+    public Student(string name, int age) : base(name, age)
+    {
+    }
+
+    public override void Hello()
+    {
+        base.Hello();
+        Console.WriteLine("hello i am Student");
+    }
+}
+```
+
 ## 🌲 getter/setter
 
 ### 🌸 控制读写

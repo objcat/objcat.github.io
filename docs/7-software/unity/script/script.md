@@ -371,9 +371,9 @@ public class NewBehaviourScript : MonoBehaviour
 
 ![](images/Pasted%20image%2020250911133908.png)
 
-### 🌸 注解变量
+### 🌸 注解修饰变量
 
-那私有和受保护的变量就无法挂载吗? 其实也是可以的, `unity`为我们提供了`SerializeField`注解
+那`私有`和`受保护`的变量就无法挂载吗? 其实也是可以的, `Unity`为我们提供了`SerializeField`注解
 
 ```csharp
 public class NewBehaviourScript : MonoBehaviour
@@ -385,6 +385,237 @@ public class NewBehaviourScript : MonoBehaviour
 }
 ```
 
-加上后我们可以看到这些变量又回来了
+加上后我们可以看到这些变量又可以显示了
 
 ![](images/Pasted%20image%2020250911133731.png)
+
+与之对应的是`HideInInspector`, 即使都是`public`也无法显示的
+
+```csharp
+public class NewBehaviourScript : MonoBehaviour
+{
+    [HideInInspector]
+    public GameObject GameObject;
+    [HideInInspector]
+    public Vector3 Transform;
+}
+```
+
+### 🌸 支持的类型
+
+支持大部分类型, 不支持`字典`
+
+```csharp
+public enum TestEnum
+{
+     None = 0,
+     A = 1,
+}
+
+public class NewBehaviourScript : MonoBehaviour
+{
+    public GameObject GameObject;
+    public Vector3 Transform;
+    public int TestInt;
+    public int[] TestIntArray;
+    public List<int> TestList;
+    public Boolean TestBoolean;
+    public TestEnum type;
+}
+```
+
+可以看到界面是能够看到的
+
+![](images/Pasted%20image%2020250911194640.png)
+
+我们再来看看不支持的类型, 我们写了一个字典和自定义类型
+
+```csharp
+public class Person
+{
+    public string Name { get; set; }
+    public string Age { get; set; }
+}
+
+public class NewBehaviourScript : MonoBehaviour
+{
+    public Dictionary<string, int> TestDictionary;
+    public Person Person;
+}
+```
+
+在界面上我们发现看不到他们
+
+![](images/Pasted%20image%2020250911194936.png)
+
+### 🌸 自定义类型挂载
+
+自定义类型不同的是有注解可以让它支持
+
+```csharp
+[System.Serializable]
+public class Person
+{
+    public string Name;
+}
+
+public class NewBehaviourScript : MonoBehaviour
+{
+    public Person person;
+}
+```
+
+注意name一定更不要写成`public string Name {  get; set; }`, 否则会无法挂载
+
+## 🌲 挂变量辅助功能
+
+### 🌸 分组
+
+使用`Header`注解进行分组
+
+```csharp
+public class NewBehaviourScript : MonoBehaviour
+{
+    [Header("基本属性")]
+    public string Name;
+    public int Age;
+    [Header("战斗属性")]
+    public string Att;
+    public int Def;
+}
+```
+
+我们可以看到分组了
+
+![](images/Pasted%20image%2020250911232636.png)
+
+### 🌸 悬停注释
+
+当鼠标停在上面时可以看到注释
+
+```csharp
+public class NewBehaviourScript : MonoBehaviour
+{
+    [Header("基本属性")]
+    public string Name;
+    public int Age;
+    [Header("战斗属性")]
+    [Tooltip("攻击力")]
+    public string Att;
+    [Tooltip("防御力")]
+    public int Def;
+}
+```
+
+![](images/Pasted%20image%2020250911235411.png)
+
+### 🌸 空隙
+
+我们用`Space`注解来增加一个空隙
+
+```csharp
+public class NewBehaviourScript : MonoBehaviour
+{
+    [Header("基本属性")]
+    public string Name;
+    public int Age;
+    [Header("战斗属性")]
+    [Tooltip("攻击力")]
+    public string Att;
+    [Space()]
+    [Tooltip("防御力")]
+    public int Def;
+}
+```
+
+可以看到确实有一个空隙
+
+![](images/Pasted%20image%2020250912000005.png)
+
+### 🌸 滑动条
+
+```csharp
+public class NewBehaviourScript : MonoBehaviour
+{
+    [Range(0f, 1f)]
+    public float Age;
+}
+```
+
+![](images/Pasted%20image%2020250912000330.png)
+
+### 🌸 多行
+
+使用`Multiline`可以让字符串支持输入多行
+
+```csharp
+public class NewBehaviourScript : MonoBehaviour
+{
+    [Multiline]
+    public String Name;
+}
+```
+
+没用注解是1行, 用了默认是3行
+
+![](images/Pasted%20image%2020250912000623.png)
+
+ 我们也可以指定行号, 比如5行
+
+```csharp
+public class NewBehaviourScript : MonoBehaviour
+{
+    [Multiline(10)]
+    public String Name;
+}
+```
+
+效果是这样的
+
+![](images/Pasted%20image%2020250912000725.png)
+
+当然你也可以设置为1行, 不过这有点脱裤子放屁, 费二遍事
+
+### 🌸 动态多行
+
+有时候可能你会觉得直接设置固定的行数不适合你的业务, 当你也可以使用动态多行
+
+```csharp
+public class NewBehaviourScript : MonoBehaviour
+{
+    [TextArea(3, 5)]
+    public String Name;
+}
+```
+
+默认3行
+
+![](images/Pasted%20image%2020250912001110.png)
+
+最多五行, 再多出现滚动条
+
+![](images/Pasted%20image%2020250912001037.png)
+
+### 🌸 添加右键按钮
+
+我们可以在界面上添加右键按钮, 这样就更方便了
+
+```csharp
+public class NewBehaviourScript : MonoBehaviour
+{
+    [ContextMenuItem("重置名字", "ResetName")]
+    public String Name;
+
+    private void ResetName()
+    {
+        Name = "狗蛋儿";
+    }
+}
+```
+
+然后可以看到
+
+![](images/Pasted%20image%2020250912001722.png)
+
+点击重置名字把名字改成`狗蛋儿`
+

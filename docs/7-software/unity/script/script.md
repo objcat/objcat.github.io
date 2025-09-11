@@ -305,9 +305,86 @@ private void OnDestroy()
 
 ## 🌲 支持继承
 
-比如我们搞一个父类继承于`MonoBehaviour`
+比如我们搞一个父类继承于`MonoBehaviour`, 新加一个`BaseBehaviour.cs`
 
+```csharp
+public class BaseBehaviour : MonoBehaviour
+{
+    public virtual void Awake()
+    {
+        print("BaseBehaviour Awake");
+    }
+}
 ```
 
+然后我们让原来的脚本继承这个
+
+```csharp
+public class NewBehaviourScript : BaseBehaviour
 ```
 
+然后我们可以看到`NewBehaviourScript`也是拥有全部声明周期, 我们可以尝试重写父类中的方法
+
+```csharp
+public override void Awake()
+{
+    base.Awake();
+    print("NewBehaviourScript Awake");
+}
+```
+
+然后我们可以看到里面是能打印两个声明周期的, 因为先执行了`base.Awake()`再执行了`Awake()`明白伐? 通过这个特性我们就可以做更多事了, 自己去探索吧
+
+# 🍎 Inspector
+
+## 🌲 挂变量
+
+这个我们在`快速开始`中已经学习过了, 这里来做一下增强
+
+### 🌸 哪些变量能挂
+
+首先我们要从成员变量的权限修饰符上下手, 我们都知道有`public protected private`, 这里面只有`public`的能挂, 因为是公开的
+
+```csharp
+public class NewBehaviourScript : MonoBehaviour
+{
+    public GameObject GameObject;
+    public Vector3 Transform;
+}
+```
+
+可以看到都能显示出来
+
+![](images/Pasted%20image%2020250911133731.png)
+
+我们修改一下权限
+
+```csharp
+public class NewBehaviourScript : MonoBehaviour
+{
+    public GameObject GameObject;
+    protected Vector3 Transform;
+}
+```
+
+可以看到, `Transform`就不见了, 如果把`GameObject`也改成`private`那么两个变量就都不见了, 这与我们的认知相符
+
+![](images/Pasted%20image%2020250911133908.png)
+
+### 🌸 注解变量
+
+那私有和受保护的变量就无法挂载吗? 其实也是可以的, `unity`为我们提供了`SerializeField`注解
+
+```csharp
+public class NewBehaviourScript : MonoBehaviour
+{
+    [SerializeField]
+    private GameObject GameObject;
+    [SerializeField]
+    protected Vector3 Transform;
+}
+```
+
+加上后我们可以看到这些变量又回来了
+
+![](images/Pasted%20image%2020250911133731.png)

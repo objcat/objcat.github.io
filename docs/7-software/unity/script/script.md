@@ -294,7 +294,7 @@ private void OnDisable()
 
 ## 🌲 OnDestroy
 
-对象销毁时调用
+对象销毁时调用, 但是我没有试出来如何可以让这个声明周期调用
 
 ```csharp
 private void OnDestroy()
@@ -729,21 +729,30 @@ public class NewBehaviourScript : MonoBehaviour
 我们可以在一个脚本中获取另一个脚本, 这样就可以控制别的游戏对象了
 
 ```csharp
-public class NewBehaviourScript2 : MonoBehaviour
+public class NewBehaviourScript : MonoBehaviour
 {
     public MonoBehaviour OtherMonoBehaviour;
     public GameObject OtherGameObject;
 }
 ```
 
-然后我们把对象拖拽上来, 值得注意的是虽然`MonoBehaviour`是脚本的类型, 但是我们还是需要拖拽一个对象上去, 而不是把脚本拖拽上去, 后来想了一下是因为一个脚本是可以绑定多个对象的, 如果能把脚本拖上来, 那就不知道是表达的哪个对象了 
+然后我们新建一个脚本绑定另外一个游戏对象, 比如一个球
+
+```csharp
+public class NewBehaviourScript2 : MonoBehaviour
+{
+    
+}
+```
+
+然后我们把对象拖拽上来, 值得注意的是虽然`MonoBehaviour`是脚本的类型, 但是我们还是需要并且必须拖拽一个对象上去, 而不是把脚本拖拽上去, 后来想了一下大概知道了原因, 是因为一个脚本是可以绑定多个对象的, 如果能把脚本拖上来, 那就不知道是表达的哪个对象了 
 
 ![](images/Pasted%20image%2020250912210621.png)
 
 上面的描述没懂也没事, 我们现在想实现在一个脚本中去获取另外一个脚本中的变量, 这样我们就有了读取和控制它的能力了
 
 ```csharp
-public class NewBehaviourScript2 : MonoBehaviour
+public class NewBehaviourScript : MonoBehaviour
 {
     public MonoBehaviour OtherMonoBehaviour;
     public GameObject OtherGameObject;

@@ -719,10 +719,16 @@ public class NewBehaviourScript : MonoBehaviour
         print($"游戏对象位置:{gameObject.transform.position}");
         print($"游戏对象角度:{gameObject.transform.eulerAngles}");
         print($"游戏对象缩放:{gameObject.transform.lossyScale}");
-        print($"游戏对象是否激活:{enabled}");
+        print($"游戏对象是否激活:{gameObject.activeSelf}");
+        print($"生命周期是否激活:{enabled}");
     }
 }
 ```
+
+我们获取了游戏对象就能获取到一系列的属性, 其中有两个东西比较相似, 是`gameObject.activeSelf`和`enabled`
+
+- 区别1 一个是游戏对象上的属性 一个是脚本对象上的属性
+- 区别2 activeSelf表示游戏对象是否激活 为false时会隐藏对象以及声明周期 而enabled不会隐藏对象 只会隐藏声明周期
 
 ### 🌸 获取别的脚本
 

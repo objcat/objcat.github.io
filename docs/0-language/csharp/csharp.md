@@ -93,34 +93,49 @@ testInt = 200;
 ## 🌲 无参数无返回值
 
 ```cs
-void hello()
+void Hello()
 {
     Console.WriteLine("hello world!");
 }
 
-hello();
+Hello();
 ```
 
-## 🌲 有参数无返回值
+然后我们会发现一个警告`IDE0062: 可以使用本地函数成为静态函数`
+
+https://learn.microsoft.com/zh-cn/dotnet/fundamentals/code-analysis/style-rules/ide0062
 
 ```cs
-void hello(string text)
+static void Hello(string text)
 {
     Console.WriteLine(text);
 }
 
-hello("hello world!");
+Hello("hello world!");
+```
+
+那我们就按照他推荐的去做, 先学习, 再研究为什么
+
+## 🌲 有参数无返回值
+
+```cs
+void Hello(string text)
+{
+    Console.WriteLine(text);
+}
+
+Hello("hello world!");
 ```
 
 ## 🌲 有参数有返回值
 
 ```cs
-string hello(string text)
+static string Hello(string text)
 {
     return text;
 }
 
-Console.WriteLine(hello("hello world!"));
+Console.WriteLine(Hello("hello world!"));
 ```
 
 ## 🌲 默认参数
@@ -128,12 +143,12 @@ Console.WriteLine(hello("hello world!"));
 我们可以通过在参数上加`=`来设置默认参数, 当参数没传的时候程序会读取默认参数
 
 ```cs
-void hello(string text = "这是默认参数")
+static void Hello(string text = "这是默认参数")
 {
     Console.WriteLine(text);
 }
 
-hello();
+Hello();
 ```
 
 ## 🌲 数组参数
@@ -141,7 +156,7 @@ hello();
 ### 🌸 数组
 
 ```cs
-void hello(int[] arr)
+static void Hello(int[] arr)
 {
     foreach (int i in arr)
     {
@@ -149,13 +164,13 @@ void hello(int[] arr)
     }
 }
 
-hello([1, 2, 3, 4, 5]);
+Hello([1, 2, 3, 4, 5]);
 ```
 
 ### 🌸 列表
 
 ```cs
-void hello(List<int> list)
+static void Hello(List<int> list)
 {
     foreach (int i in list)
     {
@@ -165,13 +180,13 @@ void hello(List<int> list)
 
 var list = new List<int> { 1, 2, 3 };
 
-hello(list);
+Hello(list);
 ```
 
 ## 🌲 字典参数
 
 ```cs
-void hello(Dictionary<string, object> dic)
+static void Hello(Dictionary<string, object> dic)
 {
     foreach (var i in dic)
     {
@@ -185,23 +200,8 @@ var dic = new Dictionary<string, object>
     {"age", 18 }
 };
 
-hello(dic);
+Hello(dic);
 ```
-
-## 🌲 静态函数
-
-就是在函数前面加上`static`
-
-```cs
-static void hello()
-{
-    Console.WriteLine("hello world!");
-}
-
-hello();
-```
-
-在类中用法稍有不同, 下面会介绍
 
 # 🍎 字符串
 
@@ -556,7 +556,7 @@ class Person
 
 ## 🌲 定义成员变量
 
-注意`C#`中的成员变量需要大写
+注意`C#`中的成员变量规范是大写, 否则会有警告
 
 ```cs
 Person person = new Person();
@@ -610,6 +610,34 @@ class Person
     public void Hello()
     {
         Console.WriteLine("hello i am " + Name);
+    }
+}
+```
+
+## 🌲 静态方法
+
+与Java中类似, 静态方法就是类直接调用的
+
+```cs
+Person.Hello2();
+
+class Person
+{
+    public string Name;
+    public int Age;
+    public Person(string name, int age)
+    {
+        this.Name = name;
+        this.Age = age;
+    }
+    public void Hello()
+    {
+        Console.WriteLine("hello i am " + Name);
+    }
+
+    public static void Hello2()
+    {
+        Console.WriteLine("hello i am static Hello2");
     }
 }
 ```

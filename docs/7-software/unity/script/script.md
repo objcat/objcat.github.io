@@ -843,3 +843,7 @@ public class NewBehaviourScript : MonoBehaviour
     }
 }
 ```
+
+挂一个脚本数量就是1, 我挂2个数量是2, 可以看到我这里使用泛型的方式, 然后取的是所有脚本的父类`MonoBehaviour`
+
+![](images/Pasted%20image%2020250913000106.png)

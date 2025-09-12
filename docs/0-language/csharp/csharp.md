@@ -1168,7 +1168,7 @@ hello(() => {
 c#中最基本的异步编程就是Task<>语法, 它可以创建出一个后台线程, 达到异步执行任务的目的
 
 ```cs
-static Task<string> hello()
+static Task<string> Hello()
 {
 	return Task.Run(() => {
 		// 模拟耗时任务
@@ -1191,7 +1191,7 @@ static Task<string> hello()
 ```cs
 static void Main(string[] args)
 {
-	var task = hello();
+	var task = Hello();
 	task.GetAwaiter().OnCompleted(() =>
 	{
 		Console.WriteLine(task.Result);
@@ -1213,7 +1213,7 @@ end!
 ```cs
 static void Main(string[] args)
 {
-	var task = hello();
+	var task = Hello();
 	Console.WriteLine(task.Result);
 	Console.WriteLine("按任意键结束...");
 	Console.ReadKey();
@@ -1238,7 +1238,7 @@ hello world
 ```cs
 static async Task Main(string[] args)
 {
-	var task = hello();
+	var task = Hello();
 	string str = await task;
 	Console.WriteLine(str);
 	Console.WriteLine("按任意键结束...");
@@ -1253,7 +1253,7 @@ static async Task Main(string[] args)
 这个目前还不能做到, 只能使用以前的旧方法
 
 ```cs
-var task = hello();
+var task = Hello();
 task.GetAwaiter().OnCompleted(() =>
 {
 	Console.WriteLine(task.Result);
@@ -1265,7 +1265,7 @@ task.GetAwaiter().OnCompleted(() =>
 异步方法中默认的返回值会被系统包装成`Task`所以不需要再`new`一个`task`了
 
 ```cs
-static async Task<string> hello()
+static async Task<string> Hello()
 {
 	 Thread.Sleep(1000);
 	 return "hello world";
@@ -1281,7 +1281,7 @@ delegate void CallBack(int i);
 
 static void Main(string[] args)
 {
-	request((i =>
+	Request((i =>
 	{
 		if (i == 1)
 		{
@@ -1296,7 +1296,7 @@ static void Main(string[] args)
 	Console.WriteLine("主线程执行完毕");
 }
 
-public static void request(CallBack callBack)
+public static void Request(CallBack callBack)
 {
 	new Thread(() =>
 	{
@@ -1310,12 +1310,12 @@ public static void request(CallBack callBack)
 }
 ```
 
-使用后 async/await 解决回调地狱问题
+使用后`async/await`解决回调地狱问题
 
 ```cs
 static void Main(string[] args)
 {
-	var req2 = request2();
+	var req2 = Request2();
 	
 	// 异步等待不阻塞主线程
 	req2.GetAwaiter().OnCompleted(() =>
@@ -1336,7 +1336,7 @@ static void Main(string[] args)
     Console.ReadKey();
 }
             
-public async static Task<int> request2()
+public async static Task<int> Request2()
 {
 	int i = await Task.Run(() =>
 	{
@@ -1387,10 +1387,10 @@ fun String.lenth2(): Int {
 
 ```cs
 fun main() {
-    String.hello()
+    String.Hello()
 }
 
-fun String.Companion.hello() {
+fun String.Companion.Hello() {
     println("hello")
 }
 ```

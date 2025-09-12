@@ -757,7 +757,7 @@ public class NewBehaviourScript2 : MonoBehaviour
 
 上面的描述没懂也没事, 我们现在想实现在一个脚本中去获取另外一个脚本中的变量, 这样我们就有了读取和控制它的能力了
 
-```csharp
+```cs
 public class NewBehaviourScript : MonoBehaviour
 {
     public MonoBehaviour OtherMonoBehaviour;
@@ -770,17 +770,76 @@ public class NewBehaviourScript : MonoBehaviour
         print($"游戏对象位置:{OtherMonoBehaviour.gameObject.transform.position}");
         print($"游戏对象角度:{OtherMonoBehaviour.gameObject.transform.eulerAngles}");
         print($"游戏对象缩放:{OtherMonoBehaviour.gameObject.transform.lossyScale}");
-        print($"游戏对象是否激活:{OtherMonoBehaviour.enabled}");
+        print($"游戏对象是否激活:{OtherMonoBehaviour.gameObject.activeSelf}");
+        print($"生命周期是否激活:{OtherMonoBehaviour.enabled}");
 
         print($"游戏对象:{OtherGameObject}");
         print($"游戏对象名字:{OtherGameObject.name}");
         print($"游戏对象位置:{OtherGameObject.transform.position}");
         print($"游戏对象角度:{OtherGameObject.transform.eulerAngles}");
         print($"游戏对象缩放:{OtherGameObject.transform.lossyScale}");
-        //print($"游戏对象是否激活:{OtherGameObject.enabled}");
+        print($"游戏对象是否激活:{OtherGameObject.activeSelf}");
     }
 }
 ```
 
-这里有意思了, 我们可以看到, 使用`MonoBehaviour`来获取其他脚本和使用`GameObject`来获取其他对象大部分东西都是一样的, 但是我们发现貌似使用`OtherGameObject`是无法读取激活状态的
+所以我们现在就具有了在一个`游戏对象`中读取和控制另外一个游戏对象的能力了
 
+## 🌲 Component
+
+### 🌸 获取组件
+
+`MonoBehaviour`类给我们提供了获取组件的方法叫`GetComponent`, 它可以获取绑定在当前游戏对象上的组件, 因为脚本也是一个组件, 我们就来获取这个最简单的
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        NewBehaviourScript newBehaviourScript1 = GetComponent("NewBehaviourScript") as NewBehaviourScript;
+        NewBehaviourScript newBehaviourScript2 = GetComponent(typeof(NewBehaviourScript)) as NewBehaviourScript;
+        NewBehaviourScript newBehaviourScript3 = GetComponent<NewBehaviourScript>();
+        print(newBehaviourScript1);
+        print(newBehaviourScript2);
+        print(newBehaviourScript3);
+    }
+}
+```
+
+可以看到有多种获取方法, 找到一种适合你的就好, 我们看看打印
+
+![](images/Pasted%20image%2020250912233222.png)
+
+是可以看到打印的, 如果组件没有会返回什么呢, 我们来试试
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        NewBehaviourScript2 tempScript = GetComponent<NewBehaviourScript2>();
+        print(tempScript);
+    }
+}
+```
+
+可以看到返回了一个`null`, 因为`NewBehaviourScript2`脚本没有绑定在当前`游戏对象`上
+
+![](images/Pasted%20image%2020250912233353.png)
+
+### 🌸 获取多个组件
+
+如果组件有多个, 我们也是可以获取的, 比如我们获取绑定的所有脚本
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        List<MonoBehaviour> list = new List<MonoBehaviour>();
+        GetComponents<MonoBehaviour>(list);
+        print(list);
+        print(list.Count);
+    }
+}
+```

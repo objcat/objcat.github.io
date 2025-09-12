@@ -617,5 +617,155 @@ public class NewBehaviourScript : MonoBehaviour
 
 ![](images/Pasted%20image%2020250912001722.png)
 
-点击重置名字把名字改成`狗蛋儿`
+点击重置名字把名字改成`狗蛋儿`, 这会对调试很大的帮助
+
+### 🌸 绑定脚本右键按钮
+
+我们已经实现在属性上点击右键弹出菜单了, 同样的`Unity`也提供给我们在脚本上点右键可以绑定一个按钮, 按钮可以有一个点击事件, 主要用于测试
+
+```csharp
+public class NewBehaviourScript : MonoBehaviour
+{
+    [ContextMenu("撒钱")]
+    private void ResetName()
+    {
+        print("撒钱");
+    }
+}
+```
+
+![](images/Pasted%20image%2020250912201621.png)
+
+## 🌲 值得注意的点
+
+### 🌸 拷贝参数
+
+如果运行的时候一个脚本的参数很重要我们可以点击右键复制它, 比如我要记录`狗蛋`
+
+![](images/Pasted%20image%2020250912202429.png)
+
+当我们结束运行这个狗蛋就没了, 有时候变量很多
+
+![](images/Pasted%20image%2020250912202409.png)
+
+我们如果想记录这么一组值可以在脚本上点击`Copy Component`
+
+![](images/Pasted%20image%2020250912202315.png)
+
+结束之后发现狗蛋也没了
+
+![](images/Pasted%20image%2020250912202409.png)
+
+但是我们可以右键点击粘贴
+
+![](images/Pasted%20image%2020250912202606.png)
+
+然后发现狗蛋是可以粘贴上的
+
+![](images/Pasted%20image%2020250912202429.png)
+
+# 🍎 MonoBehaviour
+
+这是我们最熟悉的一个类, 因为我们大多数的脚本都继承于这个类, 我们可以使用它的声明周期相关的东西, 这个我们上面也学过了, 我们如果想充分学习它可以在`Visual Studio`里面选择`MonoBehaviour`然后按`F12`可以跳转到这个类, 里面有300多行代码我就不贴了
+
+```csharp
+[NativeHeader("Runtime/Mono/MonoBehaviour.h")]
+[ExtensionOfNativeClass]
+[NativeHeader("Runtime/Scripting/DelayedCallUtility.h")]
+[RequiredByNativeCode]
+public class MonoBehaviour : Behaviour
+{
+    private CancellationTokenSource m_CancellationTokenSource;
+
+```
+
+我们接下来就逐步来学习它
+
+## 🌲 GameObject
+
+翻译过来就是游戏对象, 在我们`Unity`的学习中说到的最多的词可能就是它, 它可能是个可能是个球, 可能是个方块, 也可能是个看不见的空对象, 在我们的脚本中
+
+### 🌸 获取游戏对象
+
+那我们要如何获取这个游戏对象呢, 很简单`unity`已经帮我们定义了这个属性
+
+```csharp
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        print(gameObject);
+        // 或
+        print(this.gameObject);
+    }
+}
+```
+
+我们运行工程发现可以打印出这个游戏对象了
+
+![](images/Pasted%20image%2020250912203533.png)
+
+### 🌸 游戏对象上的属性
+
+我们打印出游戏对象了, 就可以去打印它上面的属性, 代码如下
+
+```csharp
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        print($"游戏对象:{gameObject}");
+        print($"游戏对象名字:{gameObject.name}");
+        print($"游戏对象位置:{gameObject.transform.position}");
+        print($"游戏对象角度:{gameObject.transform.eulerAngles}");
+        print($"游戏对象缩放:{gameObject.transform.lossyScale}");
+        print($"游戏对象是否激活:{enabled}");
+    }
+}
+```
+
+### 🌸 获取别的脚本
+
+我们可以在一个脚本中获取另一个脚本, 这样就可以控制别的游戏对象了
+
+```csharp
+public class NewBehaviourScript2 : MonoBehaviour
+{
+    public MonoBehaviour OtherMonoBehaviour;
+    public GameObject OtherGameObject;
+}
+```
+
+然后我们把对象拖拽上来, 值得注意的是虽然`MonoBehaviour`是脚本的类型, 但是我们还是需要拖拽一个对象上去, 而不是把脚本拖拽上去, 后来想了一下是因为一个脚本是可以绑定多个对象的, 如果能把脚本拖上来, 那就不知道是表达的哪个对象了 
+
+![](images/Pasted%20image%2020250912210621.png)
+
+上面的描述没懂也没事, 我们现在想实现在一个脚本中去获取另外一个脚本中的变量, 这样我们就有了读取和控制它的能力了
+
+```csharp
+public class NewBehaviourScript2 : MonoBehaviour
+{
+    public MonoBehaviour OtherMonoBehaviour;
+    public GameObject OtherGameObject;
+
+    private void Start()
+    {
+        print($"游戏对象:{OtherMonoBehaviour.gameObject}");
+        print($"游戏对象名字:{OtherMonoBehaviour.gameObject.name}");
+        print($"游戏对象位置:{OtherMonoBehaviour.gameObject.transform.position}");
+        print($"游戏对象角度:{OtherMonoBehaviour.gameObject.transform.eulerAngles}");
+        print($"游戏对象缩放:{OtherMonoBehaviour.gameObject.transform.lossyScale}");
+        print($"游戏对象是否激活:{OtherMonoBehaviour.enabled}");
+
+        print($"游戏对象:{OtherGameObject}");
+        print($"游戏对象名字:{OtherGameObject.name}");
+        print($"游戏对象位置:{OtherGameObject.transform.position}");
+        print($"游戏对象角度:{OtherGameObject.transform.eulerAngles}");
+        print($"游戏对象缩放:{OtherGameObject.transform.lossyScale}");
+        //print($"游戏对象是否激活:{OtherGameObject.enabled}");
+    }
+}
+```
+
+这里有意思了, 我们可以看到, 使用`MonoBehaviour`来获取其他脚本和使用`GameObject`来获取其他对象大部分东西都是一样的, 但是我们发现貌似使用`OtherGameObject`是无法读取激活状态的
 

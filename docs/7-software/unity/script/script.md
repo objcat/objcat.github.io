@@ -849,6 +849,36 @@ public class NewBehaviourScript : MonoBehaviour
 
 ![](images/Pasted%20image%2020250913182823.png)
 
+#### 🌼 创建空物体
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        GameObject gameObject1 = new GameObject("张三的空物体");
+    }
+}
+```
+
+我们也可以给空物体绑定脚本
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        GameObject gameObject1 = new GameObject("张三的空物体", typeof(NewBehaviourScript2));
+    }
+}
+```
+
+然后我们启动程序, 可以看到`NewBehaviourScript2`中的生命周期被调用了
+
+![](images/Pasted%20image%2020250913231311.png)
+
+通过都好也可以给空物体添加多个脚本
+
 ### 🌸 查找游戏对象
 
 有多种方法, 我们一起来学习一下
@@ -930,9 +960,172 @@ public class NewBehaviourScript : MonoBehaviour
 }
 ```
 
+#### 🌼 FindObjectOfType
+
+可以获取任意类型的对象
+
+```cs
+NewBehaviourScript newBehaviourScript = GameObject.FindObjectOfType<NewBehaviourScript>();
+print(newBehaviourScript);
+```
+
+### 🌸 克隆对象(重要)
+
+根据一个`游戏对象`创建出和它一模一样的对象
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        GameObject gameObject1 = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        gameObject1.name = "张三的游戏对象";
+        gameObject1.tag = "Player";
+
+        GameObject.Instantiate(gameObject1);
+        // 或
+        // Instantiate(gameObject1);
+    }
+}
+```
+
+![](images/Pasted%20image%2020250913213854.png)
+
+比较常用的是关联预设体然后动态创建对象, 比如
+
+随便创建一个空游戏对象挂上脚本, 比如`对象生成器`
+
+![](images/Pasted%20image%2020250913214457.png)
+
+然后把我们的预制体挂上
+
+![](images/Pasted%20image%2020250913214425.png)
+
+在脚本中创建即可
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    public GameObject NewGameObject;
+
+    private void Start()
+    {
+        GameObject.Instantiate(NewGameObject);
+    }
+}
+```
+
+![](images/Pasted%20image%2020250913224353.png)
+
+### 🌸 删除对象
+
+#### 🌼 删除游戏对象
+
+使用`Destroy`方法删除对象
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    public GameObject NewGameObject;
+
+    private void Start()
+    {
+        GameObject gameObject1 = GameObject.Instantiate(NewGameObject);
+        GameObject.Destroy(gameObject1);
+        // 或
+        // Destroy(gameObject1);
+    }
+}
+```
+
+运行后我们发现什么也没有, 是因为克隆后立刻被删除了, 我们也可以进行延时删除
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    public GameObject NewGameObject;
+
+    private void Start()
+    {
+        GameObject gameObject1 = GameObject.Instantiate(NewGameObject);
+        GameObject.Destroy(gameObject1, 5);
+    }
+}
+```
+
+可以看到这个是延时五秒钟删除
+
+#### 🌼 删除脚本自己
+
+不仅可以删除游戏对象, 也可以删除脚本组件自己
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    public GameObject NewGameObject;
+
+    private void Start()
+    {
+        print("删除自己");
+        Destroy(this);
+    }
+
+    private void OnDestroy()
+    {
+        print("OnDestroy");
+    }
+}
+```
+
+我们可以看到调用删除自己, 就会触发`OnDestroy`生命周期, 我们在生命周期的时候没有试出来的现在试出来了
+
+#### 🌼 立即同步删除
+
+据说这个是同步删除, 性能没有`Destroy`好, 如果没有特殊需求使用`Destroy`
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    public GameObject NewGameObject;
+
+    private void Start()
+    {
+        DestroyImmediate(this);
+    }
+
+    private void OnDestroy()
+    {
+        print("OnDestroy");
+    }
+}
+```
+
 ## 🌲 Component
 
+### 🌸 添加组件
+
+添加组件很简单, 比如我们想在一个对象上添加脚本
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        GameObject gameObject1 = new GameObject("张三的空物体");
+        gameObject1.AddComponent<NewBehaviourScript2>();
+    }
+}
+```
+
+我们可以在窗口中看到动态添加的脚本
+
+![](images/Pasted%20image%2020250913232010.png)
+
+当然也可以初始化的时候添加脚本, 我们在上面的时候已经学习过了
+
 ### 🌸 获取组件
+
+#### 🌼 获取组件
 
 `MonoBehaviour`类给我们提供了获取组件的方法叫`GetComponent`, 它可以获取绑定在当前游戏对象上的组件, 因为脚本也是一个组件, 我们就来获取这个最简单的
 
@@ -972,7 +1165,7 @@ public class NewBehaviourScript : MonoBehaviour
 
 ![](images/Pasted%20image%2020250912233353.png)
 
-### 🌸 获取多个组件
+#### 🌼 获取多个组件
 
 如果组件有多个, 我们也是可以获取的, 比如我们获取绑定的所有脚本
 
@@ -993,7 +1186,7 @@ public class NewBehaviourScript : MonoBehaviour
 
 ![](images/Pasted%20image%2020250913000106.png)
 
-### 🌸 获取子对象上挂载的组件
+#### 🌼 获取子对象上挂载的组件
 
 一个游戏对象上可以挂无数个子对象, 我们也可以获取子对象的组件, 比如这里获取子对象的脚本, 如果自己身上本身有相同类型的脚本也是可以获取出来的
 
@@ -1046,7 +1239,7 @@ public class NewBehaviourScript : MonoBehaviour
 }
 ```
 
-### 🌸 获取子对象上挂载的组件多个
+#### 🌼 获取子对象上挂载的组件多个
 
 包括也可以获取多个, 你也可以等用到的时候再去学习, 就知道有这种方法就可以了
 
@@ -1062,7 +1255,7 @@ public class NewBehaviourScript : MonoBehaviour
 }
 ```
 
-### 🌸 子对象获取父组件上面的组件
+#### 🌼 子对象获取父组件上面的组件
 
 默认也是能获取到自己本身的, 跟上面获取子组件上面一样, 就好像他们把脚本都放进一个池子里, 池子里都有, 就看你想要获取什么类型
 
@@ -1076,7 +1269,5 @@ public class NewBehaviourScript : MonoBehaviour
     }
 }
 ```
-
-### 🌸 子对象获取父组件上面的组件多个
 
 

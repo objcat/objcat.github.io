@@ -699,7 +699,7 @@ public class NewBehaviourScript : MonoBehaviour
 
 翻译过来就是游戏对象, 在我们`Unity`的学习中说到的最多的词可能就是它, 它可能是个可能是个球, 可能是个方块, 也可能是个看不见的空对象, 在我们的脚本中
 
-### 🌸 获取游戏对象
+### 🌸 获取脚本挂载的游戏对象
 
 那我们要如何获取这个游戏对象呢, 很简单`unity`已经帮我们定义了这个属性
 
@@ -721,7 +721,7 @@ public class NewBehaviourScript : MonoBehaviour
 
 ### 🌸 游戏对象上的属性
 
-我们打印出游戏对象了, 就可以去打印它上面的属性, 代码如下
+游戏对象上有各种各样的属性, 我打印出了一些, 代码如下
 
 ```csharp
 public class NewBehaviourScript : MonoBehaviour
@@ -1100,11 +1100,110 @@ public class NewBehaviourScript : MonoBehaviour
 }
 ```
 
+### 🌸 设置激活状态
+
+我们可以使用`SetActive`方法来设置激活状态
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        gameObject.SetActive(true);
+    }
+}
+```
+
+### 🌸 比较Tag
+
+有时候我们需要判断游戏对象的`tag`是什么, 可以使用`CompareTag`
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        GameObject gameObject1 = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        gameObject1.name = "张三的游戏对象";
+        gameObject1.tag = "Player";
+
+        if (gameObject1.CompareTag("Player"))
+        {
+            print("tag是Player");
+        }
+        else
+        {
+            print("不是");
+        }
+    }
+}
+```
+
+### 🌸 执行方法
+
+#### 🌼 普通执行
+
+我们可以直接调用方法
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        gameObject.SetActive(true);
+        Hello();
+    }
+
+    private void Hello()
+    {
+        print("Hello");
+    }
+}
+```
+
+#### 🌼 发送消息
+
+也可以使用`Unity`提供的方法去找
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        gameObject.SetActive(true);
+        gameObject.SendMessage("Hello");
+    }
+
+    private void Hello()
+    {
+        print("Hello");
+    }
+}
+```
+
+#### 🌼 发送消息带参数
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        gameObject.SetActive(true);
+        gameObject.SendMessage("Hello", 133);
+    }
+
+    private void Hello(int num)
+    {
+        print($"Hello {num}");
+    }
+}
+```
+
 ## 🌲 Component
 
 ### 🌸 添加组件
 
-添加组件很简单, 比如我们想在一个对象上添加脚本
+添加组件很简单, 比如我们想在一个对象上添加脚本, 脚本也是一个组件别忘了
 
 ```cs
 public class NewBehaviourScript : MonoBehaviour

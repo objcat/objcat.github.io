@@ -679,7 +679,21 @@ public class MonoBehaviour : Behaviour
 
 ```
 
-我们接下来就逐步来学习它
+## 🌲 MonoBehaviour
+
+我们的`MonoBehaviour`其实也是个对象, 它不仅可以获取挂载的游戏对象, 在它本上也可以操作很多东西, 如下
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        print($"生命周期是否激活:{enabled}");
+    }
+}
+```
+
+- 我们可以通过`enabled`来读取和控制生命周期函数是否激活
 
 ## 🌲 GameObject
 
@@ -720,6 +734,9 @@ public class NewBehaviourScript : MonoBehaviour
         print($"游戏对象角度:{gameObject.transform.eulerAngles}");
         print($"游戏对象缩放:{gameObject.transform.lossyScale}");
         print($"游戏对象是否激活:{gameObject.activeSelf}");
+        print($"游戏对象是否是静态:{gameObject.isStatic}");
+        print($"游戏对象层级:{gameObject.layer}");
+        print($"游戏对象标签:{gameObject.tag}");
         print($"生命周期是否激活:{enabled}");
     }
 }
@@ -730,7 +747,7 @@ public class NewBehaviourScript : MonoBehaviour
 - 区别1 一个是游戏对象上的属性 一个是脚本对象上的属性
 - 区别2 activeSelf表示游戏对象是否激活 为false时会隐藏对象以及声明周期 而enabled不会隐藏对象 只会隐藏声明周期
 
-### 🌸 获取别的脚本
+### 🌸 接收别的脚本
 
 我们可以在一个脚本中获取另一个脚本, 这样就可以控制别的游戏对象了
 
@@ -784,6 +801,134 @@ public class NewBehaviourScript : MonoBehaviour
 ```
 
 所以我们现在就具有了在一个`游戏对象`中读取和控制另外一个游戏对象的能力了
+
+### 🌸 代码创建游戏对象
+
+#### 🌼 CreatePrimitive
+
+我们不仅可以在层级面板上可视化的创建游戏对象, 也可以在代码中使用`CreatePrimitive`创建游戏对象
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        GameObject.CreatePrimitive(PrimitiveType.Cube);
+    }
+}
+```
+
+运行可以看到确实多了个正方体
+
+![](images/Pasted%20image%2020250913182255.png)
+
+可以看到层级里面确实会生成这个游戏对象
+
+![](images/Pasted%20image%2020250913182433.png)
+
+我们可以看到默认的`Transform`, 位置是`0, 0`
+
+```
+UnityEditor.TransformWorldPlacementJSON:{"position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0}}
+```
+
+#### 🌼 设置名字
+
+如果你觉得Cube不好听, 可以使用name属性来设置名字
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        GameObject gameObject1 = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        gameObject1.name = "张三的游戏对象";
+    }
+}
+```
+
+![](images/Pasted%20image%2020250913182823.png)
+
+### 🌸 查找游戏对象
+
+有多种方法, 我们一起来学习一下
+
+#### 🌼 Find
+
+我们可以通过`Find`来查找游戏对象
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        GameObject gameObject1 = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        gameObject1.name = "张三的游戏对象";
+
+        GameObject gameObject2 = GameObject.Find("张三的游戏对象");
+        print(gameObject2);
+    }
+}
+```
+
+我们可以看到, 根据名字是可以找到的
+
+![](images/Pasted%20image%2020250913183754.png)
+
+但是这种效率是比较慢的, 因为它要去遍历场景
+
+#### 🌼 FindWithTag
+
+我们也可以通过`tag`去找
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        GameObject gameObject1 = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        gameObject1.name = "张三的游戏对象";
+        gameObject1.tag = "Player";
+
+        GameObject gameObject2 = GameObject.FindWithTag("Player");
+        print(gameObject2);
+    }
+}
+```
+
+可以看到能够找到
+
+![](images/Pasted%20image%2020250913200140.png)
+
+这里的tag不能随意设置, 必须是界面上面的
+
+![](images/Pasted%20image%2020250913200246.png)
+
+否则设置一个奇怪的会找不到
+
+我们可以看到下面的特点
+
+- 无法找到失活的对象
+- 如果场景有多个同Tag的对象, 无法准确的找到是谁
+- 所以看来拖动绑定还是比较靠谱的, 至少它可以定位的准确
+
+#### 🌼 FindGameObjectsWithTag
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        GameObject gameObject1 = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        gameObject1.name = "张三的游戏对象";
+        gameObject1.tag = "Player";
+
+        GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("Player");
+        print(gameObjects);
+        print(gameObjects.Length);
+    }
+}
+```
 
 ## 🌲 Component
 
@@ -847,3 +992,91 @@ public class NewBehaviourScript : MonoBehaviour
 挂一个脚本数量就是1, 我挂2个数量是2, 可以看到我这里使用泛型的方式, 然后取的是所有脚本的父类`MonoBehaviour`
 
 ![](images/Pasted%20image%2020250913000106.png)
+
+### 🌸 获取子对象上挂载的组件
+
+一个游戏对象上可以挂无数个子对象, 我们也可以获取子对象的组件, 比如这里获取子对象的脚本, 如果自己身上本身有相同类型的脚本也是可以获取出来的
+
+比如像这样 我在方球的子对象上挂一个脚本
+
+![](images/Pasted%20image%2020250913122550.png)
+
+![](images/Pasted%20image%2020250913122557.png)
+
+然后在方球的脚本上, 也就是父对象的脚本上去获取
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        NewBehaviourScript2 mono = GetComponentInChildren<NewBehaviourScript2>();
+        print(mono);
+    }
+}
+```
+
+发现是可以获取的, 这个方法有效, 但是有一个问题, 我的对象一旦失活就不能找了
+
+![](images/Pasted%20image%2020250913122752.png)
+
+然后我们再次找, 就会出现`Null`
+
+![](images/Pasted%20image%2020250913122811.png)
+
+这个时候我们如果还想找就要传递一个参数, 我们来看这个函数的定义
+
+```cs
+public T GetComponentInChildren<T>([UnityEngine.Internal.DefaultValue("false")] bool includeInactive)
+{
+    return (T)(object)GetComponentInChildren(typeof(T), includeInactive);
+}
+```
+
+可以看到`includeInactive`, 如果为true就是可以去找`Inactive`也就是失活的游戏对象
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        NewBehaviourScript2 mono = GetComponentInChildren<NewBehaviourScript2>(true);
+        print(mono);
+    }
+}
+```
+
+### 🌸 获取子对象上挂载的组件多个
+
+包括也可以获取多个, 你也可以等用到的时候再去学习, 就知道有这种方法就可以了
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        NewBehaviourScript2[] newBehaviourScript2s = GetComponentsInChildren<NewBehaviourScript2>(true);
+        print(newBehaviourScript2s);
+
+    }
+}
+```
+
+### 🌸 子对象获取父组件上面的组件
+
+默认也是能获取到自己本身的, 跟上面获取子组件上面一样, 就好像他们把脚本都放进一个池子里, 池子里都有, 就看你想要获取什么类型
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        NewBehaviourScript newBehaviourScript = GetComponentInParent<NewBehaviourScript>();
+        print(newBehaviourScript);
+    }
+}
+```
+
+### 🌸 子对象获取父组件上面的组件多个
+
+

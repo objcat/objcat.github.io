@@ -1369,4 +1369,79 @@ public class NewBehaviourScript : MonoBehaviour
 }
 ```
 
+# 🍎 Time
 
+时间相关的类
+
+## 🌲 时间停止
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        Time.timeScale = 0;
+    }
+}
+```
+
+## 🌲 时间恢复
+
+```cs
+Time.timeScale = 1;
+```
+
+## 🌲 2倍速
+
+```cs
+Time.timeScale = 2;
+```
+
+## 🌲 帧间隔时间
+
+主要用于计算位移, `路程=时间x速度`
+
+我们可以通过`deltaTime`来获取
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Update()
+    {
+        Time.timeScale = 2.0f;
+        print("帧间隔时间:" + Time.deltaTime);
+        print("不受scaled影响的帧间隔时间:" + Time.unscaledDeltaTime);
+    }
+}
+```
+
+可以看到当`timeScale`不等于1时, 两个开始不同
+
+![](images/Pasted%20image%2020250913234758.png)
+
+## 🌲 游戏开始到现在的时间
+
+一般做单机游戏计时, 网络游戏使用服务器计时
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Update()
+    {
+        print("游戏开始到现在的时间:" + Time.time);
+        print("游戏开始到现在的时间不受scaled影响:" + Time.unscaledTime);
+    }
+}
+```
+
+## 🌲 物理帧相关
+
+```cs
+private void FixedUpdate()
+{
+    print("物理帧间隔时间:" + Time.fixedDeltaTime);
+    print("物理帧间隔时间不受scaled影响:" + Time.fixedUnscaledDeltaTime);
+    print("物理帧总时间:" + Time.fixedTime);
+    print("物理帧总时间不受scaled影响:" + Time.fixedUnscaledTime);
+}
+```

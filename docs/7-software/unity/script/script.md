@@ -1390,9 +1390,11 @@ public class NewBehaviourScript : MonoBehaviour
 
 ### 🌸 Position
 
-表示世界坐标系的位置
+`Position`是`Transform`上的属性, 表示`游戏对象`的位置
 
-#### 🌼 获取
+#### 🌼 获取世界坐标
+
+我这里用了空对象挂载脚本来做的, 你们也可以使用Cube这种可视化的, 应该会更直观, 从下一章开始我会用可视化来做, 但不影响效果 哈哈哈
 
 ![](images2/Pasted%20image%2020250914114927.png)
 
@@ -1414,7 +1416,11 @@ public class NewBehaviourScript : MonoBehaviour
 (12.00, 13.00, 14.00)
 ```
 
-然后我们新建一个游戏对象, 把它放在里面
+#### 🌼 获取本地坐标
+
+所谓本地坐标就是相对于父视图的坐标, 当然如果你的父视图就是场景, 那么你的本地坐标也可以成为世界坐标
+
+怎么操作呢? 我们新建一个游戏对象, 把它放在里面
 
 ![](images2/Pasted%20image%2020250914115147.png)
 
@@ -1434,14 +1440,6 @@ public class NewBehaviourScript : MonoBehaviour
 
 ![](images2/Pasted%20image%2020250914115415.png)
 
-#### 🌼 坐标重合
-
-如果我们父对象的坐标是`(0, 0, 0)`, 那么position就是和世界坐标重合的, 这个没毛病
-
-![](images2/Pasted%20image%2020250914120259.png)
-
-#### 🌼 本地坐标
-
 相对于父对象的坐标
 
 ```cs
@@ -1453,6 +1451,12 @@ public class NewBehaviourScript : MonoBehaviour
     }
 }
 ```
+
+#### 🌼 坐标重合
+
+如果我们父对象的坐标是`(0, 0, 0)`, 那么position就是和世界坐标重合的, 这个没毛病
+
+![](images2/Pasted%20image%2020250914120259.png)
 
 #### 🌼 修改原值
 
@@ -1568,15 +1572,6 @@ public class NewBehaviourScript : MonoBehaviour
 transform.position += transform.forward * speed * Time.deltaTime;
 ```
 
-`Unity`也给我提供了现成的方法
-
-```cs
-int speed = 1;
-transform.Translate(transform.forward * speed * Time.deltaTime);
-```
-
-用哪个都可以, 自己决定
-
 #### 🌼 向x轴移动匀速直线运动
 
 知道了如何计算z轴, 那么计算x轴也是轻松的
@@ -1625,6 +1620,138 @@ public class NewBehaviourScript : MonoBehaviour
 ```
 
 我来说明一下, 如果物体与世界朝向相同, 那么`Vector3.forward`和`transform.forward`是相同的, 这个时候用哪个都可以, 但如果与世界朝向不同, 那么就需要根据不同的需求进行调整了
+
+#### 🌼 移动API
+
+我们上面已经学习过`手动位移`了, `Unity`也给我们提供了`API`, 需要两个参数, 第一个参数是我们计算的便宜量, 上面都学习过了, 但是值得注意的是这里的方向一定要用`Vector3.forward`这个参数只决定按照哪个轴, 第二个参数才是决定自身坐标系还是世界坐标系
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Update()
+    {
+        int speed = 1;
+        transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.World);
+    }
+}
+```
+
+我们来看运动方向
+
+![](images/Pasted%20image%2020250914220359.png)
+
+可以看到是按照世界的, 怎么改成沿着自己坐标系运动呢, 第二个参数设置为`Space.Self`或者不设置默认就是按照自己坐标系
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Update()
+    {
+        int speed = 1;
+        transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
+    }
+}
+```
+
+可以看到变成朝向自己的z轴去动了
+
+![](images/Pasted%20image%2020250914214826.png)
+
+但是这里有一个坑, 千万不要这样写
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Update()
+    {
+        int speed = 1;
+        transform.Translate(transform.forward * speed * Time.deltaTime, Space.Self);
+    }
+}
+```
+
+因为API内部有转换, 所以这样写会让运动方向很奇怪, 因为API内部默认你使用的方向是世界坐标系, 但是你使用了自己本身的, 从这个方向去变换成`Space.Self`方向就会出错, 如果你没明白自己试一试, 或者记住就可以了
+
+然后就是一般我们使用API进行计算
+
+### 🌸 Rotation
+
+`Rotation`也是`Transform`上的属性, 表示`游戏对象`的角度, 角度同样也是分xyz的
+
+好, 我们这章就用可视化的Cube来做, 首先新建一个
+
+![](images/Pasted%20image%2020250914222042.png)
+
+很干净
+
+然后看一下它
+
+![](images/Pasted%20image%2020250914222058.png)
+
+#### 🌼 获取世界角度
+
+这个很简单啊
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        print(transform.eulerAngles);
+    }
+}
+```
+
+如果你没调整过角度那就是
+
+```
+(0.00, 0.00, 0.00)
+UnityEngine.MonoBehaviour:print (object)
+NewBehaviourScript:Start () (at Assets/NewBehaviourScript.cs:10)
+```
+
+#### 🌼 获取本地角度
+
+那我们要整活了, 首先建立一个父对象
+
+然后把`父对象`的角度改成30
+
+![](images/Pasted%20image%2020250914222316.png)
+
+把Cube放在里面
+
+![](images/Pasted%20image%2020250914222155.png)
+
+可以看到这会角度还是正常的
+
+![](images/Pasted%20image%2020250914222534.png)
+
+可以看到原来是`(0, 0, 0)`的现在已经不是了, 这时我们来打印本地角度
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        print(transform.eulerAngles);
+        print(transform.localEulerAngles);
+    }
+}
+```
+
+我们发现世界角度是没变的, 而本地角度变成了`330`
+
+```shell
+(0.00, 0.00, 0.00)
+UnityEngine.MonoBehaviour:print (object)
+NewBehaviourScript:Start () (at Assets/NewBehaviourScript.cs:10)
+
+(0.00, 330.00, 0.00)
+UnityEngine.MonoBehaviour:print (object)
+NewBehaviourScript:Start () (at Assets/NewBehaviourScript.cs:11)
+```
+
+这与我们的预期相同
 
 ## 🌲 Component
 

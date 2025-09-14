@@ -1878,7 +1878,25 @@ public class NewBehaviourScript : MonoBehaviour
 
 ![](images/Pasted%20image%2020250915003521.png)
 
-#### 🌼 持续变大
+### 🌸 看向
+
+![](images/Pasted%20image%2020250915004122.png)
+
+所谓看向就是让z轴指向球
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Update()
+    {
+        transform.LookAt(Vector3.zero);
+    }
+}
+```
+
+达到的效果是, 无论我们怎么移动方, z轴都指向原点的球
+
+![](images/Pasted%20image%2020250915004253.png)
 
 ## 🌲 Component
 

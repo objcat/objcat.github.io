@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/0-language/csharp/csharp.md",
+                "file": "docs/7-software/unity/script/script.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "csharp"
+              "title": "script"
             }
           }
         ]
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/0-language/csharp/csharp.md",
+                "file": "docs/7-software/unity/script/script.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "csharp 的大纲"
+              "title": "script 的大纲"
             }
           }
         ],
@@ -170,8 +170,8 @@
   },
   "active": "e06910d1db02e8fd",
   "lastOpenFiles": [
-    "docs/7-software/unity/script/script.md",
     "docs/0-language/csharp/csharp.md",
+    "docs/7-software/unity/script/script.md",
     "docs/7-software/unity/unity3d/unity3d.md",
     "docs/7-software/unity/script/images2/Pasted image 20250914120656.png",
     "docs/7-software/unity/script/images/Pasted image 20250914120536.png",

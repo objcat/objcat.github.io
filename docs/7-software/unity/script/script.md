@@ -1501,11 +1501,39 @@ transform.position = position;
 
 #### 🌼 封装
 
-上面可能对于赋值来说是很麻烦的, 根据我的经验这种通常都可以封装
+上面可能对于赋值来说是很麻烦的, 根据我的经验这种通常都可以封装, 我这里就随便做一下实例, 我这里使用了`C#`的扩展
 
+```cs
+public static class ZYGameObjectExtension
+{
+    public static void SetX(this GameObject gameObject, float x)
+    {
+        Vector3 position = gameObject.transform.position;
+        position.x = x;
+        gameObject.transform.position = position;
+    }
 
+    public static void SetY(this GameObject gameObject, float y)
+    {
+        Vector3 position = gameObject.transform.position;
+        position.y = y;
+        gameObject.transform.position = position;
+    }
+}
+```
 
+然后使用是这样用的, 可以发挥你的想象哈
 
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        gameObject.SetX(20);
+        gameObject.SetY(20);
+    }
+}
+```
 
 ## 🌲 Component
 

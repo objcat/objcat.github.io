@@ -1454,7 +1454,7 @@ public class NewBehaviourScript : MonoBehaviour
 
 #### 🌼 坐标重合
 
-如果我们父对象的坐标是`(0, 0, 0)`, 那么position就是和世界坐标重合的, 这个没毛病
+如果我们父对象的坐标是`(0, 0, 0)`, 那么`position`中`本地和世界`坐标重合的, 这个没毛病
 
 ![](images2/Pasted%20image%2020250914120259.png)
 
@@ -1539,7 +1539,7 @@ public class NewBehaviourScript : MonoBehaviour
 }
 ```
 
-### 🌸 移动
+### 🌸 持续移动
 
 #### 🌼 三维坐标系计算公式
 
@@ -1722,11 +1722,9 @@ NewBehaviourScript:Start () (at Assets/NewBehaviourScript.cs:10)
 
 ![](images/Pasted%20image%2020250914222155.png)
 
-可以看到这会角度还是正常的
+可以看到原来是`(0, 0, 0)`的现在已经不是了, 这时我们来打印本地角度
 
 ![](images/Pasted%20image%2020250914222534.png)
-
-可以看到原来是`(0, 0, 0)`的现在已经不是了, 这时我们来打印本地角度
 
 ```cs
 public class NewBehaviourScript : MonoBehaviour
@@ -1751,7 +1749,55 @@ UnityEngine.MonoBehaviour:print (object)
 NewBehaviourScript:Start () (at Assets/NewBehaviourScript.cs:11)
 ```
 
-这与我们的预期相同
+这与我们的预期相同, 这就是本地角度和世界角度的区别
+
+### 🌸 持续改变角度
+
+为了让我们的效果明显, 我们先准备一个这样的块, 直接把父对象去掉也行
+
+![](images/Pasted%20image%2020250914232828.png)
+
+![](images/Pasted%20image%2020250914235946.png)
+
+#### 🌼 自转
+
+我这里就用y轴来举例子
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Update()
+    {
+        int speed = 10;
+        transform.Rotate(Vector3.up, speed * Time.deltaTime, Space.Self);
+    }
+}
+```
+
+我们可以看到按照自己的y轴是这样转的
+
+![](images/Pasted%20image%2020250914233037.png)
+
+其中`speed`的数值越大, 转的就
+
+#### 🌼 世界转
+
+就是根据世界坐标系的y轴去转, 世界坐标系y是向上的
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Update()
+    {
+        int speed = 10;
+        transform.Rotate(new Vector3(0, 50, 0) * Time.deltaTime, Space.World);
+    }
+}
+```
+
+可以看到物体是这么转的
+
+![](images/Pasted%20image%2020250914233246.png)
 
 ## 🌲 Component
 

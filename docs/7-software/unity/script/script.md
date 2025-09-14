@@ -1799,6 +1799,45 @@ public class NewBehaviourScript : MonoBehaviour
 
 ![](images/Pasted%20image%2020250914233246.png)
 
+#### 🌼 绕着某一个点转
+
+我们在原点创建一个球, 然后让方绕着球转
+
+![](images/Pasted%20image%2020250915000818.png)
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Update()
+    {
+        transform.RotateAround(Vector3.zero, Vector3.up, 10 * Time.deltaTime);
+    }
+}
+```
+
+可以看到是这个样子
+
+- 第一个参数`Vector3.zero`围绕着哪个点转
+- 第二个参数`Vector3.up`是绕着点的y轴旋转
+
+![](images/Pasted%20image%2020250915001003.png)
+
+我们来试试绕着x轴旋转
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Update()
+    {
+        transform.RotateAround(Vector3.zero, Vector3.left, 10 * Time.deltaTime);
+    }
+}
+```
+
+在做这个之前我把方块又移动了一下位置, 让它和球的x轴不在一个直线上, 否则就变成了自转
+
+![](images/Pasted%20image%2020250915001942.png)
+
 ## 🌲 Component
 
 ### 🌸 添加组件

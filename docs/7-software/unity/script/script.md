@@ -1539,8 +1539,6 @@ public class NewBehaviourScript : MonoBehaviour
 }
 ```
 
-### 🌸 持续移动
-
 #### 🌼 三维坐标系计算公式
 
 ![](images/Pasted%20image%2020250914190106.png)
@@ -1550,6 +1548,14 @@ public class NewBehaviourScript : MonoBehaviour
 ![](images/Pasted%20image%2020250914190325.png)
 
 #### 🌼 向z轴匀速直线运动
+
+首先我们要有一个块
+
+![](images/Pasted%20image%2020250915003736.png)
+
+设置成原点
+
+![](images/Pasted%20image%2020250915003821.png)
 
 知道了理论知识, 我们计算起来就比较简单了, 如果我们想让一个物体向一个方位移动, 就要这么做
 
@@ -1751,15 +1757,13 @@ NewBehaviourScript:Start () (at Assets/NewBehaviourScript.cs:11)
 
 这与我们的预期相同, 这就是本地角度和世界角度的区别
 
-### 🌸 持续改变角度
+#### 🌼 自转
 
-为了让我们的效果明显, 我们先准备一个这样的块, 直接把父对象去掉也行
+为了让我们的效果明显, 我们先准备一个这样的块, 直接把父对象去掉
 
 ![](images/Pasted%20image%2020250914232828.png)
 
 ![](images/Pasted%20image%2020250914235946.png)
-
-#### 🌼 自转
 
 我这里就用y轴来举例子
 
@@ -1837,6 +1841,44 @@ public class NewBehaviourScript : MonoBehaviour
 在做这个之前我把方块又移动了一下位置, 让它和球的x轴不在一个直线上, 否则就变成了自转
 
 ![](images/Pasted%20image%2020250915001942.png)
+
+### 🌸 scale
+
+#### 🌼 获取
+
+同样包括世界和本地的, 我不多演示了
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        print(transform.lossyScale);
+        print(transform.localScale);
+    }
+}
+```
+
+不同的是`lossyScale`不能修改, 但是`localScale`可以修改
+
+#### 🌼 持续变大
+
+`Unity`没有提供相应的`API`, 所以我们只能够自己实现
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Update()
+    {
+        int speed = 1;
+        transform.localScale += Vector3.one * speed * Time.deltaTime;
+    }
+}
+```
+
+![](images/Pasted%20image%2020250915003521.png)
+
+#### 🌼 持续变大
 
 ## 🌲 Component
 

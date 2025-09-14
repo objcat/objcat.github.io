@@ -8,11 +8,11 @@
 
 我们右键点击项目窗口, 在里面选择`Create -> C# Script`
 
-![](images/Pasted%20image%2020250823004647.png)
+![](images2/Pasted%20image%2020250823004647.png)
 
 然后就能看到一个默认名字的脚本
 
-![](images/Pasted%20image%2020250823004754.png)
+![](images2/Pasted%20image%2020250823004754.png)
 
 双击这个脚本使用VS打开脚本, 脚本中的初始代码是这样的, 可以看到他默认继承`MonoBehaviour`, 类名和文件名必须一致, 只有继承于这个类才能挂载到`游戏对象`上
 
@@ -45,15 +45,15 @@ public class NewBehaviourScript : MonoBehaviour
 
 所谓挂脚本, 就是我们在创建一个`游戏对象`后可以在上面绑定`一个或多个脚本`, 这些脚本可以修改游戏物体的属性和行为, 操作方法是「拖拽」
 
-![](images/Pasted%20image%2020250823005300.png)
+![](images2/Pasted%20image%2020250823005300.png)
 
 比如我要给这个`Cube`来挂载脚本, 我只需要把这个脚本拖拽到上面即可
 
-![](images/Pasted%20image%2020250823005433.png)
+![](images2/Pasted%20image%2020250823005433.png)
 
 在`Inspector`窗口中可以看到这个脚本
 
-![](images/Pasted%20image%2020250823005529.png)
+![](images2/Pasted%20image%2020250823005529.png)
 
 然后我们可以打开脚本进行编写
 
@@ -85,7 +85,7 @@ public class NewBehaviourScript : MonoBehaviour
 
 我们定义了两个变量`gameObject`和`transform`, 分别用来表示游戏对象和物体的位置, 我们切换到`Unity`界面可以看到两个变量可以显示出来了
 
-![](images/Pasted%20image%2020250823010230.png)
+![](images2/Pasted%20image%2020250823010230.png)
 
 ## 🌲 修改变量
 
@@ -93,11 +93,11 @@ public class NewBehaviourScript : MonoBehaviour
 
 - GameObject 我们直接把`Cube`拖拽到文本框上就可以绑定了
 
-![](images/Pasted%20image%2020250823010324.png)
+![](images2/Pasted%20image%2020250823010324.png)
 
 拖拽成功后可以看到, 文本框捕获了这个游戏对象的引用
 
-![](images/Pasted%20image%2020250823010403.png)
+![](images2/Pasted%20image%2020250823010403.png)
 
 - Transform
 
@@ -137,7 +137,7 @@ public class NewBehaviourScript : MonoBehaviour
 
 生命周期顺序图
 
-![](images/Pasted%20image%2020250909234910.png)
+![](images2/Pasted%20image%2020250909234910.png)
 
 ## 🌲 Awake
 
@@ -159,7 +159,7 @@ public class NewBehaviourScript : MonoBehaviour
 }
 ```
 
-![](images/Pasted%20image%2020250910000141.png)
+![](images2/Pasted%20image%2020250910000141.png)
 
 启动游戏后可以在控制台上看到输出, 我们可以看到`Console.WriteLine`是不会显示在`unity`界面中的, 那你可能会有疑问, 我以后用哪个打印呢, 我这里推荐的是, 随便用, 我们可以看看`print`源码, 其实就是封装了`Debug.Log`, 我不知道这是否算封装...
 
@@ -176,15 +176,15 @@ public static void print(object message)
 
 这个操作听起来很玄学, 其实可以, 并且这个还可以证明`Awake`是在脚本创建的时候调用的, 因为游戏运行后`游戏对象`已经被创建了, 比如
 
-![](images/Pasted%20image%2020250910002225.png)
+![](images2/Pasted%20image%2020250910002225.png)
 
 然后我们可以看到`Inspector`
 
-![](images/Pasted%20image%2020250910002245.png)
+![](images2/Pasted%20image%2020250910002245.png)
 
 脚本挂上去了, 然后会立刻打印出下面的内容
 
-![](images/Pasted%20image%2020250910002307.png)
+![](images2/Pasted%20image%2020250910002307.png)
 
 当我们停止游戏后, 我们发现刚才挂载的脚本只是临时的, 那个对象上面的组件会回到游戏运行前的状态
 
@@ -199,19 +199,19 @@ private void OnEnable()
 }
 ```
 
-![](images/Pasted%20image%2020250910200956.png)
+![](images2/Pasted%20image%2020250910200956.png)
 
 然后`激活`俩字画重点, 啥叫激活呢? 
 
-![](images/Pasted%20image%2020250910201537.png)
+![](images2/Pasted%20image%2020250910201537.png)
 
 看到这个对钩了吗, 我们点击后`游戏对象`就会隐藏不见, 再次点击`游戏对象`就被激活了, 我们可以看到二次打印
 
-![](images/Pasted%20image%2020250910201630.png)
+![](images2/Pasted%20image%2020250910201630.png)
 
 除了这个会触发其实还有一个
 
-![](images/Pasted%20image%2020250910225320.png)
+![](images2/Pasted%20image%2020250910225320.png)
 
 脚本取消勾选再勾选也会触发, 自己玩一玩
 
@@ -239,13 +239,13 @@ private void FixedUpdate()
 
 与`Update`类似, 可以看到它一直在调用
 
-![](images/Pasted%20image%2020250910225759.png)
+![](images2/Pasted%20image%2020250910225759.png)
 
-![](images/Pasted%20image%2020250910225915.png)
+![](images2/Pasted%20image%2020250910225915.png)
 
 不一样的是, 我们可以控制它的刷新时间
 
-![](images/Pasted%20image%2020250910230101.png)
+![](images2/Pasted%20image%2020250910230101.png)
 
 在这里可以设置, 默认是`0.02`, 我们把他设置为1, 发现刷新的就很慢了, 点到为止
 
@@ -355,7 +355,7 @@ public class NewBehaviourScript : MonoBehaviour
 
 可以看到都能显示出来
 
-![](images/Pasted%20image%2020250911133731.png)
+![](images2/Pasted%20image%2020250911133731.png)
 
 我们修改一下权限
 
@@ -369,7 +369,7 @@ public class NewBehaviourScript : MonoBehaviour
 
 可以看到, `Transform`就不见了, 如果把`GameObject`也改成`private`那么两个变量就都不见了, 这与我们的认知相符
 
-![](images/Pasted%20image%2020250911133908.png)
+![](images2/Pasted%20image%2020250911133908.png)
 
 ### 🌸 注解修饰变量
 
@@ -387,7 +387,7 @@ public class NewBehaviourScript : MonoBehaviour
 
 加上后我们可以看到这些变量又可以显示了
 
-![](images/Pasted%20image%2020250911133731.png)
+![](images2/Pasted%20image%2020250911133731.png)
 
 与之对应的是`HideInInspector`, 即使都是`public`也无法显示的
 
@@ -426,7 +426,7 @@ public class NewBehaviourScript : MonoBehaviour
 
 可以看到界面是能够看到的
 
-![](images/Pasted%20image%2020250911194640.png)
+![](images2/Pasted%20image%2020250911194640.png)
 
 我们再来看看不支持的类型, 我们写了一个字典和自定义类型
 
@@ -446,7 +446,7 @@ public class NewBehaviourScript : MonoBehaviour
 
 在界面上我们发现看不到他们
 
-![](images/Pasted%20image%2020250911194936.png)
+![](images2/Pasted%20image%2020250911194936.png)
 
 ### 🌸 自定义类型挂载
 
@@ -487,7 +487,7 @@ public class NewBehaviourScript : MonoBehaviour
 
 我们可以看到分组了
 
-![](images/Pasted%20image%2020250911232636.png)
+![](images2/Pasted%20image%2020250911232636.png)
 
 ### 🌸 悬停注释
 
@@ -507,7 +507,7 @@ public class NewBehaviourScript : MonoBehaviour
 }
 ```
 
-![](images/Pasted%20image%2020250911235411.png)
+![](images2/Pasted%20image%2020250911235411.png)
 
 ### 🌸 空隙
 
@@ -530,7 +530,7 @@ public class NewBehaviourScript : MonoBehaviour
 
 可以看到确实有一个空隙
 
-![](images/Pasted%20image%2020250912000005.png)
+![](images2/Pasted%20image%2020250912000005.png)
 
 ### 🌸 滑动条
 
@@ -542,7 +542,7 @@ public class NewBehaviourScript : MonoBehaviour
 }
 ```
 
-![](images/Pasted%20image%2020250912000330.png)
+![](images2/Pasted%20image%2020250912000330.png)
 
 ### 🌸 多行
 
@@ -558,7 +558,7 @@ public class NewBehaviourScript : MonoBehaviour
 
 没用注解是1行, 用了默认是3行
 
-![](images/Pasted%20image%2020250912000623.png)
+![](images2/Pasted%20image%2020250912000623.png)
 
  我们也可以指定行号, 比如5行
 
@@ -572,7 +572,7 @@ public class NewBehaviourScript : MonoBehaviour
 
 效果是这样的
 
-![](images/Pasted%20image%2020250912000725.png)
+![](images2/Pasted%20image%2020250912000725.png)
 
 当然你也可以设置为1行, 不过这有点脱裤子放屁, 费二遍事
 
@@ -590,11 +590,11 @@ public class NewBehaviourScript : MonoBehaviour
 
 默认3行
 
-![](images/Pasted%20image%2020250912001110.png)
+![](images2/Pasted%20image%2020250912001110.png)
 
 最多五行, 再多出现滚动条
 
-![](images/Pasted%20image%2020250912001037.png)
+![](images2/Pasted%20image%2020250912001037.png)
 
 ### 🌸 添加右键按钮
 
@@ -615,7 +615,7 @@ public class NewBehaviourScript : MonoBehaviour
 
 然后可以看到
 
-![](images/Pasted%20image%2020250912001722.png)
+![](images2/Pasted%20image%2020250912001722.png)
 
 点击重置名字把名字改成`狗蛋儿`, 这会对调试很大的帮助
 
@@ -634,7 +634,7 @@ public class NewBehaviourScript : MonoBehaviour
 }
 ```
 
-![](images/Pasted%20image%2020250912201621.png)
+![](images2/Pasted%20image%2020250912201621.png)
 
 ## 🌲 值得注意的点
 
@@ -642,27 +642,27 @@ public class NewBehaviourScript : MonoBehaviour
 
 如果运行的时候一个脚本的参数很重要我们可以点击右键复制它, 比如我要记录`狗蛋`
 
-![](images/Pasted%20image%2020250912202429.png)
+![](images2/Pasted%20image%2020250912202429.png)
 
 当我们结束运行这个狗蛋就没了, 有时候变量很多
 
-![](images/Pasted%20image%2020250912202409.png)
+![](images2/Pasted%20image%2020250912202409.png)
 
 我们如果想记录这么一组值可以在脚本上点击`Copy Component`
 
-![](images/Pasted%20image%2020250912202315.png)
+![](images2/Pasted%20image%2020250912202315.png)
 
 结束之后发现狗蛋也没了
 
-![](images/Pasted%20image%2020250912202409.png)
+![](images2/Pasted%20image%2020250912202409.png)
 
 但是我们可以右键点击粘贴
 
-![](images/Pasted%20image%2020250912202606.png)
+![](images2/Pasted%20image%2020250912202606.png)
 
 然后发现狗蛋是可以粘贴上的
 
-![](images/Pasted%20image%2020250912202429.png)
+![](images2/Pasted%20image%2020250912202429.png)
 
 # 🍎 MonoBehaviour
 
@@ -678,8 +678,6 @@ public class MonoBehaviour : Behaviour
     private CancellationTokenSource m_CancellationTokenSource;
 
 ```
-
-## 🌲 MonoBehaviour
 
 我们的`MonoBehaviour`其实也是个对象, 它不仅可以获取挂载的游戏对象, 在它本上也可以操作很多东西, 如下
 
@@ -717,7 +715,7 @@ public class NewBehaviourScript : MonoBehaviour
 
 我们运行工程发现可以打印出这个游戏对象了
 
-![](images/Pasted%20image%2020250912203533.png)
+![](images2/Pasted%20image%2020250912203533.png)
 
 ### 🌸 游戏对象上的属性
 
@@ -770,7 +768,7 @@ public class NewBehaviourScript2 : MonoBehaviour
 
 然后我们把对象拖拽上来, 值得注意的是虽然`MonoBehaviour`是脚本的类型, 但是我们还是需要并且必须拖拽一个对象上去, 而不是把脚本拖拽上去, 后来想了一下大概知道了原因, 是因为一个脚本是可以绑定多个对象的, 如果能把脚本拖上来, 那就不知道是表达的哪个对象了 
 
-![](images/Pasted%20image%2020250912210621.png)
+![](images2/Pasted%20image%2020250912210621.png)
 
 上面的描述没懂也没事, 我们现在想实现在一个脚本中去获取另外一个脚本中的变量, 这样我们就有了读取和控制它的能力了
 
@@ -820,11 +818,11 @@ public class NewBehaviourScript : MonoBehaviour
 
 运行可以看到确实多了个正方体
 
-![](images/Pasted%20image%2020250913182255.png)
+![](images2/Pasted%20image%2020250913182255.png)
 
 可以看到层级里面确实会生成这个游戏对象
 
-![](images/Pasted%20image%2020250913182433.png)
+![](images2/Pasted%20image%2020250913182433.png)
 
 我们可以看到默认的`Transform`, 位置是`0, 0`
 
@@ -847,7 +845,7 @@ public class NewBehaviourScript : MonoBehaviour
 }
 ```
 
-![](images/Pasted%20image%2020250913182823.png)
+![](images2/Pasted%20image%2020250913182823.png)
 
 #### 🌼 创建空物体
 
@@ -875,7 +873,7 @@ public class NewBehaviourScript : MonoBehaviour
 
 然后我们启动程序, 可以看到`NewBehaviourScript2`中的生命周期被调用了
 
-![](images/Pasted%20image%2020250913231311.png)
+![](images2/Pasted%20image%2020250913231311.png)
 
 通过都好也可以给空物体添加多个脚本
 
@@ -903,7 +901,7 @@ public class NewBehaviourScript : MonoBehaviour
 
 我们可以看到, 根据名字是可以找到的
 
-![](images/Pasted%20image%2020250913183754.png)
+![](images2/Pasted%20image%2020250913183754.png)
 
 但是这种效率是比较慢的, 因为它要去遍历场景
 
@@ -928,11 +926,11 @@ public class NewBehaviourScript : MonoBehaviour
 
 可以看到能够找到
 
-![](images/Pasted%20image%2020250913200140.png)
+![](images2/Pasted%20image%2020250913200140.png)
 
 这里的tag不能随意设置, 必须是界面上面的
 
-![](images/Pasted%20image%2020250913200246.png)
+![](images2/Pasted%20image%2020250913200246.png)
 
 否则设置一个奇怪的会找不到
 
@@ -989,17 +987,17 @@ public class NewBehaviourScript : MonoBehaviour
 }
 ```
 
-![](images/Pasted%20image%2020250913213854.png)
+![](images2/Pasted%20image%2020250913213854.png)
 
 比较常用的是关联预设体然后动态创建对象, 比如
 
 随便创建一个空游戏对象挂上脚本, 比如`对象生成器`
 
-![](images/Pasted%20image%2020250913214457.png)
+![](images2/Pasted%20image%2020250913214457.png)
 
 然后把我们的预制体挂上
 
-![](images/Pasted%20image%2020250913214425.png)
+![](images2/Pasted%20image%2020250913214425.png)
 
 在脚本中创建即可
 
@@ -1015,7 +1013,7 @@ public class NewBehaviourScript : MonoBehaviour
 }
 ```
 
-![](images/Pasted%20image%2020250913224353.png)
+![](images2/Pasted%20image%2020250913224353.png)
 
 ### 🌸 删除对象
 
@@ -1199,6 +1197,316 @@ public class NewBehaviourScript : MonoBehaviour
 }
 ```
 
+## 🌲 Transform
+
+游戏对象的位移, 旋转, 缩放, 父子关系, 坐标转换, 它是游戏对象上的属性
+
+### 🌸 Vector3
+
+#### 🌼 创建
+
+主要是用来表示三维坐标系上的一个点或一个向量, 我们接下来就创建一个吧
+
+```cs
+Vector3 vector3 = new Vector3(10, 10, 10);
+```
+
+![](images2/Pasted%20image%2020250914102756.png)
+
+它也有很多的创建方式
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        // 单个赋值
+        Vector3 vector3 = new Vector3();
+        vector3.x = 10;
+        vector3.y = 10;
+        vector3.z = 10;
+
+        // 只传两个值
+        Vector3 vector31 = new Vector3(10, 10);
+        vector31.z = 10;
+
+        // 省略vector
+        Vector3 vector32 = new(10, 10, 10);
+        
+        print(vector3);
+        print(vector31);
+        print(vector32);
+    }
+}
+```
+
+#### 🌼 运算
+
+`Vector3`提供了运算符重载, 所以我们直接使用运算符即可
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        Vector3 v1 = new(10, 10, 10);
+        Vector3 v2 = new(20, 20, 20);
+        print(v1 + v2);
+        print(v1 - v2);
+        print(v1 * 10);
+        print(v2 / 2);
+    }
+}
+```
+
+![](images2/Pasted%20image%2020250914105905.png)
+
+可以看到加法就是`xyz`相加, 减法就是`xyz`相减, 同类减同类
+
+我们可以看到`Vecotor3`之间只支持`加`和`减`, 乘除都是和float来做的
+
+```cs
+[MethodImpl(MethodImplOptions.AggressiveInlining)]
+public static Vector3 operator +(Vector3 a, Vector3 b)
+{
+	return new Vector3(a.x + b.x, a.y + b.y, a.z + b.z);
+}
+
+[MethodImpl(MethodImplOptions.AggressiveInlining)]
+public static Vector3 operator -(Vector3 a, Vector3 b)
+{
+	return new Vector3(a.x - b.x, a.y - b.y, a.z - b.z);
+}
+
+[MethodImpl(MethodImplOptions.AggressiveInlining)]
+public static Vector3 operator -(Vector3 a)
+{
+	return new Vector3(0f - a.x, 0f - a.y, 0f - a.z);
+}
+
+[MethodImpl(MethodImplOptions.AggressiveInlining)]
+public static Vector3 operator *(Vector3 a, float d)
+{
+	return new Vector3(a.x * d, a.y * d, a.z * d);
+}
+
+[MethodImpl(MethodImplOptions.AggressiveInlining)]
+public static Vector3 operator *(float d, Vector3 a)
+{
+	return new Vector3(a.x * d, a.y * d, a.z * d);
+}
+
+[MethodImpl(MethodImplOptions.AggressiveInlining)]
+public static Vector3 operator /(Vector3 a, float d)
+{
+	return new Vector3(a.x / d, a.y / d, a.z / d);
+}
+
+[MethodImpl(MethodImplOptions.AggressiveInlining)]
+public static bool operator ==(Vector3 lhs, Vector3 rhs)
+{
+	float num = lhs.x - rhs.x;
+	float num2 = lhs.y - rhs.y;
+	float num3 = lhs.z - rhs.z;
+	float num4 = num * num + num2 * num2 + num3 * num3;
+	return num4 < 9.99999944E-11f;
+}
+
+[MethodImpl(MethodImplOptions.AggressiveInlining)]
+public static bool operator !=(Vector3 lhs, Vector3 rhs)
+{
+	return !(lhs == rhs);
+}
+```
+
+#### 🌼 向量
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        print(Vector3.zero);
+        print(Vector3.left);
+        print(Vector3.right);
+        print(Vector3.forward);
+        print(Vector3.back);
+        print(Vector3.up);
+        print(Vector3.down);
+    }
+}
+```
+
+我们可以看一下打印结果
+
+```shell
+(0.00, 0.00, 0.00)
+(-1.00, 0.00, 0.00)
+(1.00, 0.00, 0.00)
+(0.00, 0.00, 1.00)
+(0.00, 0.00, -1.00)
+(0.00, 1.00, 0.00)
+(0.00, -1.00, 0.00)
+```
+
+#### 🌼 计算两点之间距离
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        Vector3 v1 = new(10, 10, 10);
+        Vector3 v2 = new(20, 20, 20);
+        print(Vector3.Distance(v1, v2));
+    }
+}
+```
+
+应该打印出数字的, 但是我却打印出一个object, 不知道为啥
+
+```shell
+17.32051
+UnityEngine.MonoBehaviour:print (object)
+NewBehaviourScript:Start () (at Assets/NewBehaviourScript.cs:12)
+```
+
+### 🌸 Transform
+
+#### 🌼 获取
+
+我们可以获取游戏对象上的`Transform`
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        print(transform);
+        print(gameObject.transform);
+    }
+}
+```
+
+### 🌸 Position
+
+表示世界坐标系的位置
+
+#### 🌼 获取
+
+![](images2/Pasted%20image%2020250914114927.png)
+
+比如我们有这样一个游戏对象
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        print(transform.position);
+    }
+}
+```
+
+然后看看结果
+
+```cs
+(12.00, 13.00, 14.00)
+```
+
+然后我们新建一个游戏对象, 把它放在里面
+
+![](images2/Pasted%20image%2020250914115147.png)
+
+可以看到这个`Position`立刻就改变了, 但是我们尝试打印还是
+
+```cs
+(12.00, 13.00, 14.00)
+```
+
+所以我们可以得到结论
+
+- `Inspector`面板上显示的`Position`始终是父对象的
+- 当游戏对象被拖拽到一个`新建的父对象`, 这个坐标系就换成相对于父对象的, 除非父对象的坐标是`0, 0, 0`
+- 但在代码里, 我们的`position`打印的永远是基于世界的, 也就是场景的坐标
+
+当我们把`对象生成器`拿到场景中, 坐标就会恢复
+
+![](images2/Pasted%20image%2020250914115415.png)
+
+#### 🌼 坐标重合
+
+如果我们父对象的坐标是`(0, 0, 0)`, 那么position就是和世界坐标重合的, 这个没毛病
+
+![](images2/Pasted%20image%2020250914120259.png)
+
+#### 🌼 本地坐标
+
+相对于父对象的坐标
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        print(transform.localPosition);
+    }
+}
+```
+
+#### 🌼 修改原值
+
+`position`不支持单个值改变, 只能整体改变
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        transform.position.x = 10;
+    }
+}
+```
+
+
+![](images2/Pasted%20image%2020250914120656.png)
+
+我们需要完整去修改, 比如
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        transform.position = new Vector3(10, 10, 10);
+    }
+}
+```
+
+但是如果我们确实想改一个值, 那就要用点麻烦的操作, 比如我只想改x
+
+```cs
+transform.position = new Vector3(20, transform.position.y, transform.position.z);
+```
+
+或者是先用变量承接, 然后再改
+
+```cs
+Vector3 position = transform.position;
+position.x = 20;
+transform.position = position;
+```
+
+具体原因`DeepSeek`说`Vector3`属于一个结构体, 在取值时相当于取了一个副本, 这个副本是无法修改的, 这个事情在`iOS`开发中View上面的`frame`也是如此, 它是一个`CGRect`结构体
+
+#### 🌼 封装
+
+上面可能对于赋值来说是很麻烦的, 根据我的经验这种通常都可以封装
+
+
+
+
+
 ## 🌲 Component
 
 ### 🌸 添加组件
@@ -1218,7 +1526,7 @@ public class NewBehaviourScript : MonoBehaviour
 
 我们可以在窗口中看到动态添加的脚本
 
-![](images/Pasted%20image%2020250913232010.png)
+![](images2/Pasted%20image%2020250913232010.png)
 
 当然也可以初始化的时候添加脚本, 我们在上面的时候已经学习过了
 
@@ -1245,7 +1553,7 @@ public class NewBehaviourScript : MonoBehaviour
 
 可以看到有多种获取方法, 找到一种适合你的就好, 我们看看打印
 
-![](images/Pasted%20image%2020250912233222.png)
+![](images2/Pasted%20image%2020250912233222.png)
 
 是可以看到打印的, 如果组件没有会返回什么呢, 我们来试试
 
@@ -1262,7 +1570,7 @@ public class NewBehaviourScript : MonoBehaviour
 
 可以看到返回了一个`null`, 因为`NewBehaviourScript2`脚本没有绑定在当前`游戏对象`上
 
-![](images/Pasted%20image%2020250912233353.png)
+![](images2/Pasted%20image%2020250912233353.png)
 
 #### 🌼 获取多个组件
 
@@ -1283,7 +1591,7 @@ public class NewBehaviourScript : MonoBehaviour
 
 挂一个脚本数量就是1, 我挂2个数量是2, 可以看到我这里使用泛型的方式, 然后取的是所有脚本的父类`MonoBehaviour`
 
-![](images/Pasted%20image%2020250913000106.png)
+![](images2/Pasted%20image%2020250913000106.png)
 
 #### 🌼 获取子对象上挂载的组件
 
@@ -1291,9 +1599,9 @@ public class NewBehaviourScript : MonoBehaviour
 
 比如像这样 我在方球的子对象上挂一个脚本
 
-![](images/Pasted%20image%2020250913122550.png)
+![](images2/Pasted%20image%2020250913122550.png)
 
-![](images/Pasted%20image%2020250913122557.png)
+![](images2/Pasted%20image%2020250913122557.png)
 
 然后在方球的脚本上, 也就是父对象的脚本上去获取
 
@@ -1310,11 +1618,11 @@ public class NewBehaviourScript : MonoBehaviour
 
 发现是可以获取的, 这个方法有效, 但是有一个问题, 我的对象一旦失活就不能找了
 
-![](images/Pasted%20image%2020250913122752.png)
+![](images2/Pasted%20image%2020250913122752.png)
 
 然后我们再次找, 就会出现`Null`
 
-![](images/Pasted%20image%2020250913122811.png)
+![](images2/Pasted%20image%2020250913122811.png)
 
 这个时候我们如果还想找就要传递一个参数, 我们来看这个函数的定义
 
@@ -1417,7 +1725,7 @@ public class NewBehaviourScript : MonoBehaviour
 
 可以看到当`timeScale`不等于1时, 两个开始不同
 
-![](images/Pasted%20image%2020250913234758.png)
+![](images2/Pasted%20image%2020250913234758.png)
 
 ## 🌲 游戏开始到现在的时间
 
@@ -1443,5 +1751,19 @@ private void FixedUpdate()
     print("物理帧间隔时间不受scaled影响:" + Time.fixedUnscaledDeltaTime);
     print("物理帧总时间:" + Time.fixedTime);
     print("物理帧总时间不受scaled影响:" + Time.fixedUnscaledTime);
+}
+```
+
+## 🌲 总帧数
+
+这个帧数是启动游戏一共跑了多少帧, 我们可以看到是不断递增的
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Update()
+    {
+        print("总帧数:" + Time.frameCount);
+    }
 }
 ```

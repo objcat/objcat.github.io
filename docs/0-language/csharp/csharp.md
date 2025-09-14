@@ -1354,47 +1354,6 @@ public async static Task<int> Request2()
 }
 ```
 
-# 🍎 线程
-
-## 🌲 创建线程
-
-```cs
-new Thread(thread).Start();
-
-// 匿名
-new Thread(() =>
-{
-	Console.WriteLine(123);
-}).Start();
-```
-
-# 🍎 扩展
-
-## 🌲 扩展实例方法
-
-```cs
-fun main() {
-    var str: String = "123"
-    println(str.lenth2())
-}
-
-fun String.lenth2(): Int {
-    return this.length;
-}
-```
-
-## 🌲 扩展静态方法
-
-```cs
-fun main() {
-    String.Hello()
-}
-
-fun String.Companion.Hello() {
-    println("hello")
-}
-```
-
 # 🍎 按键精灵
 
 ## 🌲 sendKey

@@ -20,8 +20,23 @@
               "icon": "lucide-file",
               "title": "unity3d"
             }
+          },
+          {
+            "id": "89a745c283fca5e7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "docs/7-software/unity/script/script.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "script"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -142,13 +157,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/7-software/unity/unity3d/unity3d.md",
+                "file": "docs/7-software/unity/script/script.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "unity3d 的大纲"
+              "title": "script 的大纲"
             }
           }
         ],
@@ -168,23 +183,23 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "38829127db612b2a",
+  "active": "89a745c283fca5e7",
   "lastOpenFiles": [
-    "docs/7-software/unity/unity3d/images/Pasted image 20250914183100.png",
-    "docs/7-software/unity/unity3d/images/Pasted image 20250914183036.png",
-    "docs/7-software/unity/unity3d/images/Pasted image 20250914183015.png",
-    "docs/7-software/unity/unity3d/images/Pasted image 20250914182448.png",
-    "docs/7-software/unity/unity3d/images/Pasted image 20250914182424.png",
-    "docs/7-software/unity/unity3d/images/Pasted image 20250914173355.png",
-    "docs/7-software/unity/unity3d/images/Pasted image 20250914173045.png",
-    "docs/7-software/unity/unity3d/images/Pasted image 20250914172904.png",
     "docs/7-software/unity/unity3d/unity3d.md",
-    "docs/7-software/unity/unity3d/images/Pasted image 20250914172922.png",
-    "docs/7-software/unity/unity3d/images/Pasted image 20250914172752.png",
-    "docs/7-software/unity/unity3d/images/Pasted image 20250914171844.png",
     "docs/7-software/unity/script/script.md",
-    "docs/0-language/csharp/csharp.md",
+    "docs/7-software/unity/script/images/Pasted image 20250914192756.png",
     "README.md",
+    "docs/7-software/unity/script/images/Pasted image 20250914190325.png",
+    "docs/7-software/unity/script/images/Pasted image 20250914190228.png",
+    "docs/7-software/unity/script/images/Pasted image 20250914190106.png",
+    "docs/7-software/unity/script/images",
+    "docs/7-software/unity/unity3d/images/Pasted image 20250914184646.png",
+    "docs/7-software/unity/unity3d/images/Pasted image 20250914184627.png",
+    "docs/7-software/unity/unity3d/images/Pasted image 20250914184604.png",
+    "docs/7-software/unity/unity3d/images/Pasted image 20250914184514.png",
+    "docs/7-software/unity/unity3d/images/Pasted image 20250914184246.png",
+    "docs/7-software/unity/unity3d/images/Pasted image 20250914183100.png",
+    "docs/0-language/csharp/csharp.md",
     "docs/7-software/unity/编译原理/编译原理.md",
     "docs/6-project/zzjb/zzjb-unity/zzjb-unity.md",
     "docs/7-software/unity/ioc/ioc.md",
@@ -208,7 +223,6 @@
     "docs/7-software/fork/fork.md",
     "docs/1-tecnology/csharp/luban/luban.md",
     "docs/7-software/fork/images",
-    "docs/7-software/fork",
     "docs/6-project/zzjb/devplan/devplan.md",
     "docs/6-project/zzjb/design/design.md",
     "docs/1-tecnology/java/iogame/iogame.md",

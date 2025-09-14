@@ -1535,6 +1535,97 @@ public class NewBehaviourScript : MonoBehaviour
 }
 ```
 
+### 🌸 移动
+
+#### 🌼 三维坐标系计算公式
+
+![](images/Pasted%20image%2020250914190106.png)
+
+![](images/Pasted%20image%2020250914190228.png)
+
+![](images/Pasted%20image%2020250914190325.png)
+
+#### 🌼 向z轴匀速直线运动
+
+知道了理论知识, 我们计算起来就比较简单了, 如果我们想让一个物体向一个方位移动, 就要这么做
+
+`方向 * 速度 * 时间`, 这个时间可能有点难懂, 它就是每一帧所用的时间, 所以我们的物体应该是一个沿着z轴的匀速直线运动
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Update()
+    {
+        int speed = 1;
+        transform.position = transform.position + (transform.forward * speed * Time.deltaTime);
+    }
+}
+```
+
+顺便提一下这个方向就是`transform.forward`数值为(0, 0, 1), 或者你也可以用`+=`效果也是一样的
+
+```cs
+transform.position += transform.forward * speed * Time.deltaTime;
+```
+
+`Unity`也给我提供了现成的方法
+
+```cs
+int speed = 1;
+transform.Translate(transform.forward * speed * Time.deltaTime);
+```
+
+用哪个都可以, 自己决定
+
+#### 🌼 向x轴移动匀速直线运动
+
+知道了如何计算z轴, 那么计算x轴也是轻松的
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Update()
+    {
+        int speed = 1;
+        transform.position = transform.position + (transform.right * speed * Time.deltaTime);
+    }
+}
+```
+
+#### 🌼 向y轴移动匀速直线运动
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Update()
+    {
+        int speed = 1;
+        transform.position = transform.position + (transform.up * speed * Time.deltaTime);
+    }
+}
+```
+
+#### 🌼 向世界朝向动
+
+这个也简单, 我们上面写的都是朝物体的朝向动, 那么如果物体和世界朝向不同的时候, 我们想让物体沿着世界朝向动怎么做呢?
+
+![](images/Pasted%20image%2020250914192756.png)
+
+我自己画的红色箭头是世界的z轴朝向, 如果想沿着这个动, 而不是物体本身的z方向, 这个其实也很简单, 我们只需要把方向换成定义好的世界坐标方向`Vector3.forward`
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Update()
+    {
+        int speed = 1;
+        transform.position = transform.position + (Vector3.forward * speed * Time.deltaTime);
+    }
+}
+```
+
+我来说明一下, 如果物体与世界朝向相同, 那么`Vector3.forward`和`transform.forward`是相同的, 这个时候用哪个都可以, 但如果与世界朝向不同, 那么就需要根据不同的需求进行调整了
+
 ## 🌲 Component
 
 ### 🌸 添加组件

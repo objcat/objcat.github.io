@@ -2033,6 +2033,59 @@ public class NewBehaviourScript : MonoBehaviour
 - 可以找失活的儿子, GameObject.Find只能找激活的
 - 找不了自己和孙子, 只能找儿子
 
+#### 🌼 扩展找孙子
+
+我们通过C#的扩展+递归去找
+
+```cs
+public static class ZYGameObjectExtension
+{
+    /// <summary>
+    /// 无限找儿子
+    /// </summary>
+    /// <param name="gameObject">游戏对象</param>
+    /// <param name="name">要找的对象名</param>
+    /// <returns></returns>
+    public static GameObject ZYFind(this GameObject gameObject, string name)
+    {
+        // 如果对象为空, 返回空
+        if (gameObject == null) return null;
+        // 找儿子
+        Transform transform = gameObject.transform.Find(name);
+        // 儿子找不到就去更深层递归
+        if (!transform)
+        {
+            for (int i = 0; i < gameObject.transform.childCount; i++)
+            {
+                Transform transformChild = gameObject.transform.GetChild(i);
+                return transformChild.gameObject.ZYFind(name);
+            }
+        }
+        else
+        {
+            return transform.gameObject;
+        }
+
+        return null;
+    }
+}
+```
+
+使用起来是这样
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        print(gameObject.ZYFind("Cube"));
+        print(gameObject.ZYFind("Sphere"));
+        print(gameObject.ZYFind("三毛"));
+        print(gameObject.ZYFind("Plane"));
+    }
+}
+```
+
 #### 🌼 根据索引找儿子
 
 ```cs
@@ -2115,6 +2168,12 @@ public class NewBehaviourScript : MonoBehaviour
 运行后
 
 ![](images/Pasted%20image%2020250915184039.png)
+
+那设置成最后一个儿子也同理了
+
+```cs
+gameObject.transform.GetChild(1).SetAsLastSibling();
+```
 
 ## 🌲 Component
 

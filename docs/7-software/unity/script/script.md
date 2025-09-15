@@ -903,7 +903,7 @@ public class NewBehaviourScript : MonoBehaviour
 
 ![](images2/Pasted%20image%2020250913183754.png)
 
-但是这种效率是比较慢的, 因为它要去遍历场景
+需要注意的是, 如果对象是失活的无法查找
 
 #### 🌼 FindWithTag
 
@@ -1195,105 +1195,6 @@ public class NewBehaviourScript : MonoBehaviour
         print($"Hello {num}");
     }
 }
-```
-
-### 🌸 父子关系
-
-#### 🌼 获取
-
-如果没有就返回null
-
-```cs
-public class NewBehaviourScript : MonoBehaviour
-{
-    private void Start()
-    {
-        Transform parentTransform = gameObject.transform.parent;
-        print(parentTransform);
-    }
-}
-```
-
-#### 🌼 断绝父子关系
-
-```cs
-gameObject.transform.parent = null;
-// 或
-gameObject.transform.SetParent(null);
-```
-
-#### 🌼 绑定父子关系
-
-```cs
-public class NewBehaviourScript : MonoBehaviour
-{
-    public GameObject NewGameObject;
-    private void Start()
-    {
-        gameObject.transform.parent = NewGameObject.transform;
-        // 或
-        gameObject.transform.SetParent(NewGameObject.transform);
-    }
-}
-```
-
-可以看到确实绑定上了
-
-![](images/Pasted%20image%2020250915122752.png)
-
-![](images/Pasted%20image%2020250915122741.png)
-
-绑定后我们发现这连个物体就可以整体拖动了, 如果这个游戏对象以前有爸爸会卸掉以前的爸爸, 然后认一个新爸爸
-
-#### 🌼 保留世界坐标系信息
-
-`SetParent`有第二个参数, 可以保留世界坐标信息, 不受父对象影响
-
-```cs
-public class NewBehaviourScript : MonoBehaviour
-{
-    public GameObject NewGameObject;
-    private void Start()
-    {
-        gameObject.transform.SetParent(NewGameObject.transform, true);
-    }
-}
-```
-
-我上两个图你就明白了
-
-- 原来
-
-![](images/Pasted%20image%2020250915123613.png)
-
-- 保留
-
-![](images/Pasted%20image%2020250915123625.png)
-
-- 不保留
-
-![](images/Pasted%20image%2020250915123658.png)
-
-明白了吧, 当一个对象放到父对象中会受父对象的`Transform`影响, 如果想不受影响, 就把第二个参数设置为`true`
-
-#### 🌼 抛弃所有儿子
-
-```cs
-public class NewBehaviourScript : MonoBehaviour
-{
-    private void Start()
-    {
-        gameObject.transform.DetachChildren();
-    }
-}
-```
-
-#### 🌼 查找儿子
-
-与查找游戏对象类似
-
-```cs
-gameObject.transform.Find("Cube");
 ```
 
 ## 🌲 Transform
@@ -2019,6 +1920,201 @@ public class NewBehaviourScript : MonoBehaviour
 ```
 
 然后`lookAt`可以传递一个`Transform`来实现看向, 到这里我发现一个规律, 可以看到`Transform`虽然不是对象, 但是它要把对象拖上去获取, 这跟绑定脚本是同理的, 比如我定义一个`MonoBehavior`, 然后也是拖拽对象上去, 对象的脚本就会自动的挂载上去了
+
+### 🌸 父子关系
+
+为什么写在`Transform`模块而不是`GameObject`呢, 很明显这个寻找需要通过`Transform`相关的属性和方法
+
+#### 🌼 获取
+
+如果没有就返回null
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        Transform parentTransform = gameObject.transform.parent;
+        print(parentTransform);
+    }
+}
+```
+
+#### 🌼 断绝父子关系
+
+```cs
+gameObject.transform.parent = null;
+// 或
+gameObject.transform.SetParent(null);
+```
+
+#### 🌼 绑定父子关系
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    public GameObject NewGameObject;
+    private void Start()
+    {
+        gameObject.transform.parent = NewGameObject.transform;
+        // 或
+        gameObject.transform.SetParent(NewGameObject.transform);
+    }
+}
+```
+
+可以看到确实绑定上了
+
+![](images/Pasted%20image%2020250915122752.png)
+
+![](images/Pasted%20image%2020250915122741.png)
+
+绑定后我们发现这连个物体就可以整体拖动了, 如果这个游戏对象以前有爸爸会卸掉以前的爸爸, 然后认一个新爸爸
+
+#### 🌼 保留世界坐标系信息
+
+`SetParent`有第二个参数, 可以保留世界坐标信息, 不受父对象影响
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    public GameObject NewGameObject;
+    private void Start()
+    {
+        gameObject.transform.SetParent(NewGameObject.transform, true);
+    }
+}
+```
+
+我上两个图你就明白了
+
+- 原来
+
+![](images/Pasted%20image%2020250915123613.png)
+
+- 保留
+
+![](images/Pasted%20image%2020250915123625.png)
+
+- 不保留
+
+![](images/Pasted%20image%2020250915123658.png)
+
+明白了吧, 当一个对象放到父对象中会受父对象的`Transform`影响, 如果想不受影响, 就把第二个参数设置为`true`
+
+#### 🌼 抛弃所有儿子
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        gameObject.transform.DetachChildren();
+    }
+}
+```
+
+#### 🌼 根据对象名找儿子
+
+与查找游戏对象类似`GameObject.Find`
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        print(gameObject.transform.Find("Cube"));
+    }
+}
+```
+
+- 明显比`GameObject`全局找效率高
+- 需要确定`gameObject`父再找子
+- 可以找失活的儿子, GameObject.Find只能找激活的
+- 找不了自己和孙子, 只能找儿子
+
+#### 🌼 根据索引找儿子
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        print(gameObject.transform.GetChild(0));
+    }
+}
+```
+
+#### 🌼 获取儿子数量
+
+```cs
+int childCount = gameObject.transform.childCount;
+print(childCount);
+// 1
+```
+
+#### 🌼 查找所有儿子
+
+![](images/Pasted%20image%2020250915183201.png)
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        for (int i = 0; i < gameObject.transform.childCount; i++)
+        {
+            print(gameObject.transform.GetChild(i).name);
+        }
+    }
+}
+// Sphere
+// Capsule
+```
+
+#### 🌼 判断是不是父对象
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        print(gameObject.transform.GetChild(0).IsChildOf(gameObject.transform));
+    }
+}
+```
+
+#### 🌼 获取儿子索引
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        print(gameObject.transform.GetChild(0).GetSiblingIndex());
+    }
+}
+```
+
+#### 🌼 把自己设置为第一个儿子
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        gameObject.transform.GetChild(1).SetAsFirstSibling();
+    }
+}
+```
+
+运行前
+
+![](images/Pasted%20image%2020250915183201.png)
+
+运行后
+
+![](images/Pasted%20image%2020250915184039.png)
 
 ## 🌲 Component
 

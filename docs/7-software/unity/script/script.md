@@ -1159,7 +1159,7 @@ public class NewBehaviourScript : MonoBehaviour
 }
 ```
 
-#### 🌼 发送消息
+#### 🌼 发送消息执行方法
 
 也可以使用`Unity`提供的方法去找
 
@@ -1195,6 +1195,105 @@ public class NewBehaviourScript : MonoBehaviour
         print($"Hello {num}");
     }
 }
+```
+
+### 🌸 父子关系
+
+#### 🌼 获取
+
+如果没有就返回null
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        Transform parentTransform = gameObject.transform.parent;
+        print(parentTransform);
+    }
+}
+```
+
+#### 🌼 断绝父子关系
+
+```cs
+gameObject.transform.parent = null;
+// 或
+gameObject.transform.SetParent(null);
+```
+
+#### 🌼 绑定父子关系
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    public GameObject NewGameObject;
+    private void Start()
+    {
+        gameObject.transform.parent = NewGameObject.transform;
+        // 或
+        gameObject.transform.SetParent(NewGameObject.transform);
+    }
+}
+```
+
+可以看到确实绑定上了
+
+![](images/Pasted%20image%2020250915122752.png)
+
+![](images/Pasted%20image%2020250915122741.png)
+
+绑定后我们发现这连个物体就可以整体拖动了, 如果这个游戏对象以前有爸爸会卸掉以前的爸爸, 然后认一个新爸爸
+
+#### 🌼 保留世界坐标系信息
+
+`SetParent`有第二个参数, 可以保留世界坐标信息, 不受父对象影响
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    public GameObject NewGameObject;
+    private void Start()
+    {
+        gameObject.transform.SetParent(NewGameObject.transform, true);
+    }
+}
+```
+
+我上两个图你就明白了
+
+- 原来
+
+![](images/Pasted%20image%2020250915123613.png)
+
+- 保留
+
+![](images/Pasted%20image%2020250915123625.png)
+
+- 不保留
+
+![](images/Pasted%20image%2020250915123658.png)
+
+明白了吧, 当一个对象放到父对象中会受父对象的`Transform`影响, 如果想不受影响, 就把第二个参数设置为`true`
+
+#### 🌼 抛弃所有儿子
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        gameObject.transform.DetachChildren();
+    }
+}
+```
+
+#### 🌼 查找儿子
+
+与查找游戏对象类似
+
+```cs
+gameObject.transform.Find("Cube");
 ```
 
 ## 🌲 Transform
@@ -1880,9 +1979,11 @@ public class NewBehaviourScript : MonoBehaviour
 
 ### 🌸 看向
 
+#### 🌼 看向一个点
+
 ![](images/Pasted%20image%2020250915004122.png)
 
-所谓看向就是让z轴指向球
+所谓看向一个点, 就是比如我们在(0, 0)创建一个球, 然后让方块看向球, 也就是z轴始终指向球
 
 ```cs
 public class NewBehaviourScript : MonoBehaviour
@@ -1897,6 +1998,27 @@ public class NewBehaviourScript : MonoBehaviour
 达到的效果是, 无论我们怎么移动方, z轴都指向原点的球
 
 ![](images/Pasted%20image%2020250915004253.png)
+
+#### 🌼 看向一个对象
+
+我们也可以看向一个对象
+
+![](images/Pasted%20image%2020250915121506.png)
+
+创建一个变量, 然后把球拖上来, 这里就不细讲了
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    public Transform SphereTransform;
+    private void Update()
+    {
+        transform.LookAt(SphereTransform);
+    }
+}
+```
+
+然后`lookAt`可以传递一个`Transform`来实现看向, 到这里我发现一个规律, 可以看到`Transform`虽然不是对象, 但是它要把对象拖上去获取, 这跟绑定脚本是同理的, 比如我定义一个`MonoBehavior`, 然后也是拖拽对象上去, 对象的脚本就会自动的挂载上去了
 
 ## 🌲 Component
 

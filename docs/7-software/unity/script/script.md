@@ -2068,10 +2068,11 @@ public class NewBehaviourScript : MonoBehaviour
 {
     private void Start()
     {
-        print(gameObject.ZYFind("Cube"));
-        print(gameObject.ZYFind("Sphere"));
-        print(gameObject.ZYFind("三毛"));
-        print(gameObject.ZYFind("Plane"));
+        print(gameObject.ZYFindOne("Cube"));
+        print(gameObject.ZYFindOne("Sphere"));
+        print(gameObject.ZYFindOne("三毛"));
+        print(gameObject.ZYFindOne("Plane"));
+        print(gameObject.ZYFindOne("Quad"));
     }
 }
 ```

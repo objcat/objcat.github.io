@@ -2033,41 +2033,31 @@ public class NewBehaviourScript : MonoBehaviour
 - 可以找失活的儿子, GameObject.Find只能找激活的
 - 找不了自己和孙子, 只能找儿子
 
-#### 🌼 扩展找孙子
+#### 🌼 封装找儿子
 
-我们通过C#的扩展+递归去找
+我们通过`C#`的`扩展+递归`去找
 
 ```cs
-public static class ZYGameObjectExtension
+/// <summary>
+/// 迭代找儿子
+/// </summary>
+/// <param name="gameObject">游戏对象</param>
+/// <param name="name">要找的对象名</param>
+/// <returns></returns>
+public static Transform ZYFindOne(this GameObject gameObject, string name)
 {
-    /// <summary>
-    /// 无限找儿子
-    /// </summary>
-    /// <param name="gameObject">游戏对象</param>
-    /// <param name="name">要找的对象名</param>
-    /// <returns></returns>
-    public static GameObject ZYFind(this GameObject gameObject, string name)
+    // 如果对象为空, 返回空
+    if (gameObject == null) return null;
+    // 找儿子
+    Transform transform = gameObject.transform.Find(name);
+    if (transform != null) return transform;
+    // 儿子找不到就去更深层递归
+    for (int i = 0; i < gameObject.transform.childCount; i++)
     {
-        // 如果对象为空, 返回空
-        if (gameObject == null) return null;
-        // 找儿子
-        Transform transform = gameObject.transform.Find(name);
-        // 儿子找不到就去更深层递归
-        if (!transform)
-        {
-            for (int i = 0; i < gameObject.transform.childCount; i++)
-            {
-                Transform transformChild = gameObject.transform.GetChild(i);
-                return transformChild.gameObject.ZYFind(name);
-            }
-        }
-        else
-        {
-            return transform.gameObject;
-        }
-
-        return null;
+        Transform childTransform = gameObject.transform.GetChild(i).gameObject.ZYFindOne(name);
+        if (childTransform != null) return childTransform;
     }
+    return null;
 }
 ```
 

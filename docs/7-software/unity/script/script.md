@@ -2049,13 +2049,13 @@ public static Transform ZYFindOne(this GameObject gameObject, string name)
     // 如果对象为空, 返回空
     if (gameObject == null) return null;
     // 找儿子
-    Transform transform = gameObject.transform.Find(name);
-    if (transform != null) return transform;
-    // 儿子找不到就去更深层递归
+    Transform findTransform = gameObject.transform.Find(name);
+    if (findTransform != null) return findTransform;
+    // 儿子找不到就去更深层递归孙子
     for (int i = 0; i < gameObject.transform.childCount; i++)
     {
-        Transform childTransform = gameObject.transform.GetChild(i).gameObject.ZYFindOne(name);
-        if (childTransform != null) return childTransform;
+        Transform result = gameObject.transform.GetChild(i).gameObject.ZYFindOne(name);
+        if (result != null) return result;
     }
     return null;
 }

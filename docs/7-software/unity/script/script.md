@@ -2336,6 +2336,80 @@ public class NewBehaviourScript : MonoBehaviour
 }
 ```
 
+## 🌲 坐标转换
+
+用途是可以帮助我们大概判断一个世界坐标系上的点在我们某个对象的哪个方位
+
+### 🌸 世界坐标转本地坐标
+
+绑定的游戏对象必须和世界坐标系不同, 否则不能体现
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        // 世界坐标系的点 转换为 相对本地坐标系的点 受缩放影响
+        print(gameObject.transform.InverseTransformPoint(Vector3.forward));
+        // 世界坐标系的方向 转换为 相对本地坐标系方向 不受缩放影响
+        print(gameObject.transform.InverseTransformDirection(Vector3.forward));
+        // 世界坐标系的方向 转换为 相对本地坐标系方向 受缩放影响
+        print(gameObject.transform.InverseTransformVector(Vector3.forward));
+    }
+}
+```
+
+游戏对象和世界坐标重合
+
+```shell
+(0.00, 0.00, 1.00)
+UnityEngine.MonoBehaviour:print (object)
+NewBehaviourScript:Start () (at Assets/NewBehaviourScript.cs:11)
+
+(0.00, 0.00, 1.00)
+UnityEngine.MonoBehaviour:print (object)
+NewBehaviourScript:Start () (at Assets/NewBehaviourScript.cs:13)
+
+(0.00, 0.00, 1.00)
+UnityEngine.MonoBehaviour:print (object)
+NewBehaviourScript:Start () (at Assets/NewBehaviourScript.cs:15)
+```
+
+游戏对象Y的角度45
+
+```shell
+(-0.71, 0.00, 0.71)
+UnityEngine.MonoBehaviour:print (object)
+NewBehaviourScript:Start () (at Assets/NewBehaviourScript.cs:11)
+
+(-0.71, 0.00, 0.71)
+UnityEngine.MonoBehaviour:print (object)
+NewBehaviourScript:Start () (at Assets/NewBehaviourScript.cs:13)
+
+(-0.71, 0.00, 0.71)
+UnityEngine.MonoBehaviour:print (object)
+NewBehaviourScript:Start () (at Assets/NewBehaviourScript.cs:15)
+```
+
+### 🌸 本地坐标转世界坐标
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        // 本地坐标系的点 转换为 世界坐标系的点 受缩放影响 (最重要)
+        print(gameObject.transform.TransformPoint(Vector3.forward));
+        // 本地坐标系的方向 转换为 世界坐标系的方向 不受缩放影响
+        print(gameObject.transform.TransformDirection(Vector3.forward));
+        // 本地坐标系的方向 转换为 世界坐标系的方向 受缩放影响
+        print(gameObject.transform.TransformVector(Vector3.forward));
+    }
+}
+```
+
+其中`本地坐标系的点 转换为 世界坐标系的点`是最重要的, 举个例子是假如我想在我的玩家前面两格的距离放一团火, 我需要把这个位置的坐标转化成世界坐标 然后渲染火焰, 而不是把这个火做成玩家的子组件
+
 # 🍎 Time
 
 时间相关的类
@@ -2426,3 +2500,26 @@ public class NewBehaviourScript : MonoBehaviour
     }
 }
 ```
+
+# 🍎 练习题
+
+## 🌲 练习1
+
+一个物体A, 不管它在什么位置, 只要执行这个方法, 就可以在它的左前方(-1, 0, 1)处创建一个物体
+
+这道题还是比较简单的, 我们首先设置一个菜单`ContextMenu`也就是给脚本的...中添加一个按钮叫`左前方创建物体`
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    [ContextMenu("左前方创建物体")]
+    private void CreateGameObject()
+    {
+        Vector3 vector3 = transform.TransformPoint(new Vector3(-1, 0, 1));
+        GameObject gameObject1 = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        gameObject1.transform.position = vector3;
+    }
+}
+```
+
+然后当点击的时候把这个左前方的坐标转换成世界的坐标, 赋值给刚创建出来的对象即可

@@ -2410,6 +2410,126 @@ public class NewBehaviourScript : MonoBehaviour
 
 其中`本地坐标系的点 转换为 世界坐标系的点`是最重要的, 举个例子是假如我想在我的玩家前面两格的距离放一团火, 我需要把这个位置的坐标转化成世界坐标 然后渲染火焰, 而不是把这个火做成玩家的子组件
 
+# 🍎 Input
+
+## 🌲 鼠标
+
+### 🌸 鼠标位置
+
+屏幕的左下角是`(0, 0, 0)`点
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Update()
+    {
+        print(Input.mousePosition);
+    }
+}
+```
+
+鼠标移动只会产生`2d`屏幕的坐标, 我们可以看到z始终是0, 因为鼠标就是穿行在2d平面内的
+
+```shell
+(201.00, -16.00, 0.00)
+
+(201.00, -17.00, 0.00)
+
+(200.00, -17.00, 0.00)
+```
+
+### 🌸 鼠标按键
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            print("鼠标左键按下了!");
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            print("鼠标右键按下了!");
+        }
+
+        if (Input.GetKeyUp(KeyCode.Mouse0))
+        {
+            print("鼠标左键抬起了!");
+        }
+
+        if (Input.GetKeyUp(KeyCode.Mouse1))
+        {
+            print("鼠标右键抬起了!");
+        }
+
+        // 0左键 1右键 2中键
+        if(Input.GetMouseButton(1))
+        {
+            print("右键长按");
+        }
+
+        // 向上滚是 1 乡下滚是 -1
+        print("滚轮状态" + Input.mouseScrollDelta);
+    }
+}
+```
+
+## 🌲 键盘
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            print("W按下");
+        }
+
+        if (Input.GetKeyUp(KeyCode.W))
+        {
+            print("W抬起");
+        }
+
+        if (Input.GetKey(KeyCode.W))
+        {
+            print("W长按");
+        }
+    }
+}
+```
+
+## 🌲 检测默认轴输入
+
+
+这是`Unity`给我们提供的原生的方法来检测玩家输入, 我们简单了解一下
+
+### 🌸 预制检测项
+
+`Edit -> Project Settings -> Input Manager`
+
+![](images/Pasted%20image%2020250919003042.png)
+
+### 🌸 开始检测
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Update()
+    {
+        // 监控AD和左右箭头 从左到右数值从 -1 ~ 1 变化
+        print("Horizontal" + Input.GetAxis("Horizontal"));
+
+        // 监控WS和上下箭头 从下到上 -1 ~ 1 变化
+        print("Vertical" + Input.GetAxis("Vertical"));
+    }
+}
+```
+
+
 # 🍎 Time
 
 时间相关的类
@@ -2503,23 +2623,4 @@ public class NewBehaviourScript : MonoBehaviour
 
 # 🍎 练习题
 
-## 🌲 练习1
-
-一个物体A, 不管它在什么位置, 只要执行这个方法, 就可以在它的左前方(-1, 0, 1)处创建一个物体
-
-这道题还是比较简单的, 我们首先设置一个菜单`ContextMenu`也就是给脚本的...中添加一个按钮叫`左前方创建物体`
-
-```cs
-public class NewBehaviourScript : MonoBehaviour
-{
-    [ContextMenu("左前方创建物体")]
-    private void CreateGameObject()
-    {
-        Vector3 vector3 = transform.TransformPoint(new Vector3(-1, 0, 1));
-        GameObject gameObject1 = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        gameObject1.transform.position = vector3;
-    }
-}
-```
-
-然后当点击的时候把这个左前方的坐标转换成世界的坐标, 赋值给刚创建出来的对象即可
+[practice](../practice/practice.md)

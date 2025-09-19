@@ -2502,12 +2502,102 @@ public class NewBehaviourScript : MonoBehaviour
 }
 ```
 
+## 🌲 手柄按键
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        // 得到连接的手柄的所有按钮名字
+        string[] joystickNames = Input.GetJoystickNames();
+        foreach (var item in joystickNames)
+        {
+            print(item);
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetButtonDown("Jump"))
+        {
+            print("Jump按下了");
+        }
+
+        if (Input.GetButtonUp("Jump"))
+        {
+            print("Jump抬起了");
+        }
+    }
+}
+```
+
+## 🌲 不区分
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Update()
+    {
+        if(Input.anyKeyDown)
+        {
+            print("有一个键按下");
+            // 判断按下的是哪个键
+            print(Input.inputString);
+        }
+
+        if (Input.anyKey)
+        {
+            print("有一个键长按");
+        }
+    }
+}
+```
+
+## 🌲 移动设备触摸
+
+### 🌸 捕获触摸
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Update()
+    {
+        if (Input.touchCount > 0)
+        {
+            // 获取触摸的点
+            Touch t1 = Input.GetTouch(0);
+            // 获取位置等信息
+            print(t1.position);
+            print(t1.deltaPosition);
+        }
+    }
+}
+```
+
+注意这里需要切换到`模拟器`才能捕捉到
+
+![](images/Pasted%20image%2020250920004047.png)
+
+### 🌸 启用多点触控
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        Input.multiTouchEnabled = true;
+    }
+}
+```
+
 ## 🌲 检测默认轴输入
 
-
-这是`Unity`给我们提供的原生的方法来检测玩家输入, 我们简单了解一下
+这是`Unity`给我们提供的原生的方法来检测玩家的`持续输入`
 
 ### 🌸 预制检测项
+
+我们先在配置项中看一下可以监控哪些
 
 `Edit -> Project Settings -> Input Manager`
 
@@ -2520,11 +2610,16 @@ public class NewBehaviourScript : MonoBehaviour
 {
     private void Update()
     {
-        // 监控AD和左右箭头 从左到右数值从 -1 ~ 1 变化
-        print("Horizontal" + Input.GetAxis("Horizontal"));
-
-        // 监控WS和上下箭头 从下到上 -1 ~ 1 变化
-        print("Vertical" + Input.GetAxis("Vertical"));
+        // 监控AD和左右箭头 从左到右数值从 -1 ~ 1 
+        print("键盘横向持续" + Input.GetAxis("Horizontal"));
+        // 监控WS和上下箭头 从下到上 -1 ~ 1 
+        print("键盘竖向持续" + Input.GetAxis("Vertical"));
+        // 鼠标横向移动时 从左到右 -1 ~ 1 
+        print("鼠标横向持续" + Input.GetAxis("Mouse X"));
+        // 鼠标横向移动时 从下到上 -1 ~ 1 
+        print("鼠标竖向持续" + Input.GetAxis("Mouse Y"));
+        // 也是监测移动 但是只有 -1 0 1 没有中间值
+        print("键盘横向持续Raw" + Input.GetAxis("Horizontal"));
     }
 }
 ```

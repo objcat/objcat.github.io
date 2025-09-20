@@ -57,3 +57,139 @@ public class NewBehaviourScript : MonoBehaviour
 效果如下
 
 ![](images/Pasted%20image%2020250918124256.png)
+
+# 🍎 方位控制
+
+## 🌲 练习1
+
+### 🌸 解法1(不推荐)
+
+#### 🌼 带转弯
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    public int speed = 10;
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.W))
+        {
+            gameObject.AddZ(speed * Time.deltaTime);
+        }
+
+        if (Input.GetKey(KeyCode.S))
+        {
+            gameObject.AddZ(-speed * Time.deltaTime);
+        }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            gameObject.AddAnglesY(-speed * Time.deltaTime);
+        }
+
+        if (Input.GetKey(KeyCode.D))
+        {
+            gameObject.AddAnglesY(speed * Time.deltaTime);
+        }
+    }
+}
+```
+
+但是我们发现这个转弯并不是很正常, 因为它是直来直去的, 可以看看解法2
+
+#### 🌼 直来直去
+
+本解法就是监听键盘的按键, 用`wasd`控制坦克的前进后退, 左右转向, 这里为了方便, 我就直接用封装类来做了
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    public int speed = 10;
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.W))
+        {
+            gameObject.AddZ(speed * Time.deltaTime);
+        }
+
+        if (Input.GetKey(KeyCode.S))
+        {
+            gameObject.AddZ(-speed * Time.deltaTime);
+        }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            gameObject.AddX(-speed * Time.deltaTime);
+        }
+
+        if (Input.GetKey(KeyCode.D))
+        {
+            gameObject.AddX(speed * Time.deltaTime);
+        }
+    }
+}
+```
+
+因为`position`是一个结构体, 不能单独赋值, 为了简化我这里简单的封装了一下
+
+```cs
+public static class ZYGameObjectExtension
+{
+    public static void AddX(this GameObject gameObject, float x)
+    {
+        Vector3 position = gameObject.transform.position;
+        position.x += x;
+        gameObject.transform.position = position;
+    }
+
+    public static void AddZ(this GameObject gameObject, float z)
+    {
+        Vector3 position = gameObject.transform.position;
+        position.z += z;
+        gameObject.transform.position = position;
+    }
+
+	public static void AddAnglesY(this GameObject gameObject, float y)
+	{
+    Vector3 angles = gameObject.transform.rotation.eulerAngles;
+    angles.y += y;
+    gameObject.transform.eulerAngles = angles;
+	}
+}
+```
+
+### 🌸 解法2(推荐)
+
+我们可以直接使用`translate`方法
+
+#### 🌼 带转弯
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    public float movieSpeed = 10;
+    public float rotateSpeed = 50;
+    private void Update()
+    {
+        gameObject.transform.Translate(Vector3.forward * movieSpeed * Time.deltaTime * Input.GetAxis("Vertical"));
+        gameObject.transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime * Input.GetAxis("Horizontal"));
+    }
+}
+```
+
+#### 🌼 直来直去
+
+我们都知道cs中点击前后左右其实是平移的, 转动鼠标才是转角
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    public float movieSpeed = 10;
+    private void Update()
+    {
+        gameObject.transform.Translate(Vector3.forward * movieSpeed * Time.deltaTime * Input.GetAxis("Vertical"));
+        gameObject.transform.Translate(Vector3.right * movieSpeed * Time.deltaTime * Input.GetAxis("Horizontal"));
+    }
+}
+```
+

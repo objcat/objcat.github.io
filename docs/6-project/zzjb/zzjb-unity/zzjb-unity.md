@@ -383,7 +383,57 @@ Tool.exe --AppType=Proto2CS --Console=1
 
 ![](images/Pasted%20image%2020250825011609.png)
 
-所以解决方案是把`Client和Server`中的`ignore.asmdef`补齐即可, 这样打包的时候就不会放到同一个`dll`中导致冲突了, 可以学到的是, `asmdef`不仅针对子工程, 针对某一个文件夹也是可以的, 唯一遗憾的是找这个问题浪费2小时
+所以解决方案是把`Client和Server`中的`ignore.asmdef`补齐即可, 这样打包的时候就不会放到同一个`dll`中导致冲突了, 可以学到的是, `asmdef`不仅针对子工程, 针对某一个文件夹也是可以的
+
+这两个文件的内容是这样的, 如果你没有可以直接在你本地新建`Ignore.asmdef`然后写入下面的内容即可
+
+- Client
+
+```json
+{
+    "name": "Ignore.Generate.Client",
+    "rootNamespace": "",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "IGNORE"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
+```
+
+- Server
+
+```json
+{
+    "name": "Ignore.Generate.Server",
+    "rootNamespace": "",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "IGNORE"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
+```
+
+补全后是这样的
+
+![](images/Pasted%20image%2020250922010121.png)
+
+唯一遗憾的是找这个问题浪费2小时
 
 ## 🌲 Reflection错误
 

@@ -62,9 +62,43 @@ public class NewBehaviourScript : MonoBehaviour
 
 ## 🌲 练习1
 
+首先我来解释一下`带转弯`和`直来直去`的区别, 根据游戏类型的不同, 如果是cs类的fps游戏, 控制方向一般是鼠标, 而方向键只控制行走, 所以是直来直去的, 如果是吃鸡里面的汽车, 那就是带转弯的, 自己好好想一下, 你很快就能get到了
+
+
+
 ### 🌸 解法1(不推荐)
 
 #### 🌼 带转弯
+
+首先为了下面项目需要我封装了工具类
+
+```cs
+public static class ZYGameObjectExtension
+{
+    public static void AddX(this GameObject gameObject, float x)
+    {
+        Vector3 position = gameObject.transform.position;
+        position.x += x;
+        gameObject.transform.position = position;
+    }
+
+    public static void AddZ(this GameObject gameObject, float z)
+    {
+        Vector3 position = gameObject.transform.position;
+        position.z += z;
+        gameObject.transform.position = position;
+    }
+
+	public static void AddAnglesY(this GameObject gameObject, float y)
+	{
+    Vector3 angles = gameObject.transform.rotation.eulerAngles;
+    angles.y += y;
+    gameObject.transform.eulerAngles = angles;
+	}
+}
+```
+
+然后我们来看一下如何实现移动, 我们监听`ws`负责前进后退, 监听`ad`用来转向
 
 ```cs
 public class NewBehaviourScript : MonoBehaviour
@@ -95,7 +129,7 @@ public class NewBehaviourScript : MonoBehaviour
 }
 ```
 
-但是我们发现这个转弯并不是很正常, 因为它是直来直去的, 可以看看解法2
+实现上也看不出来啥问题, 但是就不是很正常, 不够圆润
 
 #### 🌼 直来直去
 
@@ -132,32 +166,6 @@ public class NewBehaviourScript : MonoBehaviour
 
 因为`position`是一个结构体, 不能单独赋值, 为了简化我这里简单的封装了一下
 
-```cs
-public static class ZYGameObjectExtension
-{
-    public static void AddX(this GameObject gameObject, float x)
-    {
-        Vector3 position = gameObject.transform.position;
-        position.x += x;
-        gameObject.transform.position = position;
-    }
-
-    public static void AddZ(this GameObject gameObject, float z)
-    {
-        Vector3 position = gameObject.transform.position;
-        position.z += z;
-        gameObject.transform.position = position;
-    }
-
-	public static void AddAnglesY(this GameObject gameObject, float y)
-	{
-    Vector3 angles = gameObject.transform.rotation.eulerAngles;
-    angles.y += y;
-    gameObject.transform.eulerAngles = angles;
-	}
-}
-```
-
 ### 🌸 解法2(推荐)
 
 我们可以直接使用`translate`方法
@@ -179,8 +187,6 @@ public class NewBehaviourScript : MonoBehaviour
 
 #### 🌼 直来直去
 
-我们都知道cs中点击前后左右其实是平移的, 转动鼠标才是转角
-
 ```cs
 public class NewBehaviourScript : MonoBehaviour
 {
@@ -192,4 +198,39 @@ public class NewBehaviourScript : MonoBehaviour
     }
 }
 ```
+
+综合下来我们发现解法2更好, 更自然
+
+## 🌲 练习2
+
+在练习1的基础上让坦克头部根据鼠标来移动, 这个也是比较简单, 首先我们定义一个`headTransform`来接收坦克的头的变量, 这样就不用使用API去找, 省时省力
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    // 移动速度
+    public float movieSpeed = 10;
+    // 转弯速度
+    public float rotateSpeed = 50;
+    // 接收坦克的头
+    public Transform headTransform;
+    // 坦克头转动的速度
+    public float headSpeed = 500;
+    private void Update()
+    {
+        gameObject.transform.Translate(Vector3.forward * movieSpeed * Time.deltaTime * Input.GetAxis("Vertical"));
+        gameObject.transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime * Input.GetAxis("Horizontal"));
+        headTransform.Rotate(Vector3.up * headSpeed * Time.deltaTime * Input.GetAxis("Mouse X"));
+    }
+}
+```
+
+然后我们把坦克的头拖上去
+
+![](images/Pasted%20image%2020250922195353.png)
+
+然后我们运行代码试一下, 发现坦克的头可以控制了
+
+
+
 

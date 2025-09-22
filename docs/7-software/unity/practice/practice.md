@@ -60,11 +60,15 @@ public class NewBehaviourScript : MonoBehaviour
 
 # 🍎 方位控制
 
-## 🌲 练习1
+## 🌲 坦克移动
 
-首先我来解释一下`带转弯`和`直来直去`的区别, 根据游戏类型的不同, 如果是cs类的fps游戏, 控制方向一般是鼠标, 而方向键只控制行走, 所以是直来直去的, 如果是吃鸡里面的汽车, 那就是带转弯的, 自己好好想一下, 你很快就能get到了
+![](images/Pasted%20image%2020250922204500.png)
 
+首先我们要有这个坦克, 拿走不谢
 
+![](images/Tank.prefab.zip)
+
+我来解释一下`带转弯`和`直来直去`的区别, 根据游戏类型的不同, 如果是cs类的fps游戏, 控制方向一般是鼠标, 而方向键只控制行走, 所以是直来直去的, 如果是吃鸡里面的汽车, 那就是带转弯的, 自己好好想一下, 你很快就能get到了
 
 ### 🌸 解法1(不推荐)
 
@@ -138,27 +142,28 @@ public class NewBehaviourScript : MonoBehaviour
 ```cs
 public class NewBehaviourScript : MonoBehaviour
 {
-    public int speed = 10;
+	// 移动速度
+    public int Speed = 10;
     private void Update()
     {
         if (Input.GetKey(KeyCode.W))
         {
-            gameObject.AddZ(speed * Time.deltaTime);
+            gameObject.AddZ(Speed * Time.deltaTime);
         }
 
         if (Input.GetKey(KeyCode.S))
         {
-            gameObject.AddZ(-speed * Time.deltaTime);
+            gameObject.AddZ(-Speed * Time.deltaTime);
         }
 
         if (Input.GetKey(KeyCode.A))
         {
-            gameObject.AddX(-speed * Time.deltaTime);
+            gameObject.AddX(-Speed * Time.deltaTime);
         }
 
         if (Input.GetKey(KeyCode.D))
         {
-            gameObject.AddX(speed * Time.deltaTime);
+            gameObject.AddX(Speed * Time.deltaTime);
         }
     }
 }
@@ -175,12 +180,14 @@ public class NewBehaviourScript : MonoBehaviour
 ```cs
 public class NewBehaviourScript : MonoBehaviour
 {
-    public float movieSpeed = 10;
-    public float rotateSpeed = 50;
+    // 移动速度
+    public float MovieSpeed = 10;
+    // 旋转速度
+    public float RotateSpeed = 50;
     private void Update()
     {
-        gameObject.transform.Translate(Vector3.forward * movieSpeed * Time.deltaTime * Input.GetAxis("Vertical"));
-        gameObject.transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime * Input.GetAxis("Horizontal"));
+        gameObject.transform.Translate(Vector3.forward * MovieSpeed * Time.deltaTime * Input.GetAxis("Vertical"));
+        gameObject.transform.Rotate(Vector3.up * RotateSpeed * Time.deltaTime * Input.GetAxis("Horizontal"));
     }
 }
 ```
@@ -190,18 +197,18 @@ public class NewBehaviourScript : MonoBehaviour
 ```cs
 public class NewBehaviourScript : MonoBehaviour
 {
-    public float movieSpeed = 10;
+    public float MovieSpeed = 10;
     private void Update()
     {
-        gameObject.transform.Translate(Vector3.forward * movieSpeed * Time.deltaTime * Input.GetAxis("Vertical"));
-        gameObject.transform.Translate(Vector3.right * movieSpeed * Time.deltaTime * Input.GetAxis("Horizontal"));
+        gameObject.transform.Translate(Vector3.forward * MovieSpeed * Time.deltaTime * Input.GetAxis("Vertical"));
+        gameObject.transform.Translate(Vector3.right * MovieSpeed * Time.deltaTime * Input.GetAxis("Horizontal"));
     }
 }
 ```
 
 综合下来我们发现解法2更好, 更自然
 
-## 🌲 练习2
+## 🌲 坦克转头
 
 在练习1的基础上让坦克头部根据鼠标来移动, 这个也是比较简单, 首先我们定义一个`headTransform`来接收坦克的头的变量, 这样就不用使用API去找, 省时省力
 
@@ -209,18 +216,18 @@ public class NewBehaviourScript : MonoBehaviour
 public class NewBehaviourScript : MonoBehaviour
 {
     // 移动速度
-    public float movieSpeed = 10;
+    public float MovieSpeed = 10;
     // 转弯速度
-    public float rotateSpeed = 50;
+    public float RotateSpeed = 50;
     // 接收坦克的头
-    public Transform headTransform;
+    public Transform HeadTransform;
     // 坦克头转动的速度
-    public float headSpeed = 500;
+    public float HeadSpeed = 500;
     private void Update()
     {
-        gameObject.transform.Translate(Vector3.forward * movieSpeed * Time.deltaTime * Input.GetAxis("Vertical"));
-        gameObject.transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime * Input.GetAxis("Horizontal"));
-        headTransform.Rotate(Vector3.up * headSpeed * Time.deltaTime * Input.GetAxis("Mouse X"));
+        gameObject.transform.Translate(Vector3.forward * MovieSpeed * Time.deltaTime * Input.GetAxis("Vertical"));
+        gameObject.transform.Rotate(Vector3.up * RotateSpeed * Time.deltaTime * Input.GetAxis("Horizontal"));
+        HeadTransform.Rotate(Vector3.up * HeadSpeed * Time.deltaTime * Input.GetAxis("Mouse X"));
     }
 }
 ```
@@ -231,6 +238,36 @@ public class NewBehaviourScript : MonoBehaviour
 
 然后我们运行代码试一下, 发现坦克的头可以控制了
 
+## 🌲 坦克炮管角度
+
+上面的我们知道后炮管就比较容易
+
+直接上代码
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    // 移动速度
+    public float MovieSpeed = 10;
+    // 转弯速度
+    public float RotateSpeed = 50;
+    // 接收坦克的头
+    public Transform HeadTransform;
+    // 坦克头转动的速度
+    public float HeadSpeed = 500;
+    // 炮管儿
+    public Transform GunTransform;
+    // 坦克炮管速度
+    public float GunSpeed = 500;
+    private void Update()
+    {
+        gameObject.transform.Translate(Vector3.forward * MovieSpeed * Time.deltaTime * Input.GetAxis("Vertical"));
+        gameObject.transform.Rotate(Vector3.up * RotateSpeed * Time.deltaTime * Input.GetAxis("Horizontal"));
+        HeadTransform.Rotate(Vector3.up * HeadSpeed * Time.deltaTime * Input.GetAxis("Mouse X"));
+        GunTransform.Rotate(Vector3.left * GunSpeed * Time.deltaTime * Input.mouseScrollDelta.y);
+    }
+}
+```
 
 
-
+![](images/Pasted%20image%2020250922203902.png)

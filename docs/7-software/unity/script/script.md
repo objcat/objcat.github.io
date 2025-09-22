@@ -2716,6 +2716,113 @@ public class NewBehaviourScript : MonoBehaviour
 }
 ```
 
+# 🍎 Screen
+
+## 🌲 获取显示器分辨率
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        Resolution currentResolution = Screen.currentResolution;
+        print("当前屏幕分辨率" + currentResolution.width + "," + currentResolution.height);
+        // 1920, 1080
+    }
+}
+```
+
+## 🌲 获取游戏窗口分辨率
+
+一般这个分辨率是用于计算的
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        print("游戏窗口分辨率" + Screen.width + "," + Screen.height);
+        // 814, 439
+    }
+}
+```
+
+## 🌲 设置分辨率
+
+移动设备不使用这个, 因为都是全屏的
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        // 分辨率 + 是否全屏
+        Screen.SetResolution(1920, 1080, false);
+    }
+}
+```
+
+## 🌲 设置休眠
+
+### 🌸 永不休眠
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+    }
+}
+```
+
+## 🌲 窗口模式
+
+这个了解一下就行, 不太能用到, 因为我们会在发布游戏的时候去设置
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        // 运行时是否全屏模式
+        Screen.fullScreen = true;
+        // 独占全屏
+        Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
+        // 全屏窗口
+        Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+        // 最大化窗口
+        Screen.fullScreenMode = FullScreenMode.MaximizedWindow;
+        // 窗口模式
+        Screen.fullScreenMode = FullScreenMode.Windowed;
+        
+    }
+}
+```
+
+## 🌲 移动设置屏幕旋转
+
+发布的时候有专门配置的地方
+
+```cs
+public class NewBehaviourScript : MonoBehaviour
+{
+    private void Start()
+    {
+        // 允许自动旋转为左横向 Home键在左
+        Screen.autorotateToLandscapeLeft = true;
+        // 允许自动旋转为右横向 Home键在右
+        Screen.autorotateToLandscapeRight = true;
+        // 允许自动旋转为纵向 Home键在下
+        Screen.autorotateToPortrait = true;
+        // 允许自动旋转为倒立 Home键在上
+        Screen.autorotateToPortraitUpsideDown = true;
+        // 指定屏幕显示的方向
+        Screen.orientation = ScreenOrientation.Portrait;
+    }
+}
+```
+
 # 🍎 练习题
 
 [practice](../practice/practice.md)

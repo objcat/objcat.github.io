@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/1-tecnology/javascript/vue/vue-syntax/vue-syntax/vue-syntax.md",
+                "file": "docs/README.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "vue-syntax"
+              "title": "README"
             }
           },
           {
@@ -156,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/1-tecnology/javascript/vue/vue-syntax/vue-syntax/vue-syntax.md",
+                "file": "docs/README.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "vue-syntax 的大纲"
+              "title": "README 的大纲"
             }
           }
         ],
@@ -184,6 +184,7 @@
   },
   "active": "3a2d00680e44792f",
   "lastOpenFiles": [
+    "docs/1-tecnology/javascript/vue/vue-syntax/vue-jsx/vue-jsx.md",
     "docs/README.md",
     "docs/1-tecnology/javascript/vue/vue-syntax/vue-syntax/vue-syntax.md",
     "docs/1-tecnology/javascript/vue/vue-scaffold/vue-scaffold/vue-scaffold.md",
@@ -211,7 +212,6 @@
     "docs/1-tecnology/javascript/vue/vue-syntax/vue-components/vue-components.md",
     "docs/1-tecnology/javascript/vue/vue-syntax/vue-components/images",
     "docs/1-tecnology/javascript/vue/vue-syntax/vue-jsx/images",
-    "docs/1-tecnology/javascript/vue/vue-syntax/vue-jsx/vue-jsx.md",
     "docs/1-tecnology/javascript/vue/vue-syntax/vue-syntax/images",
     "docs/1-tecnology/javascript/vue/vue-syntax/vue-components",
     "docs/1-tecnology/javascript/vue/vue-syntax/vue-jsx",

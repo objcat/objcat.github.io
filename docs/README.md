@@ -54,6 +54,39 @@
 
 [unity2d学习笔记](7-software/unity/unity2d/unity2d.md)
 
+# 🍎 Javascript
+
+## 🌲 Javascript语言文档
+
+![](0-language/javascript/images/Javascript-icon-128.png)
+
+[javascript语言文档](0-language/javascript/javascript.md)
+
+## 🌲 Vue文档
+
+![](images/Vue.js_Logo_2.svg)
+
+[vue学习文档](1-tecnology/javascript/vue/vue/vue.md)
+
+## 🌲 Vue脚手架
+
+经过上面的学习, 我们已经对vue的基本语法有一些了解了, 下面我们就来看一下更高级的脚手架项目, 脚手架是vue官方提供的框架, 可以帮助开发者更好的开发`vue`, 我们在公司开发一般都用这种项目, 因为它管理多页面要比单页面方便很多, 是的脚手架也是分为`vue2`和`vue3`, 我们先来看看怎么创建吧
+
+[vue-scaffold学习文档](../vue-scaffold/vue-scaffold/vue-scaffold.md)
+
+## 🌲 Vue语法基础
+
+[vue-syntax学习文档](1-tecnology/javascript/vue/vue-syntax/vue-syntax/vue-syntax.md)
+
+## 🌲 Vite
+
+[vite学习文档](1-tecnology/javascript/vue/vite/vite/vite.md)
+
+## 🌲 VueJsx
+
+[vue-jsx学习文档](1-tecnology/javascript/vue/vue-syntax/vue-jsx/vue-jsx.md)
+
+
 # 🍎 Java
 
 ## 🌲 Java语言文档
@@ -108,30 +141,6 @@
 ![](0-language/python/images/python_icon_128.png)
 
 [Python语言文档](0-language/python/python.md)
-
-# 🍎 Javascript
-
-## 🌲 Javascript语言文档
-
-![](0-language/javascript/images/Javascript-icon-128.png)
-
-[javascript语言文档](0-language/javascript/javascript.md)
-
-## 🌲 Vue文档
-
-![](images/Vue.js_Logo_2.svg)
-
-[vue学习文档](1-tecnology/javascript/vue/vue/vue.md)
-
-## 🌲 Vue脚手架
-
-经过上面的学习, 我们已经对vue的基本语法有一些了解了, 下面我们就来看一下更高级的脚手架项目, 脚手架是vue官方提供的框架, 可以帮助开发者更好的开发`vue`, 我们在公司开发一般都用这种项目, 因为它管理多页面要比单页面方便很多, 是的脚手架也是分为`vue2`和`vue3`, 我们先来看看怎么创建吧
-
-[vue-scaffold学习文档](../vue-scaffold/vue-scaffold/vue-scaffold.md)
-
-## 🌲 Vue语法基础
-
-[vue-syntax学习文档](1-tecnology/javascript/vue/vue-syntax/vue-syntax/vue-syntax.md)
 
 # 🍎 HTML
 

@@ -1,22 +1,24 @@
 # 🍎 简介
 
+![](images/Vue.js_Logo_2.svg)
+
 Vue (发音为 /vjuː/，类似 view) 是一款用于构建用户界面的 JavaScript 框架。它基于标准 HTML、CSS 和 JavaScript 构建，并提供了一套声明式的、组件化的编程模型，帮助你高效地开发用户界面。无论是简单还是复杂的界面，Vue 都可以胜任。
 
 # 🍎 版本
 
-`Vue`分为2和3两个版本, 前者使用比较多, 市面上会的人也多, 后者比较新, 语法有改动, 并且引入了新的API风格, 作为前端来说需要同时掌握以应对不同的开发环境
+`Vue`分为`2`和`3`两个版本, 前者使用比较多, 市面上会的人也多, 后者比较新, 语法有改动, 并且引入了新的`API`风格, 作为前端来说需要同时掌握以应对不同的开发环境, 我的建议是先学`vue2`然后可以很方便的过渡到`vue3`
 
 # 🍎 项目分类
 
-`Vue`项目分为两种形式`单页面`和`脚手架`, 所谓单页面就是在`HTML`中使用`<script></script>`标签进行引入`vue.js`这种适合单个页面进行开发的项目, 而另外一种方式是使用`Vue`官方给我们提供的一个项目结构进行开发, 适合比较大的多页面项目场景, 第二种功能上是更全面的, 本文也会针对这两种形式进行说明
+`Vue`项目分为两种形式`单页面`和`脚手架`, 所谓单页面就是在`HTML`中使用`<script>`标签导入`vue.js`, 这种形式适合`单个页面`进行开发, 而另外一种方式是使用`vue`官方给我们提供的一个`脚手架`进行开发, 适合比较大的`多页面`项目, 本文使用单页面的开发方式进行说明
 
 # 🍎 IDE
 
-这里推荐`HbuilderX`, 是国内对`vue`支持比较好的, 而且他们的`uni-app`可以开发小程序和移动端(移动端不推荐使用uni-app开发问题较多), 我们首先下载`HbuilderX`
+如果是学习这里推荐`HbuilderX`, 是国内对`vue`支持比较好的, 开箱即用, 而且他们的`uni-app`可以开发小程序和移动端(移动端不推荐使用uni-app开发问题较多), 本文也是基于`HbuilderX`进行讲解的, 我们首先下载`HbuilderX`
 
 https://www.dcloud.io/hbuilderx.html
 
-其他的IDE还有`vscode`和`webstorm`, 前者用途广泛是我们工作中要使用的, 但是它不适合初学因为配置插件比较麻烦, 所以我们先学会用一个, 学会了使用其他的都不难
+其他的常用IDE还有`vscode`和`webstorm`, 如果你会他们也可以用它们来进行学习
 
 # 🍎 API风格
 
@@ -26,7 +28,7 @@ https://cn.vuejs.org/guide/introduction.html#api-styles
 
 ## 🌲 选项式(Options API)
 
-所谓选项式就是`vue2`一直以来的写法, 当然`vue3`也可以写, 即使用`el, data, methods...`分为若干个模块然后进行编码的方式, 这种方式的优点在于会的人多, 写起来熟练
+所谓选项式就是`vue2`一直以来的写法, 当然`vue3`也兼容, 即使用`el, data, methods...`分为若干个模块然后进行编码的方式, 这种方式的优点在于会的人多, 写起来熟练
 
 ```html
 <body>
@@ -48,13 +50,7 @@ https://cn.vuejs.org/guide/introduction.html#api-styles
 
 ## 🌲 组合式(Composition API)
 
-组合式是vue3提出的, 利用`setup`语法把变量, 方法, 组件等逻辑写在一起, 在可读性上可能有一些提升
-
-组合式分为脚手架和非脚手架, 非脚手架就是单页面的, 脚手架就是vue给我们提供的开发环境, 可以更好的利用组件
-
-### 🌸 非脚手架
-
-非脚手架就是应用于单页面的vue3写法, 我们可以看到利用`setup()`函数就能方便的定义变量了, 而不需要使用`data()`
+组合式是`vue3`提出的, 利用`setup语法糖`把变量, 方法, 组件等逻辑写在一起, 在可读性上`可能`有一些提升
 
 ```html
 <html>
@@ -81,76 +77,11 @@ https://cn.vuejs.org/guide/introduction.html#api-styles
 </html>
 ```
 
-### 🌸 脚手架
+当然如果在脚手架中还可以使用`setup`语法糖
 
-在`script`标签上添加setup是脚手架专用的形式, 单页面是不能使用的, 这也是vue3的主流写法
+# 🍎 快速开始
 
-```html
-<template>
-	<h1>{{ title }}</h1>
-</template>
-
-<script setup>
-	let title = "hello";
-</script>
-
-<style scoped>
-
-</style>
-```
-
-同样的我们的脚手架也可以使用`setup()函数`的那种写法, 只不过不常用, 我们只需要去掉`setup`属性就能回归选项式写法了, 当然我们还需要借助`defineComponent`来开辟一块空间来写代码
-
-```vue
-<template>
-	<h1>{{ title }}</h1>
-</template>
-
-<script>
-	export default {
-        setup() {
-            let title = "hello";
-            return {
-                title
-            }
-        }
-    }
-</script>
-
-<style scoped>
-
-</style>
-```
-
-或
-
-```html
-<template>
-	<h1>{{ title }}</h1>
-</template>
-
-<script lang="ts">
-	import { defineComponent } from 'vue';
-	export default defineComponent({
-		setup() {
-			let title = "hello";
-			return {
-				title
-			}
-		}
-	})
-</script>
-
-<style scoped>
-
-</style>
-```
-
-上面的代码仅仅是为了表达区分`选项式`和`组合式`的区别, 如果还没有真正开始学习, 所以看不懂也没关系, 下面才是真正开始学习
-
-# 🍎 基础
-
-学习的话最好是从简单的单页面开始, 也就是html内嵌vue的方式, 因为不需要搭建任何环境就能够运行, 学习起来比较方便, 这也是vue对比react方便的地方, react是不支持这种单页面嵌入开发的
+学习的话最好是从简单的单页面开始, 也就是`html`内嵌`vue`的方式, 因为不需要搭建任何环境就能够运行, 学习起来比较方便, 这也是`vue`对比`react`方便的地方, `react`是不支持这种单页面嵌入开发的
 
 ## 🌲 新建项目
 
@@ -162,9 +93,9 @@ https://cn.vuejs.org/guide/introduction.html#api-styles
 
 ![](images/Pasted%20image%2020221128134301.png)
 
-## 🌲 外链嵌入vue.js
+## 🌲 外链嵌入`vue.js`
 
-新建完毕后我们就可以嵌入vue了, 下面的例子为多版本演示方便对比, 一般我们外链嵌入是需要在下面两个网址里搜索链接
+新建完毕后我们就可以嵌入`vue`了, 下面的例子为多版本演示方便对比, 一般我们外链嵌入是需要在下面两个网址里搜索链接
 
 https://cdn.bootcdn.net
 
@@ -196,7 +127,7 @@ https://v2.cn.vuejs.org/v2/guide/installation.html#CDN
 
 > vue3
 
-vue3嵌入环境也很简单, 仅仅是换了一个地址, 需要注意的是这个地址需要是`vue.global`开放组件的, 否则可能某些功能无法使用
+`vue3`嵌入环境也很简单, 仅仅是换了一个地址, 需要注意的是这个地址需要是`vue.global`开放组件的, 否则可能某些功能无法使用, 你在使用的时候也可以用最新的版本
 
 ```html
 <!DOCTYPE html>
@@ -283,7 +214,7 @@ console.log(vm);
 
 > vue3
 
-我们可以看到Vue3不再采用`new`, 而是使用`Vue.createApp`方法来创建实例
+我们可以看到`vue3`不再采用`new`, 而是使用`Vue.createApp`方法来创建实例
 
 ```html
 <!DOCTYPE html>
@@ -294,9 +225,6 @@ console.log(vm);
 		<script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.45/vue.global.prod.js"></script>
 	</head>
 	<body>
-		<div id="app">
-			{{title}}
-		</div>
 		<script type="text/javascript">
 			Vue.createApp({
 
@@ -306,7 +234,7 @@ console.log(vm);
 </html>
 ```
 
-## 🌲 el
+## 🌲 el/mount
 
 `el即element(元素)`在我们网页的开发中用来指标签, 是用来确认我们vue实例作用范围的一个属性, 我们需要配置它来指定vue作用于哪些标签, 一般情况下我们会配置一个id为app的div作为根标签
 
@@ -329,7 +257,7 @@ console.log(vm);
 
 > vue3
 
-在vue3中, 我们使用`mount`来绑定根标签, 它跟el的作用一样
+在vue3中, 我们使用`mount`来绑定根标签, 它跟`el`的作用一样
 
 ```html
 <body>
@@ -348,7 +276,7 @@ console.log(vm);
 
 > vue2
 
-data顾名思义就是我们数据变量存放的地方, 我们可以在vue结构中定义并使用它, 下面我们来声明一个`hello world!`
+`data`顾名思义就是我们数据变量存放的地方, 我们可以在vue结构中定义并使用它, 下面我们来声明一个`hello world!`
 
 ```html
 <body>
@@ -360,7 +288,7 @@ data顾名思义就是我们数据变量存放的地方, 我们可以在vue结�
 			el: "#app",
 			data() {
 				return {
-					title: "hello world"
+					title: "hello world!"
 				}
 			}
 		});
@@ -368,11 +296,11 @@ data顾名思义就是我们数据变量存放的地方, 我们可以在vue结�
 </body>
 ```
 
-我们使用`data()`来定义一个data函数, 然后在return里面定义对象, 对象里面的属性叫做`title`, 这个属性的值是`hello world!`
+我们使用`data()`来定义一个`data`函数, 然后在`return`后面定义对象, 对象里面的属性叫做`title`, 这个属性的值是`hello world!`
 
 > vue3
 
-我们可以看到vue3也可以使用`data()`来管理数据
+我们可以看到`vue3`也可以使用`data()`来管理数据
 
 ```html
 <body>
@@ -393,7 +321,7 @@ data顾名思义就是我们数据变量存放的地方, 我们可以在vue结�
 
 > vue3 setup
 
-我们可以看到使用setup语法需要使用`return`把变量暴露出去, 否则不生效
+我们可以看到使用`setup`语法更加自然, 但在最后还是需要使用`return`把变量暴露出去, 否则外面识别不到
 
 ```html
 <body>
@@ -413,29 +341,11 @@ data顾名思义就是我们数据变量存放的地方, 我们可以在vue结�
 </body>
 ```
 
-> vue3 setup 脚手架
-
-在脚手架中我们可以使用另外一种语法糖写法, 我们可以看到这种更加方便, 脱离了选项式的结构, 所以称为组合式
-
-```html
-<template>
-	<h1>{{ title }}</h1>
-</template>
-
-<script lang="ts" setup>
-	let title = "hello world";
-</script>
-
-<style scoped>
-
-</style>
-```
-
 ## 🌲 方法
 
 > vue2
 
-我们可以使用`methods`在vue中定义方法
+我们可以使用`methods`在`vue`中定义方法
 
 ```html
 <body>
@@ -460,13 +370,9 @@ data顾名思义就是我们数据变量存放的地方, 我们可以在vue结�
 </body>
 ```
 
-我们定义了一个叫`hello`的方法, 然后在里面返回`hello`, 之后我们同样可以在模板语法里面调用这个方法渲染值, 效果是这样的
-
-![](images/Pasted%20image%2020221228091541.png)
-
 > vue3 setup
 
-我们可以看到使用`setup`语法把值和函数都能写到一起了, 阅读起来非常方便, 我们定义方法后需要在`return`中把方法暴露出去, 否则html中是无法使用的
+我们可以看到使用`setup`语法把值和函数都能写到一起了, 阅读起来非常方便, 我们定义方法后也需要在`return`中把方法暴露出去, 否则`html`中是无法使用的
 
 ```html
 <body>
@@ -489,7 +395,7 @@ data顾名思义就是我们数据变量存放的地方, 我们可以在vue结�
 </body>
 ```
 
-这种写法虽然看起来很方便, 但是有一个非常大的问题就是值不是响应式的, 也无法访问this, 因此我们如果想实现响应式数据需要使用Vue提供的类`ref`, 这里只是简单演示, 在ref章节会详细来说
+这种写法虽然看起来很方便, 但是有一个非常大的问题就是值不是响应式的, 也无法访问`this,` 因此我们如果想在`setup`中实现响应式数据需要使用`vue`提供的`ref`, 这里只是简单演示, 在`ref`章节会详细来说
 
 ```vue
 <body>
@@ -514,7 +420,7 @@ data顾名思义就是我们数据变量存放的地方, 我们可以在vue结�
 </body>
 ```
 
-因为单页面嵌入vue在setup上面的文档极少, 所以单页面还是推荐使用选项式来写, 而脚手架使用vue3则推荐组合式
+因为单页面嵌入`vue`使用`setup`上面的文档极少, 边写还得边查, 浪费时间, 所以单页面还是推荐使用选项式来写
 
 ## 🌲 计算属性
 
@@ -576,67 +482,9 @@ data顾名思义就是我们数据变量存放的地方, 我们可以在vue结�
 </body>
 ```
 
-> vue2 脚手架
-
-计算属性中也可以使用getter/setter我们来看一下
-
-```vue
-<template>
-  <h1 @click="click">{{hello}}</h1>
-</template>
-
-<script>
-
-export default {
-  data() {
-    return {
-      name: "张三"
-    }
-  },
-  methods: {
-    click() {
-      this.name = "李四"
-    }
-  },
-  computed: {
-    hello: {
-      get() {
-        return this.name
-      },
-      set(val) {
-        this.name = val
-      }
-    }
-  }
-}
-</script>
-```
-
-> vue3 setup 脚手架
-
-```html
-<template>
-	<h1>{{ hello }}</h1>
-</template>
-
-<script lang="ts" setup>
-	import { computed } from 'vue'
-	let title = "hello world!";
-	let time = "2022年11月28日14:39:30";
-
-	let hello = computed(() => {
-		return title + " " + time;
-	})
-</script>
-
-<style scoped>
-
-</style>
-```
-
 ## 🌲 监听属性
 
-我们使用watch来监听data中声明的值, 名称必须和data里面的值一样, 如例子所示当number被修改时会在watch的函数中进行回调
+我们使用`watch`来监听`data`中声明的值, 名称必须和`data`里面的值一样, 如例子所示当`number`被修改时会在`watch`的函数中进行回调
 
 > vue3
 
@@ -665,7 +513,7 @@ export default {
 
 > vue3 setup
 
-在setup语法中watch的使用有点不同
+在`setup`语法中`watch`的使用有点不同
 
 ```html
 <body>
@@ -695,39 +543,9 @@ export default {
 </body>
 ```
 
-> vue3 setup 脚手架
-
-我们再来看一下脚手架的形式
-
-```html
-<template>
-	<h1 @click="change">{{ number }}</h1>
-</template>
-
-<script lang="ts" setup>
-	import { ref, watch } from 'vue'
-
-	let number = ref(0)
-
-	watch(number, (newValue, oldValue) => {
-		console.log("新值: " + newValue + " 旧值: " + oldValue);
-	})
-
-	let change = () => {
-		number.value++;
-	}
-</script>
-
-<style scoped>
-
-</style>
-```
-
-## 🌲 监听属性
-
 # 🍎 语法
 
-下面是一些常用的语法, 这里使用最新的vue3进行演示, vue2与之相差无几
+下面是一些常用的语法, 这里使用最新的`vue3`进行演示, 演示还是用大家最熟悉的选项式, 也就是`vue2`的模式
 
 ## 🌲 {{}}
 
@@ -964,9 +782,7 @@ https://www.jianshu.com/p/0b95a319a7c7
 
 ### 🌸 拼接属性
 
-```
 我们使用 `xxx-${变量}` 来动态拼接属性 我们直接看下面的例子 我利用数组中的数字来动态生成了每个h1的属性
-```
 
 ```html
 <body>
@@ -1015,7 +831,7 @@ https://www.jianshu.com/p/0b95a319a7c7
 
 ## 🌲 v-show
 
-`v-show`即控制显示, 我们把`v-if`换成`v-show`会发现也可以机型显示和隐藏, 区别在于`v-show`是通过`display: none;`来实现隐藏的
+`v-show`即控制显示, 我们把`v-if`换成`v-show`会发现也可以机型显示和隐藏, 区别在于`v-show`是通过`display: none;`来实现隐藏的, 这种方式可能比直接移除元素效率更高, 所以频繁需要隐藏显示的可以使用该语法实现
 
 ```html
 <body>
@@ -1055,11 +871,26 @@ https://www.jianshu.com/p/0b95a319a7c7
 		}).mount("#app");
 	</script>
 </body>
+
+<body>
+	<div id="app">
+		<h1 v-for="(item, key) in dic">行:{{ index }} 值:{{ item }}</h1>
+	</div>
+	<script type="text/javascript">
+		Vue.createApp({
+			data() {
+				return {
+					dic: {"name": "张三", "age": "18"}
+				}
+			}
+		}).mount("#app");
+	</script>
+</body>
 ```
 
 ## 🌲 v-cloak
 
-有时我们刷新页面会看到一个没有渲染完的元素在上面`{{ msg }}`, 这可能是js文件还没下载完成, 而html先显示了出来, 体验不是太好, 所以这时就可以使用这个东西了
+有时我们刷新页面会看到一个没有渲染完的元素在上面`{{ msg }}`, 这可能是js文件还没下载完成, 而html先显示了出来, 体验不是太好, 所以这时就可以使用这个东西了, 使用它别忘了在`style`中添加样式
 
 ```html
 <!DOCTYPE html>
@@ -1093,211 +924,71 @@ https://www.jianshu.com/p/0b95a319a7c7
 </html>
 ```
 
-# 🍎 导出导入
+## 🌲 refs
 
-## 🌲 新建js文件
+`refs`是`vue`中方便获取元素的一个方法, 我们一起来看看吧, 我们有个子组件叫`HomeView`, 我可以在标签上用ref属性来标记它, 然后在方法中我们就可以使用`this.$refs.hello`来获取到该元素
 
-我们在开发中会经常导入一些组件或工具, js中导出使用`export`, 导入使用`import`, 我们使用vue的脚手架形式简单举例, 比如我们创建了一个工具类叫`test.js`
-
-```js
-var obj = {"name": "张三"}
-```
-
-目录如图
-
-![](images/Pasted%20image%2020230627134844.png)
-
-我们可以看到是在`utils/testUtil`下面的
-
-## 🌲 直接导入
-
-我们在`main.js`中尝试直接导入这个`js`, 导入使用`import`关键字然后+名字+路径
-
-```js
-import test from '@/utils/testUtil/test.js'
-console.log(test)
-```
-
-打印之后我们会发现结果是`{}`空对象, 这是因为js规定想从别的文件导入必须先设置导出,
-
-## 🌲 设置导出
-
-导出方式有两种`export default`和`export`, 前者一般用于导出一个对象, 后者常用于导出多个对象, 我们先看第一个
-
-### 🌸 export default
-
-我们尝试把obj导出来
-
-```js
-var obj = {"name": "张三"}
-export default obj
-```
-
-然后我们发现控制台可以输出了
-
-![](images/Pasted%20image%2020230627135912.png)
-
-### 🌸 export
-
-然后我们看`export`, 我们也尝试把obj导出来
-
-```js
-var obj = {"name": "张三"}
-export obj
-```
-
-我们发现这么写会报错, 所以在使用export导出时需要使用下面的写法
-
-```js
-export var obj = {"name": "张三"}
-// 或
-var obj = {"name": "张三"}
-export {
-    obj
-}
-```
-
-然后我们运行一下发现导入的东西没打印出来
-
-```js
-import test from '@/utils/testUtil/test.js'
-console.log(test) // undefined
-```
-
-这就是`export`和`export default`的第二个区别, 我们在使用export导出后, 相应的import也要进行改写
-
-```js
-import { obj } from '@/utils/testUtil/test.js'
-console.log(obj) // {name: '张三'}
-```
-
-我们必须使用中括号里面加变量的形式来接收, 并且名字要和导出的变量名对上
-
-我们来尝试导出多个
-
-```js
-var obj = {"name": "张三"}
-var obj2 = {"name": "李四"}
-export {
-    obj,
-    obj2
-}
-```
-
-然后我们来导入
-
-```js
-import { obj, obj2 } from '@/utils/testUtil/test.js'
-console.log(obj, obj2) // {name: '张三'} {name: '李四'}
-```
-
-可以看到能够打印出来, 而且我们可以有选择的引入, 比如我们定义了一堆工具, 最后只想到处obj2, 那没问题中括号里只写obj2就可以了
-
-## 🌲 无文件名导入
-
-这个其实很简单, 就是引入路径的时候只引入文件夹名, 不引入js文件名, 那有人会问了, 这怎么可能找到, 其实还是可以找到的, 因为导入的时候如果没有找到js文件名就会去文件夹下找`index.js`, 这就是导入原理了, 我们一起来看看
-
-我们首先把test.js改成index.js运行一下发现`报错了`
-
-![](images/Pasted%20image%2020230627141403.png)
-
-遇事不要慌, 原因是你导入的时候用的test.js这个文件名, 我们刚把它改了当然找不到了
-
-所以我们导入要变成下面这个样子
-
-```js
-import { obj, obj2 } from '@/utils/testUtil/index.js'
-console.log(obj, obj2)
-```
-
-这种写法也可以写成
-
-```js
-import { obj, obj2 } from '@/utils/testUtil'
-console.log(obj, obj2)
-```
-
-这就是让新手大犯迷糊的`文件夹名`导入了, 我觉得这种方式并不好, 因为增加了新手学习的复杂度, 知道就行了
-
-# 🍎 脚手架
-
-经过上面的学习, 我们已经对vue的基本语法有一些了解了, 下面我们就来看一下更高级的脚手架项目, 脚手架是vue官方提供的框架, 可以帮助开发者更好的开发vue, 我们在公司一般用的就是这种项目, 因为它管理多页面要比单页面方便很多, 是的脚手架也是分为vue2和vue3, 我们先来看看怎么创建吧
-
-## 🌲 创建项目
-
-![](images/Pasted%20image%2020221208134651.png)
-
-我们打开`HbuilderX`然后在里面新建项目, 我们可以看到嘎嘎简单啊, 选择一个项目后点创建就可以了, 上图是vue3-cli, 同样的向下翻也可以看到vue2-cli, 创建都是一样的, 我们这边也创建了个vue2-cli的项目, 你可以按需求创建, 那我们就开始学习脚手架语法吧
-
-我们可以看到工程结构比普通项目稍微复杂一些
-
-![](images/Pasted%20image%2020221208134924.png)
-
-- main.js 工程入口
-- App.vue 初始页面文件
-
-我们下面就来对比一下vue2和vue3的初始页面的区别
-
-> vue2
-
-```html
-<template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
-</template>
-
+```vue
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import HomeView from './views/HomeView.vue';
 export default {
-  name: 'app',
   components: {
-    HelloWorld
+    HomeView
+  },
+
+  methods: {
+    click() {
+      console.log(this.$refs.hello);
+    }
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<template>
+  <div>
+    <HomeView ref="hello"></HomeView>
+    <button @click="click">点击</button>
+  </div>
+</template>
+
+<style scoped></style>
 ```
 
-> vue3
+我们点击看一下
 
-```html
-<script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import HelloWorld from './components/HelloWorld.vue'
+```js
+VueComponent {_uid: 2, _isVue: true, __v_skip: true, _scope: EffectScope2, $options: {…}, …}
+```
+
+然后我们能做什么用呢? 很多用处哈, 这里我们可以使用它来调用子组件中的方法, 我们在子组件中写一个改变颜色的方法
+
+```vue
+<script>
+export default {
+  methods: {
+    changeColor() {
+        this.$refs.div1.style.backgroundColor = 'blue';
+    }
+  }
+}
 </script>
 
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + Vite" />
+  <div style="background-color: red; width: 100px; height: 100px;" ref="div1"></div>
 </template>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
 ```
 
-经过对比我们可以发现, vue3的script标签上面有一个setup属性, 这是vue3与vue2最大的区别, 一般叫它setup语法糖, 是用来改进vue结构引入的优化, 同时对vue的性能上也有帮助
+然后我们在父组件中调用它
+
+```js
+click() {
+  this.$refs.hello.changeColor();
+}
+```
+
+然后我们就可以看到组件的颜色改变了
+
+# 🍎 vue2和3区别
 
 ## 🌲 hello world
 
@@ -1344,15 +1035,15 @@ import HelloWorld from './components/HelloWorld.vue'
 </style>
 ```
 
-我们可以发现vue3比vue2更加清爽, 有了setup语法后, 我们不需要再指定根标签了
+我们可以发现`vue3`比`vue2`更加清爽, 有了`setup`语法后, 我们不需要再指定根标签了
 
 ## 🌲 ref
 
-这个是vue3中最重要的, 也就是数据的绑定, 我们先看看vue2是怎么实现的
+这个是`vue3`中最重要的, 也就是数据的绑定, 我们先看看`vue2`是怎么实现的
 
 > vue2
 
-vue2实现起来很简单, 因为使用的是`选项式API`风格, 我给h1绑定了一个点击方法, 当点击h1的时候就会触发`change`方法, 然后在方法里面直接修改title的值就可以了
+`vue2`实现起来很简单, 因为使用的是`选项式API`风格, 我给h1绑定了一个点击方法, 当点击h1的时候就会触发`change`方法, 然后在方法里面直接修改title的值就可以了
 
 ```html
 <template>
@@ -1461,10 +1152,17 @@ vue2实现起来很简单, 因为使用的是`选项式API`风格, 我给h1绑�
 </style>
 ```
 
-## 🌲 更多vue3脚手架详解
+# 🍎 脚手架
 
-[vue3-scaffold](../vue3/vue3-scaffold.md)
+经过上面的学习, 我们已经对vue的基本语法有一些了解了, 下面我们就来看一下更高级的脚手架项目, 脚手架是vue官方提供的框架, 可以帮助开发者更好的开发`vue`, 我们在公司开发一般都用这种项目, 因为它管理多页面要比单页面方便很多, 是的脚手架也是分为`vue2`和`vue3`, 我们先来看看怎么创建吧
 
-# 🍎 路径补全
+[跳转 vue-scaffold](../vue-scaffold/vue-scaffold/vue-scaffold.md)
 
-[index.md](../../vscode/plugin/自动补全路径/index.md.md)
+# 🍎 插件
+
+[自动补全路径.md](../../vscode/plugin/自动补全路径/自动补全路径.md.md)
+
+# 🍎 双向数据绑定
+
+在`vue2`和`vue3`中实现双向数据绑定的原理是不同的, 在`vue2`中使用了`defineProperty`来实现, 而`vue3`中使用了`ES6`的`Proxy`来实现, 在性能上得到了很大的提升
+

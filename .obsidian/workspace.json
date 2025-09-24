@@ -13,12 +13,26 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/7-software/unity/practice/practice.md",
+                "file": "docs/1-tecnology/javascript/vue/vue-syntax/vue-syntax/vue-syntax.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "practice"
+              "title": "vue-syntax"
+            }
+          },
+          {
+            "id": "ec4c02442230c2d8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "docs/1-tecnology/javascript/vue/vue-syntax/vue-syntax/vue-syntax.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "vue-syntax"
             }
           }
         ]
@@ -142,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/7-software/unity/practice/practice.md",
+                "file": "docs/1-tecnology/javascript/vue/vue-syntax/vue-syntax/vue-syntax.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "practice 的大纲"
+              "title": "vue-syntax 的大纲"
             }
           }
         ],
@@ -170,51 +184,51 @@
   },
   "active": "3a2d00680e44792f",
   "lastOpenFiles": [
-    "docs/7-software/unity/practice/images/Tank.prefab.zip",
-    "docs/7-software/unity/practice/images/Pasted image 20250922204457.png",
-    "docs/7-software/unity/practice/images/Pasted image 20250922204500.png",
+    "docs/README.md",
+    "docs/1-tecnology/javascript/vue/vue-syntax/vue-syntax/vue-syntax.md",
+    "docs/1-tecnology/javascript/vue/vue-scaffold/vue-scaffold/vue-scaffold.md",
+    "docs/1-tecnology/javascript/vue/vue-scaffold/create-vue/create-vue.md",
+    "docs/3-program/env/node/node_env.md",
+    "docs/1-tecnology/javascript/vue/vue/vue.md",
+    "docs/1-tecnology/javascript/vue/vue.md",
     "docs/7-software/unity/practice/practice.md",
-    "docs/7-software/unity/practice/images/Pasted image 20250922203902.png",
+    "docs/1-tecnology/javascript/vue/vuex/images/Pasted image 20230625133813.png",
+    "docs/1-tecnology/javascript/vue/vuex/images/Pasted image 20230621111325.png",
+    "docs/1-tecnology/javascript/vue/vuex/images",
+    "docs/1-tecnology/javascript/vue/vuex/vuex.md",
+    "docs/1-tecnology/javascript/vue/vuex",
+    "docs/1-tecnology/javascript/vue/vuepress/images/Pasted image 20221212172803.png",
+    "docs/1-tecnology/javascript/vue/vuepress/images/Pasted image 20221212172600.png",
+    "docs/1-tecnology/javascript/vue/vuepress/images/Pasted image 20221212170803.png",
+    "docs/1-tecnology/javascript/vue/vuepress/images/Pasted image 20221212172446.png",
+    "docs/1-tecnology/javascript/vue/vuepress/images/Pasted image 20221212170312.png",
+    "docs/1-tecnology/javascript/vue/vuepress/images/Pasted image 20221212171058.png",
+    "docs/1-tecnology/javascript/vue/vuepress/images/Pasted image 20221212170208.png",
+    "docs/1-tecnology/javascript/vue/vuepress/images",
+    "docs/1-tecnology/javascript/vue/vuepress/vuepress.md",
+    "docs/1-tecnology/javascript/vue/vuepress",
+    "docs/1-tecnology/javascript/vue/vue-syntax/vue-components/images/Pasted image 20240423231522.png",
+    "docs/1-tecnology/javascript/vue/vue-syntax/vue-components/vue-components.md",
+    "docs/1-tecnology/javascript/vue/vue-syntax/vue-components/images",
+    "docs/1-tecnology/javascript/vue/vue-syntax/vue-jsx/images",
+    "docs/1-tecnology/javascript/vue/vue-syntax/vue-jsx/vue-jsx.md",
+    "docs/1-tecnology/javascript/vue/vue-syntax/vue-syntax/images",
+    "docs/1-tecnology/javascript/vue/vue-syntax/vue-components",
+    "docs/1-tecnology/javascript/vue/vue-syntax/vue-jsx",
+    "docs/1-tecnology/javascript/vue/vue-syntax/vue-syntax",
+    "docs/1-tecnology/javascript/vue/vue-scaffold/vue-cli/vue-cli.md",
+    "docs/1-tecnology/javascript/vue/vue-router/vue-router/vue-router.md",
+    "docs/1-tecnology/javascript/vue/vue-router/vue-dynamic-router/vue-dynamic-router.md",
+    "docs/1-tecnology/javascript/vue/vite/vite/vite.md",
+    "docs/1-tecnology/javascript/vue/vite/plugin/plugin.md",
+    "docs/1-tecnology/javascript/vue/virtual_dom/virtual_dom.md",
+    "docs/1-tecnology/javascript/vue/pinia/pinia.md",
+    "docs/1-tecnology/javascript/vue/layout/layout.md",
     "docs/7-software/unity/script/script.md",
     "README.md",
-    "docs/7-software/unity/practice/images/Pasted image 20250922195353.png",
     "docs/6-project/zzjb/zzjb-unity/zzjb-unity.md",
-    "docs/6-project/zzjb/zzjb-unity/images/Ignore 1.asmdef",
-    "docs/6-project/zzjb/zzjb-unity/images/Ignore.asmdef",
-    "docs/6-project/zzjb/zzjb-unity/images/Pasted image 20250922010121.png",
     "docs/7-software/unity/unity3d/unity3d.md",
-    "docs/7-software/unity/script/images/Pasted image 20250920004047.png",
-    "docs/7-software/unity/script/images/Pasted image 20250919003042.png",
-    "docs/7-software/unity/practice/images/Pasted image 20250918124536.png",
-    "docs/7-software/unity/practice/images/Pasted image 20250918124256.png",
-    "docs/7-software/unity/practice/images",
-    "docs/7-software/unity/practice",
-    "docs/7-software/unity/unity3d/images/Pasted image 20250917191133.png",
     "docs/7-software/unity/inspector/inspector.md",
-    "docs/7-software/unity/script/images",
-    "docs/0-language/csharp/csharp.md",
-    "docs/7-software/unity/编译原理/编译原理.md",
-    "docs/7-software/unity/ioc/ioc.md",
-    "docs/README.md",
-    "docs/7-software/unity/unity2d/unity2d.md",
-    "docs/6-project/zzjb/map/map.md",
-    "docs/6-project/zzjb/login/login.md",
-    "docs/7-software/unity/PackageManager/PackageManager.md",
-    "docs/6-project/zzjb/map",
-    "docs/7-software/unity/ET/ET.md",
-    "docs/6-project/zzjb/zzjb-battle-java-server/zzjb-battle-java-server.md",
-    "docs/7-software/unity/PackageManager/images",
-    "docs/7-software/unity/PackageManager",
-    "docs/7-software/unity/编译原理/images",
-    "docs/7-software/unity/编译原理",
-    "docs/7-software/unity/自动生成代码/自动生成代码.md",
-    "docs/7-software/fork/fork.md",
-    "docs/1-tecnology/csharp/luban/luban.md",
-    "docs/6-project/zzjb/devplan/devplan.md",
-    "docs/6-project/zzjb/design/design.md",
-    "docs/1-tecnology/java/iogame/iogame.md",
-    "docs/4-package-manager/maven/maven.md",
-    "docs/7-software/unity/HybirdCLR/HybirdCLR.md",
-    "docs/7-software/IDE/VisualStudio/VisualStudio.md"
+    "docs/0-language/csharp/csharp.md"
   ]
 }

@@ -225,7 +225,7 @@ public class GlobalConfig : ScriptableObject
 
 上面可以满足启动项目, 但是`ET`那个编译插件有时候是`很慢的`, 或者你遇到了某些`奇奇怪怪`的问题, 那就推荐`Unity`和`ET`双编, 就是先打开`ET`编译一遍, 再打开`Unity`编译一遍即可, 详情看我的`ET`笔记中`🌲 编译项目`章节
 
-[ET编译项目](../../../7-software/unity/ET/ET.md#🌲%20编译项目)
+[ET编译项目](../../ET/ET.md#🌲%20编译项目)
 
 ## 🌲 切换环境
 

@@ -292,10 +292,39 @@ public class NewBehaviourScript : MonoBehaviour
 
 ![](images/Pasted%20image%2020250922233657.png)
 
-我们再给摄像机调整一个好的视角
-
-
+我们再给摄像机调整一个好的视角, 比如
 
 ```
+UnityEditor.TransformWorldPlacementJSON:{"position":{"x":0.33000001311302187,"y":5.0,"z":-10.210000038146973},"rotation":{"x":0.1736481636762619,"y":0.0,"z":0.0,"w":0.9848077893257141},"scale":{"x":1.0,"y":1.0,"z":1.0}}
+```
 
+再给坦克加一个球做参照物
+
+![](images/Pasted%20image%2020250925184906.png)
+
+可以看到画面是这样的
+
+我们目前可以看到移动坦克摄像机会跟着我们了
+
+那如何点击右键旋转视角呢, 需要新创建一个脚本挂载摄像机上
+
+```cs
+public class CameraBehaviourScript : MonoBehaviour
+{
+    // 坦克
+    public Transform Tank;
+    // 旋转速度
+    public float Speed = 100;
+    // Update is called once per frame
+    void Update()
+    {
+        // 让摄像机看向坦克
+        transform.LookAt(Tank);
+        // 右键按下拖动转动视角
+        if (Input.GetMouseButton(1))
+        {
+            transform.RotateAround(Tank.position, Vector3.up, Speed * Time.deltaTime * Input.GetAxis("Mouse X"));
+        }
+    }
+}
 ```

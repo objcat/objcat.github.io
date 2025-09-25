@@ -36,7 +36,7 @@
 
 项目解析, 目前完成了`项目运行, 登录页分析`
 
-[重装机兵项目解读](6-project/zzjb/zzjb-unity/zzjb-unity.md)
+[重装机兵项目解读](7-software/unity/zzjb/zzjb-unity/zzjb-unity.md)
 
 ## 🌲 ioGame框架
 
@@ -44,15 +44,17 @@
 
 ## 🌲 3D
 
-3D踩坑小笔记
+逐渐完善中...
 
-[unity3d学习笔记](7-software/unity/unity3d/unity3d.md)
+最新更新日期`2025.09.25`
+
+[Unity3D学习笔记](7-software/unity/unity3d/unity3d.md)
 
 ## 🌲 2D
 
-2D踩坑小笔记
+逐渐完善中...
 
-[unity2d学习笔记](7-software/unity/unity2d/unity2d.md)
+[Unity2D学习笔记](7-software/unity/unity2d/unity2d.md)
 
 # 🍎 Javascript
 
@@ -93,7 +95,6 @@
 `jsx`在`vue`中的应用
 
 [vue-jsx学习文档](1-tecnology/javascript/vue/vue-syntax/vue-jsx/vue-jsx.md)
-
 
 # 🍎 Java
 

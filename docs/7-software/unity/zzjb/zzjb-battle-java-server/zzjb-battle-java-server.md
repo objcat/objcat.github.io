@@ -28,7 +28,7 @@ https://iohao.github.io/game/
 
 由于是新手教程, 所以这里还是说一下, `maven`是`apache`开发的`java包管理工具`, 我们可以通过`pom`文件来引入项目所需要的依赖, 下面是我以前写的配置`maven`的教程
 
-[maven配置教程](../../../4-package-manager/maven/maven.md)
+[maven配置教程](../../../../4-package-manager/maven/maven.md)
 
 配置好`maven`后点击同步就可以了
 
@@ -38,7 +38,7 @@ https://iohao.github.io/game/
 
 ## 🌲 学习ioGame
 
-[iogame学习文档](../../../1-tecnology/java/iogame/iogame.md)
+[iogame学习文档](../../../../1-tecnology/java/iogame/iogame.md)
 
 ## 🌲 启动项目
 

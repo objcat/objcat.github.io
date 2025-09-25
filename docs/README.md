@@ -74,7 +74,7 @@
 
 经过上面的学习, 我们已经对`vue`的基本语法有一些了解了, 下面我们就来看一下更高级的脚手架项目, 脚手架是vue官方提供的框架, 可以帮助开发者更好的开发`vue`, 我们在公司开发一般都用这种项目, 因为它管理多页面要比单页面方便很多, 是的脚手架也是分为`vue2`和`vue3`, 点击学习
 
-[vue-scaffold学习文档](../vue-scaffold/vue-scaffold/vue-scaffold.md)
+[vue-scaffold学习文档](1-tecnology/javascript/vue/vue-scaffold/vue-scaffold/vue-scaffold.md)
 
 ## 🌲 Vue语法基础
 

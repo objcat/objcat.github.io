@@ -73,7 +73,8 @@
               "title": "Pasted image 20250813011523"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -220,27 +221,28 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "3a2d00680e44792f",
+  "active": "781bfaf06e0ef78f",
   "lastOpenFiles": [
-    "docs/7-software/unity/camera/images/Pasted image 20250925235022.png",
-    "docs/7-software/unity/camera/images/Pasted image 20250925234954.png",
-    "docs/7-software/unity/camera/images/Pasted image 20250925234518.png",
-    "docs/7-software/unity/camera/images/Pasted image 20250925234203.png",
-    "docs/7-software/unity/camera/images/Pasted image 20250925234153.png",
-    "docs/7-software/unity/camera/images/Pasted image 20250925234141.png",
-    "docs/7-software/unity/camera/images/Pasted image 20250925234036.png",
-    "docs/7-software/unity/unity3d/unity3d.md",
+    "docs/7-software/unity/camera/images/Pasted image 20250926122925.png",
+    "docs/7-software/unity/camera/images/Pasted image 20250926122730.png",
+    "docs/7-software/unity/camera/images/Pasted image 20250926122646.png",
+    "docs/7-software/unity/camera/images/Pasted image 20250926122619.png",
+    "docs/7-software/unity/camera/images/Pasted image 20250926122601.png",
+    "docs/7-software/unity/camera/images/Pasted image 20250926122314.png",
+    "docs/7-software/unity/camera/images/Pasted image 20250926122148.png",
+    "README.md",
     "docs/7-software/unity/camera/camera.md",
-    "docs/7-software/unity/camera/images/Pasted image 20250813182526.png",
-    "docs/7-software/unity/camera/images/Pasted image 20250813011523.png",
+    "docs/7-software/unity/camera/images/Pasted image 20250926121053.png",
+    "docs/7-software/unity/camera/images/Pasted image 20250926120722.png",
+    "docs/7-software/unity/camera/images/Pasted image 20250926120653.png",
+    "docs/7-software/unity/camera/images/Pasted image 20250926120529.png",
+    "docs/7-software/unity/unity3d/unity3d.md",
     "docs/7-software/unity/camera/images",
     "docs/7-software/unity/script/script.md",
     "docs/7-software/unity/practice/practice.md",
     "docs/README.md",
-    "README.md",
     "docs/7-software/unity/camera",
     "docs/7-software/unity/zzjb/zzjb-unity/zzjb-unity.md",
-    "docs/7-software/unity/practice/images/Pasted image 20250925184906.png",
     "docs/1-tecnology/javascript/vue/virtual_dom/virtual_dom.md",
     "docs/1-tecnology/javascript/vue/vue-scaffold/vue-scaffold/vue-scaffold.md",
     "docs/1-tecnology/javascript/vue/vue/vue.md",
@@ -249,7 +251,6 @@
     "docs/1-tecnology/javascript/vue/vue-scaffold/create-vue/create-vue.md",
     "docs/3-program/env/node/node_env.md",
     "docs/1-tecnology/javascript/vue/vue.md",
-    "docs/1-tecnology/javascript/vue/vuex/images/Pasted image 20230625133813.png",
     "docs/1-tecnology/javascript/vue/vuex/images",
     "docs/1-tecnology/javascript/vue/vuex/vuex.md",
     "docs/1-tecnology/javascript/vue/vuex",

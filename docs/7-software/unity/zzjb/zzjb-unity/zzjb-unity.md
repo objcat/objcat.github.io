@@ -55,6 +55,8 @@
 | 2025.09.26 | 学习Camera里面的MSAA, HDR, Redering path, Viewport                                   | 第33天 |
 | 2025.09.27 | 学习Camera里面的Target Display, Allow Dynamic Resolution                             | 第34天 |
 | 2025.09.28 | [practice](../../practice/practice.md) 做练习题, 实现多Camera分屏显示                      | 第35天 |
+| 2025.09.29 | 没学在研究大模型, claudecode文档诞生                                                        | --   |
+| 2025.09.30 | 没学在研究大模型, codex文档诞生, qwen-coder文档诞生                                             | --   |
 
 # 🍎 快速开始
 
